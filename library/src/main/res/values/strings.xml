@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">OddWorks Device SDK</string>
+    <string name="odd_config_url">https://device.oddworks.io/v1/config</string>
+    <string name="odd_access_token">eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ2ZXJzaW9uIjoxLCJkZXZpY2VJRCI6IjU5NDRkY2RiLTE1YWEtNDgxNy04YWFjLTUyOWVhZWIzMzNkZSIsInNjb3BlIjpbImRldmljZSJdLCJpYXQiOjE0Mzk5Mjg3MjF9.mCa_3FKVnPi643kQNWMwsEP5VFmeED-yVszo4Tfdsos</string>
+    <string name="odd_views_endpoint">views</string>
+    <string name="odd_base_url">https://device-staging.oddworks.io/v1/</string>
+    <string name="odd_config_endpoint">config</string>
+    <string name="odd_request_content_type">application/json</string>
+    <string name="odd_auth_token_endpoint">auth/device/token</string>
+    <string name="auth_device_code_endpoint">auth/device/code</string>
+</resources>
