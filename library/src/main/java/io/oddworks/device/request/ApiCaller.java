@@ -1,19 +1,24 @@
 package io.oddworks.device.request;
 
-import android.content.Context;
-
 import android.util.Log;
+
 import com.squareup.okhttp.Callback;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
 
+import org.json.JSONException;
+
 import java.io.IOException;
 import java.util.List;
 
-import io.oddworks.device.exceptions.OddParseException;
 import io.oddworks.device.exceptions.BadResponseCodeException;
-import io.oddworks.device.model.*;
-import org.json.JSONException;
+import io.oddworks.device.exceptions.OddParseException;
+import io.oddworks.device.model.AuthToken;
+import io.oddworks.device.model.Config;
+import io.oddworks.device.model.DeviceCodeResponse;
+import io.oddworks.device.model.Media;
+import io.oddworks.device.model.MediaCollection;
+import io.oddworks.device.model.View;
 
 /**
  * Class of methods for handling api calls. Is instantiated using the ReqeustServicesInitializer and afterward can be
@@ -108,20 +113,40 @@ public class ApiCaller {
 
             @Override
             public void onResponse(Response response) throws IOException {
-                        Log.d("ResponseCb onResponse", "code :"
-                                + response.code() + " responseBody: " + response);
+                Log.d("ResponseCb onResponse", "code :"
+                        + response.code() + " responseBody: " + response);
                 if (response.isSuccessful()) {
+                    T obj = null;
+                    Exception exceptionCaught = null;
+                    String bodyString = null;
                     try {
-                        T obj = parseCall.parse(response.body().string());
-                        cb.onSuccess(obj);
+                        obj = parseCall.parse(response.body().string());
                     } catch (Exception e) {
-                        cb.onFailure(new OddParseException(
-                                "Parse for response body failed: " + response.body().string(), e));
+                        exceptionCaught = e;
+                        bodyString = tryGetResponseBody(response);
                     }
+
+                    if(exceptionCaught != null) {
+                        cb.onFailure(new OddParseException(
+                                "Parse for response body failed: " + bodyString, exceptionCaught));
+                    } else {
+                        cb.onSuccess(obj);
+                    }
+
                 } else {
                     cb.onFailure(new BadResponseCodeException(response.code()));
                 }
+            }
 
+            private String tryGetResponseBody(Response response) {
+                String bodyString;
+                try {
+                    bodyString = response.body().string();
+                } catch(Exception e) {
+                    bodyString = "body could not be captured in this error message." +
+                            " This is not the cause of the exception and can be ignored";;
+                }
+                return bodyString;
             }
         };
     }
