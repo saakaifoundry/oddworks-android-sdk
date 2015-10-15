@@ -140,4 +140,24 @@ public class MediaCollection implements Parcelable {
     public void setReleaseDate(String releaseDate) {
         mReleaseDate = releaseDate;
     }
+
+    public void updateMedia(final Media media) {
+        if (mMedia != null) {
+            for (int i = 0; i < mMedia.size(); i++) {
+                if (mMedia.get(i).getId().equals(media.getId())) {
+                    mMedia.set(i, media);
+                }
+            }
+        }
+    }
+
+    public boolean isMediaEmpty() {
+        for (Media media : mMedia) {
+            if ((media.getTitle() == null || media.getTitle().isEmpty()) || (media.getUrl() ==
+                    null || media.getUrl().isEmpty())) {
+                return true;
+            }
+        }
+        return false;
+    }
 }
