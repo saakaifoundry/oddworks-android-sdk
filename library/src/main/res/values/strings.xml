@@ -8,4 +8,5 @@
     <string name="odd_request_content_type">application/json</string>
     <string name="odd_auth_token_endpoint">auth/device/token</string>
     <string name="auth_device_code_endpoint">auth/device/code</string>
+    <string name="endpoint_events">events</string>
 </resources>
