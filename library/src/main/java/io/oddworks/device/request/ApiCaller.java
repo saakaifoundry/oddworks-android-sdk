@@ -12,6 +12,7 @@ import org.json.JSONException;
 import java.io.IOException;
 import java.util.List;
 
+import io.oddworks.device.event.OddEvent;
 import io.oddworks.device.exceptions.BadResponseCodeException;
 import io.oddworks.device.exceptions.OddParseException;
 import io.oddworks.device.model.AuthToken;
@@ -83,6 +84,17 @@ public class ApiCaller {
         });
 
         requestHandler.getSearch(term, limit, offset, requestCallback);
+    }
+
+    public void postEvent(final OddEvent event, final OddCallback<OddEvent> cb) {
+        Callback requestCallback = getRequestCallback(cb, new ParseCall<OddEvent>() {
+            @Override
+            public OddEvent parse(String responseBody) throws JSONException {
+                return event;
+            }
+        });
+
+        requestHandler.postEvent(event, requestCallback);
     }
 
     protected void getPollingAuthenticator(final OddCallback<PollingAuthenticator> cb) {
