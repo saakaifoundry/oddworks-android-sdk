@@ -62,7 +62,7 @@ public class RequestHandler {
                 .addHeader("accept", mAccept)
                 .addHeader("accept-language", mLocale);
         if(!forceNoAuth && authToken != null) {
-            builder.addHeader("Authorization:", authToken.getTokenType() + " " + authToken.getToken());
+            builder.addHeader("authorization", authToken.getTokenType() + " " + authToken.getToken());
         }
         if(method == RequestMethod.POST) {
             builder.post(body);
@@ -77,6 +77,11 @@ public class RequestHandler {
 
     protected void getVideos(String collectionId, Callback callback) {
         Request request = getOddGetRequest("videoCollection/" + collectionId + "/videos");
+        enqueueOddCall(request, callback);
+    }
+
+    protected void getSearch(String term, int limit, int offset, Callback callback) {
+        Request request = getOddGetRequest("search?term=" + term + "&limit=" + limit + "&offset=" + offset);
         enqueueOddCall(request, callback);
     }
 
