@@ -274,8 +274,8 @@ public class OddParser {
         return new DeviceCodeResponse(deviceCode, userCode, verificationUrl, expiresIn, interval);
     }
 
-    protected ArrayList<Parcelable> parseSearch(final String result) {
-        ArrayList<Parcelable> searchResult = new ArrayList<>();
+    protected ArrayList<OddMedia> parseSearch(final String result) {
+        ArrayList<OddMedia> searchResult = new ArrayList<>();
         ArrayList<Media> searchMedias = new ArrayList<>();
         ArrayList<MediaCollection> searchCollections = new ArrayList<>();
         try {

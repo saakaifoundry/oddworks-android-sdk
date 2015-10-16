@@ -19,6 +19,7 @@ import io.oddworks.device.model.Config;
 import io.oddworks.device.model.DeviceCodeResponse;
 import io.oddworks.device.model.Media;
 import io.oddworks.device.model.MediaCollection;
+import io.oddworks.device.model.OddMedia;
 import io.oddworks.device.model.View;
 
 /**
@@ -72,11 +73,11 @@ public class ApiCaller {
         requestHandler.getVideos(col.getId(), requestCallback);
     }
 
-    public void getSearch(final String term, final int limit, final int offset, final OddCallback<List<Parcelable>> cb) {
-        Callback requestCallback = getRequestCallback(cb, new ParseCall<List<Parcelable>>() {
+    public void getSearch(final String term, final int limit, final int offset, final OddCallback<List<OddMedia>> cb) {
+        Callback requestCallback = getRequestCallback(cb, new ParseCall<List<OddMedia>>() {
 
             @Override
-            public List<Parcelable> parse(String responseBody) throws JSONException {
+            public List<OddMedia> parse(String responseBody) throws JSONException {
                 return parser.parseSearch(responseBody);
             }
         });
