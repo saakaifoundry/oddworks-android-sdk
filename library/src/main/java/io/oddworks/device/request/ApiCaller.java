@@ -1,5 +1,6 @@
 package io.oddworks.device.request;
 
+import android.os.Parcelable;
 import android.util.Log;
 
 import com.squareup.okhttp.Callback;
@@ -69,6 +70,18 @@ public class ApiCaller {
             }
         });
         requestHandler.getVideos(col.getId(), requestCallback);
+    }
+
+    public void getSearch(final String term, final int limit, final int offset, final OddCallback<List<Parcelable>> cb) {
+        Callback requestCallback = getRequestCallback(cb, new ParseCall<List<Parcelable>>() {
+
+            @Override
+            public List<Parcelable> parse(String responseBody) throws JSONException {
+                return parser.parseSearch(responseBody);
+            }
+        });
+
+        requestHandler.getSearch(term, limit, offset, requestCallback);
     }
 
     protected void getPollingAuthenticator(final OddCallback<PollingAuthenticator> cb) {

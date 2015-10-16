@@ -1,5 +1,6 @@
 package io.oddworks.device.request;
 
+import android.os.Parcelable;
 import android.util.Log;
 import io.oddworks.device.model.*;
 
@@ -273,38 +274,38 @@ public class OddParser {
         return new DeviceCodeResponse(deviceCode, userCode, verificationUrl, expiresIn, interval);
     }
 
-//    protected ArrayList<Entity> parseSearch(final String result) {
-//        ArrayList<Entity> searchResult = new ArrayList<>();
-//        ArrayList<Media> searchMedias = new ArrayList<>();
-//        ArrayList<MediaCollection> searchCollections = new ArrayList<>();
-//        try {
-//            JSONObject resultObject = new JSONObject(result);
-//            JSONArray dataArray = resultObject.getJSONArray("data");
-//            for (int i = 0; i < dataArray.length(); i++) {
-//                JSONObject pokerObj = dataArray.getJSONObject(i);
-//                String type = parseString(pokerObj, "type");
-//                if (Media.VIDEO.equals(type)) {
-//                    Media video = parseMedia(pokerObj);
-//                    if (video != null) {
-//                        searchMedias.add(video);
-//                    }
-//                } else if (MediaCollection.VIDEO_COLLECTION.equals(type)) {
-//                    MediaCollection collection = parseMediaCollection(pokerObj);
-//                    if (collection != null) {
-//                        searchCollections.add(collection);
-//                    }
-//                }
-//            }
-//            if (!searchCollections.isEmpty()) {
-//                searchResult.addAll(searchCollections);
-//            }
-//            if (!searchMedias.isEmpty()) {
-//                searchResult.addAll(searchMedias);
-//            }
-//        } catch (JSONException e) {
-//            e.printStackTrace();
-//        }
-//
-//        return searchResult;
-//    }
+    protected ArrayList<Parcelable> parseSearch(final String result) {
+        ArrayList<Parcelable> searchResult = new ArrayList<>();
+        ArrayList<Media> searchMedias = new ArrayList<>();
+        ArrayList<MediaCollection> searchCollections = new ArrayList<>();
+        try {
+            JSONObject resultObject = new JSONObject(result);
+            JSONArray dataArray = resultObject.getJSONArray("data");
+            for (int i = 0; i < dataArray.length(); i++) {
+                JSONObject pokerObj = dataArray.getJSONObject(i);
+                String type = parseString(pokerObj, "type");
+                if (Media.VIDEO.equals(type)) {
+                    Media video = parseMedia(pokerObj);
+                    if (video != null) {
+                        searchMedias.add(video);
+                    }
+                } else if (MediaCollection.VIDEO_COLLECTION.equals(type)) {
+                    MediaCollection collection = parseMediaCollection(pokerObj);
+                    if (collection != null) {
+                        searchCollections.add(collection);
+                    }
+                }
+            }
+            if (!searchCollections.isEmpty()) {
+                searchResult.addAll(searchCollections);
+            }
+            if (!searchMedias.isEmpty()) {
+                searchResult.addAll(searchMedias);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return searchResult;
+    }
 }
