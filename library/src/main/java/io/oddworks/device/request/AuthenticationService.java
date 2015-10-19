@@ -9,7 +9,7 @@ import io.oddworks.device.model.AuthToken;
  * afterward can be accessed through the instance field
  */
 public class AuthenticationService {
-    public static AuthenticationService instance;
+    protected static AuthenticationService instance;
     private static final String AUTH_PREFS = "AuthenticationService Prefs";
     public static final String TOKEN_KEY = "token";
     public static final String TOKEN_TYPE_KEY = "token type";

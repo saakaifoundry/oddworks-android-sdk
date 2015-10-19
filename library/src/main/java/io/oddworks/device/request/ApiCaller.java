@@ -28,7 +28,7 @@ import io.oddworks.device.model.View;
  * accessed through the instance field
  */
 public class ApiCaller {
-    public static ApiCaller instance;
+    protected static ApiCaller instance;
     public static final int RESPONSE_OK = 200;
     public static final int RESPONSE_CREATED = 201;
     public static final int RESPONSE_NOT_FOUND = 404;
