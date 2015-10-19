@@ -6,6 +6,7 @@ import android.util.Log;
 import com.squareup.okhttp.*;
 import com.squareup.okhttp.internal.http.HttpMethod;
 import io.oddworks.device.R;
+import io.oddworks.device.event.OddEvent;
 import io.oddworks.device.model.AuthToken;
 import io.oddworks.device.model.Media;
 
@@ -82,6 +83,12 @@ public class RequestHandler {
 
     protected void getSearch(String term, int limit, int offset, Callback callback) {
         Request request = getOddGetRequest("search?term=" + term + "&limit=" + limit + "&offset=" + offset);
+        enqueueOddCall(request, callback);
+    }
+
+    protected void postEvent(OddEvent event, Callback callback) {
+        String endpoint = mContext.getString(R.string.endpoint_events);
+        Request request = getOddRequest(endpoint, RequestMethod.POST, RequestBody.create(JSON, event.toJSONObject().toString()), true);
         enqueueOddCall(request, callback);
     }
 
