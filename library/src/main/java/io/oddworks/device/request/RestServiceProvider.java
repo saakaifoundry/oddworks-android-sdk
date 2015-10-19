@@ -24,7 +24,7 @@ public class RestServiceProvider {
     /** initialize services and this provider
      * @param apiVersion api version. e.g. "v1" */
     public static void init(Context context, String apiVersion) {
-        RestServiceProvider instance = new RestServiceProvider(context, apiVersion);
+        instance = new RestServiceProvider(context, apiVersion);
     }
 
     public static RestServiceProvider getInstance() {
