@@ -12,9 +12,9 @@ public class RestServiceProvider {
     private ApiCaller apiCaller;
     private AuthenticationService authenticationService;
 
-    private RestServiceProvider(Context context, String apiVersion) {
+    private RestServiceProvider(Context context, String apiVersion, String accessToken) {
         OddParser.instance = new OddParser();
-        RequestHandler.instance = new RequestHandler(context, apiVersion);
+        RequestHandler.instance = new RequestHandler(context, apiVersion, accessToken);
         ApiCaller.instance = new ApiCaller(RequestHandler.instance, OddParser.instance);
         this.apiCaller = ApiCaller.instance;
         AuthenticationService.instance = new AuthenticationService(ApiCaller.instance, context);
@@ -22,11 +22,14 @@ public class RestServiceProvider {
     }
 
     /** initialize services and this provider
-     * @param apiVersion api version. e.g. "v1" */
-    public static void init(Context context, String apiVersion) {
-        instance = new RestServiceProvider(context, apiVersion);
+     * @param apiVersion api version. e.g. "v1"*/
+    public static void init(Context context, String apiVersion, String accessToken) {
+        instance = new RestServiceProvider(context, apiVersion, accessToken );
     }
 
+    /**
+     * @return a RestServiceProvider instance if init has already been called. Otherwise returns null.
+     */
     public static RestServiceProvider getInstance() {
         return RestServiceProvider.instance;
     }
