@@ -38,9 +38,9 @@ public class RequestHandler {
      * @param context
      * @param version api version. eg "v1"
      */
-    protected RequestHandler(Context context, String version) {
+    protected RequestHandler(Context context, String version, String accessToken) {
         mContext = context;
-        mAccessToken = mContext.getString(R.string.odd_access_token);
+        mAccessToken = accessToken;
         mBaseUrl = String.format(mContext.getString(R.string.odd_base_url), version);
         mAccept = mContext.getString(R.string.odd_request_content_type);
         authToken = null;
