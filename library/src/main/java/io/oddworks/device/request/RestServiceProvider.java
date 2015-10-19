@@ -34,13 +34,11 @@ public class RestServiceProvider {
         return RestServiceProvider.instance;
     }
 
-    /** @throws NullPointerException if init has not already been called */
     public ApiCaller getApiCaller() {
-        return instance.apiCaller;
+        return this.apiCaller;
     }
 
-    /** @throws NullPointerException if init has not already been called */
     public AuthenticationService getAuthenticationService() {
-        return instance.authenticationService;
+        return this.authenticationService;
     }
 }
