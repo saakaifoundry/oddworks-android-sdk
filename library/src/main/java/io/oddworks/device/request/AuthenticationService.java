@@ -2,6 +2,7 @@ package io.oddworks.device.request;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+
 import io.oddworks.device.model.AuthToken;
 
 /**

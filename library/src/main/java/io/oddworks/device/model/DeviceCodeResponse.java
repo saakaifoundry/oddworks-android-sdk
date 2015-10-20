@@ -1,6 +1,5 @@
 package io.oddworks.device.model;
 
-import java.net.URL;
 import java.util.Calendar;
 import java.util.Date;
 

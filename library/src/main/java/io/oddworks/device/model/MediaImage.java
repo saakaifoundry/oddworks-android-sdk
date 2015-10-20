@@ -1,7 +1,5 @@
 package io.oddworks.device.model;
 
-import android.os.Parcel;
-import android.os.Parcelable;
 import android.util.Log;
 
 import java.net.URI;
@@ -10,7 +8,7 @@ import java.net.URISyntaxException;
 /**
  * Created by brkattk on 9/25/15.
  */
-public class MediaImage implements Parcelable {
+public class MediaImage {
     private static final String TAG = MediaImage.class.getSimpleName();
 
     private String mAspect16x9;
@@ -26,40 +24,6 @@ public class MediaImage implements Parcelable {
         setAspect4x3(aspect4x3);
         setAspect1x1(aspect1x1);
         setAspect2x3(aspect2x3);
-    }
-
-    protected MediaImage(Parcel in) {
-        setAspect16x9(in.readString());
-        setAspect3x4(in.readString());
-        setAspect4x3(in.readString());
-        setAspect1x1(in.readString());
-        setAspect2x3(in.readString());
-    }
-
-    public static final Creator<MediaImage> CREATOR = new Creator<MediaImage>() {
-        @Override
-        public MediaImage createFromParcel(Parcel in) {
-            return new MediaImage(in);
-        }
-
-        @Override
-        public MediaImage[] newArray(int size) {
-            return new MediaImage[size];
-        }
-    };
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(getAspect16x9());
-        dest.writeString(getAspect3x4());
-        dest.writeString(getAspect4x3());
-        dest.writeString(getAspect1x1());
-        dest.writeString(getAspect2x3());
     }
 
     @Override

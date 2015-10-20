@@ -1,24 +1,8 @@
 package io.oddworks.device.model;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
 import java.util.ArrayList;
 
-public class View implements Parcelable {
-
-    public static final Creator<View> CREATOR = new Creator<View>() {
-
-        @Override
-        public View createFromParcel(final Parcel source) {
-            return new View(source);
-        }
-
-        @Override
-        public View[] newArray(int size) {
-            return new View[size];
-        }
-    };
+public class View {
 
     private String mTitle;
     private ArrayList<MediaCollection> mFeaturedVideoCollections;
@@ -31,25 +15,6 @@ public class View implements Parcelable {
         mFeaturedVideoCollections = new ArrayList<>();
         mShows = new ArrayList<>();
         mFeaturedMedia = new ArrayList<>();
-    }
-
-    private View(final Parcel parcel) {
-        mTitle = parcel.readString();
-        mFeaturedVideoCollections = new ArrayList<>();
-        mShows = new ArrayList<>();
-        mFeaturedMedia = new ArrayList<>();
-
-        parcel.readTypedList(mFeaturedVideoCollections, MediaCollection.CREATOR);
-        parcel.readTypedList(mShows, MediaCollection.CREATOR);
-        parcel.readTypedList(mFeaturedMedia, Media.CREATOR);
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(mTitle);
-        dest.writeTypedList(mFeaturedVideoCollections);
-        dest.writeTypedList(mShows);
-        dest.writeTypedList(mFeaturedMedia);
     }
 
     public String getTitle() {
@@ -151,11 +116,6 @@ public class View implements Parcelable {
 
     public ArrayList<Media> getFeaturedMedia() {
         return mFeaturedMedia;
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
     }
 
     @Override

@@ -1,14 +1,23 @@
 package io.oddworks.device.request;
 
-import android.os.Parcelable;
 import android.util.Log;
-import io.oddworks.device.model.*;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+
+import io.oddworks.device.model.AuthToken;
+import io.oddworks.device.model.Config;
+import io.oddworks.device.model.DeviceCodeResponse;
+import io.oddworks.device.model.Media;
+import io.oddworks.device.model.MediaAds;
+import io.oddworks.device.model.MediaCollection;
+import io.oddworks.device.model.MediaImage;
+import io.oddworks.device.model.OddMedia;
+import io.oddworks.device.model.Promotion;
+import io.oddworks.device.model.View;
 //todo stop swallowing exceptions
 
 public class OddParser {

@@ -1,12 +1,9 @@
 package io.oddworks.device.model;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
 /**
  * Created by brkattk on 9/25/15.
  */
-public class MediaAds implements Parcelable {
+public class MediaAds {
     private static final String TAG = MediaAds.class.getSimpleName();
     private static final String FORMAT_VMAP = "vmap";
 
@@ -20,36 +17,6 @@ public class MediaAds implements Parcelable {
         setProvider(provider);
         setFormat(format);
         setUrl(url);
-    }
-
-    protected MediaAds(Parcel in) {
-        setProvider(in.readString());
-        setFormat(in.readString());
-        setUrl(in.readString());
-    }
-
-    public static final Creator<MediaAds> CREATOR = new Creator<MediaAds>() {
-        @Override
-        public MediaAds createFromParcel(Parcel in) {
-            return new MediaAds(in);
-        }
-
-        @Override
-        public MediaAds[] newArray(int size) {
-            return new MediaAds[size];
-        }
-    };
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(getProvider());
-        dest.writeString(getFormat());
-        dest.writeString(getUrl());
     }
 
     @Override

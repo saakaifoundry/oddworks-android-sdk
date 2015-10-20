@@ -1,7 +1,5 @@
 package io.oddworks.device.model;
 
-import android.os.Parcel;
-
 import java.util.ArrayList;
 
 /**
@@ -13,30 +11,6 @@ public class MediaCollection extends OddMedia {
     private ArrayList<Media> mMedia;
     private String mReleaseDate;
 
-    public static final Creator<MediaCollection> CREATOR = new Creator<MediaCollection>() {
-
-        @Override
-        public MediaCollection createFromParcel(final Parcel source) {
-            return new MediaCollection(source);
-        }
-
-        @Override
-        public MediaCollection[] newArray(int size) {
-            return new MediaCollection[size];
-        }
-    };
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        super.writeToParcel(dest, flags);
-        dest.writeTypedList(getMedia());
-    }
-
     public MediaCollection(final String id, final String type) {
       super(id, type);
     }
@@ -44,12 +18,6 @@ public class MediaCollection extends OddMedia {
     public MediaCollection(final String id, final String type, final String title, final String description,
                            final MediaImage mediaImage, final String releaseDate) {
         super(id, type, title, description, mediaImage, releaseDate);
-    }
-
-    public MediaCollection(Parcel source) {
-        super(source);
-        mMedia = new ArrayList<>();
-        source.readTypedList(mMedia, Media.CREATOR);
     }
 
     public void addMedia(final Media media) {

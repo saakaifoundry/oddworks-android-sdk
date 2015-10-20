@@ -1,6 +1,5 @@
 package io.oddworks.device.request;
 
-import android.os.Parcelable;
 import android.util.Log;
 
 import com.squareup.okhttp.Callback;

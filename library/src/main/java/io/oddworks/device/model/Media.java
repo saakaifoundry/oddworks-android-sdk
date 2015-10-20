@@ -1,7 +1,5 @@
 package io.oddworks.device.model;
 
-import android.os.Parcel;
-
 public class Media extends OddMedia {
     public final static String TAG = "Media";
     public final static String LIVE_STREAM = "liveStream";
@@ -9,19 +7,6 @@ public class Media extends OddMedia {
     private MediaAds mMediaAds;
     private Integer mDuration;
     private String mUrl;
-
-    public static final Creator<Media> CREATOR = new Creator<Media>() {
-
-        @Override
-        public Media createFromParcel(final Parcel source) {
-            return new Media(source);
-        }
-
-        @Override
-        public Media[] newArray(int size) {
-            return new Media[size];
-        }
-    };
 
     public Media(final String id, final String type) {
         super(id, type);
@@ -33,26 +18,6 @@ public class Media extends OddMedia {
         mMediaAds = mediaAds;
         mDuration = duration;
         mUrl = url;
-    }
-
-    public Media(Parcel parcel) {
-        super(parcel);
-        mMediaAds = parcel.readParcelable(MediaAds.class.getClassLoader());
-        mDuration = parcel.readInt();
-        mUrl = parcel.readString();
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        super.writeToParcel(dest, flags);
-        dest.writeParcelable(getMediaAds(), flags);
-        dest.writeInt(getDuration());
-        dest.writeString(getUrl());
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
     }
 
     @Override
