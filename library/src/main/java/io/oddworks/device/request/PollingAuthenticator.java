@@ -1,13 +1,14 @@
 package io.oddworks.device.request;
 
 import android.util.Log;
-import io.oddworks.device.exceptions.BadResponseCodeException;
-import io.oddworks.device.exceptions.DeviceCodeExpiredException;
-import io.oddworks.device.model.AuthToken;
 
 import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
+
+import io.oddworks.device.exception.BadResponseCodeException;
+import io.oddworks.device.exception.DeviceCodeExpiredException;
+import io.oddworks.device.model.AuthToken;
 
 /**
  * Class for polling authentication server until an auth code is generated

@@ -1,4 +1,4 @@
-package io.oddworks.device.exceptions;
+package io.oddworks.device.exception;
 
 /**
  * Response code returned from server was not what was expected

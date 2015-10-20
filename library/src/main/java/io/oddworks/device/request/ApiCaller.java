@@ -13,8 +13,8 @@ import java.io.IOException;
 import java.util.List;
 
 import io.oddworks.device.event.OddEvent;
-import io.oddworks.device.exceptions.BadResponseCodeException;
-import io.oddworks.device.exceptions.OddParseException;
+import io.oddworks.device.exception.BadResponseCodeException;
+import io.oddworks.device.exception.OddParseException;
 import io.oddworks.device.model.AuthToken;
 import io.oddworks.device.model.Config;
 import io.oddworks.device.model.DeviceCodeResponse;
