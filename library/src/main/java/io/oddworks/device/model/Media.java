@@ -1,30 +1,18 @@
 package io.oddworks.device.model;
 
-public class Media extends OddMedia {
-    public final static String TAG = "Media";
-    public final static String LIVE_STREAM = "liveStream";
-    public final static String VIDEO = "video";
+import java.util.HashMap;
+
+public class Media extends OddMediaObject {
     private MediaAds mMediaAds;
     private Integer mDuration;
     private String mUrl;
 
-    public Media(final String id, final String type) {
+    public Media(Identifier identifier) {
+        super(identifier);
+    }
+
+    public Media(String id, String type) {
         super(id, type);
-    }
-
-    public Media(final String id, final String type, final String title,
-            final String description, final MediaImage mediaImage, final MediaAds mediaAds, final String releaseDate, final int duration, final String url) {
-        super(id, type, title, description, mediaImage, releaseDate);
-        mMediaAds = mediaAds;
-        mDuration = duration;
-        mUrl = url;
-    }
-
-    @Override
-    public String toString() {
-        return TAG + "{" +
-                "mId='" + mId + "', " +
-                "mTitle='" + mTitle + "'}";
     }
 
     public String getUrl() {
@@ -32,6 +20,10 @@ public class Media extends OddMedia {
     }
 
     public Integer getDuration() {
+        if (mDuration == null) {
+            mDuration = 0;
+        }
+
         return mDuration;
     }
 
@@ -40,19 +32,38 @@ public class Media extends OddMedia {
     }
 
     public Boolean isLive() {
-        return getType().equals(LIVE_STREAM);
+        return getType().equals(OddObject.TYPE_LIVE_STREAM);
     }
 
-    public void fillData(final Media media) {
-        mId = media.getId();
-        mType = media.getType();
-        mTitle = media.getTitle();
-        mDescription = media.getDescription();
-        mMediaImage = media.getMediaImage();
-        mReleaseDate = media.getReleaseDate();
+    @Override
+    public void setAttributes(HashMap<String, Object> attributes) {
+        mTitle = (String) attributes.get("title");
+        mDescription = (String) attributes.get("description");
+        mMediaImage = (MediaImage) attributes.get("mediaImage");
+        mReleaseDate = (String) attributes.get("releaseDate");
+        mMediaAds = (MediaAds) attributes.get("mediaAds");
+        mDuration = (int) attributes.get("duration");
+        mUrl = (String) attributes.get("url");
+    }
 
-        mMediaAds = media.getMediaAds();
-        mDuration = media.getDuration();
-        mUrl = media.getUrl();
+    @Override
+    public HashMap<String, Object> getAttributes() {
+        HashMap<String, Object> attributes = new HashMap<>();
+        attributes.put("title", getTitle());
+        attributes.put("description", getDescription());
+        attributes.put("mediaImage", getMediaImage());
+        attributes.put("mediaAds", getMediaAds());
+        attributes.put("releaseDate", getReleaseDate());
+        attributes.put("duration", getDuration());
+        attributes.put("url", getUrl());
+        return attributes;
+    }
+
+    @Override
+    public String toString() {
+        return getClass().getSimpleName() + "(" +
+                "id='" + getId() + "', " +
+                "type='" + getType() + "', " +
+                "title='" + getTitle() + "')";
     }
 }

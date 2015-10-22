@@ -14,41 +14,29 @@ public class MediaAds {
     public MediaAds(){};
 
     public MediaAds(final String provider, final String format, final String url) {
-        setProvider(provider);
-        setFormat(format);
-        setUrl(url);
+        mProvider = provider;
+        mFormat = format;
+        mUrl = url;
     }
 
     @Override
     public String toString() {
-        return TAG + "{" +
+        return TAG + "(" +
                 "provider='" + getProvider() + "', " +
                 "format='" + getFormat() + "', " +
-                "url='" + getUrl() + "'}";
+                "url='" + getUrl() + "')";
     }
 
     public String getProvider() {
         return mProvider;
     }
 
-    public void setProvider(String provider) {
-        mProvider = provider;
-    }
-
     public String getFormat() {
         return mFormat;
     }
 
-    public void setFormat(String format) {
-        mFormat = format;
-    }
-
     public String getUrl() {
         return mUrl;
-    }
-
-    public void setUrl(String url) {
-        mUrl = url;
     }
 
     public Boolean isAvailable() {
@@ -59,6 +47,7 @@ public class MediaAds {
         if (getFormat() == null) {
             return false;
         }
-        return getFormat().matches(FORMAT_VMAP);
+
+        return getFormat().equals(FORMAT_VMAP);
     }
 }

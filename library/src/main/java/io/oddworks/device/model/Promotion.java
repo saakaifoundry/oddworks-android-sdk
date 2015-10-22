@@ -1,59 +1,57 @@
 package io.oddworks.device.model;
 
-public class Promotion {
+import java.util.HashMap;
+
+public class Promotion extends OddObject {
     public final static String TAG = "promotion";
 
-    private String mId;
-    private String mType;
     private String mTitle;
     private String mDescription;
     private MediaImage mMediaImage;
 
-    public Promotion(final String id, final String type, final String title, final String description, final MediaImage mediaImage) {
-        setId(id);
-        setType(type);
-        setTitle(title);
-        setDescription(description);
-        setMediaImage(mediaImage);
+    public Promotion(Identifier identifier) {
+        super(identifier);
     }
 
-    public String getId() {
-        return mId;
-    }
-
-    public void setId(String id) {
-        mId = id;
-    }
-
-    public String getType() {
-        return mType;
-    }
-
-    public void setType(String type) {
-        mType = type;
+    public Promotion(String id, String type) {
+        super(id, type);
     }
 
     public String getTitle() {
         return mTitle;
     }
 
-    public void setTitle(String title) {
-        mTitle = title;
-    }
-
     public String getDescription() {
         return mDescription;
-    }
-
-    public void setDescription(String description) {
-        mDescription = description;
     }
 
     public MediaImage getMediaImage() {
         return mMediaImage;
     }
 
-    public void setMediaImage(MediaImage mediaImage) {
-        mMediaImage = mediaImage;
+    @Override
+    public void setAttributes(HashMap<String, Object> attributes) {
+        mTitle = (String) attributes.get("title");
+        mDescription = (String) attributes.get("description");
+        mMediaImage = (MediaImage) attributes.get("mediaImage");
+    }
+
+    @Override
+    public HashMap<String, Object> getAttributes() {
+        HashMap<String, Object> attributes = new HashMap<>();
+        attributes.put("title", getTitle());
+        attributes.put("description", getDescription());
+        attributes.put("mediaImage", getMediaImage());
+
+        return attributes;
+    }
+
+
+    @Override
+    public String toString() {
+        return TAG + "(" +
+                "id='" + getId() + "', " +
+                "type='" + getType() + "', " +
+                "title='" + getTitle() + "')";
     }
 }
