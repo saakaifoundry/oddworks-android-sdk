@@ -11,9 +11,9 @@ import org.json.JSONException;
 import java.io.IOException;
 import java.util.List;
 
-import io.oddworks.device.event.OddEvent;
 import io.oddworks.device.exception.BadResponseCodeException;
 import io.oddworks.device.exception.OddParseException;
+import io.oddworks.device.metric.OddMetric;
 import io.oddworks.device.model.AuthToken;
 import io.oddworks.device.model.Config;
 import io.oddworks.device.model.DeviceCodeResponse;
@@ -85,10 +85,10 @@ public class ApiCaller {
         requestHandler.getSearch(term, limit, offset, requestCallback);
     }
 
-    public void postEvent(final OddEvent event, final OddCallback<OddEvent> cb) {
-        Callback requestCallback = getRequestCallback(cb, new ParseCall<OddEvent>() {
+    public void postEvent(final OddMetric event, final OddCallback<OddMetric> cb) {
+        Callback requestCallback = getRequestCallback(cb, new ParseCall<OddMetric>() {
             @Override
-            public OddEvent parse(String responseBody) throws JSONException {
+            public OddMetric parse(String responseBody) throws JSONException {
                 return event;
             }
         });

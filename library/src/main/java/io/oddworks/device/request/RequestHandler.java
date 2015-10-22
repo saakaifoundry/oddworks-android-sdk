@@ -13,7 +13,7 @@ import com.squareup.okhttp.RequestBody;
 import java.util.Locale;
 
 import io.oddworks.device.R;
-import io.oddworks.device.event.OddEvent;
+import io.oddworks.device.metric.OddMetric;
 import io.oddworks.device.model.AuthToken;
 
 /**
@@ -90,7 +90,7 @@ public class RequestHandler {
         enqueueOddCall(request, callback);
     }
 
-    protected void postEvent(OddEvent event, Callback callback) {
+    protected void postEvent(OddMetric event, Callback callback) {
         String endpoint = mContext.getString(R.string.endpoint_events);
         Request request = getOddRequest(endpoint, RequestMethod.POST, RequestBody.create(JSON, event.toJSONObject().toString()), true);
         enqueueOddCall(request, callback);
