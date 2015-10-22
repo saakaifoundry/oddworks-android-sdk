@@ -37,10 +37,15 @@ public class RequestHandler {
     private String mCountry = Locale.getDefault().getCountry().toLowerCase();
     private String mLocale = mLanguage + "-" + mCountry;
 
-    protected RequestHandler(Context context) {
+    /**
+     *
+     * @param context
+     * @param version api version. eg "v1"
+     */
+    protected RequestHandler(Context context, String version, String accessToken) {
         mContext = context;
-        mAccessToken = mContext.getString(R.string.odd_access_token);
-        mBaseUrl =  mContext.getString(R.string.odd_base_url);
+        mAccessToken = accessToken;
+        mBaseUrl = String.format(mContext.getString(R.string.odd_base_url), version);
         mAccept = mContext.getString(R.string.odd_request_content_type);
         authToken = null;
     }
