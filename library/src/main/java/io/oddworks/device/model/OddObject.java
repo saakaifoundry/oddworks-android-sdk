@@ -111,6 +111,9 @@ abstract public class OddObject {
     public ArrayList<OddObject> getIncludedByRelationship(String name) {
         ArrayList<OddObject> includedOfRelationship = new ArrayList<>();
         Relationship relationship = getRelationship(name);
+        if (relationship == null) {
+            return includedOfRelationship;
+        }
         for(OddObject oddObject : getIncluded()) {
             for(Identifier identifier : relationship.getIdentifiers()) {
                 if(identifier.getId().equals(oddObject.getId()) && identifier.getType().equals(oddObject.getType())) {
