@@ -2,7 +2,11 @@ package io.oddworks.device.model;
 
 import java.util.HashMap;
 
-public class Media extends OddMediaObject {
+public class Media extends OddObject {
+    private String mTitle;
+    private String mDescription;
+    private MediaImage mMediaImage;
+    private String mReleaseDate;
     private MediaAds mMediaAds;
     private Integer mDuration;
     private String mUrl;
@@ -13,6 +17,22 @@ public class Media extends OddMediaObject {
 
     public Media(String id, String type) {
         super(id, type);
+    }
+
+    public String getTitle() {
+        return mTitle;
+    }
+
+    public String getDescription() {
+        return mDescription;
+    }
+
+    public MediaImage getMediaImage() {
+        return mMediaImage;
+    }
+
+    public String getReleaseDate() {
+        return mReleaseDate;
     }
 
     public String getUrl() {

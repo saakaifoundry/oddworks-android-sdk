@@ -6,8 +6,13 @@ import java.util.HashMap;
 /**
  * Created by brkattk on 9/21/15.
  */
-public class MediaCollection extends OddMediaObject {
+public class MediaCollection extends OddObject {
     private static final String TAG = MediaCollection.class.getSimpleName();
+
+    private String mTitle;
+    private String mDescription;
+    private MediaImage mMediaImage;
+    private String mReleaseDate;
 
     public MediaCollection(final Identifier identifier) {
         super(identifier);
@@ -15,6 +20,22 @@ public class MediaCollection extends OddMediaObject {
 
     public MediaCollection(final String id, final String type) {
       super(id, type);
+    }
+
+    public String getTitle() {
+        return mTitle;
+    }
+
+    public String getDescription() {
+        return mDescription;
+    }
+
+    public MediaImage getMediaImage() {
+        return mMediaImage;
+    }
+
+    public String getReleaseDate() {
+        return mReleaseDate;
     }
 
     @Override
