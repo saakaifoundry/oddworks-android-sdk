@@ -18,7 +18,6 @@ import io.oddworks.device.model.Media;
 import io.oddworks.device.model.MediaAds;
 import io.oddworks.device.model.MediaCollection;
 import io.oddworks.device.model.MediaImage;
-import io.oddworks.device.model.OddMediaObject;
 import io.oddworks.device.model.OddObject;
 import io.oddworks.device.model.Promotion;
 import io.oddworks.device.model.Relationship;
@@ -268,8 +267,8 @@ public class OddParser {
         return new DeviceCodeResponse(deviceCode, userCode, verificationUrl, expiresIn, interval);
     }
 
-    protected ArrayList<OddMediaObject> parseSearch(final String result) {
-        ArrayList<OddMediaObject> searchResult = new ArrayList<>();
+    protected ArrayList<OddObject> parseSearch(final String result) {
+        ArrayList<OddObject> searchResult = new ArrayList<>();
         ArrayList<Media> searchMedias = new ArrayList<>();
         ArrayList<MediaCollection> searchCollections = new ArrayList<>();
         try {
