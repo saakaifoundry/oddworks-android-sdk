@@ -10,6 +10,10 @@ public class Relationship {
     private String mName;
     private ArrayList<Identifier> mIdentifiers;
 
+    public Relationship(final String name) {
+        mName = name;
+    }
+
     public Relationship(final String name, final ArrayList<Identifier> identifiers) {
         mName = name;
         mIdentifiers = identifiers;
@@ -19,7 +23,14 @@ public class Relationship {
         return mName;
     }
 
+    public void addIdentifier(Identifier identifier) {
+        getIdentifiers().add(identifier);
+    }
+
     public ArrayList<Identifier> getIdentifiers() {
+        if (mIdentifiers == null) {
+            mIdentifiers = new ArrayList<>();
+        }
         return mIdentifiers;
     }
 }
