@@ -47,7 +47,11 @@ public class RequestHandler {
     }
 
     protected void getConfig(final Callback callback) {
-        Request request = getOddGetRequest(mContext.getString(R.string.odd_config_endpoint));
+        Request request = getOddRequest(
+                mContext.getString(R.string.odd_config_endpoint),
+                RequestMethod.GET,
+                RequestBody.create(JSON, ""),
+                true);
         enqueueOddCall(request, callback);
     }
 

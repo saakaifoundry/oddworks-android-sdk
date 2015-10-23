@@ -308,4 +308,8 @@ public class OddParser {
 
         return searchResult;
     }
+
+    protected String parseErrorMessage(String responseBody) throws JSONException {
+        return new JSONObject(responseBody).getString("message");
+    }
 }
