@@ -5,6 +5,7 @@ import org.junit.Test;
 
 import java.util.HashMap;
 
+import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.*;
 
 /**
@@ -33,6 +34,11 @@ public class MediaTest {
         attributes.put("mediaAds", mediaAds);
         attributes.put("mediaImage", mediaImage);
         video.setAttributes(attributes);
+    }
+
+    @Test
+    public void testGetIdentifier() throws Exception {
+        assertThat(video.getIdentifier(), is(instanceOf(Identifier.class)));
     }
 
     @Test
