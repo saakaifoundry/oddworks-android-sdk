@@ -1,13 +1,15 @@
 package io.oddworks.device.request;
 
 import android.util.Log;
-import io.oddworks.device.exceptions.BadResponseCodeException;
-import io.oddworks.device.exceptions.DeviceCodeExpiredException;
-import io.oddworks.device.model.AuthToken;
 
 import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
+
+import io.oddworks.device.exceptions.BadResponseCodeException;
+import io.oddworks.device.exceptions.DeviceCodeExpiredException;
+import io.oddworks.device.exceptions.RestServicesNotInitialized;
+import io.oddworks.device.model.AuthToken;
 
 /**
  * Class for polling authentication server until an auth code is generated
@@ -126,6 +128,36 @@ public class PollingAuthenticator {
                 });
             }
         };
+    }
+
+    /**
+     * @return a string representation of this object which can be used in PollingAuthenticator.fromSerialized
+     */
+    public String serialize() {
+        return deviceCode + " " +
+                userCode + " " +
+                verificationUrl + " " +
+                expirationDate.getTime() + " " +
+                interval;
+
+    }
+
+    /**
+     * @param serialized a string returned by PollingAuthenticator.serialize()
+     * @throws RestServicesNotInitialized if this method was called before RestServicesProvider was initialized.
+     */
+    public static PollingAuthenticator fromSerialized(String serialized) {
+        if(RestServiceProvider.getInstance() == null) {
+            throw new RestServicesNotInitialized();
+        }
+
+        String[] strings = serialized.split(" ");
+        return new PollingAuthenticator(strings[0],
+                strings[1],
+                strings[2],
+                new Date(Long.parseLong(strings [3])),
+                Integer.parseInt(strings[4]),
+                ApiCaller.instance);
     }
 
     @Override
