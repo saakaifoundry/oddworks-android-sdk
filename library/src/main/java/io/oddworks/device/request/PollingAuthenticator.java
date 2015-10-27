@@ -60,7 +60,7 @@ public class PollingAuthenticator {
 
     public boolean isExpired() {
         Date now = new Date();
-        return expirationDate.compareTo(now) > 0;
+        return expirationDate.compareTo(now) <= 0;
     }
 
     /** @return true if currently polling for authentication token. Otherwise false */
