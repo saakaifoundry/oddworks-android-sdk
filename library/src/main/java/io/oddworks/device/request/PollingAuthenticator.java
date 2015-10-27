@@ -24,7 +24,7 @@ public class PollingAuthenticator {
     private final int interval;
     private final Object syncLock = new Object();
     private final ApiCaller apiCaller;
-    private final Timer timer;
+    private Timer timer;
     /** don't access without using syncLock*/
     private volatile Boolean authenticating;
 
@@ -54,7 +54,13 @@ public class PollingAuthenticator {
         synchronized (syncLock) {
             authenticating = false;
             timer.cancel();
+            timer.purge();
         }
+    }
+
+    public boolean isExpired() {
+        Date now = new Date();
+        return expirationDate.compareTo(now) > 0;
     }
 
     /** @return true if currently polling for authentication token. Otherwise false */
@@ -64,20 +70,24 @@ public class PollingAuthenticator {
         }
     }
 
-    /** will continue polling the server until time expires or an auth token is obtained
+    /** If not expired then this will continue polling the server until time expires or an auth token is obtained
      * Callback.onFailure will be completed with DeviceCodeExpiredException if this object expires without getting an
-     * auth token. */
-    public void authenticate(final OddCallback<AuthToken> callback) {
+     * auth token.
+     * @return true if polling started, otherwise false (expired) */
+    public boolean authenticate(final OddCallback<AuthToken> callback) {
         synchronized (syncLock) {
+            if(isExpired()) {
+                return false;
+            }
             if(!authenticating) {
                 authenticating = true;
-                timer.purge();
-
+                timer = new Timer();
                 TimerTask task = getPollTask(callback);
                 timer.schedule(task, new Date(), interval);
-                 TimerTask expiredTask = getExpiredTask(callback);
+                TimerTask expiredTask = getExpiredTask(callback);
                 timer.schedule(expiredTask, expirationDate);
             }
+            return true;
         }
     }
 
