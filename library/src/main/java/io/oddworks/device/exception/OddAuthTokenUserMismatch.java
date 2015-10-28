@@ -1,4 +1,4 @@
-package io.oddworks.device.exceptions;
+package io.oddworks.device.exception;
 
 import io.oddworks.device.exception.BadResponseCodeException;
 

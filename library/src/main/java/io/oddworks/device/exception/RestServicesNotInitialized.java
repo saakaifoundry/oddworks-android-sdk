@@ -1,4 +1,4 @@
-package io.oddworks.device.exceptions;
+package io.oddworks.device.exception;
 
 /** An operation that depends on RestServicesProvider being initialized was called before RestServicesProvider was
  * initialized.

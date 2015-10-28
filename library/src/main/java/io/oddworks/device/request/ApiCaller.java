@@ -14,7 +14,7 @@ import java.util.List;
 import io.oddworks.device.exception.BadResponseCodeException;
 import io.oddworks.device.exception.OddParseException;
 import io.oddworks.device.metric.OddMetric;
-import io.oddworks.device.exceptions.OddAuthTokenUserMismatch;
+import io.oddworks.device.exception.OddAuthTokenUserMismatch;
 import io.oddworks.device.model.AuthToken;
 import io.oddworks.device.model.Config;
 import io.oddworks.device.model.DeviceCodeResponse;
