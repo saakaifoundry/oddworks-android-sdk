@@ -1,16 +1,20 @@
 package io.oddworks.device.request;
 
 import android.content.Context;
-import android.text.TextUtils;
 import android.util.Log;
-import com.squareup.okhttp.*;
-import com.squareup.okhttp.internal.http.HttpMethod;
-import io.oddworks.device.R;
-import io.oddworks.device.event.OddEvent;
-import io.oddworks.device.model.AuthToken;
-import io.oddworks.device.model.Media;
+
+import com.squareup.okhttp.Call;
+import com.squareup.okhttp.Callback;
+import com.squareup.okhttp.MediaType;
+import com.squareup.okhttp.OkHttpClient;
+import com.squareup.okhttp.Request;
+import com.squareup.okhttp.RequestBody;
 
 import java.util.Locale;
+
+import io.oddworks.device.R;
+import io.oddworks.device.metric.OddMetric;
+import io.oddworks.device.model.AuthToken;
 
 /**
  * For calling the api and returning raw responses
@@ -95,7 +99,7 @@ public class RequestHandler {
         enqueueOddCall(request, callback);
     }
 
-    protected void postEvent(OddEvent event, Callback callback) {
+    protected void postEvent(OddMetric event, Callback callback) {
         String endpoint = mContext.getString(R.string.endpoint_events);
         Request request = getOddRequest(endpoint, RequestMethod.POST, RequestBody.create(JSON, event.toJSONObject().toString()), true);
         enqueueOddCall(request, callback);

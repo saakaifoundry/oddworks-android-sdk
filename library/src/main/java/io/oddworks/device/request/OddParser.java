@@ -1,14 +1,27 @@
 package io.oddworks.device.request;
 
-import android.os.Parcelable;
 import android.util.Log;
-import io.oddworks.device.model.*;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+
+import io.oddworks.device.model.AuthToken;
+import io.oddworks.device.model.Config;
+import io.oddworks.device.model.DeviceCodeResponse;
+import io.oddworks.device.model.Identifier;
+import io.oddworks.device.model.Media;
+import io.oddworks.device.model.MediaAds;
+import io.oddworks.device.model.MediaCollection;
+import io.oddworks.device.model.MediaImage;
+import io.oddworks.device.model.OddObject;
+import io.oddworks.device.model.Promotion;
+import io.oddworks.device.model.Relationship;
+import io.oddworks.device.model.View;
 //todo stop swallowing exceptions
 
 public class OddParser {
@@ -82,71 +95,73 @@ public class OddParser {
     }
 
     public MediaCollection parseMediaCollection(final JSONObject data) throws JSONException {
-        JSONObject attributes = data.getJSONObject("attributes");
-        JSONObject images = attributes.getJSONObject("images");
+        JSONObject rawAttributes = data.getJSONObject("attributes");
+        JSONObject images = rawAttributes.getJSONObject("images");
 
         String id = parseString(data, "id");
         String type = parseString(data, "type");
-        String title = parseString(attributes, "title");
-        String description = parseString(attributes, "description");
-        String releaseDate = parseString(attributes, "releaseDate");
 
-        MediaImage mediaImage = parseMediaImage(images);
+        HashMap<String, Object> attributes = new HashMap<>();
+        attributes.put("title", parseString(rawAttributes, "title"));
+        attributes.put("description", parseString(rawAttributes, "description"));
+        attributes.put("releaseDate", parseString(rawAttributes, "releaseDate"));
+        attributes.put("mediaImage", parseMediaImage(images));
 
-        MediaCollection collection = new MediaCollection(id, type, title, description, mediaImage, releaseDate);
+        MediaCollection collection = new MediaCollection(id, type);
+        collection.setAttributes(attributes);
+
 
         JSONObject relationships = data.getJSONObject("relationships");
-        JSONObject videoRelationship = relationships.getJSONObject("videos");
-        JSONArray videoIdentifiers = videoRelationship.getJSONArray("data");
-        for (int i = 0; i < videoIdentifiers.length(); i++) {
-            JSONObject dataRelationObject = videoIdentifiers.getJSONObject(i);
-            String mediaType = parseString(dataRelationObject, "type");
-            if (Media.VIDEO.equals(mediaType) || Media.LIVE_STREAM.equals(mediaType)) {
-                String mediaId = parseString(dataRelationObject, "id");
-                Media media = new Media(mediaId, mediaType);
-                collection.addMedia(media);
-            }
-        }
+
+        addRelationshipsToOddObject(relationships, collection);
 
         return collection;
     }
 
     protected Media parseMedia(final JSONObject dataObject) throws JSONException {
-        JSONObject attributes = dataObject.getJSONObject("attributes");
-        JSONObject images = attributes.getJSONObject("images");
+        JSONObject rawAttributes = dataObject.getJSONObject("attributes");
+        JSONObject images = rawAttributes.getJSONObject("images");
 
-        String id = parseString(dataObject, "id");
-        String type = parseString(dataObject, "type");
-        String title = parseString(attributes, "title");
-        String description = parseString(attributes, "description");
-        String releaseDate = parseString(attributes, "releaseDate");
-        int duration = 0;
+        Media media = new Media(
+                parseString(dataObject, "id"),
+                parseString(dataObject, "type"));
+
+        HashMap<String, Object> attributes = new HashMap<>();
+        attributes.put("title", parseString(rawAttributes, "title"));
+        attributes.put("description", parseString(rawAttributes, "description"));
+        attributes.put("releaseDate", parseString(rawAttributes, "releaseDate"));
         try {
-            duration = parseInt(attributes, "duration");
+            attributes.put("duration", parseInt(rawAttributes, "duration"));
         } catch (Exception e) {
             Log.d(TAG, "Invalid duration: " + e.toString());
+            attributes.put("duration", 0);
         }
 
-        String url = parseString(attributes, "url");
+        attributes.put("url", parseString(rawAttributes, "url"));
+        attributes.put("mediaImage", parseMediaImage(images));
+        attributes.put("mediaAds", parseMediaAds(rawAttributes));
 
-        MediaImage mediaImage = parseMediaImage(images);
-        MediaAds mediaAds = parseMediaAds(attributes);
+        media.setAttributes(attributes);
 
-        return new Media(id, type, title, description, mediaImage, mediaAds, releaseDate, duration, url);
+        return media;
     }
 
-    protected Promotion parsePromotion(final JSONObject promotion) throws JSONException {
-        JSONObject attributes = promotion.getJSONObject("attributes");
-        JSONObject images = attributes.getJSONObject("images");
+    protected Promotion parsePromotion(final JSONObject rawPromotion) throws JSONException {
+        JSONObject rawAttributes = rawPromotion.getJSONObject("attributes");
+        JSONObject images = rawAttributes.getJSONObject("images");
 
-        String id = parseString(promotion, "id");
-        String type = parseString(promotion, "type");
-        String title = parseString(attributes, "title");
-        String description = parseString(attributes, "description");
+        Promotion promotion = new Promotion(
+                parseString(rawPromotion, "id"),
+                parseString(rawPromotion, "type"));
 
-        MediaImage mediaImage = parseMediaImage(images);
+        HashMap<String, Object> attributes = new HashMap<>();
+        attributes.put("title", parseString(rawAttributes, "title"));
+        attributes.put("description", parseString(rawAttributes, "description"));
+        attributes.put("mediaImage", parseMediaImage(images));
 
-        return new Promotion(id, type, title, description, mediaImage);
+        promotion.setAttributes(attributes);
+
+        return promotion;
     }
 
     protected ArrayList<Media> parseMediaList(final String result) {
@@ -166,95 +181,73 @@ public class OddParser {
     }
 
     protected Config parseConfig(final String result) {
-        String viewId = "";
         try {
             JSONObject resultJSONObject = new JSONObject(result);
             JSONObject dataJSONObject = parseJSONObject(resultJSONObject, "data");
-            JSONObject attributesJSONObject = parseJSONObject(dataJSONObject, "attributes");
-            viewId = parseString(attributesJSONObject, "view");
+            JSONObject rawAttributes = parseJSONObject(dataJSONObject, "attributes");
+
+            Config config = new Config(
+                    parseString(dataJSONObject, "id"),
+                    parseString(dataJSONObject, "type"));
+
+            HashMap<String, Object> attributes = new HashMap<>();
+            attributes.put("viewId", parseString(rawAttributes, "view"));
+
+            config.setAttributes(attributes);
+
+            return config;
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
-        return new Config(viewId);
+        return null;
     }
 
     protected View parseView(final String result) {
-        View view = null;
         try {
             JSONObject resultObject = new JSONObject(result);
-            JSONObject dataObject = parseJSONObject(resultObject, "data");
-            JSONObject attributesObject = parseJSONObject(dataObject, "attributes");
-            String title = parseString(attributesObject, "title");
-            view = new View(title);
+            JSONObject data = parseJSONObject(resultObject, "data");
+            JSONObject rawAttributes = parseJSONObject(data, "attributes");
+            View view = new View(
+                    parseString(rawAttributes, "id"),
+                    parseString(rawAttributes, "type"));
 
-            JSONObject relationshipsObject = dataObject.getJSONObject("relationships");
+            HashMap<String, Object> attributes = new HashMap<>();
+            attributes.put("title", parseString(rawAttributes, "title"));
+            view.setAttributes(attributes);
 
-            JSONObject featuredObject = relationshipsObject.getJSONObject("featured");
-            JSONArray featuredDataArray = featuredObject.getJSONArray("data");
-            for (int i = 0; i < featuredDataArray.length(); i++) {
-                JSONObject featuredDataObject = featuredDataArray.getJSONObject(i);
-                String featuredId = parseString(featuredDataObject, "id");
-                String featuredType = parseString(featuredDataObject, "type");
-                if (MediaCollection.VIDEO_COLLECTION.equals(featuredType)) {
-                    MediaCollection collection = new MediaCollection(featuredId, featuredType);
-                    view.addFeaturedMediaCollection(collection);
-                }
-            }
+            // use relationships to build view's ArrayList<Relationship>
+            addRelationshipsToOddObject(data.getJSONObject("relationships"), view);
 
-            JSONObject showsObject = relationshipsObject.getJSONObject("shows");
-            JSONArray showsDataArray = showsObject.getJSONArray("data");
-            for (int i = 0; i < showsDataArray.length(); i++) {
-                JSONObject showsDataObject = showsDataArray.getJSONObject(i);
-                String showId = parseString(showsDataObject, "id");
-                String showType = parseString(showsDataObject, "type");
-                if (MediaCollection.VIDEO_COLLECTION.equals(showType)) {
-                    MediaCollection show = new MediaCollection(showId, showType);
-                    view.addShow(show);
-                }
-            }
-
-            JSONObject featuredMediaObject = relationshipsObject.getJSONObject("featuredMedia");
-            JSONArray featuredMediaDataArray = featuredMediaObject.getJSONArray("data");
-            for (int i = 0; i < featuredMediaDataArray.length(); i++) {
-                JSONObject featuredMediaDataObject = featuredMediaDataArray.getJSONObject(i);
-                String featuredId = parseString(featuredMediaDataObject, "id");
-                String featuredType = parseString(featuredMediaDataObject, "type");
-                if (Media.VIDEO.equals(featuredType) || Media.LIVE_STREAM.equals(featuredType)) {
-                    Media video = new Media(featuredId, featuredType);
-                    view.addFeaturedMedia(video);
-                }
-            }
-
+            // fill the view's included{Type} arrays with parsable objects
             JSONArray includedArray = parseJSONArray(resultObject, "included");
             for (int i = 0; i < includedArray.length(); i++) {
                 JSONObject includedObject = includedArray.getJSONObject(i);
                 String includedType = parseString(includedObject, "type");
-                if (MediaCollection.VIDEO_COLLECTION.equals(includedType)) {
-                    MediaCollection videoCol = parseMediaCollection(includedObject);
-                    view.fillFeaturedMediaCollection(videoCol);
-                    view.fillShow(videoCol);
-                } else if (Promotion.TAG.equals(includedType)) {
-                    Promotion promotion = parsePromotion(includedObject);
-                    view.setPromotion(promotion);
+
+                switch (includedType) {
+                    case OddObject.TYPE_VIDEO_COLLECTION:
+                        view.addIncluded(parseMediaCollection(includedObject));
+                        break;
+                    case OddObject.TYPE_LIVE_STREAM:
+                    case OddObject.TYPE_VIDEO:
+                        view.addIncluded(parseMedia(includedObject));
+                        break;
+                    case OddObject.TYPE_PROMOTION:
+                        view.addIncluded(parsePromotion(includedObject));
+                        break;
                 }
             }
 
-            for (int i = 0; i < includedArray.length(); i++) {
-                JSONObject includedObject = includedArray.getJSONObject(i);
-                String includedType = parseString(includedObject, "type");
-                if (Media.VIDEO.equals(includedType) || Media.LIVE_STREAM.equals(includedType)) {
-                    Media media = parseMedia(includedObject);
-                    view.fillMedia(media);
-                    view.fillFeaturedMedia(media);
-                }
-            }
+            // backfill newly created includedMediaCollections with newly created media
+            view.fillIncludedMediaCollections();
 
+            return view;
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
-        return view;
+        return null;
     }
 
     protected AuthToken parseAuthToken(String responseBody) throws JSONException {
@@ -274,8 +267,8 @@ public class OddParser {
         return new DeviceCodeResponse(deviceCode, userCode, verificationUrl, expiresIn, interval);
     }
 
-    protected ArrayList<OddMedia> parseSearch(final String result) {
-        ArrayList<OddMedia> searchResult = new ArrayList<>();
+    protected ArrayList<OddObject> parseSearch(final String result) {
+        ArrayList<OddObject> searchResult = new ArrayList<>();
         ArrayList<Media> searchMedias = new ArrayList<>();
         ArrayList<MediaCollection> searchCollections = new ArrayList<>();
         try {
@@ -284,12 +277,12 @@ public class OddParser {
             for (int i = 0; i < dataArray.length(); i++) {
                 JSONObject pokerObj = dataArray.getJSONObject(i);
                 String type = parseString(pokerObj, "type");
-                if (Media.VIDEO.equals(type)) {
+                if (OddObject.TYPE_VIDEO.equals(type)) {
                     Media video = parseMedia(pokerObj);
                     if (video != null) {
                         searchMedias.add(video);
                     }
-                } else if (MediaCollection.VIDEO_COLLECTION.equals(type)) {
+                } else if (OddObject.TYPE_VIDEO_COLLECTION.equals(type)) {
                     MediaCollection collection = parseMediaCollection(pokerObj);
                     if (collection != null) {
                         searchCollections.add(collection);
@@ -307,6 +300,43 @@ public class OddParser {
         }
 
         return searchResult;
+    }
+
+    protected void addRelationshipsToOddObject(JSONObject relationships, OddObject relatable) {
+        Iterator<String> relationshipNames = relationships.keys();
+        try {
+            while (relationshipNames.hasNext()) {
+                String name = relationshipNames.next();
+                JSONObject relationship = relationships.getJSONObject(name);
+                if (relationship != null) {
+                    ArrayList<Identifier> identifiers = new ArrayList<>();
+
+                    if (relationship.get("data") instanceof JSONObject) {
+                        //handle single relationship.data
+                        JSONObject identifier = relationship.getJSONObject("data");
+                        String relId = identifier.getString("id");
+                        String relType = identifier.getString("type");
+                        identifiers.add(new Identifier(relId, relType));
+
+                    } else if (relationship.get("data") instanceof JSONArray) {
+                        // handle multiple relationship.data
+                        JSONArray rawIdentifiers = relationship.getJSONArray("data");
+
+                        for (int i = 0; i < rawIdentifiers.length(); i++) {
+                            JSONObject identifier = rawIdentifiers.getJSONObject(i);
+                            String relId = identifier.getString("id");
+                            String relType = identifier.getString("type");
+                            identifiers.add(new Identifier(relId, relType));
+                        }
+                    }
+
+                    relatable.addRelationship(new Relationship(name, identifiers));
+                }
+            }
+        } catch (JSONException e) {
+            Log.e(TAG, e.toString());
+            e.printStackTrace();
+        }
     }
 
     protected String parseErrorMessage(String responseBody) throws JSONException {

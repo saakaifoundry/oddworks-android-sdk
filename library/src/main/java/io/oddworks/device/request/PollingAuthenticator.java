@@ -6,8 +6,8 @@ import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import io.oddworks.device.exceptions.BadResponseCodeException;
-import io.oddworks.device.exceptions.DeviceCodeExpiredException;
+import io.oddworks.device.exception.BadResponseCodeException;
+import io.oddworks.device.exception.DeviceCodeExpiredException;
 import io.oddworks.device.exceptions.RestServicesNotInitialized;
 import io.oddworks.device.model.AuthToken;
 

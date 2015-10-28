@@ -1,4 +1,4 @@
-package io.oddworks.device.event;
+package io.oddworks.device.metric;
 
 import android.util.Log;
 
@@ -8,9 +8,13 @@ import org.json.JSONObject;
 /**
  * Created by brkattk on 10/5/15.
  */
-public abstract class OddEvent {
-    private static final String TAG = OddEvent.class.getSimpleName();
+public abstract class OddMetric {
+    private static final String TAG = OddMetric.class.getSimpleName();
     private static final String TYPE = "event";
+    public static final String ACTION_APP_INIT = "app:init";
+    public static final String ACTION_VIEW_LOAD = "view:load";
+    public static final String ACTION_VIDEO_PLAY = "video:play";
+    public static final String ACTION_VIDEO_ERROR = "video:error";
 
     protected String mOrganizationId;
     protected String mAction;

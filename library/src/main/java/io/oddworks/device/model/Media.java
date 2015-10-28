@@ -1,65 +1,38 @@
 package io.oddworks.device.model;
 
-import android.os.Parcel;
+import java.util.HashMap;
 
-public class Media extends OddMedia {
-    public final static String TAG = "Media";
-    public final static String LIVE_STREAM = "liveStream";
-    public final static String VIDEO = "video";
+public class Media extends OddObject {
+    private String mTitle;
+    private String mDescription;
+    private MediaImage mMediaImage;
+    private String mReleaseDate;
     private MediaAds mMediaAds;
     private Integer mDuration;
     private String mUrl;
 
-    public static final Creator<Media> CREATOR = new Creator<Media>() {
+    public Media(Identifier identifier) {
+        super(identifier);
+    }
 
-        @Override
-        public Media createFromParcel(final Parcel source) {
-            return new Media(source);
-        }
-
-        @Override
-        public Media[] newArray(int size) {
-            return new Media[size];
-        }
-    };
-
-    public Media(final String id, final String type) {
+    public Media(String id, String type) {
         super(id, type);
     }
 
-    public Media(final String id, final String type, final String title,
-            final String description, final MediaImage mediaImage, final MediaAds mediaAds, final String releaseDate, final int duration, final String url) {
-        super(id, type, title, description, mediaImage, releaseDate);
-        mMediaAds = mediaAds;
-        mDuration = duration;
-        mUrl = url;
+    public String getTitle() {
+        return mTitle;
     }
 
-    public Media(Parcel parcel) {
-        super(parcel);
-        mMediaAds = parcel.readParcelable(MediaAds.class.getClassLoader());
-        mDuration = parcel.readInt();
-        mUrl = parcel.readString();
+    public String getDescription() {
+        return mDescription;
     }
 
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        super.writeToParcel(dest, flags);
-        dest.writeParcelable(getMediaAds(), flags);
-        dest.writeInt(getDuration());
-        dest.writeString(getUrl());
+    public MediaImage getMediaImage() {
+        return mMediaImage;
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public String toString() {
-        return TAG + "{" +
-                "mId='" + mId + "', " +
-                "mTitle='" + mTitle + "'}";
+    public String getReleaseDate() {
+        return mReleaseDate;
     }
 
     public String getUrl() {
@@ -67,6 +40,10 @@ public class Media extends OddMedia {
     }
 
     public Integer getDuration() {
+        if (mDuration == null) {
+            mDuration = 0;
+        }
+
         return mDuration;
     }
 
@@ -75,19 +52,38 @@ public class Media extends OddMedia {
     }
 
     public Boolean isLive() {
-        return getType().equals(LIVE_STREAM);
+        return getType().equals(OddObject.TYPE_LIVE_STREAM);
     }
 
-    public void fillData(final Media media) {
-        mId = media.getId();
-        mType = media.getType();
-        mTitle = media.getTitle();
-        mDescription = media.getDescription();
-        mMediaImage = media.getMediaImage();
-        mReleaseDate = media.getReleaseDate();
+    @Override
+    public void setAttributes(HashMap<String, Object> attributes) {
+        mTitle = (String) attributes.get("title");
+        mDescription = (String) attributes.get("description");
+        mMediaImage = (MediaImage) attributes.get("mediaImage");
+        mReleaseDate = (String) attributes.get("releaseDate");
+        mMediaAds = (MediaAds) attributes.get("mediaAds");
+        mDuration = (int) attributes.get("duration");
+        mUrl = (String) attributes.get("url");
+    }
 
-        mMediaAds = media.getMediaAds();
-        mDuration = media.getDuration();
-        mUrl = media.getUrl();
+    @Override
+    public HashMap<String, Object> getAttributes() {
+        HashMap<String, Object> attributes = new HashMap<>();
+        attributes.put("title", getTitle());
+        attributes.put("description", getDescription());
+        attributes.put("mediaImage", getMediaImage());
+        attributes.put("mediaAds", getMediaAds());
+        attributes.put("releaseDate", getReleaseDate());
+        attributes.put("duration", getDuration());
+        attributes.put("url", getUrl());
+        return attributes;
+    }
+
+    @Override
+    public String toString() {
+        return getClass().getSimpleName() + "(" +
+                "id='" + getId() + "', " +
+                "type='" + getType() + "', " +
+                "title='" + getTitle() + "')";
     }
 }

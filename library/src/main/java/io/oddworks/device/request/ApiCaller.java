@@ -1,6 +1,5 @@
 package io.oddworks.device.request;
 
-import android.os.Parcelable;
 import android.util.Log;
 
 import com.squareup.okhttp.Callback;
@@ -12,16 +11,16 @@ import org.json.JSONException;
 import java.io.IOException;
 import java.util.List;
 
-import io.oddworks.device.event.OddEvent;
-import io.oddworks.device.exceptions.BadResponseCodeException;
+import io.oddworks.device.exception.BadResponseCodeException;
+import io.oddworks.device.exception.OddParseException;
+import io.oddworks.device.metric.OddMetric;
 import io.oddworks.device.exceptions.OddAuthTokenUserMismatch;
-import io.oddworks.device.exceptions.OddParseException;
 import io.oddworks.device.model.AuthToken;
 import io.oddworks.device.model.Config;
 import io.oddworks.device.model.DeviceCodeResponse;
 import io.oddworks.device.model.Media;
 import io.oddworks.device.model.MediaCollection;
-import io.oddworks.device.model.OddMedia;
+import io.oddworks.device.model.OddObject;
 import io.oddworks.device.model.View;
 
 /**
@@ -76,11 +75,11 @@ public class ApiCaller {
         requestHandler.getVideos(col.getId(), requestCallback);
     }
 
-    public void getSearch(final String term, final int limit, final int offset, final OddCallback<List<OddMedia>> cb) {
-        Callback requestCallback = getRequestCallback(cb, new ParseCall<List<OddMedia>>() {
+    public void getSearch(final String term, final int limit, final int offset, final OddCallback<List<OddObject>> cb) {
+        Callback requestCallback = getRequestCallback(cb, new ParseCall<List<OddObject>>() {
 
             @Override
-            public List<OddMedia> parse(String responseBody) throws JSONException {
+            public List<OddObject> parse(String responseBody) throws JSONException {
                 return parser.parseSearch(responseBody);
             }
         });
@@ -88,10 +87,10 @@ public class ApiCaller {
         requestHandler.getSearch(term, limit, offset, requestCallback);
     }
 
-    public void postEvent(final OddEvent event, final OddCallback<OddEvent> cb) {
-        Callback requestCallback = getRequestCallback(cb, new ParseCall<OddEvent>() {
+    public void postEvent(final OddMetric event, final OddCallback<OddMetric> cb) {
+        Callback requestCallback = getRequestCallback(cb, new ParseCall<OddMetric>() {
             @Override
-            public OddEvent parse(String responseBody) throws JSONException {
+            public OddMetric parse(String responseBody) throws JSONException {
                 return event;
             }
         });
