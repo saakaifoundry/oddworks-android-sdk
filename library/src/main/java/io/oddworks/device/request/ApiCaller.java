@@ -14,6 +14,7 @@ import java.util.List;
 import io.oddworks.device.exception.BadResponseCodeException;
 import io.oddworks.device.exception.OddParseException;
 import io.oddworks.device.metric.OddMetric;
+import io.oddworks.device.exceptions.OddAuthTokenUserMismatch;
 import io.oddworks.device.model.AuthToken;
 import io.oddworks.device.model.Config;
 import io.oddworks.device.model.DeviceCodeResponse;
@@ -27,6 +28,7 @@ import io.oddworks.device.model.View;
  * accessed through the instance field
  */
 public class ApiCaller {
+    public static final String AUTH_TOKEN_MISMATCH = "DeviceID accessToken/authorizationToken mismatch";
     protected static ApiCaller instance;
     public static final int RESPONSE_OK = 200;
     public static final int RESPONSE_CREATED = 201;
@@ -159,6 +161,15 @@ public class ApiCaller {
                     }
 
                 } else {
+                    try {
+                        if (response.code() == 400 &&
+                                parser.parseErrorMessage(response.body().string()).equals(AUTH_TOKEN_MISMATCH)) {
+                            cb.onFailure(new OddAuthTokenUserMismatch(400));
+                            return;
+                        }
+                    } catch (Exception e) {
+                        //do nothing. This was not an accessToken authorization token mismatch.
+                    }
                     cb.onFailure(new BadResponseCodeException(response.code()));
                 }
             }

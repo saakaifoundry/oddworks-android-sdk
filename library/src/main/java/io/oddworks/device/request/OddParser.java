@@ -338,4 +338,8 @@ public class OddParser {
             e.printStackTrace();
         }
     }
+
+    protected String parseErrorMessage(String responseBody) throws JSONException {
+        return new JSONObject(responseBody).getString("message");
+    }
 }
