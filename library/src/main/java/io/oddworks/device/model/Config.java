@@ -2,12 +2,10 @@ package io.oddworks.device.model;
 
 import java.util.HashMap;
 
-/**
- * Created by brkattk on 9/15/15.
- */
 public class Config extends OddObject {
 
-    private String mViewId;
+    private HashMap<String, Object> mViews;
+    private HashMap<String, Object> mFeatures;
 
     public Config(Identifier identifier) {
         super(identifier);
@@ -17,28 +15,41 @@ public class Config extends OddObject {
         super(id, type);
     }
 
-    public final String getViewId() {
-        return mViewId;
+    public final HashMap<String, Object> getViews() {
+        if (mViews == null) {
+            mViews = new HashMap<>();
+        }
+        return mViews;
+    }
+
+    public final HashMap<String, Object> getFeatures() {
+        if (mFeatures == null) {
+            mFeatures = new HashMap<>();
+        }
+        return mFeatures;
     }
 
     @Override
     public HashMap<String, Object> getAttributes() {
         HashMap<String, Object> attributes = new HashMap<>();
 
-        attributes.put("viewId", getViewId());
+        attributes.put("views", getViews());
+        attributes.put("features", getFeatures());
 
         return attributes;
     }
 
     @Override
     public void setAttributes(HashMap<String, Object> attributes) {
-        mViewId = (String) attributes.get("viewId");
+        mViews = (HashMap<String, Object>) attributes.get("views");
+        mFeatures = (HashMap<String, Object>) attributes.get("features");
     }
 
     @Override
     public String toString() {
         return "Config{" +
-                "mViewId='" + mViewId + '\'' +
+                "views='" + getViews().toString() + '\'' +
+                "features='" + getFeatures().toString() + '\'' +
                 '}';
     }
 }

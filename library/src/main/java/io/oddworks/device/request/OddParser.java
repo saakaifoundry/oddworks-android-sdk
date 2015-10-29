@@ -190,9 +190,27 @@ public class OddParser {
                     parseString(dataJSONObject, "id"),
                     parseString(dataJSONObject, "type"));
 
-            HashMap<String, Object> attributes = new HashMap<>();
-            attributes.put("viewId", parseString(rawAttributes, "view"));
 
+            // TODO - figure out a better way of managing views and features @EJS
+            HashMap<String, Object> views = new HashMap<>();
+            JSONObject rawViews = parseJSONObject(rawAttributes, "views");
+            Iterator<String> viewNames = rawViews.keys();
+            while(viewNames.hasNext()) {
+                String viewName = viewNames.next();
+                views.put(viewName, parseString(rawViews, viewName));
+            }
+
+            HashMap<String, Object> features = new HashMap<>();
+            JSONObject rawFeatures = parseJSONObject(rawAttributes, "features");
+            Iterator<String> featureNames = rawFeatures.keys();
+            while(featureNames.hasNext()) {
+                String featureName = featureNames.next();
+                features.put(featureName, parseJSONObject(rawFeatures, featureName));
+            }
+
+            HashMap<String, Object> attributes = new HashMap<>();
+            attributes.put("views", views);
+            attributes.put("features", features);
             config.setAttributes(attributes);
 
             return config;
