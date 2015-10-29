@@ -9,4 +9,8 @@
     <string name="odd_auth_token_endpoint">auth/device/token</string>
     <string name="auth_device_code_endpoint">auth/device/code</string>
     <string name="endpoint_events">events</string>
+    <string name="endpoint_odd_views">views</string>
+    <string name="endpoint_odd_config">config</string>
+    <string name="endpoint_odd_auth_token">auth/device/token</string>
+    <string name="endpoint_auth_device_code">auth/device/code</string>
 </resources>

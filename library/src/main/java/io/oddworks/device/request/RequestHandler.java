@@ -52,7 +52,7 @@ public class RequestHandler {
 
     protected void getConfig(final Callback callback) {
         Request request = getOddRequest(
-                mContext.getString(R.string.odd_config_endpoint),
+                mContext.getString(R.string.endpoint_odd_config),
                 RequestMethod.GET,
                 RequestBody.create(JSON, ""),
                 true);
@@ -60,7 +60,7 @@ public class RequestHandler {
     }
 
     protected void getView(final String id, final Callback callback) {
-        Request request = getOddGetRequest(mContext.getString(R.string.odd_views_endpoint) + "/" + id);
+        Request request = getOddGetRequest(mContext.getString(R.string.endpoint_odd_views) + "/" + id);
         enqueueOddCall(request, callback);
     }
 
@@ -106,13 +106,13 @@ public class RequestHandler {
     }
 
     protected void getAuthDeviceCode(Callback callback) {
-        String endpoint = mContext.getString(R.string.auth_device_code_endpoint);
+        String endpoint = mContext.getString(R.string.endpoint_auth_device_code);
         Request request = getOddRequest(endpoint, RequestMethod.POST, RequestBody.create(JSON, ""), true);
         enqueueOddCall(request, callback);
     }
 
     protected void getAuthToken(Callback callback, String deviceCode) {
-        String endpoint = mContext.getString(R.string.odd_auth_token_endpoint);
+        String endpoint = mContext.getString(R.string.endpoint_odd_auth_token);
         RequestBody body = RequestBody.create(JSON,
                 "{ \"type\":\"authorized_user\", \"attributes\": {\"device_code\":\"" + deviceCode + "\"}}");
         Request request = getOddRequest(endpoint, RequestMethod.POST, body, true);
