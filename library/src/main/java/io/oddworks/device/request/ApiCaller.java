@@ -11,13 +11,16 @@ import org.json.JSONException;
 import java.io.IOException;
 import java.util.List;
 
-import io.oddworks.device.exceptions.BadResponseCodeException;
-import io.oddworks.device.exceptions.OddParseException;
+import io.oddworks.device.exception.BadResponseCodeException;
+import io.oddworks.device.exception.OddParseException;
+import io.oddworks.device.metric.OddMetric;
+import io.oddworks.device.exception.OddAuthTokenUserMismatch;
 import io.oddworks.device.model.AuthToken;
 import io.oddworks.device.model.Config;
 import io.oddworks.device.model.DeviceCodeResponse;
 import io.oddworks.device.model.Media;
 import io.oddworks.device.model.MediaCollection;
+import io.oddworks.device.model.OddObject;
 import io.oddworks.device.model.View;
 
 /**
@@ -25,7 +28,8 @@ import io.oddworks.device.model.View;
  * accessed through the instance field
  */
 public class ApiCaller {
-    public static ApiCaller instance;
+    public static final String AUTH_TOKEN_MISMATCH = "DeviceID accessToken/authorizationToken mismatch";
+    protected static ApiCaller instance;
     public static final int RESPONSE_OK = 200;
     public static final int RESPONSE_CREATED = 201;
     public static final int RESPONSE_NOT_FOUND = 404;
@@ -69,6 +73,29 @@ public class ApiCaller {
             }
         });
         requestHandler.getVideos(col.getId(), requestCallback);
+    }
+
+    public void getSearch(final String term, final int limit, final int offset, final OddCallback<List<OddObject>> cb) {
+        Callback requestCallback = getRequestCallback(cb, new ParseCall<List<OddObject>>() {
+
+            @Override
+            public List<OddObject> parse(String responseBody) throws JSONException {
+                return parser.parseSearch(responseBody);
+            }
+        });
+
+        requestHandler.getSearch(term, limit, offset, requestCallback);
+    }
+
+    public void postEvent(final OddMetric event, final OddCallback<OddMetric> cb) {
+        Callback requestCallback = getRequestCallback(cb, new ParseCall<OddMetric>() {
+            @Override
+            public OddMetric parse(String responseBody) throws JSONException {
+                return event;
+            }
+        });
+
+        requestHandler.postEvent(event, requestCallback);
     }
 
     protected void getPollingAuthenticator(final OddCallback<PollingAuthenticator> cb) {
@@ -134,6 +161,15 @@ public class ApiCaller {
                     }
 
                 } else {
+                    try {
+                        if (response.code() == 400 &&
+                                parser.parseErrorMessage(response.body().string()).equals(AUTH_TOKEN_MISMATCH)) {
+                            cb.onFailure(new OddAuthTokenUserMismatch(400));
+                            return;
+                        }
+                    } catch (Exception e) {
+                        //do nothing. This was not an accessToken authorization token mismatch.
+                    }
                     cb.onFailure(new BadResponseCodeException(response.code()));
                 }
             }

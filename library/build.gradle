@@ -22,6 +22,8 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
+    testCompile 'org.skyscreamer:jsonassert:1.2.3'
+    testCompile 'org.hamcrest:hamcrest-junit:2.0.0.0'
     compile 'com.squareup.okhttp:okhttp:2.5.0'
 }
 

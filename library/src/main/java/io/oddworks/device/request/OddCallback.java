@@ -1,7 +1,5 @@
 package io.oddworks.device.request;
 
-import io.oddworks.device.model.Config;
-
 /**
  * Created by brkattk on 9/15/15.
  */

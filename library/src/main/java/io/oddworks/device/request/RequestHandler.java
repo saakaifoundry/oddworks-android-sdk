@@ -1,15 +1,20 @@
 package io.oddworks.device.request;
 
 import android.content.Context;
-import android.text.TextUtils;
 import android.util.Log;
-import com.squareup.okhttp.*;
-import com.squareup.okhttp.internal.http.HttpMethod;
-import io.oddworks.device.R;
-import io.oddworks.device.model.AuthToken;
-import io.oddworks.device.model.Media;
+
+import com.squareup.okhttp.Call;
+import com.squareup.okhttp.Callback;
+import com.squareup.okhttp.MediaType;
+import com.squareup.okhttp.OkHttpClient;
+import com.squareup.okhttp.Request;
+import com.squareup.okhttp.RequestBody;
 
 import java.util.Locale;
+
+import io.oddworks.device.R;
+import io.oddworks.device.metric.OddMetric;
+import io.oddworks.device.model.AuthToken;
 
 /**
  * For calling the api and returning raw responses
@@ -32,16 +37,25 @@ public class RequestHandler {
     private String mCountry = Locale.getDefault().getCountry().toLowerCase();
     private String mLocale = mLanguage + "-" + mCountry;
 
-    protected RequestHandler(Context context) {
+    /**
+     *
+     * @param context
+     * @param version api version. eg "v1"
+     */
+    protected RequestHandler(Context context, String version, String accessToken) {
         mContext = context;
-        mAccessToken = mContext.getString(R.string.odd_access_token);
-        mBaseUrl =  mContext.getString(R.string.odd_base_url);
+        mAccessToken = accessToken;
+        mBaseUrl = String.format(mContext.getString(R.string.odd_base_url), version);
         mAccept = mContext.getString(R.string.odd_request_content_type);
         authToken = null;
     }
 
     protected void getConfig(final Callback callback) {
-        Request request = getOddGetRequest(mContext.getString(R.string.endpoint_odd_config));
+        Request request = getOddRequest(
+                mContext.getString(R.string.endpoint_odd_config),
+                RequestMethod.GET,
+                RequestBody.create(JSON, ""),
+                true);
         enqueueOddCall(request, callback);
     }
 
@@ -62,7 +76,7 @@ public class RequestHandler {
                 .addHeader("accept", mAccept)
                 .addHeader("accept-language", mLocale);
         if(!forceNoAuth && authToken != null) {
-            builder.addHeader("Authorization:", authToken.getTokenType() + " " + authToken.getToken());
+            builder.addHeader("authorization", authToken.getTokenType() + " " + authToken.getToken());
         }
         if(method == RequestMethod.POST) {
             builder.post(body);
@@ -77,6 +91,17 @@ public class RequestHandler {
 
     protected void getVideos(String collectionId, Callback callback) {
         Request request = getOddGetRequest("videoCollection/" + collectionId + "/videos");
+        enqueueOddCall(request, callback);
+    }
+
+    protected void getSearch(String term, int limit, int offset, Callback callback) {
+        Request request = getOddGetRequest("search?term=" + term + "&limit=" + limit + "&offset=" + offset);
+        enqueueOddCall(request, callback);
+    }
+
+    protected void postEvent(OddMetric event, Callback callback) {
+        String endpoint = mContext.getString(R.string.endpoint_events);
+        Request request = getOddRequest(endpoint, RequestMethod.POST, RequestBody.create(JSON, event.toJSONObject().toString()), true);
         enqueueOddCall(request, callback);
     }
 

@@ -1,13 +1,15 @@
 package io.oddworks.device.request;
 
 import android.util.Log;
-import io.oddworks.device.exceptions.BadResponseCodeException;
-import io.oddworks.device.exceptions.DeviceCodeExpiredException;
-import io.oddworks.device.model.AuthToken;
 
 import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
+
+import io.oddworks.device.exception.BadResponseCodeException;
+import io.oddworks.device.exception.DeviceCodeExpiredException;
+import io.oddworks.device.exception.RestServicesNotInitialized;
+import io.oddworks.device.model.AuthToken;
 
 /**
  * Class for polling authentication server until an auth code is generated
@@ -22,7 +24,7 @@ public class PollingAuthenticator {
     private final int interval;
     private final Object syncLock = new Object();
     private final ApiCaller apiCaller;
-    private final Timer timer;
+    private Timer timer;
     /** don't access without using syncLock*/
     private volatile Boolean authenticating;
 
@@ -52,7 +54,13 @@ public class PollingAuthenticator {
         synchronized (syncLock) {
             authenticating = false;
             timer.cancel();
+            timer.purge();
         }
+    }
+
+    public boolean isExpired() {
+        Date now = new Date();
+        return expirationDate.compareTo(now) <= 0;
     }
 
     /** @return true if currently polling for authentication token. Otherwise false */
@@ -62,20 +70,24 @@ public class PollingAuthenticator {
         }
     }
 
-    /** will continue polling the server until time expires or an auth token is obtained
+    /** If not expired then this will continue polling the server until time expires or an auth token is obtained
      * Callback.onFailure will be completed with DeviceCodeExpiredException if this object expires without getting an
-     * auth token. */
-    public void authenticate(final OddCallback<AuthToken> callback) {
+     * auth token.
+     * @return true if polling started, otherwise false (expired) */
+    public boolean authenticate(final OddCallback<AuthToken> callback) {
         synchronized (syncLock) {
+            if(isExpired()) {
+                return false;
+            }
             if(!authenticating) {
                 authenticating = true;
-                timer.purge();
-
+                timer = new Timer();
                 TimerTask task = getPollTask(callback);
                 timer.schedule(task, new Date(), interval);
-                 TimerTask expiredTask = getExpiredTask(callback);
+                TimerTask expiredTask = getExpiredTask(callback);
                 timer.schedule(expiredTask, expirationDate);
             }
+            return true;
         }
     }
 
@@ -126,6 +138,36 @@ public class PollingAuthenticator {
                 });
             }
         };
+    }
+
+    /**
+     * @return a string representation of this object which can be used in PollingAuthenticator.fromSerialized
+     */
+    public String serialize() {
+        return deviceCode + " " +
+                userCode + " " +
+                verificationUrl + " " +
+                expirationDate.getTime() + " " +
+                interval;
+
+    }
+
+    /**
+     * @param serialized a string returned by PollingAuthenticator.serialize()
+     * @throws RestServicesNotInitialized if this method was called before RestServicesProvider was initialized.
+     */
+    public static PollingAuthenticator fromSerialized(String serialized) {
+        if(RestServiceProvider.getInstance() == null) {
+            throw new RestServicesNotInitialized();
+        }
+
+        String[] strings = serialized.split(" ");
+        return new PollingAuthenticator(strings[0],
+                strings[1],
+                strings[2],
+                new Date(Long.parseLong(strings [3])),
+                Integer.parseInt(strings[4]),
+                ApiCaller.instance);
     }
 
     @Override

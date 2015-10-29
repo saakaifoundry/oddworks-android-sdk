@@ -1,4 +1,4 @@
-package io.oddworks.device.exceptions;
+package io.oddworks.device.exception;
 
 /**
  * Created by brkattk on 9/15/15.
