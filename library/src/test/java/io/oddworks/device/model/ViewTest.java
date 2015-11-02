@@ -13,10 +13,10 @@ import static org.junit.Assert.assertEquals;
  */
 public class ViewTest {
     private String id = "theId";
-    private String type = View.class.getSimpleName();
+    private String type = OddView.class.getSimpleName();
     private String title = "Android View";
     private String relationshipName = "viewRel";
-    private View view = new View(id, type);
+    private OddView view = new OddView(id, type);
 
     @Before
     public void beforeEach() {

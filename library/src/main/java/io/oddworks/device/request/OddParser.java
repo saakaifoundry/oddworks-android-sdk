@@ -19,9 +19,9 @@ import io.oddworks.device.model.MediaAds;
 import io.oddworks.device.model.MediaCollection;
 import io.oddworks.device.model.MediaImage;
 import io.oddworks.device.model.OddObject;
+import io.oddworks.device.model.OddView;
 import io.oddworks.device.model.Promotion;
 import io.oddworks.device.model.Relationship;
-import io.oddworks.device.model.View;
 //todo stop swallowing exceptions
 
 public class OddParser {
@@ -221,12 +221,12 @@ public class OddParser {
         return null;
     }
 
-    protected View parseView(final String result) {
+    protected OddView parseView(final String result) {
         try {
             JSONObject resultObject = new JSONObject(result);
             JSONObject data = parseJSONObject(resultObject, "data");
             JSONObject rawAttributes = parseJSONObject(data, "attributes");
-            View view = new View(
+            OddView view = new OddView(
                     parseString(rawAttributes, "id"),
                     parseString(rawAttributes, "type"));
 
