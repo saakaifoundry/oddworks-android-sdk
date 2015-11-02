@@ -2,16 +2,16 @@ package io.oddworks.device.model;
 
 import java.util.HashMap;
 
-public class View extends OddObject {
-    private static final String TAG = View.class.getSimpleName();
+public class OddView extends OddObject {
+    private static final String TAG = OddView.class.getSimpleName();
 
     private String mTitle;
 
-    public View(Identifier identifier) {
+    public OddView(Identifier identifier) {
         super(identifier);
     }
 
-    public View(String id, String type) {
+    public OddView(String id, String type) {
         super(id, type);
     }
 

@@ -21,7 +21,7 @@ import io.oddworks.device.model.DeviceCodeResponse;
 import io.oddworks.device.model.Media;
 import io.oddworks.device.model.MediaCollection;
 import io.oddworks.device.model.OddObject;
-import io.oddworks.device.model.View;
+import io.oddworks.device.model.OddView;
 
 /**
  * Class of methods for handling api calls. Is instantiated using the ReqeustServicesInitializer and afterward can be
@@ -55,10 +55,10 @@ public class ApiCaller {
         requestHandler.getConfig(requestCallback);
     }
 
-    public void getView(final String id, final OddCallback<View> cb) {
-        Callback requestCallback = getRequestCallback(cb, new ParseCall<View>() {
+    public void getView(final String id, final OddCallback<OddView> cb) {
+        Callback requestCallback = getRequestCallback(cb, new ParseCall<OddView>() {
             @Override
-            public View parse(String responseBody) {
+            public OddView parse(String responseBody) {
                 return parser.parseView(responseBody);
             }
         });
