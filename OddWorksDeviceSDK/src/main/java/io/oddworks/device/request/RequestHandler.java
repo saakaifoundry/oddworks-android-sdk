@@ -1,6 +1,7 @@
 package io.oddworks.device.request;
 
 import android.content.Context;
+import android.os.Build;
 import android.util.Log;
 
 import com.squareup.okhttp.Call;
@@ -29,6 +30,7 @@ public class RequestHandler {
 
     private AuthToken authToken;
     private OkHttpClient mClient = new OkHttpClient();
+    private String mAppVersion;
     private String mBaseUrl;
     private Context mContext;
     private String mAccessToken;
@@ -42,9 +44,10 @@ public class RequestHandler {
      * @param context
      * @param version api version. eg "v1"
      */
-    protected RequestHandler(Context context, String version, String accessToken) {
+    protected RequestHandler(Context context, String version, String accessToken, String appVersion) {
         mContext = context;
         mAccessToken = accessToken;
+        mAppVersion = appVersion;
         mBaseUrl = String.format(mContext.getString(R.string.odd_base_url), version);
         mAccept = mContext.getString(R.string.odd_request_content_type);
         authToken = null;
@@ -73,6 +76,7 @@ public class RequestHandler {
         Request.Builder builder = new Request.Builder();
         builder.url(mBaseUrl + endpoint + "?include=true")
                 .addHeader("x-access-token", mAccessToken)
+                .addHeader("x-odd-user-agent", getOddUserAgent())
                 .addHeader("accept", mAccept)
                 .addHeader("accept-language", mLocale);
         if(!forceNoAuth && authToken != null) {
@@ -82,6 +86,19 @@ public class RequestHandler {
             builder.post(body);
         }
         return builder.build();
+    }
+
+    private String getOddUserAgent() {
+        String oddUserAgent = "";
+
+        oddUserAgent += "platform[name]=Google";
+        oddUserAgent += "&model[name]=" + Build.MANUFACTURER;
+        oddUserAgent += "&model[version]=" + Build.MODEL;
+        oddUserAgent += "&os[name]=Android";
+        oddUserAgent += "&os[version]=" + Build.VERSION.RELEASE;
+        oddUserAgent += "&build[version]=" + mAppVersion;
+
+        return oddUserAgent;
     }
 
     private void enqueueOddCall(Request request, Callback callback) {
