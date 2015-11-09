@@ -87,7 +87,7 @@ public class ApiCaller {
         requestHandler.getSearch(term, limit, offset, requestCallback);
     }
 
-    public void postEvent(final OddMetric event, final OddCallback<OddMetric> cb) {
+    public void postMetric(final OddMetric event, final OddCallback<OddMetric> cb) {
         Callback requestCallback = getRequestCallback(cb, new ParseCall<OddMetric>() {
             @Override
             public OddMetric parse(String responseBody) throws JSONException {
@@ -95,7 +95,7 @@ public class ApiCaller {
             }
         });
 
-        requestHandler.postEvent(event, requestCallback);
+        requestHandler.postMetric(event, requestCallback);
     }
 
     protected void getPollingAuthenticator(final OddCallback<PollingAuthenticator> cb) {
