@@ -14,6 +14,8 @@ public abstract class OddMetric {
     public static final String ACTION_APP_INIT = "app:init";
     public static final String ACTION_VIEW_LOAD = "view:load";
     public static final String ACTION_VIDEO_PLAY = "video:play";
+    public static final String ACTION_VIDEO_PLAYING = "video:playing";
+    public static final String ACTION_VIDEO_STOP = "video:stop";
     public static final String ACTION_VIDEO_ERROR = "video:error";
 
     protected String mOrganizationId;
