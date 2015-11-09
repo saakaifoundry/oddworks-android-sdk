@@ -16,46 +16,46 @@ public class OddVideoPlayMetricTest {
 
     @Test
 	public void testGetType() throws Exception {
-        OddVideoPlayMetric event = new OddVideoPlayMetric(orgId, contentType, contentId);
-        assertEquals("event", event.getType());
+        OddVideoPlayMetric metric = new OddVideoPlayMetric(orgId, contentType, contentId);
+        assertEquals("event", metric.getType());
     }
 
     @Test
 	public void testGetOrganizationId() throws Exception {
-        OddVideoPlayMetric event = new OddVideoPlayMetric(orgId, contentType, contentId);
-        assertEquals(orgId, event.getOrganizationId());
+        OddVideoPlayMetric metric = new OddVideoPlayMetric(orgId, contentType, contentId);
+        assertEquals(orgId, metric.getOrganizationId());
     }
 
     @Test
 	public void testGetAction() throws Exception {
-        OddVideoPlayMetric event = new OddVideoPlayMetric(orgId, contentType, contentId);
-        assertEquals(OddAppInitMetric.ACTION_VIDEO_PLAY, event.getAction());
+        OddVideoPlayMetric metric = new OddVideoPlayMetric(orgId, contentType, contentId);
+        assertEquals(OddAppInitMetric.ACTION_VIDEO_PLAY, metric.getAction());
     }
 
     @Test
 	public void testGetContentType() throws Exception {
-        OddVideoPlayMetric event = new OddVideoPlayMetric(orgId, contentType, contentId);
-        assertEquals(contentType, event.getContentType());
+        OddVideoPlayMetric metric = new OddVideoPlayMetric(orgId, contentType, contentId);
+        assertEquals(contentType, metric.getContentType());
     }
 
     @Test
 	public void testGetContentId() throws Exception {
-        OddVideoPlayMetric event = new OddVideoPlayMetric(orgId, contentType, contentId);
-        assertEquals(contentId, event.getContentId());
+        OddVideoPlayMetric metric = new OddVideoPlayMetric(orgId, contentType, contentId);
+        assertEquals(contentId, metric.getContentId());
     }
 
     @Test
 	public void testToJSONObject() throws Exception {
-        OddVideoPlayMetric event = new OddVideoPlayMetric(orgId, contentType, contentId);
+        OddVideoPlayMetric metric = new OddVideoPlayMetric(orgId, contentType, contentId);
         String expected = "{" +
-                "type: \"" + event.getType() + "\"," +
+                "type: \"" + metric.getType() + "\"," +
                 "attributes: {" +
-                "organizationId: \"" + event.getOrganizationId() + "\"," +
-                "action: \"" + event.getAction() + "\"," +
-                "contentType: \"" + event.getContentType() + "\"," +
-                "contentId: \"" + event.getContentId() + "\"" +
+                "organizationId: \"" + metric.getOrganizationId() + "\"," +
+                "action: \"" + metric.getAction() + "\"," +
+                "contentType: \"" + metric.getContentType() + "\"," +
+                "contentId: \"" + metric.getContentId() + "\"" +
                 "}" +
                 "}";
-        JSONAssert.assertEquals(expected, event.toJSONObject(), true);
+        JSONAssert.assertEquals(expected, metric.toJSONObject(), true);
     }
 }

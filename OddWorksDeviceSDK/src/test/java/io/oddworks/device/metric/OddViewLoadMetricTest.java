@@ -15,46 +15,46 @@ public class OddViewLoadMetricTest {
 
     @Test
 	public void testGetType() throws Exception {
-        OddViewLoadMetric event = new OddViewLoadMetric(orgId, contentType, contentId);
-        assertEquals("event", event.getType());
+        OddViewLoadMetric metric = new OddViewLoadMetric(orgId, contentType, contentId);
+        assertEquals("event", metric.getType());
     }
 
     @Test
 	public void testGetOrganizationId() throws Exception {
-        OddViewLoadMetric event = new OddViewLoadMetric(orgId, contentType, contentId);
-        assertEquals(orgId, event.getOrganizationId());
+        OddViewLoadMetric metric = new OddViewLoadMetric(orgId, contentType, contentId);
+        assertEquals(orgId, metric.getOrganizationId());
     }
 
     @Test
 	public void testGetAction() throws Exception {
-        OddViewLoadMetric event = new OddViewLoadMetric(orgId, contentType, contentId);
-        assertEquals(OddAppInitMetric.ACTION_VIEW_LOAD, event.getAction());
+        OddViewLoadMetric metric = new OddViewLoadMetric(orgId, contentType, contentId);
+        assertEquals(OddAppInitMetric.ACTION_VIEW_LOAD, metric.getAction());
     }
 
     @Test
 	public void testGetContentType() throws Exception {
-        OddViewLoadMetric event = new OddViewLoadMetric(orgId, contentType, contentId);
-        assertEquals(contentType, event.getContentType());
+        OddViewLoadMetric metric = new OddViewLoadMetric(orgId, contentType, contentId);
+        assertEquals(contentType, metric.getContentType());
     }
 
     @Test
 	public void testGetContentId() throws Exception {
-        OddViewLoadMetric event = new OddViewLoadMetric(orgId, contentType, contentId);
-        assertEquals(contentId, event.getContentId());
+        OddViewLoadMetric metric = new OddViewLoadMetric(orgId, contentType, contentId);
+        assertEquals(contentId, metric.getContentId());
     }
 
     @Test
 	public void testToJSONObject() throws Exception {
-        OddViewLoadMetric event = new OddViewLoadMetric(orgId, contentType, contentId);
+        OddViewLoadMetric metric = new OddViewLoadMetric(orgId, contentType, contentId);
         String expected = "{" +
-                "type: \"" + event.getType() + "\"," +
+                "type: \"" + metric.getType() + "\"," +
                 "attributes: {" +
-                "organizationId: \"" + event.getOrganizationId() + "\"," +
-                "action: \"" + event.getAction() + "\"," +
-                "contentType: \"" + event.getContentType() + "\"," +
-                "contentId: \"" + event.getContentId() + "\"" +
+                "organizationId: \"" + metric.getOrganizationId() + "\"," +
+                "action: \"" + metric.getAction() + "\"," +
+                "contentType: \"" + metric.getContentType() + "\"," +
+                "contentId: \"" + metric.getContentId() + "\"" +
                 "}" +
                 "}";
-        JSONAssert.assertEquals(expected, event.toJSONObject(), true);
+        JSONAssert.assertEquals(expected, metric.toJSONObject(), true);
     }
 }

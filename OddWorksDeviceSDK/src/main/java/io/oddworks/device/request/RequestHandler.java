@@ -116,7 +116,7 @@ public class RequestHandler {
         enqueueOddCall(request, callback);
     }
 
-    protected void postEvent(OddMetric event, Callback callback) {
+    protected void postMetric(OddMetric event, Callback callback) {
         String endpoint = mContext.getString(R.string.endpoint_events);
         Request request = getOddRequest(endpoint, RequestMethod.POST, RequestBody.create(JSON, event.toJSONObject().toString()), true);
         enqueueOddCall(request, callback);
