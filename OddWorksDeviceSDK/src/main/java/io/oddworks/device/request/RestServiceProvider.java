@@ -12,9 +12,9 @@ public class RestServiceProvider {
     private ApiCaller apiCaller;
     private AuthenticationService authenticationService;
 
-    private RestServiceProvider(Context context, String apiVersion, String accessToken) {
+    private RestServiceProvider(Context context, String apiVersion, String accessToken, String appVersion) {
         OddParser.instance = new OddParser();
-        RequestHandler.instance = new RequestHandler(context, apiVersion, accessToken);
+        RequestHandler.instance = new RequestHandler(context, apiVersion, accessToken, appVersion);
         ApiCaller.instance = new ApiCaller(RequestHandler.instance, OddParser.instance);
         this.apiCaller = ApiCaller.instance;
         AuthenticationService.instance = new AuthenticationService(ApiCaller.instance, context);
@@ -22,9 +22,11 @@ public class RestServiceProvider {
     }
 
     /** initialize services and this provider
-     * @param apiVersion api version. e.g. "v1"*/
-    public static void init(Context context, String apiVersion, String accessToken) {
-        instance = new RestServiceProvider(context, apiVersion, accessToken );
+     * @param apiVersion OddWorks API version. e.g. "v1"
+     * @param accessToken OddWorks API access token
+     * @param appVersion git revision or app version string*/
+    public static void init(Context context, String apiVersion, String accessToken, String appVersion) {
+        instance = new RestServiceProvider(context, apiVersion, accessToken, appVersion);
     }
 
     /**
