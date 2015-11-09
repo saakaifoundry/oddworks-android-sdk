@@ -15,46 +15,46 @@ public class OddVideoErrorMetricTest {
 
     @Test
 	public void testGetType() throws Exception {
-        OddVideoErrorMetric event = new OddVideoErrorMetric(orgId, contentType, contentId);
-        assertEquals("event", event.getType());
+        OddVideoErrorMetric metric = new OddVideoErrorMetric(orgId, contentType, contentId);
+        assertEquals("event", metric.getType());
     }
 
     @Test
 	public void testGetOrganizationId() throws Exception {
-        OddVideoErrorMetric event = new OddVideoErrorMetric(orgId, contentType, contentId);
-        assertEquals(orgId, event.getOrganizationId());
+        OddVideoErrorMetric metric = new OddVideoErrorMetric(orgId, contentType, contentId);
+        assertEquals(orgId, metric.getOrganizationId());
     }
 
     @Test
 	public void testGetAction() throws Exception {
-        OddVideoErrorMetric event = new OddVideoErrorMetric(orgId, contentType, contentId);
-        assertEquals(OddAppInitMetric.ACTION_VIDEO_ERROR, event.getAction());
+        OddVideoErrorMetric metric = new OddVideoErrorMetric(orgId, contentType, contentId);
+        assertEquals(OddAppInitMetric.ACTION_VIDEO_ERROR, metric.getAction());
     }
 
     @Test
 	public void testGetContentType() throws Exception {
-        OddVideoErrorMetric event = new OddVideoErrorMetric(orgId, contentType, contentId);
-        assertEquals(contentType, event.getContentType());
+        OddVideoErrorMetric metric = new OddVideoErrorMetric(orgId, contentType, contentId);
+        assertEquals(contentType, metric.getContentType());
     }
 
     @Test
 	public void testGetContentId() throws Exception {
-        OddVideoErrorMetric event = new OddVideoErrorMetric(orgId, contentType, contentId);
-        assertEquals(contentId, event.getContentId());
+        OddVideoErrorMetric metric = new OddVideoErrorMetric(orgId, contentType, contentId);
+        assertEquals(contentId, metric.getContentId());
     }
 
     @Test
 	public void testToJSONObject() throws Exception {
-        OddVideoErrorMetric event = new OddVideoErrorMetric(orgId, contentType, contentId);
+        OddVideoErrorMetric metric = new OddVideoErrorMetric(orgId, contentType, contentId);
         String expected = "{" +
-                "type: \"" + event.getType() + "\"," +
+                "type: \"" + metric.getType() + "\"," +
                 "attributes: {" +
-                "organizationId: \"" + event.getOrganizationId() + "\"," +
-                "action: \"" + event.getAction() + "\"," +
-                "contentType: \"" + event.getContentType() + "\"," +
-                "contentId: \"" + event.getContentId() + "\"" +
+                "organizationId: \"" + metric.getOrganizationId() + "\"," +
+                "action: \"" + metric.getAction() + "\"," +
+                "contentType: \"" + metric.getContentType() + "\"," +
+                "contentId: \"" + metric.getContentId() + "\"" +
                 "}" +
                 "}";
-        JSONAssert.assertEquals(expected, event.toJSONObject(), true);
+        JSONAssert.assertEquals(expected, metric.toJSONObject(), true);
     }
 }

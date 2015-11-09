@@ -14,44 +14,44 @@ public class OddAppInitMetricTest {
 
     @Test
 	public void testGetType() throws Exception {
-        OddAppInitMetric event = new OddAppInitMetric(orgId);
-        assertEquals("event", event.getType());
+        OddAppInitMetric metric = new OddAppInitMetric(orgId);
+        assertEquals("event", metric.getType());
     }
 
     @Test
 	public void testGetOrganizationId() throws Exception {
-        OddAppInitMetric event = new OddAppInitMetric(orgId);
-        assertEquals(orgId, event.getOrganizationId());
+        OddAppInitMetric metric = new OddAppInitMetric(orgId);
+        assertEquals(orgId, metric.getOrganizationId());
     }
 
     @Test
 	public void testGetAction() throws Exception {
-        OddAppInitMetric event = new OddAppInitMetric(orgId);
-        assertEquals(OddAppInitMetric.ACTION_APP_INIT, event.getAction());
+        OddAppInitMetric metric = new OddAppInitMetric(orgId);
+        assertEquals(OddAppInitMetric.ACTION_APP_INIT, metric.getAction());
     }
 
     @Test
 	public void testGetContentType() throws Exception {
-        OddAppInitMetric event = new OddAppInitMetric(orgId);
-        assertEquals(null, event.getContentType());
+        OddAppInitMetric metric = new OddAppInitMetric(orgId);
+        assertEquals(null, metric.getContentType());
     }
 
     @Test
 	public void testGetContentId() throws Exception {
-        OddAppInitMetric event = new OddAppInitMetric(orgId);
-        assertEquals(null, event.getContentId());
+        OddAppInitMetric metric = new OddAppInitMetric(orgId);
+        assertEquals(null, metric.getContentId());
     }
 
     @Test
 	public void testToJSONObject() throws Exception {
-        OddAppInitMetric event = new OddAppInitMetric(orgId);
+        OddAppInitMetric metric = new OddAppInitMetric(orgId);
         String expected = "{" +
-                "type: \"" + event.getType() + "\"," +
+                "type: \"" + metric.getType() + "\"," +
                 "attributes: {" +
-                "organizationId: \"" + event.getOrganizationId() + "\"," +
-                "action: \"" + event.getAction() + "\"" +
+                "organizationId: \"" + metric.getOrganizationId() + "\"," +
+                "action: \"" + metric.getAction() + "\"" +
                 "}" +
                 "}";
-        JSONAssert.assertEquals(expected, event.toJSONObject(), true);
+        JSONAssert.assertEquals(expected, metric.toJSONObject(), true);
     }
 }
