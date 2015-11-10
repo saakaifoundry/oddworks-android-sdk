@@ -3,6 +3,7 @@ package io.oddworks.device.model;
 import java.util.HashMap;
 
 public class Media extends OddObject {
+    public static final String TAG = Media.class.getSimpleName();
     private String mTitle;
     private String mDescription;
     private MediaImage mMediaImage;
