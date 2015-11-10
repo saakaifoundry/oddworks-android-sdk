@@ -7,6 +7,7 @@ import java.util.Date;
  * Response from /v1/auth/device/code
  */
 public class DeviceCodeResponse {
+    public final static String TAG = DeviceCodeResponse.class.getSimpleName();
     final private String deviceCode;
     final private String userCode;
     final private String verificationUrl;

@@ -7,7 +7,7 @@ import java.util.HashMap;
  * Created by brkattk on 9/21/15.
  */
 public class MediaCollection extends OddObject {
-    private static final String TAG = MediaCollection.class.getSimpleName();
+    public static final String TAG = MediaCollection.class.getSimpleName();
 
     private String mTitle;
     private String mDescription;

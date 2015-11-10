@@ -3,6 +3,7 @@ package io.oddworks.device.model;
 import java.util.HashMap;
 
 public class Config extends OddObject {
+    public static final String TAG = Config.class.getSimpleName();
 
     private HashMap<String, Object> mViews;
     private HashMap<String, Object> mFeatures;

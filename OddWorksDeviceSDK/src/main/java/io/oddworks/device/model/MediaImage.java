@@ -9,7 +9,7 @@ import java.net.URISyntaxException;
  * Created by brkattk on 9/25/15.
  */
 public class MediaImage {
-    private static final String TAG = MediaImage.class.getSimpleName();
+    public static final String TAG = MediaImage.class.getSimpleName();
 
     private String mAspect16x9;
     private String mAspect3x4;

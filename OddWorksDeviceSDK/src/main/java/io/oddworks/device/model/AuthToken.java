@@ -4,6 +4,7 @@ package io.oddworks.device.model;
  * Authorization token
  */
 public class AuthToken {
+    public static final String TAG = AuthToken.class.getSimpleName();
     private final String token;
     private final String tokenType;
 

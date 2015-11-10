@@ -4,7 +4,7 @@ package io.oddworks.device.model;
  * Created by brkattk on 9/25/15.
  */
 public class MediaAds {
-    private static final String TAG = MediaAds.class.getSimpleName();
+    public static final String TAG = MediaAds.class.getSimpleName();
     private static final String FORMAT_VMAP = "vmap";
 
     private String mProvider;

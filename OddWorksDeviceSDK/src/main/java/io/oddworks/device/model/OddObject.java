@@ -7,7 +7,7 @@ import java.util.HashMap;
  * Created by brkattk on 10/22/15.
  */
 abstract public class OddObject {
-    private static final String TAG = OddObject.class.getSimpleName();
+    public static final String TAG = OddObject.class.getSimpleName();
 
     public static final String TYPE_LIVE_STREAM = "liveStream";
     public static final String TYPE_PROMOTION = "promotion";

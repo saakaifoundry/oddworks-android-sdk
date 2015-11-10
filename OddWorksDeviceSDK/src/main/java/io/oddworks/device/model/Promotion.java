@@ -3,7 +3,7 @@ package io.oddworks.device.model;
 import java.util.HashMap;
 
 public class Promotion extends OddObject {
-    public final static String TAG = "promotion";
+    public static final String TAG = Promotion.class.getSimpleName();
 
     private String mTitle;
     private String mDescription;
