@@ -234,4 +234,20 @@ public class MediaCollectionTest {
 
         assertThat(mediaCollection.findIncludedByIdentifier(videoId), is(nullValue()));
     }
+
+    @Test
+    public void isPresentableShouldReturnTrue() {
+        assertThat(mediaCollection.isPresentable(), is(true));
+    }
+
+    @Test
+    public void toPresentableFieldsShouldEqualMediasFields() {
+        Presentable presentable = mediaCollection.toPresentable();
+
+        assertThat("titles should match", presentable.getTitle(), is(equalTo(mediaCollection.getTitle())));
+        assertThat("descriptions should match", presentable.getDescription(),
+                is(equalTo(mediaCollection.getDescription())));
+        assertThat("MediaImages should match", presentable.getMediaImage(),
+                is(equalTo(mediaCollection.getMediaImage())));
+    }
 }

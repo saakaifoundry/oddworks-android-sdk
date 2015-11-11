@@ -81,10 +81,21 @@ public class Media extends OddObject {
     }
 
     @Override
+    public boolean isPresentable() {
+        return true;
+    }
+
+    @Override
+    public Presentable toPresentable() {
+        return new Presentable(mTitle, mDescription, mMediaImage);
+    }
+
+    @Override
     public String toString() {
         return getClass().getSimpleName() + "(" +
                 "id='" + getId() + "', " +
                 "type='" + getType() + "', " +
                 "title='" + getTitle() + "')";
     }
+
 }

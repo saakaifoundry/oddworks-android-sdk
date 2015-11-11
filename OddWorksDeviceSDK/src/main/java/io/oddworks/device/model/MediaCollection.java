@@ -57,6 +57,16 @@ public class MediaCollection extends OddObject {
     }
 
     @Override
+    public boolean isPresentable() {
+        return true;
+    }
+
+    @Override
+    public Presentable toPresentable() {
+        return new Presentable(mTitle, mDescription, mMediaImage);
+    }
+
+    @Override
     public String toString() {
         return TAG + "(" +
                 "id='" + getId() + "', " +

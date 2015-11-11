@@ -1,6 +1,9 @@
 package io.oddworks.device.model;
 
 import android.support.test.runner.AndroidJUnit4;
+import android.test.ActivityInstrumentationTestCase2;
+
+import junit.framework.TestCase;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -8,8 +11,13 @@ import org.junit.runner.RunWith;
 
 import java.util.HashMap;
 
-import static org.hamcrest.CoreMatchers.*;
-import static org.junit.Assert.*;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.instanceOf;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Created by brkattk on 10/22/15.
@@ -132,5 +140,22 @@ public class MediaTest {
     @Test
     public void testGetAttributes() throws Exception {
         assertEquals(attributes, video.getAttributes());
+    }
+
+    @Test
+    public void isPresentableShouldReturnTrue() {
+        Media media = new Media(id, typeVideo);
+        assertThat(media.isPresentable(), is(true));
+    }
+
+    @Test
+    public void toPresentableFieldsShouldEqualMediasFields() {
+        Media media = new Media(id, typeVideo);
+        media.setAttributes(attributes);
+        Presentable presentable = media.toPresentable();
+
+        assertThat("titles should match", presentable.getTitle(), is(equalTo(media.getTitle())));
+        assertThat("descriptions should match", presentable.getDescription(), is(equalTo(media.getDescription())));
+        assertThat("MediaImages should match", presentable.getMediaImage(), is(equalTo(media.getMediaImage())));
     }
 }
