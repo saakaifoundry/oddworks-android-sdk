@@ -1,10 +1,14 @@
 package io.oddworks.device.metric;
 
+import android.support.test.runner.AndroidJUnit4;
+
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.skyscreamer.jsonassert.JSONAssert;
 
 import static org.junit.Assert.assertEquals;
 
+@RunWith(AndroidJUnit4.class)
 public class OddVideoStopMetricTest {
     private String orgId = "odd-networks";
     private String contentType = "aThing";

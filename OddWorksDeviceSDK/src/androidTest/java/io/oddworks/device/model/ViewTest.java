@@ -1,7 +1,10 @@
 package io.oddworks.device.model;
 
+import android.support.test.runner.AndroidJUnit4;
+
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -11,6 +14,7 @@ import static org.junit.Assert.assertEquals;
 /**
  * Created by brkattk on 10/20/15.
  */
+@RunWith(AndroidJUnit4.class)
 public class ViewTest {
     private String id = "theId";
     private String type = OddView.class.getSimpleName();
