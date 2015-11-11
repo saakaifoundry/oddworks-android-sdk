@@ -8,7 +8,6 @@ import java.util.HashMap;
  */
 abstract public class OddObject {
     public static final String TAG = OddObject.class.getSimpleName();
-
     public static final String TYPE_LIVE_STREAM = "liveStream";
     public static final String TYPE_PROMOTION = "promotion";
     public static final String TYPE_VIDEO_COLLECTION = "videoCollection";
@@ -150,10 +149,28 @@ abstract public class OddObject {
         }
     }
 
+    /**
+     * @return true if a presentable can be created from this object using the method toPresentable, otherwise false
+
+     */
+    public boolean isPresentable() {
+        return false;
+    }
+
+    /**
+     * Generate a Presentable from this odd object. Should be overridden by any child classes that can be presented.
+     * If overriding, remember to override isPresentable too.
+     * @return a Presentable representation of this object or null if object is not presentable.
+     */
+    public Presentable toPresentable() {
+        return null;
+    }
+
     @Override
     public String toString() {
         return getClass().getSimpleName() + "(" +
                 "id='" + getId() + "', " +
                 "type='" + getType() + "')";
     }
+
 }
