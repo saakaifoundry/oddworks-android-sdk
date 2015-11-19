@@ -1,6 +1,5 @@
 package io.oddworks.device.model;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 /**

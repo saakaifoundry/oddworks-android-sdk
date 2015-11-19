@@ -1,9 +1,6 @@
 package io.oddworks.device.model;
 
 import android.support.test.runner.AndroidJUnit4;
-import android.test.ActivityInstrumentationTestCase2;
-
-import junit.framework.TestCase;
 
 import org.junit.Before;
 import org.junit.Test;

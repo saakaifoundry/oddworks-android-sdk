@@ -1,7 +1,5 @@
 package io.oddworks.device.exception;
 
-import io.oddworks.device.exception.BadResponseCodeException;
-
 /**
  * Created by dan on 10/23/15.
  */

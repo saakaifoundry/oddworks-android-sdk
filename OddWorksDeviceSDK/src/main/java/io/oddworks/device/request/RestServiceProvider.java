@@ -1,7 +1,6 @@
 package io.oddworks.device.request;
 
 import android.content.Context;
-import io.oddworks.device.model.AuthToken;
 
 /**
  * Class to initialize services in the io.oddworks.device.request package
