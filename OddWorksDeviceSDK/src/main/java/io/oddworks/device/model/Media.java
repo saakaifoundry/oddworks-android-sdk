@@ -8,7 +8,7 @@ public class Media extends OddObject {
     private String mDescription;
     private MediaImage mMediaImage;
     private String mReleaseDate;
-    private MediaAds mMediaAds;
+    private MediaAd mMediaAd;
     private Integer mDuration;
     private String mUrl;
 
@@ -48,8 +48,8 @@ public class Media extends OddObject {
         return mDuration;
     }
 
-    public MediaAds getMediaAds() {
-        return mMediaAds;
+    public MediaAd getMediaAd() {
+        return mMediaAd;
     }
 
     public Boolean isLive() {
@@ -62,7 +62,7 @@ public class Media extends OddObject {
         mDescription = (String) attributes.get("description");
         mMediaImage = (MediaImage) attributes.get("mediaImage");
         mReleaseDate = (String) attributes.get("releaseDate");
-        mMediaAds = (MediaAds) attributes.get("mediaAds");
+        mMediaAd = (MediaAd) attributes.get("mediaAd");
         mDuration = (int) attributes.get("duration");
         mUrl = (String) attributes.get("url");
     }
@@ -73,7 +73,7 @@ public class Media extends OddObject {
         attributes.put("title", getTitle());
         attributes.put("description", getDescription());
         attributes.put("mediaImage", getMediaImage());
-        attributes.put("mediaAds", getMediaAds());
+        attributes.put("mediaAd", getMediaAd());
         attributes.put("releaseDate", getReleaseDate());
         attributes.put("duration", getDuration());
         attributes.put("url", getUrl());
