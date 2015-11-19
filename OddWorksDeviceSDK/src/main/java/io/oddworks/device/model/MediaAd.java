@@ -22,7 +22,7 @@ public class MediaAd {
         mProvider = (String) properties.get("provider");
         mFormat = (String) properties.get("format");
         mUrl = (String) properties.get("url");
-        mNetworkId = (int) properties.get("networkId");
+        mNetworkId = Integer.valueOf((String) properties.get("networkId"));
         mProfileName = (String) properties.get("profileName");
         mSiteSectionId = (String) properties.get("siteSectionId");
         mVHost = (String) properties.get("vHost");

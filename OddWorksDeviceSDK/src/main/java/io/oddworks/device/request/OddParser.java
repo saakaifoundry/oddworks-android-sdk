@@ -90,11 +90,7 @@ public class OddParser {
             Iterator<String> adKeys = rawAds.keys();
             while(adKeys.hasNext()) {
                 String adProperty = adKeys.next();
-                if (adProperty == "networkId") {
-                    properties.put(adProperty, parseInt(rawAds, adProperty));
-                } else {
-                    properties.put(adProperty, parseString(rawAds, adProperty));
-                }
+                properties.put(adProperty, parseString(rawAds, adProperty));
             }
             return new MediaAd(properties);
         } catch (Exception e) {
