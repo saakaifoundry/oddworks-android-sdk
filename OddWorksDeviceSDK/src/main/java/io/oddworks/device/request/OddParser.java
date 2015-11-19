@@ -84,11 +84,19 @@ public class OddParser {
 
     public MediaAd parseMediaAd(final JSONObject data) throws JSONException {
         try {
-            JSONObject ads = data.getJSONObject("ads");
-            String provider = parseString(ads, "provider");
-            String format = parseString(ads, "format");
-            String url = parseString(ads, "url");
-            return new MediaAds(provider, format, url);
+            JSONObject rawAds = data.getJSONObject("ads");
+
+            HashMap<String, Object> properties = new HashMap<>();
+            Iterator<String> adKeys = rawAds.keys();
+            while(adKeys.hasNext()) {
+                String adProperty = adKeys.next();
+                if (adProperty == "networkId") {
+                    properties.put(adProperty, parseInt(rawAds, adProperty));
+                } else {
+                    properties.put(adProperty, parseString(rawAds, adProperty));
+                }
+            }
+            return new MediaAd(properties);
         } catch (Exception e) {
             return new MediaAd();
         }
