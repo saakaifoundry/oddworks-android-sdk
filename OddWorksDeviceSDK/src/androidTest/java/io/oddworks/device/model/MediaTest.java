@@ -19,9 +19,6 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
-/**
- * Created by brkattk on 10/22/15.
- */
 @RunWith(AndroidJUnit4.class)
 public class MediaTest {
     private String id = "123";
@@ -31,7 +28,7 @@ public class MediaTest {
     private String releaseDate = "for.ev.er.";
     private String url = "http://oddnetworks.com";
     private int duration = 2345;
-    private MediaAds mediaAds = new MediaAds();
+    private MediaAd mediaAd = new MediaAd();
     private MediaImage mediaImage = new MediaImage("a", "b", "c", "d", "e");
     private Media video = new Media(id, typeVideo);
     private HashMap<String, Object> attributes = new HashMap<>();
@@ -43,7 +40,7 @@ public class MediaTest {
         attributes.put("releaseDate", releaseDate);
         attributes.put("url", url);
         attributes.put("duration", duration);
-        attributes.put("mediaAds", mediaAds);
+        attributes.put("mediaAd", mediaAd);
         attributes.put("mediaImage", mediaImage);
         video.setAttributes(attributes);
     }
@@ -94,8 +91,8 @@ public class MediaTest {
     }
 
     @Test
-    public void testGetMediaAds() throws Exception {
-        assertEquals(mediaAds, video.getMediaAds());
+    public void testGetMediaAd() throws Exception {
+        assertEquals(mediaAd, video.getMediaAd());
     }
 
     @Test
@@ -120,7 +117,7 @@ public class MediaTest {
         assertEquals(null, media.getMediaImage());
         assertEquals(Integer.toString(0), Integer.toString(media.getDuration()));
         assertEquals(null, media.getUrl());
-        assertEquals(null, media.getMediaAds());
+        assertEquals(null, media.getMediaAd());
     }
 
     @Test
@@ -134,7 +131,7 @@ public class MediaTest {
         assertEquals(mediaImage, video.getMediaImage());
         assertEquals(Integer.toString(duration), Integer.toString(video.getDuration()));
         assertEquals(url, video.getUrl());
-        assertEquals(mediaAds, video.getMediaAds());
+        assertEquals(mediaAd, video.getMediaAd());
     }
 
     @Test

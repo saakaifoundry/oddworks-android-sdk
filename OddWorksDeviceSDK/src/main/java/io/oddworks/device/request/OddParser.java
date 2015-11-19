@@ -15,7 +15,7 @@ import io.oddworks.device.model.Config;
 import io.oddworks.device.model.DeviceCodeResponse;
 import io.oddworks.device.model.Identifier;
 import io.oddworks.device.model.Media;
-import io.oddworks.device.model.MediaAds;
+import io.oddworks.device.model.MediaAd;
 import io.oddworks.device.model.MediaCollection;
 import io.oddworks.device.model.MediaImage;
 import io.oddworks.device.model.OddObject;
@@ -82,15 +82,23 @@ public class OddParser {
         return new MediaImage(aspect16x9, aspect3x4, aspect4x3, aspect1x1, aspect2x3);
     }
 
-    public MediaAds parseMediaAds(final JSONObject data) throws JSONException {
+    public MediaAd parseMediaAd(final JSONObject data) throws JSONException {
         try {
-            JSONObject ads = data.getJSONObject("ads");
-            String provider = parseString(ads, "provider");
-            String format = parseString(ads, "format");
-            String url = parseString(ads, "url");
-            return new MediaAds(provider, format, url);
+            JSONObject rawAds = data.getJSONObject("ads");
+
+            HashMap<String, Object> properties = new HashMap<>();
+            Iterator<String> adKeys = rawAds.keys();
+            while(adKeys.hasNext()) {
+                String adProperty = adKeys.next();
+                if (adProperty == "networkId") {
+                    properties.put(adProperty, parseInt(rawAds, adProperty));
+                } else {
+                    properties.put(adProperty, parseString(rawAds, adProperty));
+                }
+            }
+            return new MediaAd(properties);
         } catch (Exception e) {
-            return new MediaAds();
+            return new MediaAd();
         }
     }
 
@@ -139,7 +147,7 @@ public class OddParser {
 
         attributes.put("url", parseString(rawAttributes, "url"));
         attributes.put("mediaImage", parseMediaImage(images));
-        attributes.put("mediaAds", parseMediaAds(rawAttributes));
+        attributes.put("mediaAd", parseMediaAd(rawAttributes));
 
         media.setAttributes(attributes);
 
