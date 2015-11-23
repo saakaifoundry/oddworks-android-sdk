@@ -29,7 +29,7 @@ public class MediaAdTest {
     @Before
     public void beforeEach() {
         attributes.put("url", url);
-        attributes.put("networkId", networkId);
+        attributes.put("networkId", Integer.toString(networkId));
         attributes.put("profileName", profileName);
         attributes.put("siteSectionId", siteSectionId);
         attributes.put("vHost", vHost);
