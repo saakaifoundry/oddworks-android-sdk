@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">OddWorks Device SDK</string>
-    <string name="odd_base_url">https://device-staging.oddworks.io/%1$s/</string>
+    <string name="odd_base_url_staging">https://device-staging.oddworks.io/%1$s/</string>
+    <string name="odd_base_url">https://device.oddworks.io/%1$s/</string>
     <string name="odd_request_content_type">application/json</string>
     <string name="endpoint_events">events</string>
     <string name="endpoint_odd_views">views</string>

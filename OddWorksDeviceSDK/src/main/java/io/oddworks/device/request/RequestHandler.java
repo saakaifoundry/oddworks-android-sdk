@@ -23,7 +23,7 @@ import io.oddworks.device.model.AuthToken;
 public class RequestHandler {
     protected static RequestHandler instance;
 
-    /** supported request methods, if adding new ones, you'll probably have to make changes to existing
+    /** supported request methods. if you add new ones, you'll probably have to make changes to existing
     RequestHandler methods */
     private enum RequestMethod { GET, POST};
     private static MediaType JSON = MediaType.parse("application/json; charset=utf-8");
@@ -40,15 +40,14 @@ public class RequestHandler {
     private String mLocale = mLanguage + "-" + mCountry;
 
     /**
-     *
-     * @param context
-     * @param version api version. eg "v1"
+     * @param baseUrl base url for all calls from the http to the version number and trailing slash.
+     *                eg https://device.oddworks.io/vi/
      */
-    protected RequestHandler(Context context, String version, String accessToken, String appVersion) {
+    protected RequestHandler(Context context, String baseUrl, String accessToken, String appVersion) {
         mContext = context;
         mAccessToken = accessToken;
         mAppVersion = appVersion;
-        mBaseUrl = String.format(mContext.getString(R.string.odd_base_url), version);
+        mBaseUrl = baseUrl;
         mAccept = mContext.getString(R.string.odd_request_content_type);
         authToken = null;
     }
