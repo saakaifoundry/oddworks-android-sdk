@@ -1,56 +1,32 @@
 package io.oddworks.device.model;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 
-public class Config extends OddObject {
+public class Config {
     public static final String TAG = Config.class.getSimpleName();
+    private final boolean mAuthEnabled;
+    private final AdsConfig mAds;
 
-    private HashMap<String, Object> mViews;
-    private HashMap<String, Object> mFeatures;
+    private LinkedHashMap<String, String> mViews;
 
-    public Config(Identifier identifier) {
-        super(identifier);
+    public Config(LinkedHashMap<String, String> views,
+                  boolean authEnabled,
+                  AdsConfig ads) {
+        this.mViews = views;
+        this.mAuthEnabled = authEnabled;
+        this.mAds = ads;
     }
 
-    public Config(String id, String type) {
-        super(id, type);
+
+    public boolean isAuthEnabled() {
+        return mAuthEnabled;
     }
 
-    public final HashMap<String, Object> getViews() {
-        if (mViews == null) {
-            mViews = new HashMap<>();
-        }
+    public AdsConfig getAds() {
+        return mAds;
+    }
+
+    public LinkedHashMap<String, String> getViews() {
         return mViews;
-    }
-
-    public final HashMap<String, Object> getFeatures() {
-        if (mFeatures == null) {
-            mFeatures = new HashMap<>();
-        }
-        return mFeatures;
-    }
-
-    @Override
-    public HashMap<String, Object> getAttributes() {
-        HashMap<String, Object> attributes = new HashMap<>();
-
-        attributes.put("views", getViews());
-        attributes.put("features", getFeatures());
-
-        return attributes;
-    }
-
-    @Override
-    public void setAttributes(HashMap<String, Object> attributes) {
-        mViews = (HashMap<String, Object>) attributes.get("views");
-        mFeatures = (HashMap<String, Object>) attributes.get("features");
-    }
-
-    @Override
-    public String toString() {
-        return "Config{" +
-                "views='" + getViews().toString() + '\'' +
-                "features='" + getFeatures().toString() + '\'' +
-                '}';
     }
 }
