@@ -1,8 +1,8 @@
 package io.oddworks.device.model;
 
 public class AdsConfig {
-    public enum AdProvider { FREEWHEEL, BRIGHTCOVE, YOESPACE, GOOGLE}
-    public enum AdFormat { VAST }
+    public enum AdProvider { FREEWHEEL, GOOGLE, VIDEOPLAZA }
+    public enum AdFormat { FREEWHEEL, VAST, VMAP }
     private final AdProvider provider;
     private final AdFormat format;
     private final String url;
