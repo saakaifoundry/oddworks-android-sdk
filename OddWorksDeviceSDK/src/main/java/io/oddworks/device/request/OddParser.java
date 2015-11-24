@@ -9,9 +9,11 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 
 import io.oddworks.device.model.AuthToken;
 import io.oddworks.device.model.Config;
+import io.oddworks.device.model.AdsConfig;
 import io.oddworks.device.model.DeviceCodeResponse;
 import io.oddworks.device.model.Identifier;
 import io.oddworks.device.model.Media;
@@ -184,19 +186,29 @@ public class OddParser {
         return videos;
     }
 
+    protected AdsConfig parseAds(JSONObject rawFeatures) {
+
+        try {
+            JSONObject rawAds = parseJSONObject(rawFeatures, "ads");
+            String providerStr = parseString(rawAds, "provider");
+            AdsConfig.AdProvider provider = AdsConfig.AdProvider.valueOf(providerStr.toUpperCase());
+            String adFormatStr = parseString(rawAds, "format");
+            AdsConfig.AdFormat format = AdsConfig.AdFormat.valueOf(adFormatStr.toUpperCase());
+            String url = parseString(rawAds, "url");
+            return new AdsConfig(provider, format, url);
+        } catch (Exception e) {
+            Log.w(TAG, "failed to parse ads feature from config");
+            return null;
+        }
+    }
+
     protected Config parseConfig(final String result) {
         try {
             JSONObject resultJSONObject = new JSONObject(result);
             JSONObject dataJSONObject = parseJSONObject(resultJSONObject, "data");
             JSONObject rawAttributes = parseJSONObject(dataJSONObject, "attributes");
 
-            Config config = new Config(
-                    parseString(dataJSONObject, "id"),
-                    parseString(dataJSONObject, "type"));
-
-
-            // TODO - figure out a better way of managing views and features @EJS
-            HashMap<String, Object> views = new HashMap<>();
+            LinkedHashMap<String, String> views = new LinkedHashMap<>();
             JSONObject rawViews = parseJSONObject(rawAttributes, "views");
             Iterator<String> viewNames = rawViews.keys();
             while(viewNames.hasNext()) {
@@ -204,25 +216,29 @@ public class OddParser {
                 views.put(viewName, parseString(rawViews, viewName));
             }
 
-            HashMap<String, Object> features = new HashMap<>();
-            JSONObject rawFeatures = parseJSONObject(rawAttributes, "features");
-            Iterator<String> featureNames = rawFeatures.keys();
-            while(featureNames.hasNext()) {
-                String featureName = featureNames.next();
-                features.put(featureName, parseJSONObject(rawFeatures, featureName));
-            }
-
-            HashMap<String, Object> attributes = new HashMap<>();
-            attributes.put("views", views);
-            attributes.put("features", features);
-            config.setAttributes(attributes);
-
-            return config;
+            JSONObject rawFeatures = parseFeatures(rawAttributes);
+            AdsConfig ads = parseAds(rawFeatures);
+            boolean authEnabled = isAuthEnabled(rawFeatures);
+            return new Config(views, authEnabled, ads);
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
         return null;
+    }
+
+    private JSONObject parseFeatures(JSONObject rawAttributes) throws JSONException {
+        return parseJSONObject(rawAttributes, "features");
+    }
+
+    private boolean isAuthEnabled(JSONObject rawFeatures) throws JSONException {
+        try {
+            JSONObject rawAuth = parseJSONObject(rawFeatures, "authentication");
+            String authString = parseString(rawAuth, "enabled");
+            return Boolean.parseBoolean(authString);
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     protected OddView parseView(final String result) {
