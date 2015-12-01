@@ -11,9 +11,6 @@ import java.util.HashMap;
 
 import static org.junit.Assert.assertEquals;
 
-/**
- * Created by brkattk on 10/20/15.
- */
 @RunWith(AndroidJUnit4.class)
 public class ViewTest {
     private String id = "theId";

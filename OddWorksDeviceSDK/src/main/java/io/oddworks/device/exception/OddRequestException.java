@@ -1,8 +1,5 @@
 package io.oddworks.device.exception;
 
-/**
- * Created by Dan Pallas on 9/16/15.
- */
 public class OddRequestException extends RuntimeException {
     public OddRequestException() {
     }

@@ -5,9 +5,6 @@ import android.util.Log;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-/**
- * Created by brkattk on 10/5/15.
- */
 public abstract class OddMetric {
     private static final String TAG = OddMetric.class.getSimpleName();
     private static final String TYPE = "event";

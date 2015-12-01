@@ -1,8 +1,5 @@
 package io.oddworks.device.model;
 
-/**
- * Created by brkattk on 10/20/15.
- */
 public class Identifier {
     public static final String TAG = Identifier.class.getSimpleName();
     private String mId;

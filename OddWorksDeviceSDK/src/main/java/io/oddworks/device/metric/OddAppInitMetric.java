@@ -1,8 +1,5 @@
 package io.oddworks.device.metric;
 
-/**
- * Created by brkattk on 10/5/15.
- */
 public class OddAppInitMetric extends OddMetric {
     private static final String TAG = OddAppInitMetric.class.getSimpleName();
 

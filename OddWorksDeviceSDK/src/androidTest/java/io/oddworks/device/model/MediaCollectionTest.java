@@ -15,9 +15,6 @@ import static org.hamcrest.CoreMatchers.isA;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.junit.Assert.assertThat;
 
-/**
- * Created by brkattk on 10/22/15.
- */
 @RunWith(AndroidJUnit4.class)
 public class MediaCollectionTest {
     private String id = "123";

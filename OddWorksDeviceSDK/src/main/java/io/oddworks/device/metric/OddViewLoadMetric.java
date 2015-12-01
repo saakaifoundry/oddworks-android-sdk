@@ -1,8 +1,5 @@
 package io.oddworks.device.metric;
 
-/**
- * Created by brkattk on 10/16/15.
- */
 public class OddViewLoadMetric extends OddMetric {
     private static final String TAG = OddViewLoadMetric.class.getSimpleName();
 

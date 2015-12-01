@@ -3,9 +3,6 @@ package io.oddworks.device.model;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-/**
- * Created by brkattk on 10/22/15.
- */
 abstract public class OddObject {
     public static final String TAG = OddObject.class.getSimpleName();
     public static final String TYPE_LIVE_STREAM = "liveStream";

@@ -7,9 +7,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
-/**
- * Created by dan on 11/24/15.
- */
 public class AssetUtils {
     public static final String TAG = AssetUtils.class.getSimpleName();
     public static final int INPUT_BUFFER_SIZE = 3000;

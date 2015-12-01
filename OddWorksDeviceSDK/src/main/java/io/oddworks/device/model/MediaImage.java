@@ -5,9 +5,6 @@ import android.util.Log;
 import java.net.URI;
 import java.net.URISyntaxException;
 
-/**
- * Created by brkattk on 9/25/15.
- */
 public class MediaImage {
     public static final String TAG = MediaImage.class.getSimpleName();
 

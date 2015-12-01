@@ -1,8 +1,5 @@
 package io.oddworks.device.metric;
 
-/**
- * Created by brkattk on 10/5/15.
- */
 public class OddVideoErrorMetric extends OddMetric {
     private static final String TAG = OddVideoErrorMetric.class.getSimpleName();
 

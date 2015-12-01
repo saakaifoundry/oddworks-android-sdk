@@ -2,9 +2,6 @@ package io.oddworks.device.model;
 
 import java.util.HashMap;
 
-/**
- * Created by brkattk on 9/21/15.
- */
 public class MediaCollection extends OddObject {
     public static final String TAG = MediaCollection.class.getSimpleName();
 

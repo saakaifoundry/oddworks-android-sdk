@@ -12,9 +12,6 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
-/**
- * Created by dan on 11/11/15.
- */
 @RunWith(AndroidJUnit4.class)
 public class PromotionTest {
     public Promotion mPromotion;
