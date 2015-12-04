@@ -75,6 +75,18 @@ public class ApiCaller {
         requestHandler.getVideos(col.getId(), requestCallback);
     }
 
+    /** gets all MediaCollections and Media related to a MediaCollection. Good when you want videos and nested
+     * collections */
+    public void getMediaCollectionWithRelated(String mediaCollectionId, final OddCallback<MediaCollection> cb) {
+        Callback requestCallback = getRequestCallback(cb, new ParseCall<MediaCollection>() {
+            @Override
+            public MediaCollection parse(String responseBody) {
+                return parser.parseMediaCollectionResponse(responseBody);
+            }
+        });
+        requestHandler.getVideos(mediaCollectionId, requestCallback);
+    }
+
     public void getSearch(final String term, final int limit, final int offset, final OddCallback<List<OddObject>> cb) {
         Callback requestCallback = getRequestCallback(cb, new ParseCall<List<OddObject>>() {
 

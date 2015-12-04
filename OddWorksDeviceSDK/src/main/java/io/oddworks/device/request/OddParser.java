@@ -11,9 +11,10 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 
+import io.oddworks.device.exception.OddParseException;
+import io.oddworks.device.model.AdsConfig;
 import io.oddworks.device.model.AuthToken;
 import io.oddworks.device.model.Config;
-import io.oddworks.device.model.AdsConfig;
 import io.oddworks.device.model.DeviceCodeResponse;
 import io.oddworks.device.model.Identifier;
 import io.oddworks.device.model.Media;
@@ -122,6 +123,45 @@ public class OddParser {
         addRelationshipsToOddObject(relationships, collection);
 
         return collection;
+    }
+
+    public MediaCollection parseMediaCollectionResponse(String responseBody) {
+        MediaCollection mc = null;
+        try {
+            JSONObject jsonResponse = new JSONObject(responseBody);
+            JSONObject jsonData = jsonResponse.getJSONObject("data");
+            mc = parseMediaCollection(jsonData);
+            JSONArray included = jsonResponse.getJSONArray("included");
+            addIncluded(mc, included);
+        } catch (Exception e) {
+            throw new OddParseException(e);
+        }
+        return mc;
+    }
+
+    /**
+     * parses included and adds it to an OddObject
+     * @param addTo addTo.addIncluded is called on the parsed included objects
+     * @throws JSONException
+     */
+    private void addIncluded(OddObject addTo, JSONArray included) throws JSONException {
+        for (int i = 0; i < included.length(); i++) {
+            JSONObject includedObject = included.getJSONObject(i);
+            String includedType = parseString(includedObject, "type");
+
+            switch (includedType) {
+                case OddObject.TYPE_VIDEO_COLLECTION:
+                    addTo.addIncluded(parseMediaCollection(includedObject));
+                    break;
+                case OddObject.TYPE_LIVE_STREAM:
+                case OddObject.TYPE_VIDEO:
+                    addTo.addIncluded(parseMedia(includedObject));
+                    break;
+                case OddObject.TYPE_PROMOTION:
+                    addTo.addIncluded(parsePromotion(includedObject));
+                    break;
+            }
+        }
     }
 
     protected Media parseMedia(final JSONObject dataObject) throws JSONException {
@@ -259,24 +299,7 @@ public class OddParser {
 
             // fill the view's included{Type} arrays with parsable objects
             JSONArray includedArray = parseJSONArray(resultObject, "included");
-            for (int i = 0; i < includedArray.length(); i++) {
-                JSONObject includedObject = includedArray.getJSONObject(i);
-                String includedType = parseString(includedObject, "type");
-
-                switch (includedType) {
-                    case OddObject.TYPE_VIDEO_COLLECTION:
-                        view.addIncluded(parseMediaCollection(includedObject));
-                        break;
-                    case OddObject.TYPE_LIVE_STREAM:
-                    case OddObject.TYPE_VIDEO:
-                        view.addIncluded(parseMedia(includedObject));
-                        break;
-                    case OddObject.TYPE_PROMOTION:
-                        view.addIncluded(parsePromotion(includedObject));
-                        break;
-                }
-            }
-
+            addIncluded(view, includedArray);
             // backfill newly created includedMediaCollections with newly created media
             view.fillIncludedMediaCollections();
 

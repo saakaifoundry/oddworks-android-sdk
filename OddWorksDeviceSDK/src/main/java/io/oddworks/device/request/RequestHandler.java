@@ -106,12 +106,17 @@ public class RequestHandler {
     }
 
     protected void getVideos(String collectionId, Callback callback) {
-        Request request = getOddGetRequest("videoCollection/" + collectionId + "/videos");
+        Request request = getOddGetRequest("videoCollections/" + collectionId + "/videos");
         enqueueOddCall(request, callback);
     }
 
     protected void getSearch(String term, int limit, int offset, Callback callback) {
         Request request = getOddGetRequest("search?term=" + term + "&limit=" + limit + "&offset=" + offset);
+        enqueueOddCall(request, callback);
+    }
+
+    protected void getVideoCollection(String videoCollectionId, Callback callback) {
+        Request request= getOddGetRequest("videoCollections/" + videoCollectionId);
         enqueueOddCall(request, callback);
     }
 

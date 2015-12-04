@@ -5,19 +5,23 @@ import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
 import android.test.AndroidTestCase;
 
-
-import static org.junit.Assert.assertThat;
-import static org.hamcrest.CoreMatchers.*;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import io.oddworks.device.model.AdsConfig;
 import io.oddworks.device.model.Config;
+import io.oddworks.device.model.Identifier;
+import io.oddworks.device.model.MediaCollection;
 import io.oddworks.device.testutils.AssetUtils;
+
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.hamcrest.CoreMatchers.nullValue;
+import static org.junit.Assert.assertThat;
 
 @RunWith(AndroidJUnit4.class)
 public class OddParserTest extends AndroidTestCase {
@@ -89,5 +93,21 @@ public class OddParserTest extends AndroidTestCase {
         Config config = oddParser.parseConfig(json);
         assertThat(config.isAuthEnabled(), is(false));
         assertThat(config.getAds(), is(nullValue()));
+    }
+
+    @Test
+    public void testParseMediaCollectionWithRelated() throws Exception {
+        String json = AssetUtils.readFileToString(mContext, "MediaCollectionWithIncluded.json");
+        MediaCollection mc = oddParser.parseMediaCollectionResponse(json);
+        assertThat(mc.getId(), is("ooyala-8zbHZrdzp4s-iQtsn5V_KWt1NUutoiMx"));
+        assertThat(mc.getAttributes(), is(notNullValue()));
+        assertThat(mc.getRelationships().size(), is(1));
+        ArrayList<Identifier> relationshipIds = mc.getRelationships().get(0).getIdentifiers();
+        Identifier firstVidId = relationshipIds.get(0);
+        assertThat(firstVidId.getId(), is("ooyala-wyN2FzdzrDIT7uOhpq_ZMX1fSv5k7T9k"));
+        assertThat(mc.findIncludedByIdentifier(firstVidId), is(notNullValue()));
+        Identifier secondVidId = relationshipIds.get(1);
+        assertThat(secondVidId.getId(), is("ooyala-p0NmFzdzp2HFJfXPruqOCXJ5VEwqjVU-"));
+        assertThat(mc.findIncludedByIdentifier(secondVidId), is(notNullValue()));
     }
 }
