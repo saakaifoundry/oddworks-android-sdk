@@ -26,7 +26,7 @@ android {
 
 group = 'com.github.oddnetworks'
 
-version = '1.0.0-beta-25'
+version = '1.0.0-beta-26'
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
