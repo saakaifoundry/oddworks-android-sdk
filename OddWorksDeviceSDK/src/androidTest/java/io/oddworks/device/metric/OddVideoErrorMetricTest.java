@@ -1,6 +1,7 @@
 package io.oddworks.device.metric;
 
 import android.support.test.runner.AndroidJUnit4;
+import android.util.Log;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -16,37 +17,40 @@ public class OddVideoErrorMetricTest {
 
     @Test
 	public void testGetType() throws Exception {
-        OddVideoErrorMetric metric = new OddVideoErrorMetric(orgId, contentType, contentId);
-        assertEquals("event", metric.getType());
+        assertEquals("event", OddVideoErrorMetric.getInstance().getType());
     }
 
     @Test
 	public void testGetOrganizationId() throws Exception {
-        OddVideoErrorMetric metric = new OddVideoErrorMetric(orgId, contentType, contentId);
-        assertEquals(orgId, metric.getOrganizationId());
+        OddVideoErrorMetric.getInstance().setOrganizationId(orgId);
+        assertEquals(orgId, OddVideoErrorMetric.getInstance().getOrganizationId());
     }
 
     @Test
 	public void testGetAction() throws Exception {
-        OddVideoErrorMetric metric = new OddVideoErrorMetric(orgId, contentType, contentId);
-        assertEquals(OddAppInitMetric.ACTION_VIDEO_ERROR, metric.getAction());
+        assertEquals(OddAppInitMetric.ACTION_VIDEO_ERROR, OddVideoErrorMetric.getInstance().getAction());
     }
 
     @Test
 	public void testGetContentType() throws Exception {
-        OddVideoErrorMetric metric = new OddVideoErrorMetric(orgId, contentType, contentId);
-        assertEquals(contentType, metric.getContentType());
+        OddVideoErrorMetric.getInstance().setContentType(contentType);
+        assertEquals(contentType, OddVideoErrorMetric.getInstance().getContentType());
     }
 
     @Test
 	public void testGetContentId() throws Exception {
-        OddVideoErrorMetric metric = new OddVideoErrorMetric(orgId, contentType, contentId);
-        assertEquals(contentId, metric.getContentId());
+        OddVideoErrorMetric.getInstance().setContentId(contentId);
+        assertEquals(contentId, OddVideoErrorMetric.getInstance().getContentId());
     }
 
     @Test
 	public void testToJSONObject() throws Exception {
-        OddVideoErrorMetric metric = new OddVideoErrorMetric(orgId, contentType, contentId);
+        OddVideoErrorMetric metric = (OddVideoErrorMetric) OddVideoErrorMetric
+                .getInstance()
+                .setOrganizationId(orgId)
+                .setContentType(contentType)
+                .setContentId(contentId);
+
         String expected = "{" +
                 "type: \"" + metric.getType() + "\"," +
                 "attributes: {" +
@@ -56,6 +60,7 @@ public class OddVideoErrorMetricTest {
                 "contentId: \"" + metric.getContentId() + "\"" +
                 "}" +
                 "}";
+
         JSONAssert.assertEquals(expected, metric.toJSONObject(), true);
     }
 }

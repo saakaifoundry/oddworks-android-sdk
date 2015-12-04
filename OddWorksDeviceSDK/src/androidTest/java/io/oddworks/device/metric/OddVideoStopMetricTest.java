@@ -18,37 +18,42 @@ public class OddVideoStopMetricTest {
 
     @Test
     public void testGetType() throws Exception {
-        OddVideoStopMetric metric = new OddVideoStopMetric(orgId, contentType, contentId, elapsed, duration);
-        assertEquals("event", metric.getType());
+        assertEquals("event", OddVideoStopMetric.getInstance().getType());
     }
 
     @Test
     public void testGetOrganizationId() throws Exception {
-        OddVideoStopMetric metric = new OddVideoStopMetric(orgId, contentType, contentId, elapsed, duration);
-        assertEquals(orgId, metric.getOrganizationId());
+        OddVideoStopMetric.getInstance().setOrganizationId(orgId);
+        assertEquals(orgId, OddVideoStopMetric.getInstance().getOrganizationId());
     }
 
     @Test
     public void testGetAction() throws Exception {
-        OddVideoStopMetric metric = new OddVideoStopMetric(orgId, contentType, contentId, elapsed, duration);
-        assertEquals(OddAppInitMetric.ACTION_VIDEO_STOP, metric.getAction());
+        assertEquals(OddAppInitMetric.ACTION_VIDEO_STOP, OddVideoStopMetric.getInstance().getAction());
     }
 
     @Test
     public void testGetContentType() throws Exception {
-        OddVideoStopMetric metric = new OddVideoStopMetric(orgId, contentType, contentId, elapsed, duration);
-        assertEquals(contentType, metric.getContentType());
+        OddVideoStopMetric.getInstance().setContentType(contentType);
+        assertEquals(contentType, OddVideoStopMetric.getInstance().getContentType());
     }
 
     @Test
     public void testGetContentId() throws Exception {
-        OddVideoStopMetric metric = new OddVideoStopMetric(orgId, contentType, contentId, elapsed, duration);
-        assertEquals(contentId, metric.getContentId());
+        OddVideoStopMetric.getInstance().setContentId(contentId);
+        assertEquals(contentId, OddVideoStopMetric.getInstance().getContentId());
     }
 
     @Test
     public void testToJSONObject() throws Exception {
-        OddVideoStopMetric metric = new OddVideoStopMetric(orgId, contentType, contentId, elapsed, duration);
+        OddVideoStopMetric metric = (OddVideoStopMetric) OddVideoStopMetric
+                .getInstance()
+                .setOrganizationId(orgId)
+                .setContentType(contentType)
+                .setContentId(contentId)
+                .setElapsed(elapsed)
+                .setDuration(duration);
+
         String expected = "{" +
                 "type: \"" + metric.getType() + "\"," +
                 "attributes: {" +

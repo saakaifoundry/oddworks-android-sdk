@@ -2,6 +2,7 @@ package io.oddworks.device.metric;
 
 
 import android.support.test.runner.AndroidJUnit4;
+import android.util.Log;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -19,37 +20,44 @@ public class OddVideoPlayingMetricTest {
 
     @Test
     public void testGetType() throws Exception {
-        OddVideoPlayingMetric metric = new OddVideoPlayingMetric(orgId, contentType, contentId, elapsed, duration);
-        assertEquals("event", metric.getType());
+        assertEquals("event", OddVideoPlayingMetric.getInstance().getType());
     }
 
     @Test
     public void testGetOrganizationId() throws Exception {
-        OddVideoPlayingMetric metric = new OddVideoPlayingMetric(orgId, contentType, contentId, elapsed, duration);
-        assertEquals(orgId, metric.getOrganizationId());
+        OddVideoPlayingMetric.getInstance().setOrganizationId(orgId);
+        assertEquals(orgId, OddVideoPlayingMetric.getInstance().getOrganizationId());
     }
 
     @Test
     public void testGetAction() throws Exception {
-        OddVideoPlayingMetric metric = new OddVideoPlayingMetric(orgId, contentType, contentId, elapsed, duration);
-        assertEquals(OddAppInitMetric.ACTION_VIDEO_PLAYING, metric.getAction());
+        assertEquals(OddAppInitMetric.ACTION_VIDEO_PLAYING, OddVideoPlayingMetric.getInstance().getAction());
     }
 
     @Test
     public void testGetContentType() throws Exception {
-        OddVideoPlayingMetric metric = new OddVideoPlayingMetric(orgId, contentType, contentId, elapsed, duration);
-        assertEquals(contentType, metric.getContentType());
+        OddVideoPlayingMetric.getInstance().setContentType(contentType);
+        assertEquals(contentType, OddVideoPlayingMetric.getInstance().getContentType());
     }
 
     @Test
     public void testGetContentId() throws Exception {
-        OddVideoPlayingMetric metric = new OddVideoPlayingMetric(orgId, contentType, contentId, elapsed, duration);
-        assertEquals(contentId, metric.getContentId());
+        OddVideoPlayingMetric.getInstance().setContentId(contentId);
+        assertEquals(contentId, OddVideoPlayingMetric.getInstance().getContentId());
     }
 
     @Test
     public void testToJSONObject() throws Exception {
-        OddVideoPlayingMetric metric = new OddVideoPlayingMetric(orgId, contentType, contentId, elapsed, duration);
+        OddVideoPlayingMetric metric = (OddVideoPlayingMetric) OddVideoPlayingMetric
+                .getInstance()
+                .setOrganizationId(orgId)
+                .setContentType(contentType)
+                .setContentId(contentId)
+                .setElapsed(elapsed)
+                .setDuration(duration);
+
+        Log.d("TESTING", metric.getContentId());
+        Log.d("TESTING", metric.toString());
         String expected = "{" +
                 "type: \"" + metric.getType() + "\"," +
                 "attributes: {" +

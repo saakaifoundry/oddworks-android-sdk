@@ -15,6 +15,7 @@ public abstract class OddMetric {
     public static final String ACTION_VIDEO_STOP = "video:stop";
     public static final String ACTION_VIDEO_ERROR = "video:error";
 
+    protected boolean mEnabled;
     protected String mOrganizationId;
     protected String mAction;
     protected String mContentType;
@@ -22,6 +23,10 @@ public abstract class OddMetric {
 
     public String getType() {
         return TYPE;
+    }
+
+    public boolean getEnabled() {
+        return mEnabled;
     }
 
     public String getOrganizationId() {
@@ -38,6 +43,31 @@ public abstract class OddMetric {
 
     public String getContentId() {
         return mContentId;
+    }
+
+    public OddMetric setEnabled(boolean isEnabled) {
+        mEnabled = isEnabled;
+        return this;
+    }
+
+    public OddMetric setOrganizationId(String organizationId) {
+        mOrganizationId = organizationId;
+        return this;
+    }
+
+    public OddMetric setAction(String action) {
+        mAction = action;
+        return this;
+    }
+
+    public OddMetric setContentType(String contentType) {
+        mContentType = contentType;
+        return this;
+    }
+
+    public OddMetric setContentId(String contentId) {
+        mContentId = contentId;
+        return this;
     }
 
     public JSONObject toJSONObject() {

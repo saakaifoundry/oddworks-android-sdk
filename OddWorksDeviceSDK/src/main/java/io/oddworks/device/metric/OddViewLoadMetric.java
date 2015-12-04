@@ -2,11 +2,14 @@ package io.oddworks.device.metric;
 
 public class OddViewLoadMetric extends OddMetric {
     private static final String TAG = OddViewLoadMetric.class.getSimpleName();
+    private static OddViewLoadMetric INSTANCE = new OddViewLoadMetric();
 
-    public OddViewLoadMetric(final String organizationId, final String contentType, final String contentId) {
+    private OddViewLoadMetric() {
         mAction = ACTION_VIEW_LOAD;
-        mOrganizationId = organizationId;
-        mContentType = contentType;
-        mContentId = contentId;
+        // singleton
+    }
+
+    public static OddViewLoadMetric getInstance() {
+        return INSTANCE;
     }
 }

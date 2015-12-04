@@ -2,11 +2,14 @@ package io.oddworks.device.metric;
 
 public class OddVideoPlayMetric extends OddMetric {
     private static final String TAG = OddVideoPlayMetric.class.getSimpleName();
+    private static OddVideoPlayMetric INSTANCE = new OddVideoPlayMetric();
 
-    public OddVideoPlayMetric(final String organizationId, final String contentType, final String contentId) {
+    private OddVideoPlayMetric() {
         mAction = ACTION_VIDEO_PLAY;
-        mOrganizationId = organizationId;
-        mContentType = contentType;
-        mContentId = contentId;
+        // singleton
+    }
+
+    public static OddVideoPlayMetric getInstance() {
+        return INSTANCE;
     }
 }

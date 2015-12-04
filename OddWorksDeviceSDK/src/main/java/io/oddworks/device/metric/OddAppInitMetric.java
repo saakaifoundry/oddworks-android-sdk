@@ -2,9 +2,14 @@ package io.oddworks.device.metric;
 
 public class OddAppInitMetric extends OddMetric {
     private static final String TAG = OddAppInitMetric.class.getSimpleName();
+    private static OddAppInitMetric INSTANCE = new OddAppInitMetric();
 
-    public OddAppInitMetric(final String organizationId) {
+    private OddAppInitMetric(){
         mAction = ACTION_APP_INIT;
-        mOrganizationId = organizationId;
+        // singleton
+    }
+
+    public static OddAppInitMetric getInstance() {
+        return INSTANCE;
     }
 }
