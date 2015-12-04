@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
+import java.util.Map;
 
 import io.oddworks.device.model.AuthToken;
 import io.oddworks.device.model.Config;
@@ -20,6 +21,8 @@ import io.oddworks.device.model.Media;
 import io.oddworks.device.model.MediaAd;
 import io.oddworks.device.model.MediaCollection;
 import io.oddworks.device.model.MediaImage;
+import io.oddworks.device.model.Metric;
+import io.oddworks.device.model.MetricsConfig;
 import io.oddworks.device.model.OddObject;
 import io.oddworks.device.model.OddView;
 import io.oddworks.device.model.Promotion;
@@ -45,6 +48,20 @@ public class OddParser {
         int value = 0;
         if (!json.isNull(key)) {
             value = json.getInt(key);
+        }
+
+        return value;
+    }
+
+    /**
+     * @param json  object containing the boolean value
+     * @param key   key at which the boolean value is located
+     * @return      defaults to false
+     **/
+    private boolean parseBoolean(final JSONObject json, String key) throws JSONException {
+        boolean value = false;
+        if (!json.isNull(key)) {
+            value = json.getBoolean(key);
         }
 
         return value;
@@ -186,6 +203,44 @@ public class OddParser {
         return videos;
     }
 
+    protected MetricsConfig parseMetrics(JSONObject rawFeatures) {
+        try {
+            JSONObject rawMetrics = parseJSONObject(rawFeatures, "metrics");
+
+            ArrayList<Metric> metrics = new ArrayList<>();
+            for(String key : MetricsConfig.ACTION_KEYS) {
+                Map<String, Object> attributes = new HashMap<>();
+                JSONObject rawMetric = rawMetrics.getJSONObject(key);
+                Iterator<String> mkeys = rawMetric.keys();
+                while(mkeys.hasNext()) {
+                    String mkey = mkeys.next();
+                    switch(mkey) {
+                        case Metric.ENABLED:
+                            attributes.put(mkey, parseBoolean(rawMetric, mkey));
+                            break;
+                        case Metric.INTERVAL:
+                            attributes.put(mkey, parseInt(rawMetric, mkey));
+                            break;
+                        default:
+                            attributes.put(mkey, parseString(rawMetric, mkey));
+                            break;
+                    }
+                }
+
+                metrics.add(new Metric(key, attributes));
+            }
+
+            MetricsConfig metricsConfig = new MetricsConfig(metrics);
+
+            metricsConfig.setupOddMetrics(); // MAGIC!
+
+            return metricsConfig;
+        } catch (JSONException e) {
+            Log.w(TAG, "failed to parse metrics feature from config");
+            return null;
+        }
+    }
+
     protected AdsConfig parseAds(JSONObject rawFeatures) {
 
         try {
@@ -196,7 +251,7 @@ public class OddParser {
             AdsConfig.AdFormat format = AdsConfig.AdFormat.valueOf(adFormatStr.toUpperCase());
             String url = parseString(rawAds, "url");
             return new AdsConfig(provider, format, url);
-        } catch (Exception e) {
+        } catch (JSONException e) {
             Log.w(TAG, "failed to parse ads feature from config");
             return null;
         }
@@ -218,8 +273,10 @@ public class OddParser {
 
             JSONObject rawFeatures = parseFeatures(rawAttributes);
             AdsConfig ads = parseAds(rawFeatures);
+            MetricsConfig metrics = parseMetrics(rawFeatures);
+
             boolean authEnabled = isAuthEnabled(rawFeatures);
-            return new Config(views, authEnabled, ads);
+            return new Config(views, authEnabled, ads, metrics);
         } catch (JSONException e) {
             e.printStackTrace();
         }
