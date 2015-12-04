@@ -131,7 +131,7 @@ public class OddParser {
             JSONObject jsonResponse = new JSONObject(responseBody);
             JSONObject jsonData = jsonResponse.getJSONObject("data");
             mc = parseMediaCollection(jsonData);
-            JSONArray included = jsonData.getJSONArray("included");
+            JSONArray included = jsonResponse.getJSONArray("included");
             addIncluded(mc, included);
         } catch (Exception e) {
             throw new OddParseException(e);
