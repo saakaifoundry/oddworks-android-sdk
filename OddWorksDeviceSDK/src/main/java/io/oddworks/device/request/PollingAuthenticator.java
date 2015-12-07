@@ -32,9 +32,7 @@ public class PollingAuthenticator {
                                    int interval, ApiCaller apiCaller) {
         this.deviceCode = deviceCode;
         this.userCode = userCode;
-        // todo stop hardcoding verificationUrl when api stops hardcoding verificationurl in its response
-//        this.verificationUrl = verificationUrl;
-        this.verificationUrl = "https://odd-auth-reference.herokuapp.com/device/link/android";
+        this.verificationUrl = verificationUrl;
         this.expirationDate = userCodeExpires;
         this.interval = interval;
         this.apiCaller = apiCaller;
