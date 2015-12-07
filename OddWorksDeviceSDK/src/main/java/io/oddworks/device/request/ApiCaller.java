@@ -84,7 +84,7 @@ public class ApiCaller {
                 return parser.parseMediaCollectionResponse(responseBody);
             }
         });
-        requestHandler.getVideos(mediaCollectionId, requestCallback);
+        requestHandler.getVideoCollection(mediaCollectionId, requestCallback);
     }
 
     public void getSearch(final String term, final int limit, final int offset, final OddCallback<List<OddObject>> cb) {
