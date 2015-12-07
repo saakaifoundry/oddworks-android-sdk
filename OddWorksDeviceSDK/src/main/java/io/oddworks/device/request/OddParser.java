@@ -13,6 +13,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import io.oddworks.device.exception.OddParseException;
+import io.oddworks.device.exception.UnhandledPlayerTypeException;
 import io.oddworks.device.model.AdsConfig;
 import io.oddworks.device.model.AuthToken;
 import io.oddworks.device.model.Config;
@@ -28,6 +29,10 @@ import io.oddworks.device.model.OddObject;
 import io.oddworks.device.model.OddView;
 import io.oddworks.device.model.Promotion;
 import io.oddworks.device.model.Relationship;
+import io.oddworks.device.model.players.ExternalPlayer;
+import io.oddworks.device.model.players.OoyalaPlayer;
+import io.oddworks.device.model.players.Player;
+import io.oddworks.device.model.players.Player.PlayerType;
 //todo stop swallowing exceptions
 
 public class OddParser {
@@ -203,10 +208,47 @@ public class OddParser {
         attributes.put("url", parseString(rawAttributes, "url"));
         attributes.put("mediaImage", parseMediaImage(images));
         attributes.put("mediaAd", parseMediaAd(rawAttributes));
-
         media.setAttributes(attributes);
+        media.setPlayer(parsePlayer(rawAttributes.getJSONObject("player")));
 
         return media;
+    }
+
+    protected Player parsePlayer(final JSONObject rawPlayer) throws JSONException {
+        PlayerType type = null;
+        try {
+            type = PlayerType.valueOf(rawPlayer.getString("type").toUpperCase());
+        } catch(IllegalArgumentException e) {
+            throw new UnhandledPlayerTypeException("unsupported player type: " + rawPlayer);
+        }
+
+        Player player = null;
+        switch (type) {
+            case NATIVE:
+            case BRIGHTCOVE:
+                player = new Player(type);
+                break;
+            case EXTERNAL:
+                player = parseExternalPlayer(rawPlayer);
+                break;
+            case OOYALA:
+                player = parseOoyalaPlayer(rawPlayer);
+                break;
+            default:
+                throw new UnhandledPlayerTypeException("unsupported player type: " + type);
+        }
+        return player;
+    }
+
+    private OoyalaPlayer parseOoyalaPlayer(JSONObject rawPlayer) throws JSONException {
+        return new OoyalaPlayer(PlayerType.OOYALA,
+                rawPlayer.getString("pCode"),
+                rawPlayer.getString("embedCode"),
+                rawPlayer.getString("domain"));
+    }
+
+    private ExternalPlayer parseExternalPlayer(JSONObject rawPlayer) throws JSONException {
+        return new ExternalPlayer(PlayerType.EXTERNAL, rawPlayer.getString("url"));
     }
 
     protected Promotion parsePromotion(final JSONObject rawPromotion) throws JSONException {
