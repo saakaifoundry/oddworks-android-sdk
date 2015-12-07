@@ -12,6 +12,12 @@ import org.junit.runner.RunWith;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import io.oddworks.device.metric.OddAppInitMetric;
+import io.oddworks.device.metric.OddVideoErrorMetric;
+import io.oddworks.device.metric.OddVideoPlayMetric;
+import io.oddworks.device.metric.OddVideoPlayingMetric;
+import io.oddworks.device.metric.OddVideoStopMetric;
+import io.oddworks.device.metric.OddViewLoadMetric;
 import io.oddworks.device.model.AdsConfig;
 import io.oddworks.device.model.Config;
 import io.oddworks.device.model.Identifier;
@@ -77,9 +83,9 @@ public class OddParserTest extends AndroidTestCase {
         String spashpageId = "ac4ece84-d872-4b98-b8b9-2840e060a6ea";
         assertThat(config.getViews().get("homepage"), is(spashpageId));
         assertThat(config.getViews().values().iterator().next(), is(spashpageId));
-        assertThat(config.getViews().get("splashpage"), is("2a019789-2475-4674-84f0-764bca8b8f66"));
+        assertThat(config.getViews().get("splash"), is("2a019789-2475-4674-84f0-764bca8b8f66"));
         assertThat(config.isAuthEnabled(), is(true));
-        AdsConfig ads = config.getAds();
+        AdsConfig ads = config.getAdsConfig();
         assertThat(ads.getProvider(), is(AdsConfig.AdProvider.FREEWHEEL));
         assertThat(ads.getFormat(), is(AdsConfig.AdFormat.VAST));
         String adsUrl = "http://vp-validation.videoplaza.tv/proxy/distributor/v2" +
@@ -88,11 +94,42 @@ public class OddParserTest extends AndroidTestCase {
     }
 
     @Test
+    public  void testParseConfigWithMetrics() throws Exception {
+        String json = AssetUtils.readFileToString(mContext, "ConfigWithMetrics.json");
+        Config config = oddParser.parseConfig(json);
+        assertThat(config.getViews().size(), is(1));
+        String homepage = "a23e156c-5df3-45bb-812e-1bfa79fbd008";
+        assertThat(config.getViews().get("homepage"), is(homepage));
+        assertThat(config.getViews().values().iterator().next(), is(homepage));
+
+        assertFalse(config.isAuthEnabled());
+
+        assertThat(OddAppInitMetric.getInstance().getAction(), is("wacky:init"));
+        assertTrue(OddAppInitMetric.getInstance().getEnabled());
+
+        assertThat(OddViewLoadMetric.getInstance().getAction(), is("wacky:load"));
+        assertTrue(OddViewLoadMetric.getInstance().getEnabled());
+
+        assertThat(OddVideoPlayMetric.getInstance().getAction(), is("wacky:play"));
+        assertTrue(OddVideoPlayMetric.getInstance().getEnabled());
+
+        assertThat(OddVideoPlayingMetric.getInstance().getAction(), is("wacky:playing"));
+        assertThat(OddVideoPlayingMetric.getInstance().getInterval(), is(30000));
+        assertTrue(OddVideoPlayingMetric.getInstance().getEnabled());
+
+        assertThat(OddVideoStopMetric.getInstance().getAction(), is("wacky:stop"));
+        assertTrue(OddVideoStopMetric.getInstance().getEnabled());
+
+        assertThat(OddVideoErrorMetric.getInstance().getAction(), is("wacky:error"));
+        assertFalse(OddVideoErrorMetric.getInstance().getEnabled());
+    }
+
+    @Test
     public void testParseConfigWithoutAuthAndWithoutAds() throws Exception {
         String json = AssetUtils.readFileToString(mContext, "ConfigWithoutAuthAndWithoutAds.json");
         Config config = oddParser.parseConfig(json);
         assertThat(config.isAuthEnabled(), is(false));
-        assertThat(config.getAds(), is(nullValue()));
+        assertThat(config.getAdsConfig(), is(nullValue()));
     }
 
     @Test

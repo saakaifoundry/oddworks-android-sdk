@@ -1,0 +1,61 @@
+{
+  "data": {
+    "type": "config",
+    "links": {
+      "self": "https://device-staging.oddworks.io/v1/configs/"
+    },
+    "attributes": {
+      "features": {
+        "overlays": {
+          "enabled": true
+        },
+        "ads": {
+          "provider": "freewheel",
+          "format": "freewheel",
+          "networkId": 393946,
+          "profileName": "393946:crtv_android_test",
+          "siteSectionId": "pc_android_all",
+          "vHost": "602da.v.fwmrm.net"
+        },
+        "metrics": {
+          "appInit": {
+            "action": "wacky:init",
+            "enabled": true
+          },
+          "viewLoad": {
+            "action": "wacky:load",
+            "enabled": true
+          },
+          "videoPlay": {
+            "action": "wacky:play",
+            "enabled": true
+          },
+          "videoPlaying": {
+            "action": "wacky:playing",
+            "enabled": true,
+            "interval": 30000
+          },
+          "videoStop": {
+            "action": "wacky:stop",
+            "enabled": true
+          },
+          "videoError": {
+            "action": "wacky:error",
+            "enabled": false
+          }
+        }
+      },
+      "views": {
+        "homepage": "a23e156c-5df3-45bb-812e-1bfa79fbd008"
+      }
+    }
+  },
+  "meta": {
+    "device": "GOOGLE_ANDROID",
+    "queryParams": {},
+    "userEntitlements": []
+  },
+  "links": {
+    "self": "https://device-staging.oddworks.io/v1/config"
+  }
+}

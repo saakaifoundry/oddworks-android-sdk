@@ -1,8 +1,5 @@
 package io.oddworks.device.exception;
 
-/**
- * Created by brkattk on 9/15/15.
- */
 public class OddParseException extends RuntimeException {
     public OddParseException() {
         super();

@@ -9,46 +9,42 @@ import org.skyscreamer.jsonassert.JSONAssert;
 
 import static org.junit.Assert.assertEquals;
 
-/**
- * Created by brkattk on 10/20/15.
- */
 @RunWith(AndroidJUnit4.class)
 public class OddAppInitMetricTest {
     private String orgId = "odd-networks";
 
     @Test
 	public void testGetType() throws Exception {
-        OddAppInitMetric metric = new OddAppInitMetric(orgId);
-        assertEquals("event", metric.getType());
+        assertEquals("event", OddAppInitMetric.getInstance().getType());
     }
 
     @Test
 	public void testGetOrganizationId() throws Exception {
-        OddAppInitMetric metric = new OddAppInitMetric(orgId);
-        assertEquals(orgId, metric.getOrganizationId());
+        OddAppInitMetric.getInstance().setOrganizationId(orgId);
+        assertEquals(orgId, OddAppInitMetric.getInstance().getOrganizationId());
     }
 
     @Test
 	public void testGetAction() throws Exception {
-        OddAppInitMetric metric = new OddAppInitMetric(orgId);
-        assertEquals(OddAppInitMetric.ACTION_APP_INIT, metric.getAction());
+        assertEquals(OddAppInitMetric.ACTION_APP_INIT, OddAppInitMetric.getInstance().getAction());
     }
 
     @Test
 	public void testGetContentType() throws Exception {
-        OddAppInitMetric metric = new OddAppInitMetric(orgId);
-        assertEquals(null, metric.getContentType());
+        assertEquals(null, OddAppInitMetric.getInstance().getContentType());
     }
 
     @Test
 	public void testGetContentId() throws Exception {
-        OddAppInitMetric metric = new OddAppInitMetric(orgId);
-        assertEquals(null, metric.getContentId());
+        assertEquals(null, OddAppInitMetric.getInstance().getContentId());
     }
 
     @Test
 	public void testToJSONObject() throws Exception {
-        OddAppInitMetric metric = new OddAppInitMetric(orgId);
+        OddAppInitMetric metric = (OddAppInitMetric) OddAppInitMetric
+                .getInstance()
+                .setOrganizationId(orgId);
+
         String expected = "{" +
                 "type: \"" + metric.getType() + "\"," +
                 "attributes: {" +
@@ -56,6 +52,7 @@ public class OddAppInitMetricTest {
                 "action: \"" + metric.getAction() + "\"" +
                 "}" +
                 "}";
+
         JSONAssert.assertEquals(expected, metric.toJSONObject(), true);
     }
 }

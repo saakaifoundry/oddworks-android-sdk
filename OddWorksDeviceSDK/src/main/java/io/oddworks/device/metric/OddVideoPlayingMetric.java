@@ -7,24 +7,68 @@ import org.json.JSONObject;
 
 public class OddVideoPlayingMetric extends OddMetric {
     private static final String TAG = OddVideoPlayingMetric.class.getSimpleName();
+    private static OddVideoPlayingMetric INSTANCE = new OddVideoPlayingMetric();
 
     private int mElapsed;
     private int mDuration;
+    private int mInterval;
 
-    /**
-     * @param organizationId OddWorks organization slug
-     * @param contentType OddWorks entity type
-     * @param contentId OddWorks entity id
-     * @param elapsed time in milliseconds
-     * @param duration time in milliseconds
-     */
-    public OddVideoPlayingMetric(final String organizationId, final String contentType, final String contentId, final int elapsed, final int duration) {
+    private OddVideoPlayingMetric() {
         mAction = ACTION_VIDEO_PLAYING;
-        mOrganizationId = organizationId;
-        mContentType = contentType;
-        mContentId = contentId;
+        // singleton
+    }
+
+    public static OddVideoPlayingMetric getInstance() {
+        return INSTANCE;
+    }
+
+    public OddVideoPlayingMetric setElapsed(int elapsed) {
         mElapsed = elapsed;
+        return this;
+    }
+
+    public OddVideoPlayingMetric setDuration(int duration) {
         mDuration = duration;
+        return this;
+    }
+
+    public OddVideoPlayingMetric setInterval(int interval) {
+        mInterval = interval;
+        return this;
+    }
+
+    public int getInterval() {
+        return mInterval;
+    }
+
+    @Override
+    public OddVideoPlayingMetric setAction(String action) {
+        super.setAction(action);
+        return this;
+    }
+
+    @Override
+    public OddVideoPlayingMetric setEnabled(boolean isEnabled) {
+        super.setEnabled(isEnabled);
+        return this;
+    }
+
+    @Override
+    public OddVideoPlayingMetric setContentId(String contentId) {
+        super.setContentId(contentId);
+        return this;
+    }
+
+    @Override
+    public OddVideoPlayingMetric setContentType(String contentType) {
+        super.setContentType(contentType);
+        return this;
+    }
+
+    @Override
+    public OddVideoPlayingMetric setOrganizationId(String organizationId) {
+        super.setOrganizationId(organizationId);
+        return this;
     }
 
     @Override

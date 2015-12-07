@@ -5,16 +5,19 @@ import java.util.LinkedHashMap;
 public class Config {
     public static final String TAG = Config.class.getSimpleName();
     private final boolean mAuthEnabled;
-    private final AdsConfig mAds;
+    private final AdsConfig mAdsConfig;
+    private final MetricsConfig mMetricsConfig;
 
     private LinkedHashMap<String, String> mViews;
 
     public Config(LinkedHashMap<String, String> views,
                   boolean authEnabled,
-                  AdsConfig ads) {
+                  AdsConfig adsConfig,
+                  MetricsConfig metricsConfig) {
         this.mViews = views;
         this.mAuthEnabled = authEnabled;
-        this.mAds = ads;
+        this.mAdsConfig = adsConfig;
+        this.mMetricsConfig = metricsConfig;
     }
 
 
@@ -22,8 +25,12 @@ public class Config {
         return mAuthEnabled;
     }
 
-    public AdsConfig getAds() {
-        return mAds;
+    public AdsConfig getAdsConfig() {
+        return mAdsConfig;
+    }
+
+    public MetricsConfig getMetricsConfig() {
+        return mMetricsConfig;
     }
 
     public LinkedHashMap<String, String> getViews() {

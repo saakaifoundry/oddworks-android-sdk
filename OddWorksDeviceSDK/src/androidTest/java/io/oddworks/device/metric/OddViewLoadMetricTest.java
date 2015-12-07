@@ -8,9 +8,6 @@ import org.skyscreamer.jsonassert.JSONAssert;
 
 import static org.junit.Assert.assertEquals;
 
-/**
- * Created by brkattk on 10/20/15.
- */
 @RunWith(AndroidJUnit4.class)
 public class OddViewLoadMetricTest {
     private String orgId = "odd-networks";
@@ -19,37 +16,38 @@ public class OddViewLoadMetricTest {
 
     @Test
 	public void testGetType() throws Exception {
-        OddViewLoadMetric metric = new OddViewLoadMetric(orgId, contentType, contentId);
-        assertEquals("event", metric.getType());
+        assertEquals("event", OddViewLoadMetric.getInstance().getType());
     }
 
     @Test
 	public void testGetOrganizationId() throws Exception {
-        OddViewLoadMetric metric = new OddViewLoadMetric(orgId, contentType, contentId);
-        assertEquals(orgId, metric.getOrganizationId());
+        OddViewLoadMetric.getInstance().setOrganizationId(orgId);
+        assertEquals(orgId, OddViewLoadMetric.getInstance().getOrganizationId());
     }
 
     @Test
 	public void testGetAction() throws Exception {
-        OddViewLoadMetric metric = new OddViewLoadMetric(orgId, contentType, contentId);
-        assertEquals(OddAppInitMetric.ACTION_VIEW_LOAD, metric.getAction());
+        assertEquals(OddAppInitMetric.ACTION_VIEW_LOAD, OddViewLoadMetric.getInstance().getAction());
     }
 
     @Test
 	public void testGetContentType() throws Exception {
-        OddViewLoadMetric metric = new OddViewLoadMetric(orgId, contentType, contentId);
-        assertEquals(contentType, metric.getContentType());
+        OddViewLoadMetric.getInstance().setContentType(contentType);
+        assertEquals(contentType, OddViewLoadMetric.getInstance().getContentType());
     }
 
     @Test
 	public void testGetContentId() throws Exception {
-        OddViewLoadMetric metric = new OddViewLoadMetric(orgId, contentType, contentId);
-        assertEquals(contentId, metric.getContentId());
+        OddViewLoadMetric.getInstance().setContentId(contentId);
+        assertEquals(contentId, OddViewLoadMetric.getInstance().getContentId());
     }
 
     @Test
 	public void testToJSONObject() throws Exception {
-        OddViewLoadMetric metric = new OddViewLoadMetric(orgId, contentType, contentId);
+        OddViewLoadMetric metric = OddViewLoadMetric.getInstance();
+        metric.setOrganizationId(orgId);
+        metric.setContentType(contentType);
+        metric.setContentId(contentId);
         String expected = "{" +
                 "type: \"" + metric.getType() + "\"," +
                 "attributes: {" +

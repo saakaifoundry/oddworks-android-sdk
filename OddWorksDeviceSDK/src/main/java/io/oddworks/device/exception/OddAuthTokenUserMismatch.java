@@ -1,8 +1,5 @@
 package io.oddworks.device.exception;
 
-/**
- * Created by dan on 10/23/15.
- */
 public class OddAuthTokenUserMismatch extends BadResponseCodeException {
 
     public OddAuthTokenUserMismatch(int code) {
