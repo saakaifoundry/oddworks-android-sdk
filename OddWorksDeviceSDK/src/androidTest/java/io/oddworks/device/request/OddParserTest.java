@@ -5,6 +5,7 @@ import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
 import android.test.AndroidTestCase;
 
+import org.json.JSONObject;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -12,6 +13,7 @@ import org.junit.runner.RunWith;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import io.oddworks.device.exception.UnhandledPlayerTypeException;
 import io.oddworks.device.metric.OddAppInitMetric;
 import io.oddworks.device.metric.OddVideoErrorMetric;
 import io.oddworks.device.metric.OddVideoPlayMetric;
@@ -22,6 +24,9 @@ import io.oddworks.device.model.AdsConfig;
 import io.oddworks.device.model.Config;
 import io.oddworks.device.model.Identifier;
 import io.oddworks.device.model.MediaCollection;
+import io.oddworks.device.model.players.ExternalPlayer;
+import io.oddworks.device.model.players.OoyalaPlayer;
+import io.oddworks.device.model.players.Player;
 import io.oddworks.device.testutils.AssetUtils;
 
 import static org.hamcrest.CoreMatchers.is;
@@ -146,5 +151,40 @@ public class OddParserTest extends AndroidTestCase {
         Identifier secondVidId = relationshipIds.get(1);
         assertThat(secondVidId.getId(), is("ooyala-p0NmFzdzp2HFJfXPruqOCXJ5VEwqjVU-"));
         assertThat(mc.findIncludedByIdentifier(secondVidId), is(notNullValue()));
+    }
+
+    @Test
+    public void testParsePlayerWithNative() throws Exception {
+        String json = AssetUtils.readFileToString(mContext, "players/NativePlayer.json");
+        JSONObject rawPlayer = new JSONObject(json);
+        Player player = oddParser.parsePlayer(rawPlayer);
+        assertThat(player.getPlayerType(), is(Player.PlayerType.NATIVE));
+    }
+
+    @Test
+    public void testParsePlayerWithExternal() throws Exception {
+        String json = AssetUtils.readFileToString(mContext, "players/ExternalPlayer.json");
+        JSONObject rawPlayer = new JSONObject(json);
+        ExternalPlayer player = (ExternalPlayer)oddParser.parsePlayer(rawPlayer);
+        assertThat(player.getPlayerType(), is(Player.PlayerType.EXTERNAL));
+        assertThat(player.getUrl(), is("http://link.to/a/webpage/for/a/video/asset.htm"));
+    }
+
+    @Test
+    public void testParsePlayerWithOoyala() throws Exception {
+        String json = AssetUtils.readFileToString(mContext, "players/OoyalaPlayer.json");
+        JSONObject rawPlayer = new JSONObject(json);
+        OoyalaPlayer player = (OoyalaPlayer)oddParser.parsePlayer(rawPlayer);
+        assertThat(player.getPlayerType(), is(Player.PlayerType.OOYALA));
+        assertThat(player.getPCode(), is("pcode1"));
+        assertThat(player.getEmbedCode(), is("embedCode1"));
+        assertThat(player.getDomain(), is("domain1"));
+    }
+
+    @Test(expected=UnhandledPlayerTypeException.class)
+    public void testParsePlayerWithUnhandledType() throws Exception {
+        String json = "{\"type\":\"unhandled type\"}";
+        JSONObject rawPlayer = new JSONObject(json);
+        oddParser.parsePlayer(rawPlayer);
     }
 }

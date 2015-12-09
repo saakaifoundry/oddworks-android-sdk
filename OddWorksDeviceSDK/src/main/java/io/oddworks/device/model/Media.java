@@ -2,6 +2,8 @@ package io.oddworks.device.model;
 
 import java.util.HashMap;
 
+import io.oddworks.device.model.players.Player;
+
 public class Media extends OddObject {
     public static final String TAG = Media.class.getSimpleName();
     private String mTitle;
@@ -11,6 +13,7 @@ public class Media extends OddObject {
     private MediaAd mMediaAd;
     private Integer mDuration;
     private String mUrl;
+    private Player mPlayer;
 
     public Media(Identifier identifier) {
         super(identifier);
@@ -85,6 +88,14 @@ public class Media extends OddObject {
         return true;
     }
 
+    public Player getPlayer() {
+        return mPlayer;
+    }
+
+    public void setPlayer(Player player) {
+        mPlayer = player;
+    }
+
     @Override
     public Presentable toPresentable() {
         return new Presentable(mTitle, mDescription, mMediaImage);
@@ -92,10 +103,15 @@ public class Media extends OddObject {
 
     @Override
     public String toString() {
-        return getClass().getSimpleName() + "(" +
-                "id='" + getId() + "', " +
-                "type='" + getType() + "', " +
-                "title='" + getTitle() + "')";
+        return "Media{" +
+                "mTitle='" + mTitle + '\'' +
+                ", mDescription='" + mDescription + '\'' +
+                ", mMediaImage=" + mMediaImage +
+                ", mReleaseDate='" + mReleaseDate + '\'' +
+                ", mMediaAd=" + mMediaAd +
+                ", mDuration=" + mDuration +
+                ", mUrl='" + mUrl + '\'' +
+                ", mPlayer=" + mPlayer +
+                '}';
     }
-
 }

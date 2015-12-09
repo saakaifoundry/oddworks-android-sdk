@@ -59,6 +59,9 @@
       },
       "type": "video",
       "attributes": {
+        "player": {
+          "type": "native"
+        },
         "ads": {
           "assetId": "pzYmFzdzp3bJ3tPXIjFP-x56Xs6oSQLW",
           "provider": "freewheel",
@@ -111,6 +114,9 @@
       },
       "type": "video",
       "attributes": {
+        "player": {
+          "type": "native"
+        },
         "ads": {
           "assetId": "pzYmFzdzp3bJ3tPXIjFP-x56Xs6oSQLW",
           "provider": "freewheel",
