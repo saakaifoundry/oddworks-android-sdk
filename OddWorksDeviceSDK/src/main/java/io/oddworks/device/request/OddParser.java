@@ -38,6 +38,7 @@ import io.oddworks.device.model.players.Player.PlayerType;
 public class OddParser {
     private static final String TAG = OddParser.class.getSimpleName();
     protected static OddParser instance;
+    private final JSONParser JSON = JSONParser.getInstance();
 
     protected OddParser(){}
 
@@ -98,11 +99,11 @@ public class OddParser {
     }
 
     public MediaImage parseMediaImage(final JSONObject data) throws JSONException {
-        String aspect16x9 = parseString(data, "aspect16x9");
-        String aspect4x3 = parseString(data, "aspect4x3");
-        String aspect3x4 = parseString(data, "aspect3x4");
-        String aspect1x1 = parseString(data, "aspect1x1");
-        String aspect2x3 = parseString(data, "aspect2x3");
+        String aspect16x9 = JSON.getString(data, "aspect16x9");
+        String aspect4x3 = JSON.getString(data, "aspect4x3");
+        String aspect3x4 = JSON.getString(data, "aspect3x4");
+        String aspect1x1 = JSON.getString(data, "aspect1x1");
+        String aspect2x3 = JSON.getString(data, "aspect2x3");
 
         return new MediaImage(aspect16x9, aspect3x4, aspect4x3, aspect1x1, aspect2x3);
     }
@@ -115,7 +116,7 @@ public class OddParser {
             Iterator<String> adKeys = rawAds.keys();
             while(adKeys.hasNext()) {
                 String adProperty = adKeys.next();
-                properties.put(adProperty, parseString(rawAds, adProperty));
+                properties.put(adProperty, JSON.getString(rawAds, adProperty));
             }
             return new MediaAd(properties);
         } catch (Exception e) {
@@ -127,13 +128,13 @@ public class OddParser {
         JSONObject rawAttributes = data.getJSONObject("attributes");
         JSONObject images = rawAttributes.getJSONObject("images");
 
-        String id = parseString(data, "id");
-        String type = parseString(data, "type");
+        String id = JSON.getString(data, "id");
+        String type = JSON.getString(data, "type");
 
         HashMap<String, Object> attributes = new HashMap<>();
-        attributes.put("title", parseString(rawAttributes, "title"));
-        attributes.put("description", parseString(rawAttributes, "description"));
-        attributes.put("releaseDate", parseString(rawAttributes, "releaseDate"));
+        attributes.put("title", JSON.getString(rawAttributes, "title"));
+        attributes.put("description", JSON.getString(rawAttributes, "description"));
+        attributes.put("releaseDate", JSON.getDateTime(rawAttributes, "releaseDate"));
         attributes.put("mediaImage", parseMediaImage(images));
 
         MediaCollection collection = new MediaCollection(id, type);
@@ -169,7 +170,7 @@ public class OddParser {
     private void addIncluded(OddObject addTo, JSONArray included) throws JSONException {
         for (int i = 0; i < included.length(); i++) {
             JSONObject includedObject = included.getJSONObject(i);
-            String includedType = parseString(includedObject, "type");
+            String includedType = JSON.getString(includedObject, "type");
 
             switch (includedType) {
                 case OddObject.TYPE_VIDEO_COLLECTION:
@@ -191,21 +192,21 @@ public class OddParser {
         JSONObject images = rawAttributes.getJSONObject("images");
 
         Media media = new Media(
-                parseString(dataObject, "id"),
-                parseString(dataObject, "type"));
+                JSON.getString(dataObject, "id"),
+                JSON.getString(dataObject, "type"));
 
         HashMap<String, Object> attributes = new HashMap<>();
-        attributes.put("title", parseString(rawAttributes, "title"));
-        attributes.put("description", parseString(rawAttributes, "description"));
-        attributes.put("releaseDate", parseString(rawAttributes, "releaseDate"));
+        attributes.put("title", JSON.getString(rawAttributes, "title"));
+        attributes.put("description", JSON.getString(rawAttributes, "description"));
+        attributes.put("releaseDate", JSON.getDateTime(rawAttributes, "releaseDate"));
         try {
-            attributes.put("duration", parseInt(rawAttributes, "duration"));
+            attributes.put("duration", JSON.getInt(rawAttributes, "duration"));
         } catch (Exception e) {
             Log.d(TAG, "Invalid duration: " + e.toString());
             attributes.put("duration", 0);
         }
 
-        attributes.put("url", parseString(rawAttributes, "url"));
+        attributes.put("url", JSON.getString(rawAttributes, "url"));
         attributes.put("mediaImage", parseMediaImage(images));
         attributes.put("mediaAd", parseMediaAd(rawAttributes));
         media.setAttributes(attributes);
@@ -256,12 +257,12 @@ public class OddParser {
         JSONObject images = rawAttributes.getJSONObject("images");
 
         Promotion promotion = new Promotion(
-                parseString(rawPromotion, "id"),
-                parseString(rawPromotion, "type"));
+                JSON.getString(rawPromotion, "id"),
+                JSON.getString(rawPromotion, "type"));
 
         HashMap<String, Object> attributes = new HashMap<>();
-        attributes.put("title", parseString(rawAttributes, "title"));
-        attributes.put("description", parseString(rawAttributes, "description"));
+        attributes.put("title", JSON.getString(rawAttributes, "title"));
+        attributes.put("description", JSON.getString(rawAttributes, "description"));
         attributes.put("mediaImage", parseMediaImage(images));
 
         promotion.setAttributes(attributes);
@@ -287,7 +288,7 @@ public class OddParser {
 
     protected MetricsConfig parseMetrics(JSONObject rawFeatures) {
         try {
-            JSONObject rawMetrics = parseJSONObject(rawFeatures, "metrics");
+            JSONObject rawMetrics = JSON.getJSONObject(rawFeatures, "metrics");
 
             ArrayList<Metric> metrics = new ArrayList<>();
             for(String key : MetricsConfig.ACTION_KEYS) {
@@ -298,13 +299,13 @@ public class OddParser {
                     String mkey = mkeys.next();
                     switch(mkey) {
                         case Metric.ENABLED:
-                            attributes.put(mkey, parseBoolean(rawMetric, mkey));
+                            attributes.put(mkey, JSON.getBoolean(rawMetric, mkey));
                             break;
                         case Metric.INTERVAL:
-                            attributes.put(mkey, parseInt(rawMetric, mkey));
+                            attributes.put(mkey, JSON.getInt(rawMetric, mkey));
                             break;
                         default:
-                            attributes.put(mkey, parseString(rawMetric, mkey));
+                            attributes.put(mkey, JSON.getString(rawMetric, mkey));
                             break;
                     }
                 }
@@ -324,14 +325,13 @@ public class OddParser {
     }
 
     protected AdsConfig parseAds(JSONObject rawFeatures) {
-
         try {
-            JSONObject rawAds = parseJSONObject(rawFeatures, "ads");
-            String providerStr = parseString(rawAds, "provider");
+            JSONObject rawAds = JSON.getJSONObject(rawFeatures, "ads");
+            String providerStr = JSON.getString(rawAds, "provider");
             AdsConfig.AdProvider provider = AdsConfig.AdProvider.valueOf(providerStr.toUpperCase());
-            String adFormatStr = parseString(rawAds, "format");
+            String adFormatStr = JSON.getString(rawAds, "format");
             AdsConfig.AdFormat format = AdsConfig.AdFormat.valueOf(adFormatStr.toUpperCase());
-            String url = parseString(rawAds, "url");
+            String url = JSON.getString(rawAds, "url");
             return new AdsConfig(provider, format, url);
         } catch (JSONException e) {
             Log.w(TAG, "failed to parse ads feature from config");
@@ -342,15 +342,15 @@ public class OddParser {
     protected Config parseConfig(final String result) {
         try {
             JSONObject resultJSONObject = new JSONObject(result);
-            JSONObject dataJSONObject = parseJSONObject(resultJSONObject, "data");
-            JSONObject rawAttributes = parseJSONObject(dataJSONObject, "attributes");
+            JSONObject dataJSONObject = JSON.getJSONObject(resultJSONObject, "data");
+            JSONObject rawAttributes = JSON.getJSONObject(dataJSONObject, "attributes");
 
             LinkedHashMap<String, String> views = new LinkedHashMap<>();
-            JSONObject rawViews = parseJSONObject(rawAttributes, "views");
+            JSONObject rawViews = JSON.getJSONObject(rawAttributes, "views");
             Iterator<String> viewNames = rawViews.keys();
             while(viewNames.hasNext()) {
                 String viewName = viewNames.next();
-                views.put(viewName, parseString(rawViews, viewName));
+                views.put(viewName, JSON.getString(rawViews, viewName));
             }
 
             JSONObject rawFeatures = parseFeatures(rawAttributes);
@@ -367,15 +367,14 @@ public class OddParser {
     }
 
     private JSONObject parseFeatures(JSONObject rawAttributes) throws JSONException {
-        return parseJSONObject(rawAttributes, "features");
+        return JSON.getJSONObject(rawAttributes, "features");
     }
 
     private boolean isAuthEnabled(JSONObject rawFeatures) throws JSONException {
         try {
-            JSONObject rawAuth = parseJSONObject(rawFeatures, "authentication");
-            String authString = parseString(rawAuth, "enabled");
-            return Boolean.parseBoolean(authString);
-        } catch (Exception e) {
+            JSONObject rawAuth = JSON.getJSONObject(rawFeatures, "authentication");
+            return JSON.getBoolean(rawAuth, "enabled");
+        } catch (JSONException e) {
             return false;
         }
     }
@@ -383,24 +382,24 @@ public class OddParser {
     protected OddView parseView(final String result) {
         try {
             JSONObject resultObject = new JSONObject(result);
-            JSONObject data = parseJSONObject(resultObject, "data");
-            JSONObject rawAttributes = parseJSONObject(data, "attributes");
+            JSONObject data = JSON.getJSONObject(resultObject, "data");
+            JSONObject rawAttributes = JSON.getJSONObject(data, "attributes");
             OddView view = new OddView(
-                    parseString(rawAttributes, "id"),
-                    parseString(rawAttributes, "type"));
+                    JSON.getString(rawAttributes, "id"),
+                    JSON.getString(rawAttributes, "type"));
 
             HashMap<String, Object> attributes = new HashMap<>();
-            attributes.put("title", parseString(rawAttributes, "title"));
+            attributes.put("title", JSON.getString(rawAttributes, "title"));
             view.setAttributes(attributes);
 
             // use relationships to build view's ArrayList<Relationship>
             addRelationshipsToOddObject(data.getJSONObject("relationships"), view);
 
             // fill the view's included{Type} arrays with parsable objects
-            JSONArray includedArray = parseJSONArray(resultObject, "included");
+            JSONArray includedArray = JSON.getJSONArray(resultObject, "included");
             addIncluded(view, includedArray);
             // backfill newly created includedMediaCollections with newly created media
-            view.fillIncludedMediaCollections();
+            view.fillIncludedCollections();
 
             return view;
         } catch (JSONException e) {
