@@ -76,6 +76,21 @@ abstract public class OddObject {
         return null;
     }
 
+    /**
+     *
+     * @return  true - if there are any missing related entities
+     */
+    public boolean isMissingIncluded() {
+        for(Relationship relationship : getRelationships()) {
+            for(Identifier identifier : relationship.getIdentifiers()) {
+                if (findIncludedByIdentifier(identifier) == null) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
     public void addIncluded(OddObject oddObject) {
         getIncluded().add(oddObject);
     }
