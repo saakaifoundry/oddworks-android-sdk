@@ -42,8 +42,7 @@ public class OddParserTest extends AndroidTestCase {
 
     @Before
     public void beforeEach() throws IOException {
-        OddParser.instance = new OddParser();
-        oddParser = OddParser.instance;
+        oddParser = OddParser.getInstance();
         mContext = InstrumentationRegistry.getTargetContext();
     }
 

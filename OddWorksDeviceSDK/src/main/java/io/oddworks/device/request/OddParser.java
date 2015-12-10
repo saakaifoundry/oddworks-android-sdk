@@ -37,65 +37,15 @@ import io.oddworks.device.model.players.Player.PlayerType;
 
 public class OddParser {
     private static final String TAG = OddParser.class.getSimpleName();
-    protected static OddParser instance;
+    private static OddParser INSTANCE = new OddParser();
     private final JSONParser JSON = JSONParser.getInstance();
 
-    protected OddParser(){}
-
-    private String parseString(final JSONObject json, String key) throws JSONException {
-        String value = null;
-        if (!json.isNull(key)) {
-            value = json.getString(key);
-        }
-
-        return value;
+    private OddParser(){
+        // singleton
     }
 
-    private int parseInt(final JSONObject json, String key) throws JSONException {
-        int value = 0;
-        if (!json.isNull(key)) {
-            value = json.getInt(key);
-        }
-
-        return value;
-    }
-
-    /**
-     * @param json  object containing the boolean value
-     * @param key   key at which the boolean value is located
-     * @return      defaults to false
-     **/
-    private boolean parseBoolean(final JSONObject json, String key) throws JSONException {
-        boolean value = false;
-        if (!json.isNull(key)) {
-            value = json.getBoolean(key);
-        }
-
-        return value;
-    }
-
-    private JSONObject parseJSONObject(final JSONObject json, String key) throws JSONException {
-        JSONObject obj = null;
-        if (!json.isNull(key)) {
-            obj = json.getJSONObject(key);
-        }
-        if (obj == null) {
-            throw new JSONException(key);
-        }
-
-        return obj;
-    }
-
-    private JSONArray parseJSONArray(final JSONObject json, String key) throws JSONException {
-        JSONArray obj = null;
-        if (!json.isNull(key)) {
-            obj = json.getJSONArray(key);
-        }
-        if (obj == null) {
-            throw new JSONException(key);
-        }
-
-        return obj;
+    public static OddParser getInstance() {
+        return INSTANCE;
     }
 
     public MediaImage parseMediaImage(final JSONObject data) throws JSONException {

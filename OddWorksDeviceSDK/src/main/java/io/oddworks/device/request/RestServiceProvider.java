@@ -15,11 +15,10 @@ public class RestServiceProvider {
 
     private RestServiceProvider(Context context, String apiVersion, String accessToken, String appVersion,
                                 boolean useStagingApi) {
-        OddParser.instance = new OddParser();
         String baseUrl = useStagingApi ? context.getString(R.string.odd_base_url_staging, apiVersion) :
                                         context.getString(R.string.odd_base_url, apiVersion);
         RequestHandler.instance = new RequestHandler(context, baseUrl, accessToken, appVersion);
-        ApiCaller.instance = new ApiCaller(RequestHandler.instance, OddParser.instance);
+        ApiCaller.instance = new ApiCaller(RequestHandler.instance, OddParser.getInstance());
         this.apiCaller = ApiCaller.instance;
         AuthenticationService.instance = new AuthenticationService(ApiCaller.instance, context);
         this. authenticationService = AuthenticationService.instance;
