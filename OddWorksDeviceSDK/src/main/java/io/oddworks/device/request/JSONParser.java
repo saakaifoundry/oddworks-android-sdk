@@ -6,7 +6,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class JSONParser {
-    private static JSONParser INSTANCE = new JSONParser();
+    private static final JSONParser INSTANCE = new JSONParser();
 
     private JSONParser() {
         // singleton

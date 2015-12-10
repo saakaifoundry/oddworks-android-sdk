@@ -7,7 +7,7 @@ import org.json.JSONObject;
 
 public class OddVideoPlayingMetric extends OddMetric {
     private static final String TAG = OddVideoPlayingMetric.class.getSimpleName();
-    private static OddVideoPlayingMetric INSTANCE = new OddVideoPlayingMetric();
+    private static final OddVideoPlayingMetric INSTANCE = new OddVideoPlayingMetric();
 
     private int mElapsed;
     private int mDuration;

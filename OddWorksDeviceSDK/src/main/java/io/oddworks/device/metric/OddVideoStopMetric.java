@@ -7,7 +7,7 @@ import org.json.JSONObject;
 
 public class OddVideoStopMetric extends OddMetric {
     private static final String TAG = OddVideoStopMetric.class.getSimpleName();
-    private static OddVideoStopMetric INSTANCE = new OddVideoStopMetric();
+    private static final OddVideoStopMetric INSTANCE = new OddVideoStopMetric();
 
     private int mElapsed;
     private int mDuration;
