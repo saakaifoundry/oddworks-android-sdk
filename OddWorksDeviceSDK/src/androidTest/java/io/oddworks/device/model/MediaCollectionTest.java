@@ -2,6 +2,7 @@ package io.oddworks.device.model;
 
 import android.support.test.runner.AndroidJUnit4;
 
+import org.joda.time.DateTime;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -21,7 +22,7 @@ public class MediaCollectionTest {
     private String type = "videoCollection";
     private String title = "Odd the Great and Powerful";
     private String description = "Odd is good! Odd is great!";
-    private String releaseDate = "for.ev.er.";
+    private DateTime releaseDate = new DateTime("2015-04-20T16:20:00-0400");
     private MediaImage mediaImage = new MediaImage("a", "b", "c", "d", "e");
     private MediaCollection mediaCollection = new MediaCollection(id, type);
     private HashMap<String, Object> attributes = new HashMap<>();
@@ -62,7 +63,7 @@ public class MediaCollectionTest {
 
     @Test
     public void testGetReleaseDate() throws Exception {
-        assertThat(mediaCollection.getReleaseDate(), is(equalTo(releaseDate)));
+        assertThat(mediaCollection.getReleaseDate().toString(), is(equalTo(releaseDate.toString())));
     }
 
     @Test
@@ -87,7 +88,7 @@ public class MediaCollectionTest {
 
         assertThat(mediaCollection.getTitle(), is(equalTo(title)));
         assertThat(mediaCollection.getDescription(), is(equalTo(description)));
-        assertThat(mediaCollection.getReleaseDate(), is(equalTo(releaseDate)));
+        assertThat(mediaCollection.getReleaseDate().toString(), is(equalTo(releaseDate.toString())));
         assertThat(mediaCollection.getMediaImage(), is(equalTo(mediaImage)));
     }
 
@@ -101,7 +102,7 @@ public class MediaCollectionTest {
         HashMap<String, Object> otherAttributes = new HashMap<>();
         otherAttributes.put("title", "AAA");
         otherAttributes.put("description", "ZZZ");
-        otherAttributes.put("releaseDate", "XXX");
+        otherAttributes.put("releaseDate", new DateTime("2012-11-13T09:30:00+0100"));
         otherAttributes.put("mediaImage", new MediaImage("e", "d", "c", "b", "a"));
 
         MediaCollection mediaCollection2 = new MediaCollection("1", "type");
