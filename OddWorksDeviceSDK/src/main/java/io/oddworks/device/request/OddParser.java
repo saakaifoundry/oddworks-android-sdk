@@ -25,7 +25,6 @@ import io.oddworks.device.model.External;
 import io.oddworks.device.model.Identifier;
 import io.oddworks.device.model.Media;
 import io.oddworks.device.model.MediaAd;
-import io.oddworks.device.model.MediaCollection;
 import io.oddworks.device.model.MediaImage;
 import io.oddworks.device.model.Metric;
 import io.oddworks.device.model.MetricsConfig;
@@ -78,30 +77,6 @@ public class OddParser {
         }
     }
 
-    public MediaCollection parseMediaCollection(final JSONObject data) throws JSONException {
-        JSONObject rawAttributes = data.getJSONObject("attributes");
-        JSONObject images = rawAttributes.getJSONObject("images");
-
-        String id = JSON.getString(data, "id");
-        String type = JSON.getString(data, "type");
-
-        HashMap<String, Object> attributes = new HashMap<>();
-        attributes.put("title", JSON.getString(rawAttributes, "title"));
-        attributes.put("description", JSON.getString(rawAttributes, "description"));
-        attributes.put("releaseDate", JSON.getDateTime(rawAttributes, "releaseDate"));
-        attributes.put("mediaImage", parseMediaImage(images));
-
-        MediaCollection collection = new MediaCollection(id, type);
-        collection.setAttributes(attributes);
-
-
-        JSONObject relationships = data.getJSONObject("relationships");
-
-        addRelationshipsToOddObject(relationships, collection);
-
-        return collection;
-    }
-
     public Collection parseCollection(final JSONObject data) throws JSONException {
         JSONObject rawAttributes = data.getJSONObject("attributes");
         JSONObject images = rawAttributes.getJSONObject("images");
@@ -128,20 +103,6 @@ public class OddParser {
         return collection;
     }
 
-    public MediaCollection parseMediaCollectionResponse(String responseBody) {
-        MediaCollection mc = null;
-        try {
-            JSONObject jsonResponse = new JSONObject(responseBody);
-            JSONObject jsonData = jsonResponse.getJSONObject("data");
-            mc = parseMediaCollection(jsonData);
-            JSONArray included = jsonResponse.getJSONArray("included");
-            addIncluded(mc, included);
-        } catch (Exception e) {
-            throw new OddParseException(e);
-        }
-        return mc;
-    }
-
     /**
      * parses included and adds it to an OddObject
      * @param addTo addTo.addIncluded is called on the parsed included objects
@@ -157,6 +118,7 @@ public class OddParser {
                     addTo.addIncluded(parseArticle(includedObject));
                     break;
                 case OddObject.TYPE_COLLECTION:
+                case OddObject.TYPE_VIDEO_COLLECTION:
                     addTo.addIncluded(parseCollection(includedObject));
                     break;
                 case OddObject.TYPE_EVENT:
@@ -171,9 +133,6 @@ public class OddParser {
                 case OddObject.TYPE_LIVE_STREAM:
                 case OddObject.TYPE_VIDEO:
                     addTo.addIncluded(parseMedia(includedObject));
-                    break;
-                case OddObject.TYPE_VIDEO_COLLECTION:
-                    addTo.addIncluded(parseMediaCollection(includedObject));
                     break;
             }
         }
@@ -330,20 +289,42 @@ public class OddParser {
         return promotion;
     }
 
-    protected ArrayList<Media> parseMediaList(final String result) {
-        ArrayList<Media> videos = new ArrayList<>();
+    protected ArrayList<OddObject> parseEntityList(final String result) {
+        ArrayList<OddObject> entities = new ArrayList<>();
         try {
-            JSONObject videosObjectResponse = new JSONObject(result);
-            JSONArray videosArray = videosObjectResponse.getJSONArray("data");
-            for (int i = 0; i < videosArray.length(); i++) {
-                Media video = parseMedia(videosArray.getJSONObject(i));
-                videos.add(video);
+            JSONObject entitiesResponse = new JSONObject(result);
+            JSONArray rawEntities = entitiesResponse.getJSONArray("data");
+            for (int i = 0; i < rawEntities.length(); i++) {
+                JSONObject rawEntity = rawEntities.getJSONObject(i);
+                String type = JSON.getString(rawEntity, "type");
+                switch (type) {
+                    case OddObject.TYPE_ARTICLE:
+                        entities.add(parseArticle(rawEntity));
+                        break;
+                    case OddObject.TYPE_COLLECTION:
+                    case OddObject.TYPE_VIDEO_COLLECTION:
+                        entities.add(parseCollection(rawEntity));
+                        break;
+                    case OddObject.TYPE_EVENT:
+                        entities.add(parseEvent(rawEntity));
+                        break;
+                    case OddObject.TYPE_EXTERNAL:
+                        entities.add(parseExternal(rawEntity));
+                        break;
+                    case OddObject.TYPE_PROMOTION:
+                        entities.add(parsePromotion(rawEntity));
+                        break;
+                    case OddObject.TYPE_LIVE_STREAM:
+                    case OddObject.TYPE_VIDEO:
+                        entities.add(parseMedia(rawEntity));
+                        break;
+                }
             }
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
-        return videos;
+        return entities;
     }
 
     protected MetricsConfig parseMetrics(JSONObject rawFeatures) {
@@ -458,7 +439,7 @@ public class OddParser {
             // fill the view's included{Type} arrays with parsable objects
             JSONArray includedArray = JSON.getJSONArray(resultObject, "included");
             addIncluded(view, includedArray);
-            // backfill newly created includedMediaCollections with newly created media
+            // backfill newly created collections with newly created entities
             view.fillIncludedCollections();
 
             return view;
@@ -484,6 +465,20 @@ public class OddParser {
         int expiresIn = attributes.getInt("expires_in");
         int interval = attributes.getInt("interval");
         return new DeviceCodeResponse(deviceCode, userCode, verificationUrl, expiresIn, interval);
+    }
+
+    public Collection parseCollectionResponse(String responseBody) {
+        Collection collection = null;
+        try {
+            JSONObject jsonResponse = new JSONObject(responseBody);
+            JSONObject jsonData = jsonResponse.getJSONObject("data");
+            collection = parseCollection(jsonData);
+            JSONArray included = jsonResponse.getJSONArray("included");
+            addIncluded(collection, included);
+        } catch (Exception e) {
+            throw new OddParseException(e);
+        }
+        return collection;
     }
 
     protected ArrayList<OddObject> parseSearch(final String result) {
@@ -522,15 +517,10 @@ public class OddParser {
                         }
                         break;
                     case OddObject.TYPE_COLLECTION:
+                    case OddObject.TYPE_VIDEO_COLLECTION:
                         Collection collection = parseCollection(pokerObj);
                         if (collection != null) {
-                            searchResult.add(collection);
-                        }
-                        break;
-                    case OddObject.TYPE_VIDEO_COLLECTION:
-                        MediaCollection mediaCollection = parseMediaCollection(pokerObj);
-                        if (mediaCollection != null) {
-                            searchResult.add(mediaCollection);
+                                searchResult.add(collection);
                         }
                         break;
                 }

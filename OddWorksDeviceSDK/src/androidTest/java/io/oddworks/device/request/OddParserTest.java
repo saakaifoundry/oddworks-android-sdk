@@ -4,7 +4,6 @@ import android.content.Context;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
 import android.test.AndroidTestCase;
-import android.util.Log;
 
 import org.json.JSONObject;
 import org.junit.Before;
@@ -26,7 +25,6 @@ import io.oddworks.device.model.Collection;
 import io.oddworks.device.model.Config;
 import io.oddworks.device.model.Identifier;
 import io.oddworks.device.model.Media;
-import io.oddworks.device.model.MediaCollection;
 import io.oddworks.device.model.players.ExternalPlayer;
 import io.oddworks.device.model.players.OoyalaPlayer;
 import io.oddworks.device.model.players.Player;
@@ -66,7 +64,7 @@ public class OddParserTest extends AndroidTestCase {
         assertThat(((Media) featuredMedia.get(0)).getTitle(), is("Luke"));
 
         assertFalse(featured.isEmpty());
-        MediaCollection collection = (MediaCollection) featured.get(0);
+        Collection collection = (Collection) featured.get(0);
         assertThat(collection.getTitle(), is("Videos"));
         ArrayList<OddObject> videos = collection.getIncludedByRelationship("videos");
         Media video = (Media) videos.get(0);
@@ -175,9 +173,9 @@ public class OddParserTest extends AndroidTestCase {
     }
 
     @Test
-    public void testParseMediaCollectionWithRelated() throws Exception {
-        String json = AssetUtils.readFileToString(mContext, "MediaCollectionWithIncluded.json");
-        MediaCollection mc = oddParser.parseMediaCollectionResponse(json);
+    public void testParseCollectionWithIncludedV1() throws Exception {
+        String json = AssetUtils.readFileToString(mContext, "CollectionWithIncludedV1.json");
+        Collection mc = oddParser.parseCollectionResponse(json);
         assertThat(mc.getId(), is("ooyala-8zbHZrdzp4s-iQtsn5V_KWt1NUutoiMx"));
         assertThat(mc.getAttributes(), is(notNullValue()));
         assertThat(mc.getRelationships().size(), is(1));
@@ -188,6 +186,22 @@ public class OddParserTest extends AndroidTestCase {
         Identifier secondVidId = relationshipIds.get(1);
         assertThat(secondVidId.getId(), is("ooyala-p0NmFzdzp2HFJfXPruqOCXJ5VEwqjVU-"));
         assertThat(mc.findIncludedByIdentifier(secondVidId), is(notNullValue()));
+    }
+
+    @Test
+    public void testParseCollectionWithIncludedV2() throws Exception {
+        String json = AssetUtils.readFileToString(mContext, "CollectionWithIncludedV2.json");
+        Collection mc = oddParser.parseCollectionResponse(json);
+        assertThat(mc.getId(), is("ooyala-pbr-featured-collections"));
+        assertThat(mc.getAttributes(), is(notNullValue()));
+        assertThat(mc.getRelationships().size(), is(1));
+        ArrayList<Identifier> relationshipIds = mc.getRelationships().get(0).getIdentifiers();
+        Identifier firstRelationship = relationshipIds.get(0);
+        assertThat(firstRelationship.getId(), is("ooyala-w4MGV5eDpoE0rmbrcHEeDEEuhQMypB0u"));
+        assertThat(mc.findIncludedByIdentifier(firstRelationship), is(notNullValue()));
+        Identifier secondRelationship = relationshipIds.get(1);
+        assertThat(secondRelationship.getId(), is("ooyala-02ZWV5eDqBpEbc9ooAspnWFIIycMZWfK"));
+        assertThat(mc.findIncludedByIdentifier(secondRelationship), is(notNullValue()));
     }
 
     @Test

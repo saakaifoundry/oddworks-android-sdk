@@ -16,10 +16,9 @@ import io.oddworks.device.exception.OddAuthTokenUserMismatch;
 import io.oddworks.device.exception.OddParseException;
 import io.oddworks.device.metric.OddMetric;
 import io.oddworks.device.model.AuthToken;
+import io.oddworks.device.model.Collection;
 import io.oddworks.device.model.Config;
 import io.oddworks.device.model.DeviceCodeResponse;
-import io.oddworks.device.model.Media;
-import io.oddworks.device.model.MediaCollection;
 import io.oddworks.device.model.OddObject;
 import io.oddworks.device.model.OddView;
 
@@ -65,26 +64,25 @@ public class ApiCaller {
         requestHandler.getView(id, requestCallback);
     }
 
-    public void getVideos(final MediaCollection col, final OddCallback<List<Media>> cb) {
-        Callback requestCallback = getRequestCallback(cb, new ParseCall<List<Media>>() {
+    public void getCollectionEntities(final Collection col, final OddCallback<List<OddObject>> cb) {
+        Callback requestCallback = getRequestCallback(cb, new ParseCall<List<OddObject>>() {
             @Override
-            public List<Media> parse(String responseBody) {
-                return parser.parseMediaList(responseBody);
+            public List<OddObject> parse(String responseBody) {
+                return parser.parseEntityList(responseBody);
             }
         });
-        requestHandler.getVideos(col.getId(), requestCallback);
+        requestHandler.getCollectionEntities(col.getId(), requestCallback);
     }
 
-    /** gets all MediaCollections and Media related to a MediaCollection. Good when you want videos and nested
-     * collections */
-    public void getMediaCollectionWithRelated(String mediaCollectionId, final OddCallback<MediaCollection> cb) {
-        Callback requestCallback = getRequestCallback(cb, new ParseCall<MediaCollection>() {
+    /** gets Collection and all entities within **/
+    public void getCollection(String collectionId, final OddCallback<Collection> cb) {
+        Callback requestCallback = getRequestCallback(cb, new ParseCall<Collection>() {
             @Override
-            public MediaCollection parse(String responseBody) {
-                return parser.parseMediaCollectionResponse(responseBody);
+            public Collection parse(String responseBody) {
+                return parser.parseCollectionResponse(responseBody);
             }
         });
-        requestHandler.getVideoCollection(mediaCollectionId, requestCallback);
+        requestHandler.getCollection(collectionId, requestCallback);
     }
 
     public void getSearch(final String term, final int limit, final int offset, final OddCallback<List<OddObject>> cb) {
