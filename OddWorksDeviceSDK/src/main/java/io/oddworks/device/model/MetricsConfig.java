@@ -2,7 +2,12 @@ package io.oddworks.device.model;
 
 import java.util.List;
 
-import io.oddworks.device.metric.*;
+import io.oddworks.device.metric.OddAppInitMetric;
+import io.oddworks.device.metric.OddVideoErrorMetric;
+import io.oddworks.device.metric.OddVideoPlayMetric;
+import io.oddworks.device.metric.OddVideoPlayingMetric;
+import io.oddworks.device.metric.OddVideoStopMetric;
+import io.oddworks.device.metric.OddViewLoadMetric;
 
 public class MetricsConfig {
     public static final String ACTION_APP_INIT = "appInit";
