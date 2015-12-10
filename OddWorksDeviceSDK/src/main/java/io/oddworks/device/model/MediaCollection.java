@@ -1,5 +1,7 @@
 package io.oddworks.device.model;
 
+import org.joda.time.DateTime;
+
 import java.util.HashMap;
 
 public class MediaCollection extends OddObject {
@@ -8,7 +10,7 @@ public class MediaCollection extends OddObject {
     private String mTitle;
     private String mDescription;
     private MediaImage mMediaImage;
-    private String mReleaseDate;
+    private DateTime mReleaseDate;
 
     public MediaCollection(final Identifier identifier) {
         super(identifier);
@@ -30,7 +32,7 @@ public class MediaCollection extends OddObject {
         return mMediaImage;
     }
 
-    public String getReleaseDate() {
+    public DateTime getReleaseDate() {
         return mReleaseDate;
     }
 
@@ -39,7 +41,7 @@ public class MediaCollection extends OddObject {
         mTitle = (String) attributes.get("title");
         mDescription = (String) attributes.get("description");
         mMediaImage = (MediaImage) attributes.get("mediaImage");
-        mReleaseDate = (String) attributes.get("releaseDate");
+        mReleaseDate = (DateTime) attributes.get("releaseDate");
     }
 
     @Override
