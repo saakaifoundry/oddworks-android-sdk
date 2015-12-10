@@ -51,27 +51,6 @@ public class OddParserTest extends AndroidTestCase {
     }
 
     @Test
-    public void testParseViewV1() throws Exception {
-        String viewResponseV1 = AssetUtils.readFileToString(mContext, "ViewResponseV1.json");
-
-        OddView oddView = oddParser.parseView(viewResponseV1);
-
-        ArrayList<OddObject> featuredMedia = oddView.getIncludedByRelationship("featuredMedia");
-        ArrayList<OddObject> featured = oddView.getIncludedByRelationship("featured");
-        ArrayList<OddObject> shows = oddView.getIncludedByRelationship("shows");
-
-        assertFalse(featuredMedia.isEmpty());
-        assertThat(((Media) featuredMedia.get(0)).getTitle(), is("Luke"));
-
-        assertFalse(featured.isEmpty());
-        Collection collection = (Collection) featured.get(0);
-        assertThat(collection.getTitle(), is("Videos"));
-        ArrayList<OddObject> videos = collection.getIncludedByRelationship("videos");
-        Media video = (Media) videos.get(0);
-        assertThat(video.getTitle(), is("S1:E2 Pokerography: The Story of Antonio Esfandiari"));
-    }
-
-    @Test
     public void testParseViewV2() throws Exception {
         String viewResponseV2 = AssetUtils.readFileToString(mContext, "ViewResponseV2.json");
 
@@ -170,22 +149,6 @@ public class OddParserTest extends AndroidTestCase {
         Config config = oddParser.parseConfig(json);
         assertThat(config.isAuthEnabled(), is(false));
         assertThat(config.getAdsConfig(), is(nullValue()));
-    }
-
-    @Test
-    public void testParseCollectionWithIncludedV1() throws Exception {
-        String json = AssetUtils.readFileToString(mContext, "CollectionWithIncludedV1.json");
-        Collection mc = oddParser.parseCollectionResponse(json);
-        assertThat(mc.getId(), is("ooyala-8zbHZrdzp4s-iQtsn5V_KWt1NUutoiMx"));
-        assertThat(mc.getAttributes(), is(notNullValue()));
-        assertThat(mc.getRelationships().size(), is(1));
-        ArrayList<Identifier> relationshipIds = mc.getRelationships().get(0).getIdentifiers();
-        Identifier firstVidId = relationshipIds.get(0);
-        assertThat(firstVidId.getId(), is("ooyala-wyN2FzdzrDIT7uOhpq_ZMX1fSv5k7T9k"));
-        assertThat(mc.findIncludedByIdentifier(firstVidId), is(notNullValue()));
-        Identifier secondVidId = relationshipIds.get(1);
-        assertThat(secondVidId.getId(), is("ooyala-p0NmFzdzp2HFJfXPruqOCXJ5VEwqjVU-"));
-        assertThat(mc.findIncludedByIdentifier(secondVidId), is(notNullValue()));
     }
 
     @Test

@@ -131,7 +131,7 @@
       "relationships": {
         "entities": {
           "links": {
-            "self": "/v1/collections/ooyala-w4MGV5eDpoE0rmbrcHEeDEEuhQMypB0u/videos"
+            "self": "/v1/collections/ooyala-w4MGV5eDpoE0rmbrcHEeDEEuhQMypB0u/relationships/entities"
           },
           "data": [
             {
@@ -170,7 +170,7 @@
       "relationships": {
         "entities": {
           "links": {
-            "self": "/v1/collections/ooyala-02ZWV5eDqBpEbc9ooAspnWFIIycMZWfK/videos"
+            "self": "/v1/collections/ooyala-02ZWV5eDqBpEbc9ooAspnWFIIycMZWfK/relationships/entities"
           },
           "data": [
             {
@@ -205,7 +205,7 @@
       "relationships": {
         "entities": {
           "links": {
-            "self": "/v1/collections/ooyala-1sb3lyeDqceL2bg9n92QLrx70spWE_-E/videos"
+            "self": "/v1/collections/ooyala-1sb3lyeDqceL2bg9n92QLrx70spWE_-E/relationships/entities"
           },
           "data": [
             {

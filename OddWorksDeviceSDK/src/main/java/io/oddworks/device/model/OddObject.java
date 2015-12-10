@@ -11,7 +11,6 @@ abstract public class OddObject {
     public static final String TYPE_EXTERNAL = "external";
     public static final String TYPE_LIVE_STREAM = "liveStream";
     public static final String TYPE_PROMOTION = "promotion";
-    public static final String TYPE_VIDEO_COLLECTION = "videoCollection";
     public static final String TYPE_VIDEO = "video";
 
     protected Identifier mIdentifier;
@@ -135,11 +134,6 @@ abstract public class OddObject {
 
     public void fillIncludedCollections() {
         for(OddObject collection : getIncludedByType(OddObject.TYPE_COLLECTION)) {
-            fillCollectionWithIncluded(collection);
-        }
-
-        // SUPPORT LEGACY TYPE_VIDEO_COLLECTION
-        for(OddObject collection : getIncludedByType(OddObject.TYPE_VIDEO_COLLECTION)) {
             fillCollectionWithIncluded(collection);
         }
     }

@@ -118,7 +118,6 @@ public class OddParser {
                     addTo.addIncluded(parseArticle(includedObject));
                     break;
                 case OddObject.TYPE_COLLECTION:
-                case OddObject.TYPE_VIDEO_COLLECTION:
                     addTo.addIncluded(parseCollection(includedObject));
                     break;
                 case OddObject.TYPE_EVENT:
@@ -302,7 +301,6 @@ public class OddParser {
                         entities.add(parseArticle(rawEntity));
                         break;
                     case OddObject.TYPE_COLLECTION:
-                    case OddObject.TYPE_VIDEO_COLLECTION:
                         entities.add(parseCollection(rawEntity));
                         break;
                     case OddObject.TYPE_EVENT:
@@ -517,7 +515,6 @@ public class OddParser {
                         }
                         break;
                     case OddObject.TYPE_COLLECTION:
-                    case OddObject.TYPE_VIDEO_COLLECTION:
                         Collection collection = parseCollection(pokerObj);
                         if (collection != null) {
                                 searchResult.add(collection);
