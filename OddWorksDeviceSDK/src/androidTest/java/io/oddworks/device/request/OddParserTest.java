@@ -63,14 +63,14 @@ public class OddParserTest extends AndroidTestCase {
         ArrayList<OddObject> shows = oddView.getIncludedByRelationship("shows");
 
         assertFalse(featuredMedia.isEmpty());
-        assertThat(((Media) featuredMedia.get(0)).getTitle(), is("Wasabi: Wasabi Went Bad"));
+        assertThat(((Media) featuredMedia.get(0)).getTitle(), is("Luke"));
 
         assertFalse(featured.isEmpty());
         MediaCollection collection = (MediaCollection) featured.get(0);
         assertThat(collection.getTitle(), is("Videos"));
         ArrayList<OddObject> videos = collection.getIncludedByRelationship("videos");
         Media video = (Media) videos.get(0);
-        assertThat(video.getTitle(), is("S1:E4 Doubles Poker Championship"));
+        assertThat(video.getTitle(), is("S1:E2 Pokerography: The Story of Antonio Esfandiari"));
     }
 
     @Test

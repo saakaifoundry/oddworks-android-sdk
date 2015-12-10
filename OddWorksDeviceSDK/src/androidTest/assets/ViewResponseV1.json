@@ -11,7 +11,7 @@
       "featuredMedia": {
         "data": [
           {
-            "id": "ooyala-s1dWJqdzqzyT5-Wn6Vtecr7jQzAEeEMa",
+            "id": "ooyala-FwOGFzdzq52unCsAATZpVbkIo0Wrr2_6",
             "type": "video"
           }
         ]
@@ -71,42 +71,56 @@
     {
       "type": "video",
       "meta": {
-        "sourceId": "s1dWJqdzqzyT5-Wn6Vtecr7jQzAEeEMa",
+        "sourceId": "FwOGFzdzq52unCsAATZpVbkIo0Wrr2_6",
         "source": "ooyala"
       },
-      "id": "ooyala-s1dWJqdzqzyT5-Wn6Vtecr7jQzAEeEMa",
+      "id": "ooyala-FwOGFzdzq52unCsAATZpVbkIo0Wrr2_6",
       "links": {
-        "self": "https://device-staging.oddworks.io/v1/videos/ooyala-s1dWJqdzqzyT5-Wn6Vtecr7jQzAEeEMa"
+        "self": "https://device-staging.oddworks.io/v1/videos/ooyala-FwOGFzdzq52unCsAATZpVbkIo0Wrr2_6"
       },
       "attributes": {
-        "title": "Wasabi: Wasabi Went Bad",
-        "description": "Wasabi Went Bad",
+        "title": "Luke",
+        "description": "In this clip, Luke Schwartz exhibits his classic bad boy persona against David Benyamine.",
         "images": {
-          "aspect16x9": "http://image.oddworks.io/eooyala/s1dWJqdzqzyT5-Wn6Vtecr7jQzAEeEMa/3Gduepif0T1UGY8H4xMDoxOjBzMTt2bJ.jpg",
+          "aspect16x9": "http://image.oddworks.io/eooyala/FwOGFzdzq52unCsAATZpVbkIo0Wrr2_6/promo267716555.jpg",
           "aspect4x3": "http://image.oddworks.io/edummyimage/4:3x1440&text=placeholder.png",
           "aspect3x4": "http://image.oddworks.io/edummyimage/3:4x1920&text=placeholder.png",
           "aspect1x1": "http://image.oddworks.io/edummyimage/1:1x1920&text=placeholder.png",
           "aspect2x3": "http://image.oddworks.io/edummyimage/2:3x1920&text=placeholder.png"
         },
-        "actors": [],
+        "actors": [
+          "Luke Schwartz",
+          "David Benyamine",
+          "Jesse May",
+          "Special",
+          "TV-NR",
+          "In this clip, Luke Schwartz exhibits his classic bad boy persona against David Benyamine.",
+          "Poker's 100 Greatest Moments - Luke",
+          "2013"
+        ],
         "tags": [],
-        "duration": 30113,
-        "releaseDate": "2015-09-15T13:16:57Z",
-        "updatedAt": "2015-09-15T14:37:15Z",
-        "createdAt": "2015-09-15T13:16:57Z",
+        "duration": 277010,
+        "releaseDate": "2015-09-28T13:27:38Z",
+        "updatedAt": "2015-12-03T21:55:11Z",
+        "createdAt": "2015-09-28T13:27:38Z",
         "organization": "poker-central",
         "ads": {
+          "enabled": true,
           "provider": "freewheel",
           "format": "freewheel",
           "networkId": 393946,
           "profileName": "393946:crtv_android_test",
-          "siteSectionId": "androidtestsection",
-          "vHost": "602da.v.fwmrm.net"
+          "siteSectionId": "pc_android_all",
+          "vHost": "602da.v.fwmrm.net",
+          "assetId": "FwOGFzdzq52unCsAATZpVbkIo0Wrr2_6"
         },
         "overlays": {
           "enabled": true
         },
-        "url": "http://player.ooyala.com/player/appletv/s1dWJqdzqzyT5-Wn6Vtecr7jQzAEeEMa.m3u8"
+        "player": {
+          "type": "brightcove"
+        },
+        "url": "http://player.ooyala.com/player/appletv/FwOGFzdzq52unCsAATZpVbkIo0Wrr2_6.m3u8"
       }
     },
     {
@@ -116,6 +130,10 @@
             "self": "/v1/videoCollections/ooyala-YzMTUxeDp3sLeqKcFM37S2JcNf7I1hpF/videos"
           },
           "data": [
+            {
+              "id": "ooyala-ZjaGwzeToO266P0qxjvz4VsA6AMxDkqj",
+              "type": "video"
+            },
             {
               "id": "ooyala-9vcjZoeDpQtJzHsoLkxINFQ9vkaJ3ZmK",
               "type": "video"
@@ -143,7 +161,7 @@
           "aspect16x9": "http://image.oddworks.io/eooyala/YzMTUxeDp3sLeqKcFM37S2JcNf7I1hpF/promo268429664.jpg"
         },
         "releaseDate": "2015-10-05T15:35:03Z",
-        "updatedAt": "2015-11-06T14:20:44Z",
+        "updatedAt": "2015-11-25T14:14:09Z",
         "createdAt": "2015-10-05T15:35:03Z",
         "organization": "poker-central"
       }
@@ -190,7 +208,7 @@
           "aspect16x9": "http://image.oddworks.io/eooyala/xlNHZtdzpLIaIcnouCzc2anZfCoMJwiL/promo267387256.jpg"
         },
         "releaseDate": "2015-09-21T15:51:59Z",
-        "updatedAt": "2015-09-28T14:03:49Z",
+        "updatedAt": "2015-12-03T21:58:31Z",
         "createdAt": "2015-09-21T15:51:59Z",
         "organization": "poker-central"
       }
@@ -237,9 +255,63 @@
           "aspect16x9": "http://image.oddworks.io/eooyala/JiaHZrdzonMGdaWTKm86qfy0dxtCMxJd/promo266790469.jpg"
         },
         "releaseDate": "2015-09-17T20:27:09Z",
-        "updatedAt": "2015-11-01T16:33:52Z",
+        "updatedAt": "2015-12-03T21:59:06Z",
         "createdAt": "2015-09-17T20:27:09Z",
         "organization": "poker-central"
+      }
+    },
+    {
+      "type": "video",
+      "meta": {
+        "sourceId": "ZjaGwzeToO266P0qxjvz4VsA6AMxDkqj",
+        "source": "ooyala"
+      },
+      "id": "ooyala-ZjaGwzeToO266P0qxjvz4VsA6AMxDkqj",
+      "links": {
+        "self": "https://device-staging.oddworks.io/v1/videos/ooyala-ZjaGwzeToO266P0qxjvz4VsA6AMxDkqj"
+      },
+      "attributes": {
+        "title": "S1:E2 Pokerography: The Story of Antonio Esfandiari",
+        "description": "After escaping from a war-torn country at only eight years old, Antonio Esfandiari is no stranger to beating the odds.  Delve deep into the personal story of how a shy boy originally named Amir first picked up a deck of cards and soon became one of the most charismatic and highest-earning poker players in the entire world.  Features original interviews with \"The Magician\" himself as well as his loving father and closest friends.",
+        "images": {
+          "aspect16x9": "http://image.oddworks.io/eooyala/ZjaGwzeToO266P0qxjvz4VsA6AMxDkqj/promo272668900.jpg",
+          "aspect4x3": "http://image.oddworks.io/edummyimage/4:3x1440&text=placeholder.png",
+          "aspect3x4": "http://image.oddworks.io/edummyimage/3:4x1920&text=placeholder.png",
+          "aspect1x1": "http://image.oddworks.io/edummyimage/1:1x1920&text=placeholder.png",
+          "aspect2x3": "http://image.oddworks.io/edummyimage/2:3x1920&text=placeholder.png"
+        },
+        "actors": [
+          "Antonio Esfandiari",
+          "Biography",
+          "USA",
+          "TV-NR",
+          "After escaping from a war-torn country at only eight years old, Antonio Esfandiari is no stranger to beating the odds. Delve deep into the personal story of how a shy boy originally named Amir first picked up a deck of cards and soon became one of the most charismatic and highest-earning poker players in the entire world. Features original interviews with \"The Magician\" himself as well as his loving father and closest friends.",
+          "S1:E2 Pokerography: The Story of Antonio Esfandiari",
+          "2015"
+        ],
+        "tags": [],
+        "duration": 60026,
+        "releaseDate": "2015-11-24T21:16:27Z",
+        "updatedAt": "2015-12-03T21:32:10Z",
+        "createdAt": "2015-11-24T21:16:27Z",
+        "organization": "poker-central",
+        "ads": {
+          "enabled": true,
+          "provider": "freewheel",
+          "format": "freewheel",
+          "networkId": 393946,
+          "profileName": "393946:crtv_android_test",
+          "siteSectionId": "pc_android_all",
+          "vHost": "602da.v.fwmrm.net",
+          "assetId": "ZjaGwzeToO266P0qxjvz4VsA6AMxDkqj"
+        },
+        "overlays": {
+          "enabled": true
+        },
+        "player": {
+          "type": "brightcove"
+        },
+        "url": "http://player.ooyala.com/player/appletv/ZjaGwzeToO266P0qxjvz4VsA6AMxDkqj.m3u8"
       }
     },
     {
@@ -265,24 +337,38 @@
         "actors": [
           "Jennifer Harman",
           "Greg Mueller",
-          "Andrew Lichtenberger"
+          "Andrew Lichtenberger",
+          "Lacy Jones",
+          "Phil Hellmuth",
+          "Allen Cunningham",
+          "Tournament",
+          "David Tuchman",
+          "Brandon Adams",
+          "Las Vegas",
+          "TV-NR",
+          "S1:E4 Doubles Poker Championship"
         ],
         "tags": [],
         "duration": 2586353,
         "releaseDate": "2015-10-29T16:12:32Z",
-        "updatedAt": "2015-11-01T03:08:08Z",
+        "updatedAt": "2015-12-03T20:14:25Z",
         "createdAt": "2015-10-29T16:12:32Z",
         "organization": "poker-central",
         "ads": {
+          "enabled": true,
           "provider": "freewheel",
           "format": "freewheel",
           "networkId": 393946,
           "profileName": "393946:crtv_android_test",
-          "siteSectionId": "androidtestsection",
-          "vHost": "602da.v.fwmrm.net"
+          "siteSectionId": "pc_android_all",
+          "vHost": "602da.v.fwmrm.net",
+          "assetId": "9vcjZoeDpQtJzHsoLkxINFQ9vkaJ3ZmK"
         },
         "overlays": {
           "enabled": true
+        },
+        "player": {
+          "type": "brightcove"
         },
         "url": "http://player.ooyala.com/player/appletv/9vcjZoeDpQtJzHsoLkxINFQ9vkaJ3ZmK.m3u8"
       }
@@ -310,24 +396,37 @@
         "actors": [
           "Eric Lindgren",
           "Annette Obrestad",
-          "Mike Matusow"
+          "Mike Matusow",
+          "Phil Laak",
+          "Phil Hellmuth",
+          "Feature",
+          "Leeann Tweeden",
+          "Ali Nejad",
+          "Las Vegas",
+          "TV-NR",
+          "S6:Wk55:E1 Poker After Dark"
         ],
         "tags": [],
         "duration": 2560493,
         "releaseDate": "2015-10-29T16:12:33Z",
-        "updatedAt": "2015-11-01T16:34:28Z",
+        "updatedAt": "2015-12-03T20:23:47Z",
         "createdAt": "2015-10-29T16:12:33Z",
         "organization": "poker-central",
         "ads": {
+          "enabled": true,
           "provider": "freewheel",
           "format": "freewheel",
           "networkId": 393946,
           "profileName": "393946:crtv_android_test",
-          "siteSectionId": "androidtestsection",
-          "vHost": "602da.v.fwmrm.net"
+          "siteSectionId": "pc_android_all",
+          "vHost": "602da.v.fwmrm.net",
+          "assetId": "91cjZoeDrApjYggXwGtzsX-mHhCWGJYr"
         },
         "overlays": {
           "enabled": true
+        },
+        "player": {
+          "type": "brightcove"
         },
         "url": "http://player.ooyala.com/player/appletv/91cjZoeDrApjYggXwGtzsX-mHhCWGJYr.m3u8"
       }
@@ -343,7 +442,7 @@
         "self": "https://device-staging.oddworks.io/v1/videos/ooyala-kxc3doeDrjyie41faiAzmWcjH_4BmWJ8"
       },
       "attributes": {
-        "title": "S7:E4 Big Game ",
+        "title": "S7:E4 The Big Game ",
         "description": "With a juicy line up including Tony G, Toby Lewis, Max Pescatori and Alec Torelli, the first top of the Big Game Season 7 concludes in Casino Barcelona. ",
         "images": {
           "aspect16x9": "http://image.oddworks.io/eooyala/kxc3doeDrjyie41faiAzmWcjH_4BmWJ8/promo270518031.jpg",
@@ -355,24 +454,41 @@
         "actors": [
           "Alec Torelli",
           "Faraz Jaka",
-          "Raul Mestre"
+          "Raul Mestre",
+          "Max Pescatori",
+          "Tony G",
+          "Tournament",
+          "Jesse May",
+          "Scott Baumstein",
+          "Matt Salsberg",
+          "Kara Scott",
+          "Barcelona",
+          "TV-NR",
+          "With a juicy line up including Tony G, Toby Lewis, Max Pescatori and Alec Torelli, the first top of the Big Game Season 7 concludes in Casino Barcelona.",
+          "S7:E4 The Big Game",
+          "2013"
         ],
         "tags": [],
         "duration": 2583850,
         "releaseDate": "2015-10-30T14:55:29Z",
-        "updatedAt": "2015-11-01T03:05:46Z",
+        "updatedAt": "2015-12-03T17:02:32Z",
         "createdAt": "2015-10-30T14:55:29Z",
         "organization": "poker-central",
         "ads": {
+          "enabled": true,
           "provider": "freewheel",
           "format": "freewheel",
           "networkId": 393946,
           "profileName": "393946:crtv_android_test",
-          "siteSectionId": "androidtestsection",
-          "vHost": "602da.v.fwmrm.net"
+          "siteSectionId": "pc_android_all",
+          "vHost": "602da.v.fwmrm.net",
+          "assetId": "kxc3doeDrjyie41faiAzmWcjH_4BmWJ8"
         },
         "overlays": {
           "enabled": true
+        },
+        "player": {
+          "type": "brightcove"
         },
         "url": "http://player.ooyala.com/player/appletv/kxc3doeDrjyie41faiAzmWcjH_4BmWJ8.m3u8"
       }
@@ -400,24 +516,32 @@
         "actors": [
           "Noah Boeken",
           "Jesse May",
-          "Tony Gouga"
+          "Tony Gouga",
+          "TV-NR",
+          "In this clip, Noah Boeken and Tony G discuss the approach to heads up play.",
+          "Winning Poker - Heads Up Strategy"
         ],
         "tags": [],
         "duration": 149983,
         "releaseDate": "2015-09-28T13:27:09Z",
-        "updatedAt": "2015-10-05T15:39:00Z",
+        "updatedAt": "2015-12-03T21:55:24Z",
         "createdAt": "2015-09-28T13:27:09Z",
         "organization": "poker-central",
         "ads": {
+          "enabled": true,
           "provider": "freewheel",
           "format": "freewheel",
           "networkId": 393946,
           "profileName": "393946:crtv_android_test",
-          "siteSectionId": "androidtestsection",
-          "vHost": "602da.v.fwmrm.net"
+          "siteSectionId": "pc_android_all",
+          "vHost": "602da.v.fwmrm.net",
+          "assetId": "A5OGFzdzpuBExwa3YGBo0EYYNRgfgFP5"
         },
         "overlays": {
           "enabled": true
+        },
+        "player": {
+          "type": "brightcove"
         },
         "url": "http://player.ooyala.com/player/appletv/A5OGFzdzpuBExwa3YGBo0EYYNRgfgFP5.m3u8"
       }
@@ -445,24 +569,32 @@
         "actors": [
           "Noah Boeken",
           "Tony Gouga",
-          "Jesse May"
+          "Jesse May",
+          "TV-NR",
+          "Sometimes when a player gets a big hand, they overplay it. In this case, this player does quite the opposite.",
+          "Winning Poker - Worst Fold"
         ],
         "tags": [],
         "duration": 182615,
         "releaseDate": "2015-09-28T13:29:41Z",
-        "updatedAt": "2015-10-05T15:38:49Z",
+        "updatedAt": "2015-12-03T21:53:20Z",
         "createdAt": "2015-09-28T13:29:41Z",
         "organization": "poker-central",
         "ads": {
+          "enabled": true,
           "provider": "freewheel",
           "format": "freewheel",
           "networkId": 393946,
           "profileName": "393946:crtv_android_test",
-          "siteSectionId": "androidtestsection",
-          "vHost": "602da.v.fwmrm.net"
+          "siteSectionId": "pc_android_all",
+          "vHost": "602da.v.fwmrm.net",
+          "assetId": "xsYWFzdzooFD20Yd03QjcO_t6l-AcXIJ"
         },
         "overlays": {
           "enabled": true
+        },
+        "player": {
+          "type": "brightcove"
         },
         "url": "http://player.ooyala.com/player/appletv/xsYWFzdzooFD20Yd03QjcO_t6l-AcXIJ.m3u8"
       }
@@ -479,7 +611,7 @@
       },
       "attributes": {
         "title": "Misplay",
-        "description": "In this hand analysis, Noah Boeken and Tony G take a look at the final hand of the tournament for a player they have dubbed ",
+        "description": "In this hand analysis, Noah Boeken and Tony G take a look at the final hand of the tournament for a player they have dubbed \"The Tightest Player In Poker History.\"",
         "images": {
           "aspect16x9": "http://image.oddworks.io/eooyala/c1YWFzdzonxz7FzIKA6WPBhQRr6YTakU/promo267716859.jpg",
           "aspect4x3": "http://image.oddworks.io/edummyimage/4:3x1440&text=placeholder.png",
@@ -490,24 +622,32 @@
         "actors": [
           "Tony Gouga",
           "Jesse May",
-          "Noah Boeken"
+          "Noah Boeken",
+          "TV-NR",
+          "In this hand analysis, Noah Boeken and Tony G take a look at the final hand of the tournament for a player they have dubbed \"The Tightest Player In Poker History.\"",
+          "Winning Poker - Misplay"
         ],
         "tags": [],
         "duration": 200467,
         "releaseDate": "2015-09-28T13:29:23Z",
-        "updatedAt": "2015-10-05T15:38:41Z",
+        "updatedAt": "2015-12-03T21:53:40Z",
         "createdAt": "2015-09-28T13:29:23Z",
         "organization": "poker-central",
         "ads": {
+          "enabled": true,
           "provider": "freewheel",
           "format": "freewheel",
           "networkId": 393946,
           "profileName": "393946:crtv_android_test",
-          "siteSectionId": "androidtestsection",
-          "vHost": "602da.v.fwmrm.net"
+          "siteSectionId": "pc_android_all",
+          "vHost": "602da.v.fwmrm.net",
+          "assetId": "c1YWFzdzonxz7FzIKA6WPBhQRr6YTakU"
         },
         "overlays": {
           "enabled": true
+        },
+        "player": {
+          "type": "brightcove"
         },
         "url": "http://player.ooyala.com/player/appletv/c1YWFzdzonxz7FzIKA6WPBhQRr6YTakU.m3u8"
       }
@@ -535,24 +675,32 @@
         "actors": [
           "Jesse May",
           "Tony Gouga",
-          "Noah Boeken"
+          "Noah Boeken",
+          "TV-NR",
+          "In this hand analysis, two players in the blinds have decent hands and big decisions.",
+          "Winning Poker - Bubble Play"
         ],
         "tags": [],
         "duration": 178712,
         "releaseDate": "2015-09-28T13:28:51Z",
-        "updatedAt": "2015-10-05T15:38:32Z",
+        "updatedAt": "2015-12-03T21:54:19Z",
         "createdAt": "2015-09-28T13:28:51Z",
         "organization": "poker-central",
         "ads": {
+          "enabled": true,
           "provider": "freewheel",
           "format": "freewheel",
           "networkId": 393946,
           "profileName": "393946:crtv_android_test",
-          "siteSectionId": "androidtestsection",
-          "vHost": "602da.v.fwmrm.net"
+          "siteSectionId": "pc_android_all",
+          "vHost": "602da.v.fwmrm.net",
+          "assetId": "xvOWFzdzo6QFgYb08mLt9OyeEYXtFK4T"
         },
         "overlays": {
           "enabled": true
+        },
+        "player": {
+          "type": "brightcove"
         },
         "url": "http://player.ooyala.com/player/appletv/xvOWFzdzo6QFgYb08mLt9OyeEYXtFK4T.m3u8"
       }
@@ -580,24 +728,32 @@
         "actors": [
           "Tony Gouga",
           "Jesse May",
-          "Noah Boeken"
+          "Noah Boeken",
+          "TV-NR",
+          "In this clip, Tony G and Noah Boeken discuss the Blind vs Blind strategy and what missteps most players make.",
+          "Winning Poker - Blind v Blind"
         ],
         "tags": [],
         "duration": 141174,
         "releaseDate": "2015-09-28T13:28:37Z",
-        "updatedAt": "2015-10-05T19:51:52Z",
+        "updatedAt": "2015-12-03T21:54:34Z",
         "createdAt": "2015-09-28T13:28:37Z",
         "organization": "poker-central",
         "ads": {
+          "enabled": true,
           "provider": "freewheel",
           "format": "freewheel",
           "networkId": 393946,
           "profileName": "393946:crtv_android_test",
-          "siteSectionId": "androidtestsection",
-          "vHost": "602da.v.fwmrm.net"
+          "siteSectionId": "pc_android_all",
+          "vHost": "602da.v.fwmrm.net",
+          "assetId": "JrOWFzdzpISDHQ-WCXL8CV-LGzst7c77"
         },
         "overlays": {
           "enabled": true
+        },
+        "player": {
+          "type": "brightcove"
         },
         "url": "http://player.ooyala.com/player/appletv/JrOWFzdzpISDHQ-WCXL8CV-LGzst7c77.m3u8"
       }
@@ -625,24 +781,34 @@
         "actors": [
           "Phil Gordon",
           "Steve Schirripa",
-          "Charles Campbell"
+          "Charles Campbell",
+          "Special",
+          "Las Vegas",
+          "TV-NR",
+          "Despite being the amateur at the table, Chris Campbell makes a great read and an even better fold.",
+          "Face The Ace - Pocket 7s"
         ],
         "tags": [],
         "duration": 80113,
         "releaseDate": "2015-09-28T13:30:36Z",
-        "updatedAt": "2015-10-05T19:49:52Z",
+        "updatedAt": "2015-12-03T21:52:16Z",
         "createdAt": "2015-09-28T13:30:36Z",
         "organization": "poker-central",
         "ads": {
+          "enabled": true,
           "provider": "freewheel",
           "format": "freewheel",
           "networkId": 393946,
           "profileName": "393946:crtv_android_test",
-          "siteSectionId": "androidtestsection",
-          "vHost": "602da.v.fwmrm.net"
+          "siteSectionId": "pc_android_all",
+          "vHost": "602da.v.fwmrm.net",
+          "assetId": "84YmFzdzrWoKCA9bz3y_W2K1mlgxNDrH"
         },
         "overlays": {
           "enabled": true
+        },
+        "player": {
+          "type": "brightcove"
         },
         "url": "http://player.ooyala.com/player/appletv/84YmFzdzrWoKCA9bz3y_W2K1mlgxNDrH.m3u8"
       }
@@ -670,24 +836,34 @@
         "actors": [
           "Steve Schirripa",
           "Charles Campbell",
-          "Phil Gordon"
+          "Phil Gordon",
+          "Special",
+          "Las Vegas",
+          "TV-NR",
+          "This clip shows how the tides of poker can turn in a single hand.",
+          "Face The Ace - Roller Coaster"
         ],
         "tags": [],
         "duration": 134934,
         "releaseDate": "2015-09-28T13:31:49Z",
-        "updatedAt": "2015-10-05T19:50:00Z",
+        "updatedAt": "2015-12-03T21:51:01Z",
         "createdAt": "2015-09-28T13:31:49Z",
         "organization": "poker-central",
         "ads": {
+          "enabled": true,
           "provider": "freewheel",
           "format": "freewheel",
           "networkId": 393946,
           "profileName": "393946:crtv_android_test",
-          "siteSectionId": "androidtestsection",
-          "vHost": "602da.v.fwmrm.net"
+          "siteSectionId": "pc_android_all",
+          "vHost": "602da.v.fwmrm.net",
+          "assetId": "10Y2FzdzoyU3hUwFr2Er6gTt41IDLdC0"
         },
         "overlays": {
           "enabled": true
+        },
+        "player": {
+          "type": "brightcove"
         },
         "url": "http://player.ooyala.com/player/appletv/10Y2FzdzoyU3hUwFr2Er6gTt41IDLdC0.m3u8"
       }
@@ -715,24 +891,34 @@
         "actors": [
           "Erick Lindgren",
           "Andrew Weinstein",
-          "Steve Schirripa"
+          "Steve Schirripa",
+          "Special",
+          "Las Vegas",
+          "TV-NR",
+          "With his tournament life on the line, Andrew Weinstein needs to hold here. Will Erick Lindgren get there before it's over?",
+          "Face The Ace - Double Up"
         ],
         "tags": [],
         "duration": 94994,
         "releaseDate": "2015-09-28T13:30:57Z",
-        "updatedAt": "2015-10-05T19:49:45Z",
+        "updatedAt": "2015-12-03T21:52:02Z",
         "createdAt": "2015-09-28T13:30:57Z",
         "organization": "poker-central",
         "ads": {
+          "enabled": true,
           "provider": "freewheel",
           "format": "freewheel",
           "networkId": 393946,
           "profileName": "393946:crtv_android_test",
-          "siteSectionId": "androidtestsection",
-          "vHost": "602da.v.fwmrm.net"
+          "siteSectionId": "pc_android_all",
+          "vHost": "602da.v.fwmrm.net",
+          "assetId": "FvYmFzdzquGABhBM7Flb-FYSjjk9ZlOS"
         },
         "overlays": {
           "enabled": true
+        },
+        "player": {
+          "type": "brightcove"
         },
         "url": "http://player.ooyala.com/player/appletv/FvYmFzdzquGABhBM7Flb-FYSjjk9ZlOS.m3u8"
       }
@@ -760,24 +946,34 @@
         "actors": [
           "Adam Ehrlich",
           "Phil Gordon",
-          "Steve Schirripa"
+          "Steve Schirripa",
+          "Special",
+          "Las Vegas",
+          "TV-NR",
+          "The action in the hand gets intense with lots of bets and raises.",
+          "Face The Ace - Phil"
         ],
         "tags": [],
         "duration": 122756,
         "releaseDate": "2015-09-28T13:31:35Z",
-        "updatedAt": "2015-10-05T19:50:10Z",
+        "updatedAt": "2015-12-03T21:51:18Z",
         "createdAt": "2015-09-28T13:31:35Z",
         "organization": "poker-central",
         "ads": {
+          "enabled": true,
           "provider": "freewheel",
           "format": "freewheel",
           "networkId": 393946,
           "profileName": "393946:crtv_android_test",
-          "siteSectionId": "androidtestsection",
-          "vHost": "602da.v.fwmrm.net"
+          "siteSectionId": "pc_android_all",
+          "vHost": "602da.v.fwmrm.net",
+          "assetId": "tyY2Fzdzqv2QXYJ_uGDVKFuS9WehTH9o"
         },
         "overlays": {
           "enabled": true
+        },
+        "player": {
+          "type": "brightcove"
         },
         "url": "http://player.ooyala.com/player/appletv/tyY2Fzdzqv2QXYJ_uGDVKFuS9WehTH9o.m3u8"
       }
@@ -805,24 +1001,34 @@
         "actors": [
           "Nicolas Mamy",
           "Patrick Antonius",
-          "Steve Schirripa"
+          "Steve Schirripa",
+          "Special",
+          "Las Vegas",
+          "TV-NR",
+          "Patrick Antonius is faced with a difficult decision on the river. Will he make the right one?",
+          "Face The Ace - Difficult Decision"
         ],
         "tags": [],
         "duration": 170870,
         "releaseDate": "2015-09-28T13:31:30Z",
-        "updatedAt": "2015-10-05T19:50:15Z",
+        "updatedAt": "2015-12-03T21:51:33Z",
         "createdAt": "2015-09-28T13:31:30Z",
         "organization": "poker-central",
         "ads": {
+          "enabled": true,
           "provider": "freewheel",
           "format": "freewheel",
           "networkId": 393946,
           "profileName": "393946:crtv_android_test",
-          "siteSectionId": "androidtestsection",
-          "vHost": "602da.v.fwmrm.net"
+          "siteSectionId": "pc_android_all",
+          "vHost": "602da.v.fwmrm.net",
+          "assetId": "NsY2Fzdzq5eEpgPu_OUZOt10KTRRJ4Cs"
         },
         "overlays": {
           "enabled": true
+        },
+        "player": {
+          "type": "brightcove"
         },
         "url": "http://player.ooyala.com/player/appletv/NsY2Fzdzq5eEpgPu_OUZOt10KTRRJ4Cs.m3u8"
       }
