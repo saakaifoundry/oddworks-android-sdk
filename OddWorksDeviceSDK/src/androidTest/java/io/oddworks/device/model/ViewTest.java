@@ -111,7 +111,7 @@ public class ViewTest {
     }
 
     @Test
-	public void testFillIncludedMediaCollections() throws Exception {
+	public void testFillIncludedCollections() throws Exception {
         String mcId = "12345";
         String mcType = "videoCollection";
         Identifier mcIdentifier = new Identifier(mcId, mcType);
@@ -138,7 +138,7 @@ public class ViewTest {
         MediaCollection foundMediaCollection = (MediaCollection) view.getIncludedByRelationship("featured").get(0);
         assertEquals(0, foundMediaCollection.getIncludedByRelationship("videos").size());
 
-        view.fillIncludedMediaCollections();
+        view.fillIncludedCollections();
         assertEquals(1, foundMediaCollection.getIncludedByRelationship("videos").size());
     }
 }
