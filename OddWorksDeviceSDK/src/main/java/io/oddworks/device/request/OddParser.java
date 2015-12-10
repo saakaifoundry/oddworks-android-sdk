@@ -15,9 +15,13 @@ import java.util.Map;
 import io.oddworks.device.exception.OddParseException;
 import io.oddworks.device.exception.UnhandledPlayerTypeException;
 import io.oddworks.device.model.AdsConfig;
+import io.oddworks.device.model.Article;
 import io.oddworks.device.model.AuthToken;
+import io.oddworks.device.model.Collection;
 import io.oddworks.device.model.Config;
 import io.oddworks.device.model.DeviceCodeResponse;
+import io.oddworks.device.model.Event;
+import io.oddworks.device.model.External;
 import io.oddworks.device.model.Identifier;
 import io.oddworks.device.model.Media;
 import io.oddworks.device.model.MediaAd;
@@ -98,6 +102,32 @@ public class OddParser {
         return collection;
     }
 
+    public Collection parseCollection(final JSONObject data) throws JSONException {
+        JSONObject rawAttributes = data.getJSONObject("attributes");
+        JSONObject images = rawAttributes.getJSONObject("images");
+
+        String id = JSON.getString(data, "id");
+        String type = JSON.getString(data, "type");
+
+        HashMap<String, Object> attributes = new HashMap<>();
+        attributes.put("title", JSON.getString(rawAttributes, "title"));
+        attributes.put("description", JSON.getString(rawAttributes, "description"));
+        attributes.put("releaseDate", JSON.getDateTime(rawAttributes, "releaseDate"));
+        attributes.put("mediaImage", parseMediaImage(images));
+
+        Collection collection = new Collection(id, type);
+        collection.setAttributes(attributes);
+
+
+        JSONObject relationships = data.getJSONObject("relationships");
+
+        addRelationshipsToOddObject(relationships, collection);
+
+        collection.fillIncludedCollections();
+
+        return collection;
+    }
+
     public MediaCollection parseMediaCollectionResponse(String responseBody) {
         MediaCollection mc = null;
         try {
@@ -123,18 +153,98 @@ public class OddParser {
             String includedType = JSON.getString(includedObject, "type");
 
             switch (includedType) {
-                case OddObject.TYPE_VIDEO_COLLECTION:
-                    addTo.addIncluded(parseMediaCollection(includedObject));
+                case OddObject.TYPE_ARTICLE:
+                    addTo.addIncluded(parseArticle(includedObject));
+                    break;
+                case OddObject.TYPE_COLLECTION:
+                    addTo.addIncluded(parseCollection(includedObject));
+                    break;
+                case OddObject.TYPE_EVENT:
+                    addTo.addIncluded(parseEvent(includedObject));
+                    break;
+                case OddObject.TYPE_EXTERNAL:
+                    addTo.addIncluded(parseExternal(includedObject));
+                    break;
+                case OddObject.TYPE_PROMOTION:
+                    addTo.addIncluded(parsePromotion(includedObject));
                     break;
                 case OddObject.TYPE_LIVE_STREAM:
                 case OddObject.TYPE_VIDEO:
                     addTo.addIncluded(parseMedia(includedObject));
                     break;
-                case OddObject.TYPE_PROMOTION:
-                    addTo.addIncluded(parsePromotion(includedObject));
+                case OddObject.TYPE_VIDEO_COLLECTION:
+                    addTo.addIncluded(parseMediaCollection(includedObject));
                     break;
             }
         }
+    }
+
+    protected Event parseEvent(final JSONObject dataObject) throws JSONException {
+        JSONObject rawAttributes = dataObject.getJSONObject("attributes");
+        JSONObject images = rawAttributes.getJSONObject("images");
+        JSONObject ical = rawAttributes.getJSONObject("ical");
+
+        Event event = new Event(
+                JSON.getString(dataObject, "id"),
+                JSON.getString(dataObject, "type"));
+
+        HashMap<String, Object> attributes = new HashMap<>();
+        attributes.put("title", JSON.getString(rawAttributes, "title"));
+        attributes.put("description", JSON.getString(rawAttributes, "description"));
+        attributes.put("mediaImage", parseMediaImage(images));
+        attributes.put("category", JSON.getString(rawAttributes, "category"));
+        attributes.put("source", JSON.getString(rawAttributes, "source"));
+        attributes.put("createdAt", JSON.getDateTime(rawAttributes, "createdAt"));
+        attributes.put("url", JSON.getString(rawAttributes, "url"));
+
+        attributes.put("dateTimeStart", JSON.getDateTime(ical, "dtstart"));
+        attributes.put("dateTimeEnd", JSON.getDateTime(ical, "dtend"));
+        attributes.put("location", JSON.getDateTime(ical, "location"));
+
+        event.setAttributes(attributes);
+
+        return event;
+    }
+
+    protected External parseExternal(final JSONObject dataObject) throws JSONException {
+        JSONObject rawAttributes = dataObject.getJSONObject("attributes");
+        JSONObject images = rawAttributes.getJSONObject("images");
+
+        External external = new External(
+                JSON.getString(dataObject, "id"),
+                JSON.getString(dataObject, "type"));
+
+        HashMap<String, Object> attributes = new HashMap<>();
+        attributes.put("title", JSON.getString(rawAttributes, "title"));
+        attributes.put("description", JSON.getString(rawAttributes, "description"));
+        attributes.put("mediaImage", parseMediaImage(images));
+        attributes.put("url", JSON.getString(rawAttributes, "url"));
+
+        external.setAttributes(attributes);
+
+        return external;
+    }
+
+    protected Article parseArticle(final JSONObject dataObject) throws JSONException {
+        JSONObject rawAttributes = dataObject.getJSONObject("attributes");
+        JSONObject images = rawAttributes.getJSONObject("images");
+
+        Article article = new Article(
+                JSON.getString(dataObject, "id"),
+                JSON.getString(dataObject, "type"));
+
+        HashMap<String, Object> attributes = new HashMap<>();
+        attributes.put("title", JSON.getString(rawAttributes, "title"));
+        attributes.put("description", JSON.getString(rawAttributes, "description"));
+        attributes.put("mediaImage", parseMediaImage(images));
+        attributes.put("category", JSON.getString(rawAttributes, "category"));
+        attributes.put("source", JSON.getString(rawAttributes, "source"));
+        attributes.put("createdAt", JSON.getDateTime(rawAttributes, "createdAt"));
+        attributes.put("url", JSON.getString(rawAttributes, "url"));
+
+        article.setAttributes(attributes);
+
+        return article;
     }
 
     protected Media parseMedia(final JSONObject dataObject) throws JSONException {
@@ -378,31 +488,52 @@ public class OddParser {
 
     protected ArrayList<OddObject> parseSearch(final String result) {
         ArrayList<OddObject> searchResult = new ArrayList<>();
-        ArrayList<Media> searchMedias = new ArrayList<>();
-        ArrayList<MediaCollection> searchCollections = new ArrayList<>();
         try {
             JSONObject resultObject = new JSONObject(result);
             JSONArray dataArray = resultObject.getJSONArray("data");
             for (int i = 0; i < dataArray.length(); i++) {
                 JSONObject pokerObj = dataArray.getJSONObject(i);
-                String type = parseString(pokerObj, "type");
-                if (OddObject.TYPE_VIDEO.equals(type)) {
-                    Media video = parseMedia(pokerObj);
-                    if (video != null) {
-                        searchMedias.add(video);
-                    }
-                } else if (OddObject.TYPE_VIDEO_COLLECTION.equals(type)) {
-                    MediaCollection collection = parseMediaCollection(pokerObj);
-                    if (collection != null) {
-                        searchCollections.add(collection);
-                    }
+                String type = JSON.getString(pokerObj, "type");
+
+                switch(type) {
+                    case OddObject.TYPE_VIDEO:
+                    case OddObject.TYPE_LIVE_STREAM:
+                        Media video = parseMedia(pokerObj);
+                        if (video != null) {
+                            searchResult.add(video);
+                        }
+                        break;
+                    case OddObject.TYPE_ARTICLE:
+                        Article article = parseArticle(pokerObj);
+                        if (article != null) {
+                            searchResult.add(article);
+                        }
+                        break;
+                    case OddObject.TYPE_EVENT:
+                        Event event = parseEvent(pokerObj);
+                        if (event != null) {
+                            searchResult.add(event);
+                        }
+                        break;
+                    case OddObject.TYPE_EXTERNAL:
+                        External external = parseExternal(pokerObj);
+                        if (external != null) {
+                            searchResult.add(external);
+                        }
+                        break;
+                    case OddObject.TYPE_COLLECTION:
+                        Collection collection = parseCollection(pokerObj);
+                        if (collection != null) {
+                            searchResult.add(collection);
+                        }
+                        break;
+                    case OddObject.TYPE_VIDEO_COLLECTION:
+                        MediaCollection mediaCollection = parseMediaCollection(pokerObj);
+                        if (mediaCollection != null) {
+                            searchResult.add(mediaCollection);
+                        }
+                        break;
                 }
-            }
-            if (!searchCollections.isEmpty()) {
-                searchResult.addAll(searchCollections);
-            }
-            if (!searchMedias.isEmpty()) {
-                searchResult.addAll(searchMedias);
             }
         } catch (JSONException e) {
             e.printStackTrace();

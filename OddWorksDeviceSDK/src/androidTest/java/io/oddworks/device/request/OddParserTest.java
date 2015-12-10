@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
 import android.test.AndroidTestCase;
+import android.util.Log;
 
 import org.json.JSONObject;
 import org.junit.Before;
@@ -21,12 +22,17 @@ import io.oddworks.device.metric.OddVideoPlayingMetric;
 import io.oddworks.device.metric.OddVideoStopMetric;
 import io.oddworks.device.metric.OddViewLoadMetric;
 import io.oddworks.device.model.AdsConfig;
+import io.oddworks.device.model.Collection;
 import io.oddworks.device.model.Config;
 import io.oddworks.device.model.Identifier;
+import io.oddworks.device.model.Media;
 import io.oddworks.device.model.MediaCollection;
 import io.oddworks.device.model.players.ExternalPlayer;
 import io.oddworks.device.model.players.OoyalaPlayer;
 import io.oddworks.device.model.players.Player;
+import io.oddworks.device.model.OddObject;
+import io.oddworks.device.model.OddView;
+import io.oddworks.device.model.Promotion;
 import io.oddworks.device.testutils.AssetUtils;
 
 import static org.hamcrest.CoreMatchers.is;
@@ -47,16 +53,48 @@ public class OddParserTest extends AndroidTestCase {
     }
 
     @Test
-    public void testParseView() throws Exception {
-//        String viewResponseWithIncluded = AssetUtils.readFileToString(getContext(), "ViewResponseWithIncluded.json");
+    public void testParseViewV1() throws Exception {
+        String viewResponseV1 = AssetUtils.readFileToString(mContext, "ViewResponseV1.json");
 
-//        OddView oddView = oddParser.parseView(viewResponseWithIncluded);
-//
-//        ArrayList<OddObject> mediaObjects = oddView.getIncludedByType("video");
-//
-//        Media media = (Media) mediaObjects.get(0);
-//
-//        Log.d("TEST: ", media.getMediaAd().toString());
+        OddView oddView = oddParser.parseView(viewResponseV1);
+
+        ArrayList<OddObject> featuredMedia = oddView.getIncludedByRelationship("featuredMedia");
+        ArrayList<OddObject> featured = oddView.getIncludedByRelationship("featured");
+        ArrayList<OddObject> shows = oddView.getIncludedByRelationship("shows");
+
+        assertFalse(featuredMedia.isEmpty());
+        assertThat(((Media) featuredMedia.get(0)).getTitle(), is("Wasabi: Wasabi Went Bad"));
+
+        assertFalse(featured.isEmpty());
+        MediaCollection collection = (MediaCollection) featured.get(0);
+        assertThat(collection.getTitle(), is("Videos"));
+        ArrayList<OddObject> videos = collection.getIncludedByRelationship("videos");
+        Media video = (Media) videos.get(0);
+        assertThat(video.getTitle(), is("S1:E4 Doubles Poker Championship"));
+    }
+
+    @Test
+    public void testParseViewV2() throws Exception {
+        String viewResponseV2 = AssetUtils.readFileToString(mContext, "ViewResponseV2.json");
+
+        OddView view = oddParser.parseView(viewResponseV2);
+        ArrayList<OddObject> promotions = view.getIncludedByRelationship("promotion");
+        ArrayList<OddObject> featuredMedia = view.getIncludedByRelationship("featuredMedia");
+        ArrayList<OddObject> featuredCollections = view.getIncludedByRelationship("featuredCollections");
+
+        assertFalse(promotions.isEmpty());
+        assertThat(((Promotion) promotions.get(0)).getTitle(), is("Share your best poker face using #POKERCENTRALCONTEST"));
+
+        assertFalse(featuredMedia.isEmpty());
+        assertThat(((Media) featuredMedia.get(0)).getDescription(), is("Louder, come on"));
+
+        assertFalse(featuredCollections.isEmpty());
+        Collection collection = (Collection) featuredCollections.get(0);
+        assertThat(collection.getTitle(), is("PBR Featured Collections"));
+
+        ArrayList<OddObject> subCollections = collection.getIncludedByRelationship("entities");
+        Collection subCollection = (Collection) subCollections.get(0);
+        assertThat(subCollection.getTitle(), is("The Black Eyed Peas"));
     }
 
     @Test
