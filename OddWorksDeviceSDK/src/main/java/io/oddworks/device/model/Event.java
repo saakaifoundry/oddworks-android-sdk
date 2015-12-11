@@ -1,6 +1,8 @@
 package io.oddworks.device.model;
 
 import org.joda.time.DateTime;
+import org.joda.time.Days;
+import org.joda.time.Interval;
 
 import java.util.HashMap;
 
@@ -67,6 +69,15 @@ public class Event extends OddObject {
 
     public void setCreatedAt(String date) {
         mCreatedAt = new DateTime(date);
+    }
+
+    public boolean isMultiDayEvent() {
+        return hasStartAndEndDateTime() &&
+               getDateTimeStart().getDayOfYear() != getDateTimeEnd().getDayOfYear();
+    }
+
+    public boolean hasStartAndEndDateTime() {
+        return getDateTimeStart() != null && getDateTimeEnd() != null;
     }
 
     @Override
