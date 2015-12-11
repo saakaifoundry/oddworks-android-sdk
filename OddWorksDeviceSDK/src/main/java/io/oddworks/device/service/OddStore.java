@@ -18,7 +18,7 @@ public class OddStore {
         // singleton
     }
 
-    public OddStore getInstance() {
+    public static OddStore getInstance() {
         return INSTANCE;
     }
 
