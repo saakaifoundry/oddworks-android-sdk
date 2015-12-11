@@ -1,0 +1,470 @@
+{
+  "data": {
+    "type": "view",
+    "relationships": {
+      "items": {
+        "data": [
+          {
+            "id": "pbr-homepage",
+            "type": "view"
+          },
+          {
+            "id": "ooyala-pbr-featured-collections",
+            "type": "collection"
+          },
+          {
+            "id": "9962fbef3e74fe8e54fcee17fe1ee00a",
+            "type": "collection"
+          },
+          {
+            "id": "e1ce8566655fcac15ad4ed579b1d1333",
+            "type": "collection"
+          },
+          {
+            "id": "pbr-stats",
+            "type": "external"
+          }
+        ]
+      }
+    },
+    "id": "pbr-menu",
+    "links": {
+      "self": "https://device-staging.oddworks.io/v1/views/pbr-menu"
+    },
+    "attributes": {
+      "organization": "pbr"
+    }
+  },
+  "included": [
+    {
+      "type": "view",
+      "relationships": {
+        "promotion": {
+          "data": {
+            "id": "fbec8574-6eb0-4339-91db-7833d96ed8c8",
+            "type": "promotion"
+          },
+          "meta": {
+            "displayDuration": 4
+          }
+        },
+        "featuredMedia": {
+          "data": {
+            "id": "pbr-live-web-video",
+            "type": "video"
+          }
+        },
+        "featuredCollections": {
+          "data": {
+            "id": "ooyala-pbr-featured-collections",
+            "type": "collection"
+          }
+        }
+      },
+      "id": "pbr-homepage",
+      "links": {
+        "self": "https://device-staging.oddworks.io/v1/views/pbr-homepage"
+      },
+      "attributes": {
+        "organization": "pbr"
+      }
+    },
+    {
+      "relationships": {
+        "entities": {
+          "links": {
+            "self": "/v1/collections/ooyala-featured-collections/collections"
+          },
+          "data": [
+            {
+              "id": "ooyala-w4MGV5eDpoE0rmbrcHEeDEEuhQMypB0u",
+              "type": "collection"
+            },
+            {
+              "id": "ooyala-02ZWV5eDqBpEbc9ooAspnWFIIycMZWfK",
+              "type": "collection"
+            },
+            {
+              "id": "ooyala-1sb3lyeDqceL2bg9n92QLrx70spWE_-E",
+              "type": "collection"
+            }
+          ]
+        }
+      },
+      "type": "collection",
+      "id": "ooyala-pbr-featured-collections",
+      "links": {
+        "self": "https://device-staging.oddworks.io/v1/collections/ooyala-pbr-featured-collections"
+      },
+      "attributes": {
+        "title": "PBR Featured Collections",
+        "description": "",
+        "images": {
+          "aspect16x9": "http://image.oddworks.io/eooyala/w4MGV5eDpoE0rmbrcHEeDEEuhQMypB0u/promo272218855.jpg"
+        },
+        "releaseDate": "2015-12-02T13:32:24Z",
+        "updatedAt": "2015-12-02T15:59:43Z",
+        "createdAt": "2015-12-02T13:32:24Z",
+        "organization": "pbr"
+      }
+    },
+    {
+      "type": "collection",
+      "relationships": {
+        "entities": {
+          "data": [
+            {
+              "id": "99cb11b7d32b5cf49fef63d913b3c9d4",
+              "type": "article"
+            },
+            {
+              "id": "adf3c0728aec1f58a39cabdc5e525efc",
+              "type": "article"
+            }
+          ]
+        }
+      },
+      "id": "9962fbef3e74fe8e54fcee17fe1ee00a",
+      "links": {
+        "self": "https://device-staging.oddworks.io/v1/collections/9962fbef3e74fe8e54fcee17fe1ee00a"
+      },
+      "attributes": {
+        "organization": "pbr",
+        "title": "News",
+        "link": "http://pbr.com",
+        "description": "Latest PBR News",
+        "language": "en",
+        "generator": "umbraco"
+      }
+    },
+    {
+      "type": "collection",
+      "relationships": {
+        "entities": {
+          "data": [
+            {
+              "id": "f7a9aaeb7ac2a8fadfdd8767b8ea43f7",
+              "type": "event"
+            },
+            {
+              "id": "9933fbe99b074a1775be6f85fd67eb32",
+              "type": "event"
+            },
+            {
+              "id": "b672ab4e9744cd0b690a29bcc759c2c3",
+              "type": "event"
+            }
+          ]
+        }
+      },
+      "id": "e1ce8566655fcac15ad4ed579b1d1333",
+      "links": {
+        "self": "https://device-staging.oddworks.io/v1/collections/e1ce8566655fcac15ad4ed579b1d1333"
+      },
+      "attributes": {
+        "organization": "pbr",
+        "title": "Built Ford Tough Series - Schedule",
+        "link": "http://pbr.com/en/bfts/events.rss",
+        "description": "Professional Bull Riders - BFTS"
+      }
+    },
+    {
+      "type": "external",
+      "id": "pbr-stats",
+      "links": {
+        "self": "https://device-staging.oddworks.io/v1/externals/pbr-stats"
+      },
+      "attributes": {
+        "title": "Stats",
+        "description": "Stats for PBR",
+        "url": "http://odd-pbr.s3-website-us-east-1.amazonaws.com"
+      }
+    },
+    {
+      "type": "promotion",
+      "id": "fbec8574-6eb0-4339-91db-7833d96ed8c8",
+      "links": {
+        "self": "https://device-staging.oddworks.io/v1/promotions/fbec8574-6eb0-4339-91db-7833d96ed8c8"
+      },
+      "attributes": {
+        "organization": "poker-central",
+        "title": "Share your best poker face using #POKERCENTRALCONTEST",
+        "description": "Share your best poker face using #POKERCENTRALCONTEST for a chance to win. Visit www.pokerfacecontest.com today!",
+        "images": {
+          "aspect16x9": "http://image.oddworks.io/poker-central/promotions/2/16x9.png",
+          "aspect4x3": "http://dummyimage.com/4:3x1440&text=Promo",
+          "aspect3x4": "http://dummyimage.com/3:4x1920&text=Promo",
+          "aspect1x1": "http://dummyimage.com/1:1x1920&text=Promo",
+          "aspect2x3": "http://image.oddworks.io/poker-central/promotions/2/2x3.jpg"
+        }
+      }
+    },
+    {
+      "type": "video",
+      "id": "pbr-live-web-video",
+      "links": {
+        "self": "https://device-staging.oddworks.io/v1/videos/pbr-live-web-video"
+      },
+      "attributes": {
+        "title": "Live",
+        "description": "Louder, come on",
+        "images": {
+          "aspect16x9": "http://image.oddworks.io/eooyala/dkMWV5eDrsp7GH4AnSW9ywCVuDI_-9yx/3Gduepif0T1UGY8H4xMDoxOjBrO-I4W8.jpg",
+          "aspect4x3": "http://image.oddworks.io/edummyimage/4:3x1440&text=placeholder.png",
+          "aspect3x4": "http://image.oddworks.io/edummyimage/3:4x1920&text=placeholder.png",
+          "aspect1x1": "http://image.oddworks.io/edummyimage/1:1x1920&text=placeholder.png",
+          "aspect2x3": "http://image.oddworks.io/edummyimage/2:3x1920&text=placeholder.png"
+        },
+        "player": {
+          "type": "external",
+          "pCode": "5meWUyOipwedhLMDFYYFdAYmnGKl",
+          "domain": "ooyala.com",
+          "url": "http://s3.amazonaws.com/odd-pbr/live_stream.html"
+        },
+        "tags": [],
+        "organization": "pbr",
+        "ads": {
+          "enabled": false,
+          "provider": "freewheel",
+          "format": "vast",
+          "assetId": "pbr-live-web-video"
+        },
+        "overlays": {
+          "enabled": false
+        },
+        "url": null
+      }
+    },
+    {
+      "relationships": {
+        "entities": {
+          "links": {
+            "self": "/v1/collections/ooyala-w4MGV5eDpoE0rmbrcHEeDEEuhQMypB0u/videos"
+          },
+          "data": [
+            {
+              "id": "ooyala-xpam8yeTp9y3UlSD1LYj-e8DGTe-NoB7",
+              "type": "video"
+            },
+            {
+              "id": "ooyala-I4am8yeTp8jka7BRtcECqpuJHFNg2Nl-",
+              "type": "video"
+            },
+            {
+              "id": "ooyala-BqaW8yeToh8HjQzrMZVAxuUMFnpxNdbR",
+              "type": "video"
+            }
+          ]
+        }
+      },
+      "type": "collection",
+      "id": "ooyala-w4MGV5eDpoE0rmbrcHEeDEEuhQMypB0u",
+      "links": {
+        "self": "https://device-staging.oddworks.io/v1/collections/ooyala-w4MGV5eDpoE0rmbrcHEeDEEuhQMypB0u"
+      },
+      "attributes": {
+        "title": "The Black Eyed Peas",
+        "description": "Lorem Ipsum bacon helvetica grilled pickle tomato milk soup cookie",
+        "images": {
+          "aspect16x9": "http://image.oddworks.io/eooyala/w4MGV5eDpoE0rmbrcHEeDEEuhQMypB0u/promo272218855.jpg"
+        },
+        "releaseDate": "2015-11-19T16:19:53Z",
+        "updatedAt": "2015-11-23T18:54:50Z",
+        "createdAt": "2015-11-19T16:19:53Z",
+        "organization": "odd-networks"
+      }
+    },
+    {
+      "relationships": {
+        "entities": {
+          "links": {
+            "self": "/v1/collections/ooyala-02ZWV5eDqBpEbc9ooAspnWFIIycMZWfK/videos"
+          },
+          "data": [
+            {
+              "id": "ooyala-xvam8yeTqpPr9C_Mpa7MX6oYbKoWDiEF",
+              "type": "video"
+            },
+            {
+              "id": "ooyala-82am8yeTpdP4bsVwpeIDmMZN1R0f823w",
+              "type": "video"
+            }
+          ]
+        }
+      },
+      "type": "collection",
+      "id": "ooyala-02ZWV5eDqBpEbc9ooAspnWFIIycMZWfK",
+      "links": {
+        "self": "https://device-staging.oddworks.io/v1/collections/ooyala-02ZWV5eDqBpEbc9ooAspnWFIIycMZWfK"
+      },
+      "attributes": {
+        "title": "Lynyrd Skynyrd",
+        "description": "Some birds you just cannot change",
+        "images": {
+          "aspect16x9": "http://image.oddworks.io/eooyala/02ZWV5eDqBpEbc9ooAspnWFIIycMZWfK/promo272219498.jpg"
+        },
+        "releaseDate": "2015-11-19T16:29:55Z",
+        "updatedAt": "2015-11-23T18:54:51Z",
+        "createdAt": "2015-11-19T16:29:55Z",
+        "organization": "odd-networks"
+      }
+    },
+    {
+      "relationships": {
+        "entities": {
+          "links": {
+            "self": "/v1/collections/ooyala-1sb3lyeDqceL2bg9n92QLrx70spWE_-E/videos"
+          },
+          "data": [
+            {
+              "id": "ooyala-RwaW8yeTqohoLkNMj-46VPyvJQKDMY6q",
+              "type": "video"
+            }
+          ]
+        }
+      },
+      "type": "collection",
+      "id": "ooyala-1sb3lyeDqceL2bg9n92QLrx70spWE_-E",
+      "links": {
+        "self": "https://device-staging.oddworks.io/v1/collections/ooyala-1sb3lyeDqceL2bg9n92QLrx70spWE_-E"
+      },
+      "attributes": {
+        "title": "Action Action",
+        "description": "Zombie ipsum reversus ab viral inferno, nam rick grimes malum cerebro. De carne lumbering animata corpora quaeritis. Summus brains sit , morbo vel maleficia? De apocalypsi gorger omero undead survivor dictum mauris. Hi mindless mortuis soulless creaturas, imo evil stalking monstra adventus resi dentevil vultus comedat cerebella viventium",
+        "images": {
+          "aspect16x9": "http://image.oddworks.io/eooyala/1sb3lyeDqceL2bg9n92QLrx70spWE_-E/promo271524327.jpg"
+        },
+        "releaseDate": "2015-11-11T15:23:00Z",
+        "updatedAt": "2015-11-23T18:54:41Z",
+        "createdAt": "2015-11-11T15:23:00Z",
+        "organization": "odd-networks"
+      }
+    },
+    {
+      "type": "article",
+      "id": "99cb11b7d32b5cf49fef63d913b3c9d4",
+      "links": {
+        "self": "https://device-staging.oddworks.io/v1/articles/99cb11b7d32b5cf49fef63d913b3c9d4"
+      },
+      "attributes": {
+        "organization": "pbr",
+        "title": "Stock Contractor of the Year Berger has bulls at NFR",
+        "description": "When you are the reigning PBR Stock Contractor of the Year, it is safe to say you have top-notch quality bucking bulls.",
+        "images": {
+          "aspect16x9": "http://pbr.com/media/resized/96117_0_640x360.jpg"
+        },
+        "url": "http://pbr.com/en/news/features/other-features/2015/11/stock-contractor-of-the-year-berger-has-bulls-at-nfr.aspx"
+      }
+    },
+    {
+      "type": "article",
+      "id": "adf3c0728aec1f58a39cabdc5e525efc",
+      "links": {
+        "self": "https://device-staging.oddworks.io/v1/articles/adf3c0728aec1f58a39cabdc5e525efc"
+      },
+      "attributes": {
+        "organization": "pbr",
+        "title": "Billings hosts Built Ford Tough Series for 21st year in a row",
+        "description": "The PBR (Professional Bull Riders) Built Ford Tough Series (BFTS) will enjoy its 21st consecutive year in Magic City in 2016, as the Rimrock Auto Arena hosts the Billings Invitational on April 15-17, 2016.",
+        "images": {
+          "aspect16x9": "http://pbr.com/media/resized/96108_0_640x360.jpg"
+        },
+        "createdAt": "2015-12-01T18:08:29+00:00",
+        "url": "http://pbr.com/en/news/press-releases/2015/12/billings-hosts-built-ford-tough-series-for-21st-year-in-a-row.aspx"
+      }
+    },
+    {
+      "type": "article",
+      "id": "f7a9aaeb7ac2a8fadfdd8767b8ea43f7",
+      "links": {
+        "self": "https://device-staging.oddworks.io/v1/articles/f7a9aaeb7ac2a8fadfdd8767b8ea43f7"
+      },
+      "attributes": {
+        "organization": "pbr",
+        "title": "2015 Built Ford Tough World Finals",
+        "description": "Thomas & Mack Center",
+        "images": {
+          "aspect16x9": "http://pbr.com/media/resized/96117_0_640x360.jpg"
+        },
+        "category": "BFTS",
+        "source": {
+          "title": "pbr.com",
+          "url": "http://pbr.com/en/bfts/events.rss"
+        },
+        "createdAt": "2015-11-24T19:37:36+00:00",
+        "url": "http://pbr.com/en/bfts/schedule/2015/2015-world-finals.aspx",
+        "ical": {
+          "location": "Las Vegas, NV",
+          "dtstart": "2014-10-21T18:50:00-0600",
+          "dtend": "2014-10-25T13:50:00-0600"
+        }
+      }
+    },
+    {
+      "type": "article",
+      "id": "9933fbe99b074a1775be6f85fd67eb32",
+      "links": {
+        "self": "https://device-staging.oddworks.io/v1/articles/9933fbe99b074a1775be6f85fd67eb32"
+      },
+      "attributes": {
+        "organization": "pbr",
+        "title": "Cooper Tires Take the Money and Ride",
+        "description": "Tucson Arena",
+        "images": {
+          "aspect16x9": "http://pbr.com/media/resized/96108_0_640x360.jpg"
+        },
+        "category": "BFTS",
+        "source": {
+          "title": "pbr.com",
+          "url": "http://pbr.com/path/to/this/rss/file/events.rss"
+        },
+        "createdAt": "2015-11-24T19:37:36+00:00",
+        "url": "http://pbr.com/en/bfts/schedule/2015/2015-tucson.aspx",
+        "ical": {
+          "location": "Tucson, AZ",
+          "dtstart": "2014-10-02T18:50:00-0600",
+          "dtend": "2014-10-03T13:50:00-0600"
+        }
+      }
+    },
+    {
+      "type": "article",
+      "id": "b672ab4e9744cd0b690a29bcc759c2c3",
+      "links": {
+        "self": "https://device-staging.oddworks.io/v1/articles/b672ab4e9744cd0b690a29bcc759c2c3"
+      },
+      "attributes": {
+        "organization": "pbr",
+        "title": "Allentown Invitational",
+        "description": "PPL Center",
+        "images": {
+          "aspect16x9": "http://pbr.com/media/resized/96089_0_640x360.jpg"
+        },
+        "category": "BFTS",
+        "source": {
+          "title": "pbr.com",
+          "url": "http://pbr.com/path/to/this/xml/file/events.rss"
+        },
+        "createdAt": "2015-11-24T19:37:36+00:00",
+        "url": "http://pbr.com/en/bfts/schedule/2015/2015-allentown.aspx",
+        "ical": {
+          "location": "Allentown, PA",
+          "dtstart": "2014-09-25T18:50:00-0600",
+          "dtend": "2014-09-26T13:50:00-0600"
+        }
+      }
+    }
+  ],
+  "meta": {
+    "device": "GOOGLE_ANDROID",
+    "queryParams": {
+      "include": [
+        "1"
+      ]
+    },
+    "userEntitlements": []
+  },
+  "links": {
+    "self": "https://device-staging.oddworks.io/v1/views/pbr-menu%3Finclude=1"
+  }
+}

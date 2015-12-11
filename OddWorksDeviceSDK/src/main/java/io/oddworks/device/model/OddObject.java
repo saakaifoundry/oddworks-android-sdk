@@ -5,9 +5,12 @@ import java.util.HashMap;
 
 abstract public class OddObject {
     public static final String TAG = OddObject.class.getSimpleName();
+    public static final String TYPE_ARTICLE = "article";
+    public static final String TYPE_COLLECTION = "collection";
+    public static final String TYPE_EVENT = "event";
+    public static final String TYPE_EXTERNAL = "external";
     public static final String TYPE_LIVE_STREAM = "liveStream";
     public static final String TYPE_PROMOTION = "promotion";
-    public static final String TYPE_VIDEO_COLLECTION = "videoCollection";
     public static final String TYPE_VIDEO = "video";
 
     protected Identifier mIdentifier;
@@ -73,6 +76,21 @@ abstract public class OddObject {
         return null;
     }
 
+    /**
+     *
+     * @return  true - if there are any missing related entities
+     */
+    public boolean isMissingIncluded() {
+        for(Relationship relationship : getRelationships()) {
+            for(Identifier identifier : relationship.getIdentifiers()) {
+                if (findIncludedByIdentifier(identifier) == null) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
     public void addIncluded(OddObject oddObject) {
         getIncluded().add(oddObject);
     }
@@ -129,18 +147,18 @@ abstract public class OddObject {
         return null;
     }
 
-    public void fillIncludedMediaCollections() {
-        ArrayList<String> mediaTypes = new ArrayList<>();
-        mediaTypes.add(OddObject.TYPE_LIVE_STREAM);
-        mediaTypes.add(OddObject.TYPE_VIDEO);
-        for(OddObject mediaCollection : getIncludedByType(OddObject.TYPE_VIDEO_COLLECTION)) {
-            for (Relationship relationship : mediaCollection.getRelationships()) {
-                for(Identifier identifier : relationship.getIdentifiers()) {
-                    for (OddObject media : getIncludedByType(mediaTypes)) {
-                        if (media.getId().equals(identifier.getId()) && media.getType().equals(identifier.getType())) {
-                            mediaCollection.addIncluded(media);
-                        }
-                    }
+    public void fillIncludedCollections() {
+        for(OddObject collection : getIncludedByType(OddObject.TYPE_COLLECTION)) {
+            fillCollectionWithIncluded(collection);
+        }
+    }
+
+    protected void fillCollectionWithIncluded(OddObject collection) {
+        for (Relationship relationship : collection.getRelationships()) {
+            for(Identifier identifier : relationship.getIdentifiers()) {
+                OddObject oddObject = findIncludedByIdentifier(identifier);
+                if (oddObject != null) {
+                    collection.addIncluded(oddObject);
                 }
             }
         }

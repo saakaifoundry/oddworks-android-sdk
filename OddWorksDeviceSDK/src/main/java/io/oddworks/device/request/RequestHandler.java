@@ -105,8 +105,8 @@ public class RequestHandler {
         call.enqueue(callback);
     }
 
-    protected void getVideos(String collectionId, Callback callback) {
-        Request request = getOddGetRequest("videoCollections/" + collectionId + "/videos");
+    protected void getCollectionEntities(String collectionId, Callback callback) {
+        Request request = getOddGetRequest("collections/" + collectionId + "/relationships/entities");
         enqueueOddCall(request, callback);
     }
 
@@ -115,8 +115,8 @@ public class RequestHandler {
         enqueueOddCall(request, callback);
     }
 
-    protected void getVideoCollection(String videoCollectionId, Callback callback) {
-        Request request= getOddGetRequest("videoCollections/" + videoCollectionId);
+    protected void getCollection(String collectionId, Callback callback) {
+        Request request = getOddGetRequest("collections/" + collectionId);
         enqueueOddCall(request, callback);
     }
 

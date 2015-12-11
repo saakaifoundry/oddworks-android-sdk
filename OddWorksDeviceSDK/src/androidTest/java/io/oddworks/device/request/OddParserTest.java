@@ -21,12 +21,16 @@ import io.oddworks.device.metric.OddVideoPlayingMetric;
 import io.oddworks.device.metric.OddVideoStopMetric;
 import io.oddworks.device.metric.OddViewLoadMetric;
 import io.oddworks.device.model.AdsConfig;
+import io.oddworks.device.model.Collection;
 import io.oddworks.device.model.Config;
 import io.oddworks.device.model.Identifier;
-import io.oddworks.device.model.MediaCollection;
+import io.oddworks.device.model.Media;
 import io.oddworks.device.model.players.ExternalPlayer;
 import io.oddworks.device.model.players.OoyalaPlayer;
 import io.oddworks.device.model.players.Player;
+import io.oddworks.device.model.OddObject;
+import io.oddworks.device.model.OddView;
+import io.oddworks.device.model.Promotion;
 import io.oddworks.device.testutils.AssetUtils;
 
 import static org.hamcrest.CoreMatchers.is;
@@ -42,22 +46,32 @@ public class OddParserTest extends AndroidTestCase {
 
     @Before
     public void beforeEach() throws IOException {
-        OddParser.instance = new OddParser();
-        oddParser = OddParser.instance;
+        oddParser = OddParser.getInstance();
         mContext = InstrumentationRegistry.getTargetContext();
     }
 
     @Test
-    public void testParseView() throws Exception {
-//        String viewResponseWithIncluded = AssetUtils.readFileToString(getContext(), "ViewResponseWithIncluded.json");
+    public void testParseViewV2() throws Exception {
+        String viewResponseV2 = AssetUtils.readFileToString(mContext, "ViewResponseV2.json");
 
-//        OddView oddView = oddParser.parseView(viewResponseWithIncluded);
-//
-//        ArrayList<OddObject> mediaObjects = oddView.getIncludedByType("video");
-//
-//        Media media = (Media) mediaObjects.get(0);
-//
-//        Log.d("TEST: ", media.getMediaAd().toString());
+        OddView view = oddParser.parseView(viewResponseV2);
+        ArrayList<OddObject> promotions = view.getIncludedByRelationship("promotion");
+        ArrayList<OddObject> featuredMedia = view.getIncludedByRelationship("featuredMedia");
+        ArrayList<OddObject> featuredCollections = view.getIncludedByRelationship("featuredCollections");
+
+        assertFalse(promotions.isEmpty());
+        assertThat(((Promotion) promotions.get(0)).getTitle(), is("Share your best poker face using #POKERCENTRALCONTEST"));
+
+        assertFalse(featuredMedia.isEmpty());
+        assertThat(((Media) featuredMedia.get(0)).getDescription(), is("Louder, come on"));
+
+        assertFalse(featuredCollections.isEmpty());
+        Collection collection = (Collection) featuredCollections.get(0);
+        assertThat(collection.getTitle(), is("PBR Featured Collections"));
+
+        ArrayList<OddObject> subCollections = collection.getIncludedByRelationship("entities");
+        Collection subCollection = (Collection) subCollections.get(0);
+        assertThat(subCollection.getTitle(), is("The Black Eyed Peas"));
     }
 
     @Test
@@ -138,19 +152,19 @@ public class OddParserTest extends AndroidTestCase {
     }
 
     @Test
-    public void testParseMediaCollectionWithRelated() throws Exception {
-        String json = AssetUtils.readFileToString(mContext, "MediaCollectionWithIncluded.json");
-        MediaCollection mc = oddParser.parseMediaCollectionResponse(json);
-        assertThat(mc.getId(), is("ooyala-8zbHZrdzp4s-iQtsn5V_KWt1NUutoiMx"));
+    public void testParseCollectionWithIncludedV2() throws Exception {
+        String json = AssetUtils.readFileToString(mContext, "CollectionWithIncludedV2.json");
+        Collection mc = oddParser.parseCollectionResponse(json);
+        assertThat(mc.getId(), is("ooyala-pbr-featured-collections"));
         assertThat(mc.getAttributes(), is(notNullValue()));
         assertThat(mc.getRelationships().size(), is(1));
         ArrayList<Identifier> relationshipIds = mc.getRelationships().get(0).getIdentifiers();
-        Identifier firstVidId = relationshipIds.get(0);
-        assertThat(firstVidId.getId(), is("ooyala-wyN2FzdzrDIT7uOhpq_ZMX1fSv5k7T9k"));
-        assertThat(mc.findIncludedByIdentifier(firstVidId), is(notNullValue()));
-        Identifier secondVidId = relationshipIds.get(1);
-        assertThat(secondVidId.getId(), is("ooyala-p0NmFzdzp2HFJfXPruqOCXJ5VEwqjVU-"));
-        assertThat(mc.findIncludedByIdentifier(secondVidId), is(notNullValue()));
+        Identifier firstRelationship = relationshipIds.get(0);
+        assertThat(firstRelationship.getId(), is("ooyala-w4MGV5eDpoE0rmbrcHEeDEEuhQMypB0u"));
+        assertThat(mc.findIncludedByIdentifier(firstRelationship), is(notNullValue()));
+        Identifier secondRelationship = relationshipIds.get(1);
+        assertThat(secondRelationship.getId(), is("ooyala-02ZWV5eDqBpEbc9ooAspnWFIIycMZWfK"));
+        assertThat(mc.findIncludedByIdentifier(secondRelationship), is(notNullValue()));
     }
 
     @Test

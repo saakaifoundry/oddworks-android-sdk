@@ -1,0 +1,248 @@
+{
+  "data": {
+    "type": "view",
+    "relationships": {
+      "promotion": {
+        "data": {
+          "id": "fbec8574-6eb0-4339-91db-7833d96ed8c8",
+          "type": "promotion"
+        },
+        "meta": {
+          "displayDuration": 4
+        }
+      },
+      "featuredMedia": {
+        "data": {
+          "id": "pbr-live-web-video",
+          "type": "video"
+        }
+      },
+      "featuredCollections": {
+        "data": {
+          "id": "ooyala-pbr-featured-collections",
+          "type": "collection"
+        }
+      }
+    },
+    "id": "pbr-homepage",
+    "links": {
+      "self": "https://device-staging.oddworks.io/v1/views/pbr-homepage"
+    },
+    "attributes": {
+      "organization": "pbr"
+    }
+  },
+  "included": [
+    {
+      "type": "promotion",
+      "id": "fbec8574-6eb0-4339-91db-7833d96ed8c8",
+      "links": {
+        "self": "https://device-staging.oddworks.io/v1/promotions/fbec8574-6eb0-4339-91db-7833d96ed8c8"
+      },
+      "attributes": {
+        "organization": "poker-central",
+        "title": "Share your best poker face using #POKERCENTRALCONTEST",
+        "description": "Share your best poker face using #POKERCENTRALCONTEST for a chance to win. Visit www.pokerfacecontest.com today!",
+        "images": {
+          "aspect16x9": "http://image.oddworks.io/poker-central/promotions/2/16x9.png",
+          "aspect4x3": "http://dummyimage.com/4:3x1440&text=Promo",
+          "aspect3x4": "http://dummyimage.com/3:4x1920&text=Promo",
+          "aspect1x1": "http://dummyimage.com/1:1x1920&text=Promo",
+          "aspect2x3": "http://image.oddworks.io/poker-central/promotions/2/2x3.jpg"
+        }
+      }
+    },
+    {
+      "type": "video",
+      "id": "pbr-live-web-video",
+      "links": {
+        "self": "https://device-staging.oddworks.io/v1/videos/pbr-live-web-video"
+      },
+      "attributes": {
+        "title": "Live",
+        "description": "Louder, come on",
+        "images": {
+          "aspect16x9": "http://image.oddworks.io/eooyala/dkMWV5eDrsp7GH4AnSW9ywCVuDI_-9yx/3Gduepif0T1UGY8H4xMDoxOjBrO-I4W8.jpg",
+          "aspect4x3": "http://image.oddworks.io/edummyimage/4:3x1440&text=placeholder.png",
+          "aspect3x4": "http://image.oddworks.io/edummyimage/3:4x1920&text=placeholder.png",
+          "aspect1x1": "http://image.oddworks.io/edummyimage/1:1x1920&text=placeholder.png",
+          "aspect2x3": "http://image.oddworks.io/edummyimage/2:3x1920&text=placeholder.png"
+        },
+        "player": {
+          "type": "external",
+          "pCode": "5meWUyOipwedhLMDFYYFdAYmnGKl",
+          "domain": "ooyala.com",
+          "url": "https://player.vimeo.com/video/103640686"
+        },
+        "tags": [],
+        "organization": "pbr",
+        "ads": {
+          "enabled": false,
+          "provider": "freewheel",
+          "format": "vast",
+          "assetId": "pbr-live-web-video"
+        },
+        "overlays": {
+          "enabled": false
+        },
+        "url": null
+      }
+    },
+    {
+      "relationships": {
+        "entities": {
+          "links": {
+            "self": "/v1/collections/ooyala-featured-collections/collections"
+          },
+          "data": [
+            {
+              "id": "ooyala-w4MGV5eDpoE0rmbrcHEeDEEuhQMypB0u",
+              "type": "collection"
+            },
+            {
+              "id": "ooyala-02ZWV5eDqBpEbc9ooAspnWFIIycMZWfK",
+              "type": "collection"
+            },
+            {
+              "id": "ooyala-1sb3lyeDqceL2bg9n92QLrx70spWE_-E",
+              "type": "collection"
+            }
+          ]
+        }
+      },
+      "type": "collection",
+      "id": "ooyala-pbr-featured-collections",
+      "links": {
+        "self": "https://device-staging.oddworks.io/v1/collections/ooyala-pbr-featured-collections"
+      },
+      "attributes": {
+        "title": "PBR Featured Collections",
+        "description": "",
+        "images": {
+          "aspect16x9": "http://image.oddworks.io/eooyala/w4MGV5eDpoE0rmbrcHEeDEEuhQMypB0u/promo272218855.jpg"
+        },
+        "releaseDate": "2015-12-02T13:32:24Z",
+        "updatedAt": "2015-12-02T15:59:43Z",
+        "createdAt": "2015-12-02T13:32:24Z",
+        "organization": "pbr"
+      }
+    },
+    {
+      "relationships": {
+        "entities": {
+          "links": {
+            "self": "/v1/collections/ooyala-w4MGV5eDpoE0rmbrcHEeDEEuhQMypB0u/relationships/entities"
+          },
+          "data": [
+            {
+              "id": "ooyala-xpam8yeTp9y3UlSD1LYj-e8DGTe-NoB7",
+              "type": "video"
+            },
+            {
+              "id": "ooyala-I4am8yeTp8jka7BRtcECqpuJHFNg2Nl-",
+              "type": "video"
+            },
+            {
+              "id": "ooyala-BqaW8yeToh8HjQzrMZVAxuUMFnpxNdbR",
+              "type": "video"
+            }
+          ]
+        }
+      },
+      "type": "collection",
+      "id": "ooyala-w4MGV5eDpoE0rmbrcHEeDEEuhQMypB0u",
+      "links": {
+        "self": "https://device-staging.oddworks.io/v1/collections/ooyala-w4MGV5eDpoE0rmbrcHEeDEEuhQMypB0u"
+      },
+      "attributes": {
+        "title": "The Black Eyed Peas",
+        "description": "Lorem Ipsum bacon helvetica grilled pickle tomato milk soup cookie",
+        "images": {
+          "aspect16x9": "http://image.oddworks.io/eooyala/w4MGV5eDpoE0rmbrcHEeDEEuhQMypB0u/promo272218855.jpg"
+        },
+        "releaseDate": "2015-11-19T16:19:53Z",
+        "updatedAt": "2015-11-23T18:54:50Z",
+        "createdAt": "2015-11-19T16:19:53Z",
+        "organization": "odd-networks"
+      }
+    },
+    {
+      "relationships": {
+        "entities": {
+          "links": {
+            "self": "/v1/collections/ooyala-02ZWV5eDqBpEbc9ooAspnWFIIycMZWfK/relationships/entities"
+          },
+          "data": [
+            {
+              "id": "ooyala-xvam8yeTqpPr9C_Mpa7MX6oYbKoWDiEF",
+              "type": "video"
+            },
+            {
+              "id": "ooyala-82am8yeTpdP4bsVwpeIDmMZN1R0f823w",
+              "type": "video"
+            }
+          ]
+        }
+      },
+      "type": "collection",
+      "id": "ooyala-02ZWV5eDqBpEbc9ooAspnWFIIycMZWfK",
+      "links": {
+        "self": "https://device-staging.oddworks.io/v1/collections/ooyala-02ZWV5eDqBpEbc9ooAspnWFIIycMZWfK"
+      },
+      "attributes": {
+        "title": "Lynyrd Skynyrd",
+        "description": "Some birds you just cannot change",
+        "images": {
+          "aspect16x9": "http://image.oddworks.io/eooyala/02ZWV5eDqBpEbc9ooAspnWFIIycMZWfK/promo272219498.jpg"
+        },
+        "releaseDate": "2015-11-19T16:29:55Z",
+        "updatedAt": "2015-11-23T18:54:51Z",
+        "createdAt": "2015-11-19T16:29:55Z",
+        "organization": "odd-networks"
+      }
+    },
+    {
+      "relationships": {
+        "entities": {
+          "links": {
+            "self": "/v1/collections/ooyala-1sb3lyeDqceL2bg9n92QLrx70spWE_-E/relationships/entities"
+          },
+          "data": [
+            {
+              "id": "ooyala-RwaW8yeTqohoLkNMj-46VPyvJQKDMY6q",
+              "type": "video"
+            }
+          ]
+        }
+      },
+      "type": "collection",
+      "id": "ooyala-1sb3lyeDqceL2bg9n92QLrx70spWE_-E",
+      "links": {
+        "self": "https://device-staging.oddworks.io/v1/collections/ooyala-1sb3lyeDqceL2bg9n92QLrx70spWE_-E"
+      },
+      "attributes": {
+        "title": "Action Action",
+        "description": "Zombie ipsum reversus ab viral inferno, nam rick grimes malum cerebro. De carne lumbering animata corpora quaeritis. Summus brains sit , morbo vel maleficia? De apocalypsi gorger omero undead survivor dictum mauris. Hi mindless mortuis soulless creaturas, imo evil stalking monstra adventus resi dentevil vultus comedat cerebella viventium",
+        "images": {
+          "aspect16x9": "http://image.oddworks.io/eooyala/1sb3lyeDqceL2bg9n92QLrx70spWE_-E/promo271524327.jpg"
+        },
+        "releaseDate": "2015-11-11T15:23:00Z",
+        "updatedAt": "2015-11-23T18:54:41Z",
+        "createdAt": "2015-11-11T15:23:00Z",
+        "organization": "odd-networks"
+      }
+    }
+  ],
+  "meta": {
+    "device": "GOOGLE_ANDROID",
+    "queryParams": {
+      "include": [
+        "true"
+      ]
+    },
+    "userEntitlements": []
+  },
+  "links": {
+    "self": "https://device-staging.oddworks.io/v1/views/pbr-homepage%3Finclude=true"
+  }
+}

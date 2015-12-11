@@ -15,13 +15,16 @@ import java.util.Map;
 import io.oddworks.device.exception.OddParseException;
 import io.oddworks.device.exception.UnhandledPlayerTypeException;
 import io.oddworks.device.model.AdsConfig;
+import io.oddworks.device.model.Article;
 import io.oddworks.device.model.AuthToken;
+import io.oddworks.device.model.Collection;
 import io.oddworks.device.model.Config;
 import io.oddworks.device.model.DeviceCodeResponse;
+import io.oddworks.device.model.Event;
+import io.oddworks.device.model.External;
 import io.oddworks.device.model.Identifier;
 import io.oddworks.device.model.Media;
 import io.oddworks.device.model.MediaAd;
-import io.oddworks.device.model.MediaCollection;
 import io.oddworks.device.model.MediaImage;
 import io.oddworks.device.model.Metric;
 import io.oddworks.device.model.MetricsConfig;
@@ -37,72 +40,23 @@ import io.oddworks.device.model.players.Player.PlayerType;
 
 public class OddParser {
     private static final String TAG = OddParser.class.getSimpleName();
-    protected static OddParser instance;
+    private static OddParser INSTANCE = new OddParser();
+    private final JSONParser JSON = JSONParser.getInstance();
 
-    protected OddParser(){}
-
-    private String parseString(final JSONObject json, String key) throws JSONException {
-        String value = null;
-        if (!json.isNull(key)) {
-            value = json.getString(key);
-        }
-
-        return value;
+    private OddParser(){
+        // singleton
     }
 
-    private int parseInt(final JSONObject json, String key) throws JSONException {
-        int value = 0;
-        if (!json.isNull(key)) {
-            value = json.getInt(key);
-        }
-
-        return value;
-    }
-
-    /**
-     * @param json  object containing the boolean value
-     * @param key   key at which the boolean value is located
-     * @return      defaults to false
-     **/
-    private boolean parseBoolean(final JSONObject json, String key) throws JSONException {
-        boolean value = false;
-        if (!json.isNull(key)) {
-            value = json.getBoolean(key);
-        }
-
-        return value;
-    }
-
-    private JSONObject parseJSONObject(final JSONObject json, String key) throws JSONException {
-        JSONObject obj = null;
-        if (!json.isNull(key)) {
-            obj = json.getJSONObject(key);
-        }
-        if (obj == null) {
-            throw new JSONException(key);
-        }
-
-        return obj;
-    }
-
-    private JSONArray parseJSONArray(final JSONObject json, String key) throws JSONException {
-        JSONArray obj = null;
-        if (!json.isNull(key)) {
-            obj = json.getJSONArray(key);
-        }
-        if (obj == null) {
-            throw new JSONException(key);
-        }
-
-        return obj;
+    public static OddParser getInstance() {
+        return INSTANCE;
     }
 
     public MediaImage parseMediaImage(final JSONObject data) throws JSONException {
-        String aspect16x9 = parseString(data, "aspect16x9");
-        String aspect4x3 = parseString(data, "aspect4x3");
-        String aspect3x4 = parseString(data, "aspect3x4");
-        String aspect1x1 = parseString(data, "aspect1x1");
-        String aspect2x3 = parseString(data, "aspect2x3");
+        String aspect16x9 = JSON.getString(data, "aspect16x9");
+        String aspect4x3 = JSON.getString(data, "aspect4x3");
+        String aspect3x4 = JSON.getString(data, "aspect3x4");
+        String aspect1x1 = JSON.getString(data, "aspect1x1");
+        String aspect2x3 = JSON.getString(data, "aspect2x3");
 
         return new MediaImage(aspect16x9, aspect3x4, aspect4x3, aspect1x1, aspect2x3);
     }
@@ -115,7 +69,7 @@ public class OddParser {
             Iterator<String> adKeys = rawAds.keys();
             while(adKeys.hasNext()) {
                 String adProperty = adKeys.next();
-                properties.put(adProperty, parseString(rawAds, adProperty));
+                properties.put(adProperty, JSON.getString(rawAds, adProperty));
             }
             return new MediaAd(properties);
         } catch (Exception e) {
@@ -123,20 +77,20 @@ public class OddParser {
         }
     }
 
-    public MediaCollection parseMediaCollection(final JSONObject data) throws JSONException {
+    public Collection parseCollection(final JSONObject data) throws JSONException {
         JSONObject rawAttributes = data.getJSONObject("attributes");
         JSONObject images = rawAttributes.getJSONObject("images");
 
-        String id = parseString(data, "id");
-        String type = parseString(data, "type");
+        String id = JSON.getString(data, "id");
+        String type = JSON.getString(data, "type");
 
         HashMap<String, Object> attributes = new HashMap<>();
-        attributes.put("title", parseString(rawAttributes, "title"));
-        attributes.put("description", parseString(rawAttributes, "description"));
-        attributes.put("releaseDate", parseString(rawAttributes, "releaseDate"));
+        attributes.put("title", JSON.getString(rawAttributes, "title"));
+        attributes.put("description", JSON.getString(rawAttributes, "description"));
+        attributes.put("releaseDate", JSON.getDateTime(rawAttributes, "releaseDate"));
         attributes.put("mediaImage", parseMediaImage(images));
 
-        MediaCollection collection = new MediaCollection(id, type);
+        Collection collection = new Collection(id, type);
         collection.setAttributes(attributes);
 
 
@@ -144,21 +98,9 @@ public class OddParser {
 
         addRelationshipsToOddObject(relationships, collection);
 
-        return collection;
-    }
+        collection.fillIncludedCollections();
 
-    public MediaCollection parseMediaCollectionResponse(String responseBody) {
-        MediaCollection mc = null;
-        try {
-            JSONObject jsonResponse = new JSONObject(responseBody);
-            JSONObject jsonData = jsonResponse.getJSONObject("data");
-            mc = parseMediaCollection(jsonData);
-            JSONArray included = jsonResponse.getJSONArray("included");
-            addIncluded(mc, included);
-        } catch (Exception e) {
-            throw new OddParseException(e);
-        }
-        return mc;
+        return collection;
     }
 
     /**
@@ -169,21 +111,98 @@ public class OddParser {
     private void addIncluded(OddObject addTo, JSONArray included) throws JSONException {
         for (int i = 0; i < included.length(); i++) {
             JSONObject includedObject = included.getJSONObject(i);
-            String includedType = parseString(includedObject, "type");
+            String includedType = JSON.getString(includedObject, "type");
 
             switch (includedType) {
-                case OddObject.TYPE_VIDEO_COLLECTION:
-                    addTo.addIncluded(parseMediaCollection(includedObject));
+                case OddObject.TYPE_ARTICLE:
+                    addTo.addIncluded(parseArticle(includedObject));
+                    break;
+                case OddObject.TYPE_COLLECTION:
+                    addTo.addIncluded(parseCollection(includedObject));
+                    break;
+                case OddObject.TYPE_EVENT:
+                    addTo.addIncluded(parseEvent(includedObject));
+                    break;
+                case OddObject.TYPE_EXTERNAL:
+                    addTo.addIncluded(parseExternal(includedObject));
+                    break;
+                case OddObject.TYPE_PROMOTION:
+                    addTo.addIncluded(parsePromotion(includedObject));
                     break;
                 case OddObject.TYPE_LIVE_STREAM:
                 case OddObject.TYPE_VIDEO:
                     addTo.addIncluded(parseMedia(includedObject));
                     break;
-                case OddObject.TYPE_PROMOTION:
-                    addTo.addIncluded(parsePromotion(includedObject));
-                    break;
             }
         }
+    }
+
+    protected Event parseEvent(final JSONObject dataObject) throws JSONException {
+        JSONObject rawAttributes = dataObject.getJSONObject("attributes");
+        JSONObject images = rawAttributes.getJSONObject("images");
+        JSONObject ical = rawAttributes.getJSONObject("ical");
+
+        Event event = new Event(
+                JSON.getString(dataObject, "id"),
+                JSON.getString(dataObject, "type"));
+
+        HashMap<String, Object> attributes = new HashMap<>();
+        attributes.put("title", JSON.getString(rawAttributes, "title"));
+        attributes.put("description", JSON.getString(rawAttributes, "description"));
+        attributes.put("mediaImage", parseMediaImage(images));
+        attributes.put("category", JSON.getString(rawAttributes, "category"));
+        attributes.put("source", JSON.getString(rawAttributes, "source"));
+        attributes.put("createdAt", JSON.getDateTime(rawAttributes, "createdAt"));
+        attributes.put("url", JSON.getString(rawAttributes, "url"));
+
+        attributes.put("dateTimeStart", JSON.getDateTime(ical, "dtstart"));
+        attributes.put("dateTimeEnd", JSON.getDateTime(ical, "dtend"));
+        attributes.put("location", JSON.getDateTime(ical, "location"));
+
+        event.setAttributes(attributes);
+
+        return event;
+    }
+
+    protected External parseExternal(final JSONObject dataObject) throws JSONException {
+        JSONObject rawAttributes = dataObject.getJSONObject("attributes");
+        JSONObject images = rawAttributes.getJSONObject("images");
+
+        External external = new External(
+                JSON.getString(dataObject, "id"),
+                JSON.getString(dataObject, "type"));
+
+        HashMap<String, Object> attributes = new HashMap<>();
+        attributes.put("title", JSON.getString(rawAttributes, "title"));
+        attributes.put("description", JSON.getString(rawAttributes, "description"));
+        attributes.put("mediaImage", parseMediaImage(images));
+        attributes.put("url", JSON.getString(rawAttributes, "url"));
+
+        external.setAttributes(attributes);
+
+        return external;
+    }
+
+    protected Article parseArticle(final JSONObject dataObject) throws JSONException {
+        JSONObject rawAttributes = dataObject.getJSONObject("attributes");
+        JSONObject images = rawAttributes.getJSONObject("images");
+
+        Article article = new Article(
+                JSON.getString(dataObject, "id"),
+                JSON.getString(dataObject, "type"));
+
+        HashMap<String, Object> attributes = new HashMap<>();
+        attributes.put("title", JSON.getString(rawAttributes, "title"));
+        attributes.put("description", JSON.getString(rawAttributes, "description"));
+        attributes.put("mediaImage", parseMediaImage(images));
+        attributes.put("category", JSON.getString(rawAttributes, "category"));
+        attributes.put("source", JSON.getString(rawAttributes, "source"));
+        attributes.put("createdAt", JSON.getDateTime(rawAttributes, "createdAt"));
+        attributes.put("url", JSON.getString(rawAttributes, "url"));
+
+        article.setAttributes(attributes);
+
+        return article;
     }
 
     protected Media parseMedia(final JSONObject dataObject) throws JSONException {
@@ -191,21 +210,21 @@ public class OddParser {
         JSONObject images = rawAttributes.getJSONObject("images");
 
         Media media = new Media(
-                parseString(dataObject, "id"),
-                parseString(dataObject, "type"));
+                JSON.getString(dataObject, "id"),
+                JSON.getString(dataObject, "type"));
 
         HashMap<String, Object> attributes = new HashMap<>();
-        attributes.put("title", parseString(rawAttributes, "title"));
-        attributes.put("description", parseString(rawAttributes, "description"));
-        attributes.put("releaseDate", parseString(rawAttributes, "releaseDate"));
+        attributes.put("title", JSON.getString(rawAttributes, "title"));
+        attributes.put("description", JSON.getString(rawAttributes, "description"));
+        attributes.put("releaseDate", JSON.getDateTime(rawAttributes, "releaseDate"));
         try {
-            attributes.put("duration", parseInt(rawAttributes, "duration"));
+            attributes.put("duration", JSON.getInt(rawAttributes, "duration"));
         } catch (Exception e) {
             Log.d(TAG, "Invalid duration: " + e.toString());
             attributes.put("duration", 0);
         }
 
-        attributes.put("url", parseString(rawAttributes, "url"));
+        attributes.put("url", JSON.getString(rawAttributes, "url"));
         attributes.put("mediaImage", parseMediaImage(images));
         attributes.put("mediaAd", parseMediaAd(rawAttributes));
         media.setAttributes(attributes);
@@ -256,12 +275,12 @@ public class OddParser {
         JSONObject images = rawAttributes.getJSONObject("images");
 
         Promotion promotion = new Promotion(
-                parseString(rawPromotion, "id"),
-                parseString(rawPromotion, "type"));
+                JSON.getString(rawPromotion, "id"),
+                JSON.getString(rawPromotion, "type"));
 
         HashMap<String, Object> attributes = new HashMap<>();
-        attributes.put("title", parseString(rawAttributes, "title"));
-        attributes.put("description", parseString(rawAttributes, "description"));
+        attributes.put("title", JSON.getString(rawAttributes, "title"));
+        attributes.put("description", JSON.getString(rawAttributes, "description"));
         attributes.put("mediaImage", parseMediaImage(images));
 
         promotion.setAttributes(attributes);
@@ -269,25 +288,46 @@ public class OddParser {
         return promotion;
     }
 
-    protected ArrayList<Media> parseMediaList(final String result) {
-        ArrayList<Media> videos = new ArrayList<>();
+    protected ArrayList<OddObject> parseEntityList(final String result) {
+        ArrayList<OddObject> entities = new ArrayList<>();
         try {
-            JSONObject videosObjectResponse = new JSONObject(result);
-            JSONArray videosArray = videosObjectResponse.getJSONArray("data");
-            for (int i = 0; i < videosArray.length(); i++) {
-                Media video = parseMedia(videosArray.getJSONObject(i));
-                videos.add(video);
+            JSONObject entitiesResponse = new JSONObject(result);
+            JSONArray rawEntities = entitiesResponse.getJSONArray("data");
+            for (int i = 0; i < rawEntities.length(); i++) {
+                JSONObject rawEntity = rawEntities.getJSONObject(i);
+                String type = JSON.getString(rawEntity, "type");
+                switch (type) {
+                    case OddObject.TYPE_ARTICLE:
+                        entities.add(parseArticle(rawEntity));
+                        break;
+                    case OddObject.TYPE_COLLECTION:
+                        entities.add(parseCollection(rawEntity));
+                        break;
+                    case OddObject.TYPE_EVENT:
+                        entities.add(parseEvent(rawEntity));
+                        break;
+                    case OddObject.TYPE_EXTERNAL:
+                        entities.add(parseExternal(rawEntity));
+                        break;
+                    case OddObject.TYPE_PROMOTION:
+                        entities.add(parsePromotion(rawEntity));
+                        break;
+                    case OddObject.TYPE_LIVE_STREAM:
+                    case OddObject.TYPE_VIDEO:
+                        entities.add(parseMedia(rawEntity));
+                        break;
+                }
             }
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
-        return videos;
+        return entities;
     }
 
     protected MetricsConfig parseMetrics(JSONObject rawFeatures) {
         try {
-            JSONObject rawMetrics = parseJSONObject(rawFeatures, "metrics");
+            JSONObject rawMetrics = JSON.getJSONObject(rawFeatures, "metrics");
 
             ArrayList<Metric> metrics = new ArrayList<>();
             for(String key : MetricsConfig.ACTION_KEYS) {
@@ -298,13 +338,13 @@ public class OddParser {
                     String mkey = mkeys.next();
                     switch(mkey) {
                         case Metric.ENABLED:
-                            attributes.put(mkey, parseBoolean(rawMetric, mkey));
+                            attributes.put(mkey, JSON.getBoolean(rawMetric, mkey));
                             break;
                         case Metric.INTERVAL:
-                            attributes.put(mkey, parseInt(rawMetric, mkey));
+                            attributes.put(mkey, JSON.getInt(rawMetric, mkey));
                             break;
                         default:
-                            attributes.put(mkey, parseString(rawMetric, mkey));
+                            attributes.put(mkey, JSON.getString(rawMetric, mkey));
                             break;
                     }
                 }
@@ -324,14 +364,13 @@ public class OddParser {
     }
 
     protected AdsConfig parseAds(JSONObject rawFeatures) {
-
         try {
-            JSONObject rawAds = parseJSONObject(rawFeatures, "ads");
-            String providerStr = parseString(rawAds, "provider");
+            JSONObject rawAds = JSON.getJSONObject(rawFeatures, "ads");
+            String providerStr = JSON.getString(rawAds, "provider");
             AdsConfig.AdProvider provider = AdsConfig.AdProvider.valueOf(providerStr.toUpperCase());
-            String adFormatStr = parseString(rawAds, "format");
+            String adFormatStr = JSON.getString(rawAds, "format");
             AdsConfig.AdFormat format = AdsConfig.AdFormat.valueOf(adFormatStr.toUpperCase());
-            String url = parseString(rawAds, "url");
+            String url = JSON.getString(rawAds, "url");
             return new AdsConfig(provider, format, url);
         } catch (JSONException e) {
             Log.w(TAG, "failed to parse ads feature from config");
@@ -342,15 +381,15 @@ public class OddParser {
     protected Config parseConfig(final String result) {
         try {
             JSONObject resultJSONObject = new JSONObject(result);
-            JSONObject dataJSONObject = parseJSONObject(resultJSONObject, "data");
-            JSONObject rawAttributes = parseJSONObject(dataJSONObject, "attributes");
+            JSONObject dataJSONObject = JSON.getJSONObject(resultJSONObject, "data");
+            JSONObject rawAttributes = JSON.getJSONObject(dataJSONObject, "attributes");
 
             LinkedHashMap<String, String> views = new LinkedHashMap<>();
-            JSONObject rawViews = parseJSONObject(rawAttributes, "views");
+            JSONObject rawViews = JSON.getJSONObject(rawAttributes, "views");
             Iterator<String> viewNames = rawViews.keys();
             while(viewNames.hasNext()) {
                 String viewName = viewNames.next();
-                views.put(viewName, parseString(rawViews, viewName));
+                views.put(viewName, JSON.getString(rawViews, viewName));
             }
 
             JSONObject rawFeatures = parseFeatures(rawAttributes);
@@ -367,15 +406,14 @@ public class OddParser {
     }
 
     private JSONObject parseFeatures(JSONObject rawAttributes) throws JSONException {
-        return parseJSONObject(rawAttributes, "features");
+        return JSON.getJSONObject(rawAttributes, "features");
     }
 
     private boolean isAuthEnabled(JSONObject rawFeatures) throws JSONException {
         try {
-            JSONObject rawAuth = parseJSONObject(rawFeatures, "authentication");
-            String authString = parseString(rawAuth, "enabled");
-            return Boolean.parseBoolean(authString);
-        } catch (Exception e) {
+            JSONObject rawAuth = JSON.getJSONObject(rawFeatures, "authentication");
+            return JSON.getBoolean(rawAuth, "enabled");
+        } catch (JSONException e) {
             return false;
         }
     }
@@ -383,24 +421,24 @@ public class OddParser {
     protected OddView parseView(final String result) {
         try {
             JSONObject resultObject = new JSONObject(result);
-            JSONObject data = parseJSONObject(resultObject, "data");
-            JSONObject rawAttributes = parseJSONObject(data, "attributes");
+            JSONObject data = JSON.getJSONObject(resultObject, "data");
+            JSONObject rawAttributes = JSON.getJSONObject(data, "attributes");
             OddView view = new OddView(
-                    parseString(rawAttributes, "id"),
-                    parseString(rawAttributes, "type"));
+                    JSON.getString(rawAttributes, "id"),
+                    JSON.getString(rawAttributes, "type"));
 
             HashMap<String, Object> attributes = new HashMap<>();
-            attributes.put("title", parseString(rawAttributes, "title"));
+            attributes.put("title", JSON.getString(rawAttributes, "title"));
             view.setAttributes(attributes);
 
             // use relationships to build view's ArrayList<Relationship>
             addRelationshipsToOddObject(data.getJSONObject("relationships"), view);
 
             // fill the view's included{Type} arrays with parsable objects
-            JSONArray includedArray = parseJSONArray(resultObject, "included");
+            JSONArray includedArray = JSON.getJSONArray(resultObject, "included");
             addIncluded(view, includedArray);
-            // backfill newly created includedMediaCollections with newly created media
-            view.fillIncludedMediaCollections();
+            // backfill newly created collections with newly created entities
+            view.fillIncludedCollections();
 
             return view;
         } catch (JSONException e) {
@@ -427,33 +465,62 @@ public class OddParser {
         return new DeviceCodeResponse(deviceCode, userCode, verificationUrl, expiresIn, interval);
     }
 
+    public Collection parseCollectionResponse(String responseBody) {
+        Collection collection = null;
+        try {
+            JSONObject jsonResponse = new JSONObject(responseBody);
+            JSONObject jsonData = jsonResponse.getJSONObject("data");
+            collection = parseCollection(jsonData);
+            JSONArray included = jsonResponse.getJSONArray("included");
+            addIncluded(collection, included);
+        } catch (Exception e) {
+            throw new OddParseException(e);
+        }
+        return collection;
+    }
+
     protected ArrayList<OddObject> parseSearch(final String result) {
         ArrayList<OddObject> searchResult = new ArrayList<>();
-        ArrayList<Media> searchMedias = new ArrayList<>();
-        ArrayList<MediaCollection> searchCollections = new ArrayList<>();
         try {
             JSONObject resultObject = new JSONObject(result);
             JSONArray dataArray = resultObject.getJSONArray("data");
             for (int i = 0; i < dataArray.length(); i++) {
                 JSONObject pokerObj = dataArray.getJSONObject(i);
-                String type = parseString(pokerObj, "type");
-                if (OddObject.TYPE_VIDEO.equals(type)) {
-                    Media video = parseMedia(pokerObj);
-                    if (video != null) {
-                        searchMedias.add(video);
-                    }
-                } else if (OddObject.TYPE_VIDEO_COLLECTION.equals(type)) {
-                    MediaCollection collection = parseMediaCollection(pokerObj);
-                    if (collection != null) {
-                        searchCollections.add(collection);
-                    }
+                String type = JSON.getString(pokerObj, "type");
+
+                switch(type) {
+                    case OddObject.TYPE_VIDEO:
+                    case OddObject.TYPE_LIVE_STREAM:
+                        Media video = parseMedia(pokerObj);
+                        if (video != null) {
+                            searchResult.add(video);
+                        }
+                        break;
+                    case OddObject.TYPE_ARTICLE:
+                        Article article = parseArticle(pokerObj);
+                        if (article != null) {
+                            searchResult.add(article);
+                        }
+                        break;
+                    case OddObject.TYPE_EVENT:
+                        Event event = parseEvent(pokerObj);
+                        if (event != null) {
+                            searchResult.add(event);
+                        }
+                        break;
+                    case OddObject.TYPE_EXTERNAL:
+                        External external = parseExternal(pokerObj);
+                        if (external != null) {
+                            searchResult.add(external);
+                        }
+                        break;
+                    case OddObject.TYPE_COLLECTION:
+                        Collection collection = parseCollection(pokerObj);
+                        if (collection != null) {
+                                searchResult.add(collection);
+                        }
+                        break;
                 }
-            }
-            if (!searchCollections.isEmpty()) {
-                searchResult.addAll(searchCollections);
-            }
-            if (!searchMedias.isEmpty()) {
-                searchResult.addAll(searchMedias);
             }
         } catch (JSONException e) {
             e.printStackTrace();

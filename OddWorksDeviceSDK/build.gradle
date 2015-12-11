@@ -29,8 +29,11 @@ group = 'com.github.oddnetworks'
 version = '1.0.0-beta-28'
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+
     compile 'com.squareup.okhttp:okhttp:2.5.0'
+    compile 'net.danlew:android.joda:2.9.1'
+
     androidTestCompile 'com.android.support.test:runner:0.4'
     androidTestCompile 'com.android.support.test:rules:0.4'
     androidTestCompile 'org.skyscreamer:jsonassert:1.2.3'

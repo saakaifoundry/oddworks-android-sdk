@@ -2,20 +2,19 @@ package io.oddworks.device.model;
 
 import java.util.HashMap;
 
-public class MediaCollection extends OddObject {
-    public static final String TAG = MediaCollection.class.getSimpleName();
-
+public class External extends OddObject {
+    public static final String TAG = External.class.getSimpleName();
     private String mTitle;
     private String mDescription;
     private MediaImage mMediaImage;
-    private String mReleaseDate;
+    private String mUrl;
 
-    public MediaCollection(final Identifier identifier) {
+    public External(Identifier identifier) {
         super(identifier);
     }
 
-    public MediaCollection(final String id, final String type) {
-      super(id, type);
+    public External(String id, String type) {
+        super(id, type);
     }
 
     public String getTitle() {
@@ -30,8 +29,8 @@ public class MediaCollection extends OddObject {
         return mMediaImage;
     }
 
-    public String getReleaseDate() {
-        return mReleaseDate;
+    public String getUrl() {
+        return mUrl;
     }
 
     @Override
@@ -39,7 +38,7 @@ public class MediaCollection extends OddObject {
         mTitle = (String) attributes.get("title");
         mDescription = (String) attributes.get("description");
         mMediaImage = (MediaImage) attributes.get("mediaImage");
-        mReleaseDate = (String) attributes.get("releaseDate");
+        mUrl = (String) attributes.get("url");
     }
 
     @Override
@@ -48,7 +47,7 @@ public class MediaCollection extends OddObject {
         attributes.put("title", getTitle());
         attributes.put("description", getDescription());
         attributes.put("mediaImage", getMediaImage());
-        attributes.put("releaseDate", getReleaseDate());
+        attributes.put("url", getUrl());
         return attributes;
     }
 
@@ -64,7 +63,7 @@ public class MediaCollection extends OddObject {
 
     @Override
     public String toString() {
-        return TAG + "(" +
+        return getClass().getSimpleName() + "(" +
                 "id='" + getId() + "', " +
                 "type='" + getType() + "', " +
                 "title='" + getTitle() + "')";

@@ -98,10 +98,10 @@ public class ViewTest {
     @Test
 	public void testGetIncludedByType() throws Exception {
         Media media = new Media("foo", OddObject.TYPE_VIDEO);
-        MediaCollection mediaCollection = new MediaCollection("foo", OddObject.TYPE_VIDEO_COLLECTION);
+        Collection collection = new Collection("foo", OddObject.TYPE_COLLECTION);
 
         view.addIncluded(media);
-        view.addIncluded(mediaCollection);
+        view.addIncluded(collection);
         assertEquals(2, view.getIncluded().size());
 
         ArrayList<OddObject> expected = new ArrayList<>();
@@ -111,12 +111,12 @@ public class ViewTest {
     }
 
     @Test
-	public void testFillIncludedMediaCollections() throws Exception {
+	public void testFillIncludedCollections() throws Exception {
         String mcId = "12345";
-        String mcType = "videoCollection";
+        String mcType = "collection";
         Identifier mcIdentifier = new Identifier(mcId, mcType);
 
-        MediaCollection mediaCollection = new MediaCollection(mcIdentifier);
+        Collection mediaCollection = new Collection(mcIdentifier);
 
         ArrayList<Identifier> mcIdentifiers = new ArrayList<>();
         mcIdentifiers.add(mcIdentifier);
@@ -135,10 +135,10 @@ public class ViewTest {
         view.addIncluded(media);
 
 
-        MediaCollection foundMediaCollection = (MediaCollection) view.getIncludedByRelationship("featured").get(0);
+        Collection foundMediaCollection = (Collection) view.getIncludedByRelationship("featured").get(0);
         assertEquals(0, foundMediaCollection.getIncludedByRelationship("videos").size());
 
-        view.fillIncludedMediaCollections();
+        view.fillIncludedCollections();
         assertEquals(1, foundMediaCollection.getIncludedByRelationship("videos").size());
     }
 }

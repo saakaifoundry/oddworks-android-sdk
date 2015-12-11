@@ -2,6 +2,7 @@ package io.oddworks.device.model;
 
 import android.support.test.runner.AndroidJUnit4;
 
+import org.joda.time.DateTime;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -22,7 +23,7 @@ public class MediaTest {
     private String typeVideo = "video";
     private String title = "Odd the Great and Powerful";
     private String description = "Odd is good! Odd is great!";
-    private String releaseDate = "for.ev.er.";
+    private DateTime releaseDate = new DateTime("2013-07-04T12:30:59Z");
     private String url = "http://oddnetworks.com";
     private int duration = 2345;
     private MediaAd mediaAd = new MediaAd();
