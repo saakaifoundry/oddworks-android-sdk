@@ -40,8 +40,8 @@ import io.oddworks.device.model.players.Player.PlayerType;
 
 public class OddParser {
     private static final String TAG = OddParser.class.getSimpleName();
-    private static OddParser INSTANCE = new OddParser();
-    private final JSONParser JSON = JSONParser.getInstance();
+    private static final OddParser INSTANCE = new OddParser();
+    private static final JSONParser JSON = JSONParser.getInstance();
 
     private OddParser(){
         // singleton
