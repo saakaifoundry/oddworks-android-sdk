@@ -14,7 +14,9 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
 
 @RunWith(AndroidJUnit4.class)
 public class EventTest {
@@ -28,7 +30,7 @@ public class EventTest {
     private String url = "http://oddnetworks.com/foo.html";
     private DateTime createdAt = new DateTime("2015-12-01T01:45:21Z");
     private DateTime dateTimeStart = new DateTime("2016-02-13T08:00:00-0600");
-    private DateTime dateTimeEnd = new DateTime("2016-02-14T15:30:00-0600");
+    private DateTime dateTimeEnd = new DateTime("2016-02-14T17:59:00-0600");
     private String location = "Las Vegas, NV";
     private MediaImage mediaImage = new MediaImage("a", "b", "c", "d", "e");
     private HashMap<String, Object> attributes = new HashMap<>();
@@ -112,6 +114,32 @@ public class EventTest {
     @Test
     public void testGetLocation() throws Exception {
         assertEquals(location, event.getLocation());
+    }
+
+    @Test
+    public void testHasStartAndEndDateTimeFalse() throws Exception {
+        Event badEvent = new Event(id, typeEvent);
+        assertFalse(badEvent.hasStartAndEndDateTime());
+    }
+
+    @Test
+    public void testHasStartAndEndDateTimeTrue() throws Exception {
+        assertTrue(event.hasStartAndEndDateTime());
+    }
+
+    @Test
+    public void testIsMultiDayEventTrue() throws Exception {
+        assertTrue(event.isMultiDayEvent());
+    }
+
+    @Test
+    public void testIsMultiDayEventFalse() throws Exception {
+        Event nonMultiDayEvent = new Event(id, typeEvent);
+        attributes.put("dateTimeStart", new DateTime("2013-01-01T00:00:00Z"));
+        attributes.put("dateTimeEnd", new DateTime("2013-01-01T23:59:59Z"));
+        nonMultiDayEvent.setAttributes(attributes);
+
+        assertFalse(nonMultiDayEvent.isMultiDayEvent());
     }
 
     @Test
