@@ -55,27 +55,19 @@ public class JSONParser {
         return json.optBoolean(key, false);
     }
 
-    public JSONObject getJSONObject(final JSONObject json, String key) throws JSONException {
-        JSONObject obj = null;
-        if (!json.isNull(key)) {
-            obj = json.getJSONObject(key);
+    public JSONObject getJSONObject(final JSONObject json, String key, Boolean throwOnNull) throws JSONException {
+        JSONObject jsonObject = json.optJSONObject(key);
+        if (throwOnNull && jsonObject == null) {
+            throw new JSONException("Unable to parse object: " + key);
         }
-        if (obj == null) {
-            throw new JSONException(key);
-        }
-
-        return obj;
+        return jsonObject;
     }
 
-    public JSONArray getJSONArray(final JSONObject json, String key) throws JSONException {
-        JSONArray obj = null;
-        if (!json.isNull(key)) {
-            obj = json.getJSONArray(key);
+    public JSONArray getJSONArray(final JSONObject json, String key, Boolean throwOnNull) throws JSONException {
+        JSONArray jsonArray = json.optJSONArray(key);
+        if (throwOnNull && jsonArray == null) {
+            throw new JSONException("Unable to parse array: " + key);
         }
-        if (obj == null) {
-            throw new JSONException(key);
-        }
-
-        return obj;
+        return jsonArray;
     }
 }
