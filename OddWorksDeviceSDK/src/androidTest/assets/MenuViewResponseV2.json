@@ -77,15 +77,15 @@
           },
           "data": [
             {
-              "id": "ooyala-w4MGV5eDpoE0rmbrcHEeDEEuhQMypB0u",
+              "id": "ooyala-12c21leTrN6l45_fxhryPgsGbeDg_Hzj",
               "type": "collection"
             },
             {
-              "id": "ooyala-02ZWV5eDqBpEbc9ooAspnWFIIycMZWfK",
+              "id": "ooyala-BxNWtleTrbTQB-vrcaWoX16ivQEo9Hjd",
               "type": "collection"
             },
             {
-              "id": "ooyala-1sb3lyeDqceL2bg9n92QLrx70spWE_-E",
+              "id": "ooyala-xxMGxleToTuU0WDEyOwAV6SMPCmPSGj1",
               "type": "collection"
             }
           ]
@@ -165,7 +165,9 @@
         "organization": "pbr",
         "title": "Built Ford Tough Series - Schedule",
         "link": "http://pbr.com/en/bfts/events.rss",
-        "description": "Professional Bull Riders - BFTS"
+        "description": "Professional Bull Riders - BFTS",
+        "language": null,
+        "generator": null
       }
     },
     {
@@ -239,105 +241,117 @@
       "relationships": {
         "entities": {
           "links": {
-            "self": "/v1/collections/ooyala-w4MGV5eDpoE0rmbrcHEeDEEuhQMypB0u/videos"
+            "self": "/v1/collections/ooyala-12c21leTrN6l45_fxhryPgsGbeDg_Hzj/entities"
           },
           "data": [
             {
-              "id": "ooyala-xpam8yeTp9y3UlSD1LYj-e8DGTe-NoB7",
+              "id": "ooyala-s2eGFleTrb-LthCmvutaxPmPGV0Eslgr",
               "type": "video"
             },
             {
-              "id": "ooyala-I4am8yeTp8jka7BRtcECqpuJHFNg2Nl-",
+              "id": "ooyala-94dWFleTr-rBRuvW8Z3u3vA3duVJ4Iw6",
               "type": "video"
             },
             {
-              "id": "ooyala-BqaW8yeToh8HjQzrMZVAxuUMFnpxNdbR",
+              "id": "ooyala-todWFleTp8yD5OATrWITNoxnRvIazmTj",
               "type": "video"
             }
           ]
         }
       },
       "type": "collection",
-      "id": "ooyala-w4MGV5eDpoE0rmbrcHEeDEEuhQMypB0u",
+      "id": "ooyala-12c21leTrN6l45_fxhryPgsGbeDg_Hzj",
       "links": {
-        "self": "https://device-staging.oddworks.io/v1/collections/ooyala-w4MGV5eDpoE0rmbrcHEeDEEuhQMypB0u"
+        "self": "https://device-staging.oddworks.io/v1/collections/ooyala-12c21leTrN6l45_fxhryPgsGbeDg_Hzj"
       },
       "attributes": {
-        "title": "The Black Eyed Peas",
-        "description": "Lorem Ipsum bacon helvetica grilled pickle tomato milk soup cookie",
+        "title": "2015 Top Bulls",
+        "description": "",
         "images": {
-          "aspect16x9": "http://image.oddworks.io/eooyala/w4MGV5eDpoE0rmbrcHEeDEEuhQMypB0u/promo272218855.jpg"
+          "aspect16x9": "http://image.oddworks.io/eooyala/s2eGFleTrb-LthCmvutaxPmPGV0Eslgr/QCdjB5HwFOTaWQ8X4xMDoxOjBzMTt2bJ.jpg"
         },
-        "releaseDate": "2015-11-19T16:19:53Z",
-        "updatedAt": "2015-11-23T18:54:50Z",
-        "createdAt": "2015-11-19T16:19:53Z",
-        "organization": "odd-networks"
+        "releaseDate": "2015-12-09T00:31:49Z",
+        "updatedAt": "2015-12-09T01:03:02Z",
+        "createdAt": "2015-12-09T00:31:49Z",
+        "organization": "pbr"
       }
     },
     {
       "relationships": {
         "entities": {
           "links": {
-            "self": "/v1/collections/ooyala-02ZWV5eDqBpEbc9ooAspnWFIIycMZWfK/videos"
+            "self": "/v1/collections/ooyala-BxNWtleTrbTQB-vrcaWoX16ivQEo9Hjd/entities"
           },
           "data": [
             {
-              "id": "ooyala-xvam8yeTqpPr9C_Mpa7MX6oYbKoWDiEF",
-              "type": "video"
+              "id": "ooyala-QzNG9leTp8hS6engO1_jJHWQsm_iYXWT",
+              "type": "collection"
             },
             {
-              "id": "ooyala-82am8yeTpdP4bsVwpeIDmMZN1R0f823w",
-              "type": "video"
+              "id": "ooyala-Y2eW5leTpz9CMyt-fq5qLFWjqDIP-kN3",
+              "type": "collection"
             }
           ]
         }
       },
       "type": "collection",
-      "id": "ooyala-02ZWV5eDqBpEbc9ooAspnWFIIycMZWfK",
+      "id": "ooyala-BxNWtleTrbTQB-vrcaWoX16ivQEo9Hjd",
       "links": {
-        "self": "https://device-staging.oddworks.io/v1/collections/ooyala-02ZWV5eDqBpEbc9ooAspnWFIIycMZWfK"
+        "self": "https://device-staging.oddworks.io/v1/collections/ooyala-BxNWtleTrbTQB-vrcaWoX16ivQEo9Hjd"
       },
       "attributes": {
-        "title": "Lynyrd Skynyrd",
-        "description": "Some birds you just cannot change",
+        "title": "Highlights",
+        "description": "",
         "images": {
-          "aspect16x9": "http://image.oddworks.io/eooyala/02ZWV5eDqBpEbc9ooAspnWFIIycMZWfK/promo272219498.jpg"
+          "aspect16x9": "http://image.oddworks.io/eooyala/QzNG9leTp8hS6engO1_jJHWQsm_iYXWT/promo274377455.jpg"
         },
-        "releaseDate": "2015-11-19T16:29:55Z",
-        "updatedAt": "2015-11-23T18:54:51Z",
-        "createdAt": "2015-11-19T16:29:55Z",
-        "organization": "odd-networks"
+        "releaseDate": "2015-12-08T23:19:18Z",
+        "updatedAt": "2015-12-09T01:04:18Z",
+        "createdAt": "2015-12-08T23:19:18Z",
+        "organization": "pbr"
       }
     },
     {
       "relationships": {
         "entities": {
           "links": {
-            "self": "/v1/collections/ooyala-1sb3lyeDqceL2bg9n92QLrx70spWE_-E/videos"
+            "self": "/v1/collections/ooyala-xxMGxleToTuU0WDEyOwAV6SMPCmPSGj1/entities"
           },
           "data": [
             {
-              "id": "ooyala-RwaW8yeTqohoLkNMj-46VPyvJQKDMY6q",
+              "id": "ooyala-Y3N2xleTqeWnR5yu6YLFmzUV34PJldna",
+              "type": "video"
+            },
+            {
+              "id": "ooyala-Y1N2xleTrD4Xyp11l8bTHH_3TxCzsfLI",
+              "type": "video"
+            },
+            {
+              "id": "ooyala-YzN2xleTpxnER1TlDR41x3mU6Q0MbP5u",
+              "type": "video"
+            },
+            {
+              "id": "ooyala-YxN2xleTr4qaMD4JbHcdiaDoHSe2aHQy",
               "type": "video"
             }
           ]
         }
       },
       "type": "collection",
-      "id": "ooyala-1sb3lyeDqceL2bg9n92QLrx70spWE_-E",
+      "id": "ooyala-xxMGxleToTuU0WDEyOwAV6SMPCmPSGj1",
       "links": {
-        "self": "https://device-staging.oddworks.io/v1/collections/ooyala-1sb3lyeDqceL2bg9n92QLrx70spWE_-E"
+        "self": "https://device-staging.oddworks.io/v1/collections/ooyala-xxMGxleToTuU0WDEyOwAV6SMPCmPSGj1"
       },
       "attributes": {
-        "title": "Action Action",
-        "description": "Zombie ipsum reversus ab viral inferno, nam rick grimes malum cerebro. De carne lumbering animata corpora quaeritis. Summus brains sit , morbo vel maleficia? De apocalypsi gorger omero undead survivor dictum mauris. Hi mindless mortuis soulless creaturas, imo evil stalking monstra adventus resi dentevil vultus comedat cerebella viventium",
+        "title": "2016 BlueDEF Tour Highlights",
+        "description": "",
         "images": {
-          "aspect16x9": "http://image.oddworks.io/eooyala/1sb3lyeDqceL2bg9n92QLrx70spWE_-E/promo271524327.jpg"
+          "aspect16x9": "http://image.oddworks.io/eooyala/Y3N2xleTqeWnR5yu6YLFmzUV34PJldna/3Gduepif0T1UGY8H4xMDoxOjBzMTt2bJ.jpg"
         },
-        "releaseDate": "2015-11-11T15:23:00Z",
-        "updatedAt": "2015-11-23T18:54:41Z",
-        "createdAt": "2015-11-11T15:23:00Z",
-        "organization": "odd-networks"
+        "releaseDate": "2015-12-08T23:51:30Z",
+        "updatedAt": "2015-12-09T00:54:51Z",
+        "createdAt": "2015-12-08T23:51:30Z",
+        "organization": "pbr"
       }
     },
     {
@@ -350,10 +364,10 @@
         "organization": "pbr",
         "title": "Stock Contractor of the Year Berger has bulls at NFR",
         "description": "When you are the reigning PBR Stock Contractor of the Year, it is safe to say you have top-notch quality bucking bulls.",
-        "images": {
-          "aspect16x9": "http://pbr.com/media/resized/96117_0_640x360.jpg"
-        },
-        "url": "http://pbr.com/en/news/features/other-features/2015/11/stock-contractor-of-the-year-berger-has-bulls-at-nfr.aspx"
+        "url": "http://pbr.com/en/news/features/other-features/2015/11/stock-contractor-of-the-year-berger-has-bulls-at-nfr.aspx",
+        "createdAt": "2015-12-02T17:08:35+00:00",
+        "source": {},
+        "category": null
       }
     },
     {
@@ -366,18 +380,17 @@
         "organization": "pbr",
         "title": "Billings hosts Built Ford Tough Series for 21st year in a row",
         "description": "The PBR (Professional Bull Riders) Built Ford Tough Series (BFTS) will enjoy its 21st consecutive year in Magic City in 2016, as the Rimrock Auto Arena hosts the Billings Invitational on April 15-17, 2016.",
-        "images": {
-          "aspect16x9": "http://pbr.com/media/resized/96108_0_640x360.jpg"
-        },
         "createdAt": "2015-12-01T18:08:29+00:00",
-        "url": "http://pbr.com/en/news/press-releases/2015/12/billings-hosts-built-ford-tough-series-for-21st-year-in-a-row.aspx"
+        "url": "http://pbr.com/en/news/press-releases/2015/12/billings-hosts-built-ford-tough-series-for-21st-year-in-a-row.aspx",
+        "source": {},
+        "category": null
       }
     },
     {
-      "type": "article",
+      "type": "event",
       "id": "f7a9aaeb7ac2a8fadfdd8767b8ea43f7",
       "links": {
-        "self": "https://device-staging.oddworks.io/v1/articles/f7a9aaeb7ac2a8fadfdd8767b8ea43f7"
+        "self": "https://device-staging.oddworks.io/v1/events/f7a9aaeb7ac2a8fadfdd8767b8ea43f7"
       },
       "attributes": {
         "organization": "pbr",
@@ -395,16 +408,16 @@
         "url": "http://pbr.com/en/bfts/schedule/2015/2015-world-finals.aspx",
         "ical": {
           "location": "Las Vegas, NV",
-          "dtstart": "2014-10-21T18:50:00-0600",
-          "dtend": "2014-10-25T13:50:00-0600"
+          "dtstart": "2014-10-22T00:50:00+00:00",
+          "dtend": "2014-10-25T19:50:00+00:00"
         }
       }
     },
     {
-      "type": "article",
+      "type": "event",
       "id": "9933fbe99b074a1775be6f85fd67eb32",
       "links": {
-        "self": "https://device-staging.oddworks.io/v1/articles/9933fbe99b074a1775be6f85fd67eb32"
+        "self": "https://device-staging.oddworks.io/v1/events/9933fbe99b074a1775be6f85fd67eb32"
       },
       "attributes": {
         "organization": "pbr",
@@ -422,16 +435,16 @@
         "url": "http://pbr.com/en/bfts/schedule/2015/2015-tucson.aspx",
         "ical": {
           "location": "Tucson, AZ",
-          "dtstart": "2014-10-02T18:50:00-0600",
-          "dtend": "2014-10-03T13:50:00-0600"
+          "dtstart": "2014-10-03T00:50:00+00:00",
+          "dtend": "2014-10-03T19:50:00+00:00"
         }
       }
     },
     {
-      "type": "article",
+      "type": "event",
       "id": "b672ab4e9744cd0b690a29bcc759c2c3",
       "links": {
-        "self": "https://device-staging.oddworks.io/v1/articles/b672ab4e9744cd0b690a29bcc759c2c3"
+        "self": "https://device-staging.oddworks.io/v1/events/b672ab4e9744cd0b690a29bcc759c2c3"
       },
       "attributes": {
         "organization": "pbr",
@@ -449,8 +462,8 @@
         "url": "http://pbr.com/en/bfts/schedule/2015/2015-allentown.aspx",
         "ical": {
           "location": "Allentown, PA",
-          "dtstart": "2014-09-25T18:50:00-0600",
-          "dtend": "2014-09-26T13:50:00-0600"
+          "dtstart": "2014-09-26T00:50:00+00:00",
+          "dtend": "2014-09-26T19:50:00+00:00"
         }
       }
     }
@@ -459,12 +472,12 @@
     "device": "GOOGLE_ANDROID",
     "queryParams": {
       "include": [
-        "1"
+        "true"
       ]
     },
     "userEntitlements": []
   },
   "links": {
-    "self": "https://device-staging.oddworks.io/v1/views/pbr-menu%3Finclude=1"
+    "self": "https://device-staging.oddworks.io/v1/views/pbr-menu%3Finclude=true"
   }
 }
