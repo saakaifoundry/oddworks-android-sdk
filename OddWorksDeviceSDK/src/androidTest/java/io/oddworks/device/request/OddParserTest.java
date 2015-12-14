@@ -21,10 +21,13 @@ import io.oddworks.device.metric.OddVideoPlayingMetric;
 import io.oddworks.device.metric.OddVideoStopMetric;
 import io.oddworks.device.metric.OddViewLoadMetric;
 import io.oddworks.device.model.AdsConfig;
+import io.oddworks.device.model.Article;
 import io.oddworks.device.model.Collection;
 import io.oddworks.device.model.Config;
+import io.oddworks.device.model.Event;
 import io.oddworks.device.model.Identifier;
 import io.oddworks.device.model.Media;
+import io.oddworks.device.model.MediaImage;
 import io.oddworks.device.model.players.ExternalPlayer;
 import io.oddworks.device.model.players.OoyalaPlayer;
 import io.oddworks.device.model.players.Player;
@@ -72,6 +75,31 @@ public class OddParserTest extends AndroidTestCase {
         ArrayList<OddObject> subCollections = collection.getIncludedByRelationship("entities");
         Collection subCollection = (Collection) subCollections.get(0);
         assertThat(subCollection.getTitle(), is("The Black Eyed Peas"));
+    }
+
+    @Test
+    public void testParseMenuViewResponseV2() throws Exception {
+        String json = AssetUtils.readFileToString(mContext, "MenuViewResponseV2.json");
+
+        OddView menu = oddParser.parseView(json);
+        ArrayList<OddObject> items = menu.getIncludedByRelationship("items");
+
+        assertFalse(items.isEmpty());
+
+        Collection articles = (Collection) items.get(1);
+        assertNull(articles.getMediaImage());
+        assertThat(articles.getTitle(), is("News"));
+        Article article = (Article) articles.getIncludedByRelationship("entities").get(0);
+        assertThat(article.getTitle(), is("Stock Contractor of the Year Berger has bulls at NFR"));
+        assertNull(article.getMediaImage());
+
+        Collection events = (Collection) items.get(2);
+        assertThat(events.getTitle(), is("Built Ford Tough Series - Schedule"));
+        assertNull(events.getMediaImage());
+        Event event = (Event) events.getIncludedByRelationship("entities").get(0);
+        assertThat(event.getTitle(), is("2015 Built Ford Tough World Finals"));
+        MediaImage eventImage = event.getMediaImage();
+        assertThat(eventImage.getAspect16x9(), is("http://pbr.com/media/resized/96117_0_640x360.jpg"));
     }
 
     @Test
