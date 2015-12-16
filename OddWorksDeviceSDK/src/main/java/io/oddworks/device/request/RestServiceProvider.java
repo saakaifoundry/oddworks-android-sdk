@@ -2,6 +2,8 @@ package io.oddworks.device.request;
 
 import android.content.Context;
 
+import net.danlew.android.joda.JodaTimeAndroid;
+
 import io.oddworks.device.R;
 
 /**
@@ -32,6 +34,7 @@ public class RestServiceProvider {
     public static void init(Context context, String apiVersion, String accessToken, String appVersion,
                             boolean useStagingApi) {
         instance = new RestServiceProvider(context, apiVersion, accessToken, appVersion, useStagingApi);
+        JodaTimeAndroid.init(context);
     }
 
     /** initialize services and this provider
