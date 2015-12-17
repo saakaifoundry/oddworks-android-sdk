@@ -26,6 +26,7 @@ public class OddMetricHandler {
 
         if (!metric.getEnabled()) {
             // do not post the metric if it is disabled
+            Log.d(TAG, "handleOddMetric: " + metric.getClass().getSimpleName() + " disabled");
             return;
         }
 
