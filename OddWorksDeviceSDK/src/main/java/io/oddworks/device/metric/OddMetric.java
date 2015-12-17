@@ -15,7 +15,7 @@ public abstract class OddMetric {
     public static final String ACTION_VIDEO_STOP = "video:stop";
     public static final String ACTION_VIDEO_ERROR = "video:error";
 
-    protected boolean mEnabled;
+    protected boolean mEnabled = false;
     protected String mOrganizationId;
     protected String mAction;
     protected String mContentType;
