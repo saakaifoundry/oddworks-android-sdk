@@ -24,6 +24,11 @@ public class OddMetricHandler {
         RestServiceProvider restServiceProvider = RestServiceProvider.getInstance();
         ApiCaller apiCaller = restServiceProvider.getApiCaller();
 
+        if (!metric.getEnabled()) {
+            // do not post the metric if it is disabled
+            return;
+        }
+
         apiCaller.postMetric(metric, new OddCallback<OddMetric>() {
             @Override
             public void onSuccess(OddMetric entity) {
