@@ -16,7 +16,10 @@ public class OddMetricHandler {
 
     private OddMetricHandler() {
         // singleton
-        OddBus.getInstance().register(this);
+    }
+
+    public static void enable() {
+        OddBus.getInstance().register(INSTANCE);
     }
 
     @Subscribe
