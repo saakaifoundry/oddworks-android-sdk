@@ -1,0 +1,4406 @@
+{
+  "data": {
+    "type": "view",
+    "relationships": {
+      "items": {
+        "data": [
+          {
+            "id": "pbr-homepage",
+            "type": "view"
+          },
+          {
+            "id": "d47a5d4374c67da179953c1fcb242b7f",
+            "type": "collection"
+          },
+          {
+            "id": "pbr-stats",
+            "type": "external"
+          },
+          {
+            "id": "24bd0b858ce607357c4ebe829d173cf7",
+            "type": "collection"
+          },
+          {
+            "id": "d1ba1ea55a3f472166e8a14ed1d6679f",
+            "type": "collection"
+          },
+          {
+            "id": "91778ed696776a7f78399969a10b7d9e",
+            "type": "collection"
+          },
+          {
+            "id": "ooyala-V4NG9leTon46PrmzpG75sWsitGRWNNRt",
+            "type": "collection"
+          }
+        ]
+      }
+    },
+    "id": "pbr-menu",
+    "links": {
+      "self": "http://device.oddworks.io/v2/views/pbr-menu"
+    },
+    "attributes": {
+      "organization": "pbr"
+    }
+  },
+  "included": [
+    {
+      "type": "view",
+      "relationships": {
+        "promotion": {
+          "data": {
+            "id": "85ef34da-faf6-4aa9-ab7b-7f1b6b1c63e7",
+            "type": "promotion"
+          },
+          "meta": {
+            "displayDuration": 4
+          }
+        },
+        "featuredMedia": {
+          "data": {
+            "id": "pbr-live-web-video",
+            "type": "video"
+          }
+        },
+        "featuredCollections": {
+          "data": {
+            "id": "ooyala-pbr-featured-collections",
+            "type": "collection"
+          }
+        }
+      },
+      "id": "pbr-homepage",
+      "links": {
+        "self": "http://device.oddworks.io/v2/views/pbr-homepage"
+      },
+      "attributes": {
+        "organization": "pbr"
+      }
+    },
+    {
+      "type": "collection",
+      "relationships": {
+        "entities": {
+          "data": [
+            {
+              "id": "e0118ed834634405ce4b83faaed31a80",
+              "type": "article"
+            },
+            {
+              "id": "eed914bcd05c2f1157a72c716961ecdf",
+              "type": "article"
+            },
+            {
+              "id": "c1d35e739bb79576e0c356d2ed95c80f",
+              "type": "article"
+            },
+            {
+              "id": "90c254cd57090a59fb7536cd3289364c",
+              "type": "article"
+            },
+            {
+              "id": "6e983beaf88ac6e3b76632ee27f22c88",
+              "type": "article"
+            },
+            {
+              "id": "0dd5b724156120cead4d6a0d4a2726a9",
+              "type": "article"
+            },
+            {
+              "id": "5ab48bc9bc294725860fdb38e13d8247",
+              "type": "article"
+            },
+            {
+              "id": "5c242292e7e1c96183462ea35b1b6d08",
+              "type": "article"
+            },
+            {
+              "id": "a629b7bc2e318bee5d6bdebb17346aea",
+              "type": "article"
+            },
+            {
+              "id": "af69c500b856717906fec681598416ae",
+              "type": "article"
+            }
+          ]
+        }
+      },
+      "id": "d47a5d4374c67da179953c1fcb242b7f",
+      "links": {
+        "self": "http://device.oddworks.io/v2/collections/d47a5d4374c67da179953c1fcb242b7f"
+      },
+      "attributes": {
+        "title": "News",
+        "link": "http://www.pbr.com/en/mobile/news",
+        "description": "Latest PBR News",
+        "language": "en-us",
+        "generator": "pbr.com",
+        "organization": "pbr"
+      }
+    },
+    {
+      "type": "external",
+      "id": "pbr-stats",
+      "links": {
+        "self": "http://device.oddworks.io/v2/externals/pbr-stats"
+      },
+      "attributes": {
+        "title": "Stats",
+        "description": "Stats for PBR",
+        "url": "http://odd-pbr.s3-website-us-east-1.amazonaws.com"
+      }
+    },
+    {
+      "type": "collection",
+      "relationships": {
+        "entities": {
+          "data": [
+            {
+              "id": "3b8c8095946d0be8c992e072f684aeba",
+              "type": "event"
+            },
+            {
+              "id": "e1e03ce1aaf16c15027b15b6fa959230",
+              "type": "event"
+            },
+            {
+              "id": "97912ce1c2dade648308bf8d7ee37c7b",
+              "type": "event"
+            },
+            {
+              "id": "66ea6691a819c31136d7631856a11852",
+              "type": "event"
+            },
+            {
+              "id": "5e2a91d9dedcc2e14e6c4e1b6e64be97",
+              "type": "event"
+            },
+            {
+              "id": "f78d14fe7aa559f5e8e0c7e7664da48a",
+              "type": "event"
+            },
+            {
+              "id": "30577d12128bb2fd917cd32c22a238c6",
+              "type": "event"
+            },
+            {
+              "id": "6234a744b0c783a4c118b305844c372c",
+              "type": "event"
+            },
+            {
+              "id": "eb7d96d2d06855ab0c768a0d5d7d7579",
+              "type": "event"
+            },
+            {
+              "id": "e3f30212eca5ab8aec748f381a04314e",
+              "type": "event"
+            },
+            {
+              "id": "d1b9251404dd6b922565e7b1464a6826",
+              "type": "event"
+            },
+            {
+              "id": "e41d7d2d0f80789c9aa572a2e7c6e685",
+              "type": "event"
+            },
+            {
+              "id": "5b421c826af34a588f38dcd138d70377",
+              "type": "event"
+            },
+            {
+              "id": "d11114023697ebb63f47cfb9385fd234",
+              "type": "event"
+            },
+            {
+              "id": "10edd4e810ef6fe75713529b9e0a46db",
+              "type": "event"
+            },
+            {
+              "id": "3157a76114617202ee33d12e52cc7aa0",
+              "type": "event"
+            },
+            {
+              "id": "36f980a98eb650828298b54dcadf303a",
+              "type": "event"
+            },
+            {
+              "id": "d61b857468868bdb4968672c7c5b60cc",
+              "type": "event"
+            },
+            {
+              "id": "e0ed3ff47a7cb3edbcaaf03d300f4b65",
+              "type": "event"
+            },
+            {
+              "id": "9fa0773993ae07f058de6982fc3e9669",
+              "type": "event"
+            },
+            {
+              "id": "6ca1fc8718f9ab0bbe18b05291a298e7",
+              "type": "event"
+            },
+            {
+              "id": "7f571e9f6fa39217f03aaaf7bc7ba4fb",
+              "type": "event"
+            },
+            {
+              "id": "008845271ded3be82236a4efee990c86",
+              "type": "event"
+            },
+            {
+              "id": "fac556ea9574a9c3f32dc49200b13eeb",
+              "type": "event"
+            },
+            {
+              "id": "f79ed03e1a74441e7379d24906df2ce7",
+              "type": "event"
+            }
+          ]
+        }
+      },
+      "id": "24bd0b858ce607357c4ebe829d173cf7",
+      "links": {
+        "self": "http://device.oddworks.io/v2/collections/24bd0b858ce607357c4ebe829d173cf7"
+      },
+      "attributes": {
+        "title": "Built Ford Tough Series - Schedule",
+        "link": "http://cms.pbr.com/en/bfts/schedule.aspx",
+        "description": "Professional Bull Riders - Built Ford Tough Series - Schedule",
+        "language": "en-us",
+        "generator": "pbr.com",
+        "organization": "pbr"
+      }
+    },
+    {
+      "type": "collection",
+      "relationships": {
+        "entities": {
+          "data": [
+            {
+              "id": "427ead5b27034c5eca192a26f6353175",
+              "type": "event"
+            },
+            {
+              "id": "f2f824e488a4af9900b07a0ef8df3ff7",
+              "type": "event"
+            },
+            {
+              "id": "9ac84deff123301c6c0640d782182c24",
+              "type": "event"
+            },
+            {
+              "id": "f1f8ccc1a1d7c0228f0084925b3f139f",
+              "type": "event"
+            },
+            {
+              "id": "0607ae8fcd25e23fe1a54193b169341c",
+              "type": "event"
+            },
+            {
+              "id": "c582d5f6e4c476acde8884f8dbd800c1",
+              "type": "event"
+            },
+            {
+              "id": "53c87a1f36fbcf7c61d09ca3b227f531",
+              "type": "event"
+            },
+            {
+              "id": "6ec80b799c0142de0619b3ab41dfe185",
+              "type": "event"
+            },
+            {
+              "id": "0a574bf492e730c6c08b47d4caa6075a",
+              "type": "event"
+            },
+            {
+              "id": "550c4e3470150bf54ac14eb5ebdc339c",
+              "type": "event"
+            },
+            {
+              "id": "e27eb1bc2f1acf2b01f7049cc1aff292",
+              "type": "event"
+            },
+            {
+              "id": "e2f95a02f8b881e0daed7383525c06a2",
+              "type": "event"
+            },
+            {
+              "id": "ef40c811418ba60953ad8961f7b4f2bb",
+              "type": "event"
+            },
+            {
+              "id": "e81e07cf72c0916dedc24ef750537edf",
+              "type": "event"
+            },
+            {
+              "id": "a4b56db79e450f2aa386ccbef47e6806",
+              "type": "event"
+            },
+            {
+              "id": "3e21938042e9692cdb83cbd9c67868d7",
+              "type": "event"
+            },
+            {
+              "id": "1a017be8fce7a17cd0aea3a30db91255",
+              "type": "event"
+            },
+            {
+              "id": "980706663a8ec138c267387bbd58af4b",
+              "type": "event"
+            },
+            {
+              "id": "d673b5eae404a371720b577e4f9aeebc",
+              "type": "event"
+            },
+            {
+              "id": "25aeedd4aa020d4689d8f898c1a91c8d",
+              "type": "event"
+            },
+            {
+              "id": "2101044491580bd14b2e353a923c28ea",
+              "type": "event"
+            },
+            {
+              "id": "a3005f9a5462b8507f88c029f26559ae",
+              "type": "event"
+            },
+            {
+              "id": "cd8e0f4519b9352920a1f20df967c464",
+              "type": "event"
+            },
+            {
+              "id": "5c62f3bcef0340464528cc2dca952db3",
+              "type": "event"
+            },
+            {
+              "id": "40183d35a75a5c36714e1624767f326e",
+              "type": "event"
+            },
+            {
+              "id": "e67ed3d5522d7b8da0a7539a8f9ba5f8",
+              "type": "event"
+            },
+            {
+              "id": "c1692265dc3dcea8f101a6b2da753ed9",
+              "type": "event"
+            },
+            {
+              "id": "5a2d8b962f9b5880fc93800276feee6a",
+              "type": "event"
+            },
+            {
+              "id": "7436f14a6a42e7b29de1b21f8d0beb1e",
+              "type": "event"
+            },
+            {
+              "id": "ec03aad42530c868abe5e354940e5f21",
+              "type": "event"
+            },
+            {
+              "id": "59274a3347dbaa6adfdfd080334b2804",
+              "type": "event"
+            },
+            {
+              "id": "f2a0f69ab4e546d0850de2714298eb70",
+              "type": "event"
+            },
+            {
+              "id": "2d05a9c5d5b50ae4ac88673c11a7a84f",
+              "type": "event"
+            },
+            {
+              "id": "6530fe9bc050538ec08bfd4dcd9554fb",
+              "type": "event"
+            }
+          ]
+        }
+      },
+      "id": "d1ba1ea55a3f472166e8a14ed1d6679f",
+      "links": {
+        "self": "http://device.oddworks.io/v2/collections/d1ba1ea55a3f472166e8a14ed1d6679f"
+      },
+      "attributes": {
+        "title": "Touring Pro Division - Schedule",
+        "link": "http://cms.pbr.com/en/tpd/schedule.aspx",
+        "description": "Professional Bull Riders - Touring Pro Division - Schedule",
+        "language": "en-us",
+        "generator": "pbr.com",
+        "organization": "pbr"
+      }
+    },
+    {
+      "type": "collection",
+      "relationships": {
+        "entities": {
+          "data": [
+            {
+              "id": "fb2e641e6681b95e7dbeae611e9047ac",
+              "type": "event"
+            },
+            {
+              "id": "c001545b35826c0456bbeea5fa82ae51",
+              "type": "event"
+            },
+            {
+              "id": "03c4f7084b3b826190bae8adfe461bb6",
+              "type": "event"
+            },
+            {
+              "id": "79dc5a2de85441d3e473d4cc26ebabed",
+              "type": "event"
+            },
+            {
+              "id": "fcbf9a3c5fc5cea5880c1f471bab9d11",
+              "type": "event"
+            },
+            {
+              "id": "4f22829be1af5507166aabe5c5673118",
+              "type": "event"
+            },
+            {
+              "id": "8b9a48d19d1f35528f68f7c5feac4da3",
+              "type": "event"
+            },
+            {
+              "id": "b79912e53783968a523f4927dfe80d45",
+              "type": "event"
+            },
+            {
+              "id": "bc4b01bb85b8f124e97acad54e753526",
+              "type": "event"
+            },
+            {
+              "id": "526e9b94df1aa46896a1f6829dac6838",
+              "type": "event"
+            },
+            {
+              "id": "43e825f095bc29c585bc227faceef8e8",
+              "type": "event"
+            },
+            {
+              "id": "9ad15bce4f1a41ea4c69202f381fedd6",
+              "type": "event"
+            },
+            {
+              "id": "fa511dbd968ca36df8893e52471b7894",
+              "type": "event"
+            },
+            {
+              "id": "3733745f636dece91eb252f4cccb638d",
+              "type": "event"
+            },
+            {
+              "id": "c4a387430f8e9a3302b13bc14e8cf182",
+              "type": "event"
+            },
+            {
+              "id": "64528eb74bf5c3a5ab89d17cd0bc25af",
+              "type": "event"
+            },
+            {
+              "id": "d2a5c4f4dfd2f250aa400da451686c70",
+              "type": "event"
+            },
+            {
+              "id": "adc9c3a66ae3b451c7fc5b923ead183d",
+              "type": "event"
+            },
+            {
+              "id": "d4cc04f44b2bb98b92cf49bff515b98c",
+              "type": "event"
+            },
+            {
+              "id": "b26e4c50890632fe1632320cb7921ec2",
+              "type": "event"
+            },
+            {
+              "id": "655a6e56b16668711fd49482392db174",
+              "type": "event"
+            }
+          ]
+        }
+      },
+      "id": "91778ed696776a7f78399969a10b7d9e",
+      "links": {
+        "self": "http://device.oddworks.io/v2/collections/91778ed696776a7f78399969a10b7d9e"
+      },
+      "attributes": {
+        "title": "BlueDEF Tour - Schedule",
+        "link": "http://cms.pbr.com/en/velocity/schedule.aspx",
+        "description": "Professional Bull Riders - BlueDEF Tour - Schedule",
+        "language": "en-us",
+        "generator": "pbr.com",
+        "organization": "pbr"
+      }
+    },
+    {
+      "relationships": {
+        "entities": {
+          "links": {
+            "self": "/v1/collections/ooyala-V4NG9leTon46PrmzpG75sWsitGRWNNRt/entities"
+          },
+          "data": [
+            {
+              "id": "ooyala-xrNmxleTqQaiP5wuFEz_KKBxCYEYXbwK",
+              "type": "video"
+            },
+            {
+              "id": "ooyala-s4eGFleTogYHG6pImNH-iovoQfbfPX_N",
+              "type": "video"
+            },
+            {
+              "id": "ooyala-s2eGFleTrb-LthCmvutaxPmPGV0Eslgr",
+              "type": "video"
+            },
+            {
+              "id": "ooyala-s0eGFleTrZGKCCn61tuoOTcDZB-BH0Sl",
+              "type": "video"
+            },
+            {
+              "id": "ooyala-syeGFleTqVEpqs6OMSAAPiWMZ_LLjV0H",
+              "type": "video"
+            },
+            {
+              "id": "ooyala-t4d2FleToTdd933e36QKsNXzLGCtRmRh",
+              "type": "video"
+            },
+            {
+              "id": "ooyala-t2d2FleTprAKlWLibX4D_EchOxMIJ069",
+              "type": "video"
+            },
+            {
+              "id": "ooyala-9wd2FleTpqaztocs2Q74HYbqdqW4tRgD",
+              "type": "video"
+            },
+            {
+              "id": "ooyala-1ud2FleTovwgVrp0tf_CmhmBHOok0jpI",
+              "type": "video"
+            },
+            {
+              "id": "ooyala-1sd2FleToMA211LFX9iR84Af16QW-ub3",
+              "type": "video"
+            },
+            {
+              "id": "ooyala-1qd2FleTrzMt77qQ7OyQAzdbazAAHbdY",
+              "type": "video"
+            },
+            {
+              "id": "ooyala-1od2FleTqiB-0jwZgsXLtI7gDoJo9luT",
+              "type": "video"
+            },
+            {
+              "id": "ooyala-1md2FleTrGdiuicFAhUOUk93wEfI-rng",
+              "type": "video"
+            },
+            {
+              "id": "ooyala-93dmFleTr2fsGp0QfB23C1H0oKJ2WqQ3",
+              "type": "video"
+            },
+            {
+              "id": "ooyala-91dmFleToMOcx8zz99W7YSGUBRAjb0v6",
+              "type": "video"
+            },
+            {
+              "id": "ooyala-9xdmFleTrJ5Yg9TVJPZVgz1G1daaGPE2",
+              "type": "video"
+            },
+            {
+              "id": "ooyala-9vdmFleTrhBljZB6EJPQ5AKkmVfIXALd",
+              "type": "video"
+            },
+            {
+              "id": "ooyala-9tdmFleTpN_hwyb-RLMn48uIXJ2qA0iB",
+              "type": "video"
+            },
+            {
+              "id": "ooyala-9rdmFleTorcLMjI0wyXu1e2m73oJVq2S",
+              "type": "video"
+            },
+            {
+              "id": "ooyala-A4dmFleTqR_rWXOpIjoHF8bv7UliQN66",
+              "type": "video"
+            },
+            {
+              "id": "ooyala-82dmFleTr-v3JpcaJ0tYNoRiEYUUxdjW",
+              "type": "video"
+            },
+            {
+              "id": "ooyala-80dmFleTra9_8J5O5VaeSIukKEFY_tB1",
+              "type": "video"
+            },
+            {
+              "id": "ooyala-8ydmFleToFRSmfAOzDTDZq1JxDDxw_Kd",
+              "type": "video"
+            },
+            {
+              "id": "ooyala-8wdmFleTqghM8KlrfpwI7dodo8xekebZ",
+              "type": "video"
+            },
+            {
+              "id": "ooyala-94dWFleTr-rBRuvW8Z3u3vA3duVJ4Iw6",
+              "type": "video"
+            },
+            {
+              "id": "ooyala-tydWFleTpHbU7RuW5tB7hGwHbNnus4s4",
+              "type": "video"
+            },
+            {
+              "id": "ooyala-twdWFleTruhQ2fFOWXmufOU6xDCiqoKP",
+              "type": "video"
+            },
+            {
+              "id": "ooyala-tudWFleToyO84qwhVhuXGmU5Czi-vNfR",
+              "type": "video"
+            },
+            {
+              "id": "ooyala-tsdWFleTpGYt71UAfpzWUOQVRcGgaov8",
+              "type": "video"
+            },
+            {
+              "id": "ooyala-tqdWFleTolrls93OBDqc4a0t-tXCzGgG",
+              "type": "video"
+            },
+            {
+              "id": "ooyala-todWFleTp8yD5OATrWITNoxnRvIazmTj",
+              "type": "video"
+            }
+          ]
+        }
+      },
+      "type": "collection",
+      "id": "ooyala-V4NG9leTon46PrmzpG75sWsitGRWNNRt",
+      "links": {
+        "self": "http://device.oddworks.io/v2/collections/ooyala-V4NG9leTon46PrmzpG75sWsitGRWNNRt"
+      },
+      "attributes": {
+        "title": "2015 World Finals Highlights",
+        "description": "PBR takes a look back at 2015 World Finals",
+        "images": {
+          "aspect16x9": "http://image.oddworks.io/eooyala/xrNmxleTqQaiP5wuFEz_KKBxCYEYXbwK/3Gduepif0T1UGY8H4zMDoxOjBzMTu0hl.jpg"
+        },
+        "releaseDate": "2015-12-09T01:04:24Z",
+        "updatedAt": "2015-12-15T03:38:50Z",
+        "createdAt": "2015-12-09T01:04:24Z",
+        "organization": "pbr"
+      }
+    },
+    {
+      "type": "promotion",
+      "id": "85ef34da-faf6-4aa9-ab7b-7f1b6b1c63e7",
+      "links": {
+        "self": "http://device.oddworks.io/v2/promotions/85ef34da-faf6-4aa9-ab7b-7f1b6b1c63e7"
+      },
+      "attributes": {
+        "organization": "pbr",
+        "title": "PBR Live is all new in 2016",
+        "description": "Promote your content with Odd Networks!",
+        "url": "http://pbr.com",
+        "images": {
+          "aspect16x9": "http://dummyimage.com/19:9x1440&text=Promo",
+          "aspect4x3": "http://dummyimage.com/4:3x1440&text=Promo",
+          "aspect3x4": "http://dummyimage.com/3:4x1920&text=Promo",
+          "aspect1x1": "http://dummyimage.com/1:1x1920&text=Promo",
+          "aspect2x3": "http://image.oddworks.io/poker-central/promotions/5/2x3.jpg"
+        }
+      }
+    },
+    {
+      "type": "video",
+      "id": "pbr-live-web-video",
+      "links": {
+        "self": "http://device.oddworks.io/v2/videos/pbr-live-web-video"
+      },
+      "attributes": {
+        "title": "Live",
+        "description": "Louder, come on",
+        "images": {
+          "aspect16x9": "http://image.oddworks.io/eooyala/dkMWV5eDrsp7GH4AnSW9ywCVuDI_-9yx/3Gduepif0T1UGY8H4xMDoxOjBrO-I4W8.jpg",
+          "aspect4x3": "http://image.oddworks.io/edummyimage/4:3x1440&text=placeholder.png",
+          "aspect3x4": "http://image.oddworks.io/edummyimage/3:4x1920&text=placeholder.png",
+          "aspect1x1": "http://image.oddworks.io/edummyimage/1:1x1920&text=placeholder.png",
+          "aspect2x3": "http://image.oddworks.io/edummyimage/2:3x1920&text=placeholder.png"
+        },
+        "player": {
+          "type": "external",
+          "pCode": "5meWUyOipwedhLMDFYYFdAYmnGKl",
+          "domain": "http://ooyala.com",
+          "url": "http://s3.amazonaws.com/odd-pbr/live_stream.html"
+        },
+        "tags": [],
+        "organization": "pbr",
+        "ads": {
+          "provider": "freewheel",
+          "format": "VAST",
+          "assetId": "pbr-live-web-video"
+        },
+        "overlays": {},
+        "url": null
+      }
+    },
+    {
+      "relationships": {
+        "entities": {
+          "links": {
+            "self": "/v2/collections/ooyala-featured-collections/collections"
+          },
+          "data": [
+            {
+              "id": "ooyala-12c21leTrN6l45_fxhryPgsGbeDg_Hzj",
+              "type": "collection"
+            },
+            {
+              "id": "ooyala-BxNWtleTrbTQB-vrcaWoX16ivQEo9Hjd",
+              "type": "collection"
+            },
+            {
+              "id": "ooyala-xxMGxleToTuU0WDEyOwAV6SMPCmPSGj1",
+              "type": "collection"
+            },
+            {
+              "id": "ooyala-Y2eW5leTpz9CMyt-fq5qLFWjqDIP-kN3",
+              "type": "collection"
+            },
+            {
+              "id": "ooyala-lucW1leToA0W7d1d7yZI3SZI-_9iC1Ol",
+              "type": "collection"
+            }
+          ]
+        }
+      },
+      "type": "collection",
+      "id": "ooyala-pbr-featured-collections",
+      "links": {
+        "self": "http://device.oddworks.io/v2/collections/ooyala-pbr-featured-collections"
+      },
+      "attributes": {
+        "title": "PBR Featured Collections",
+        "description": "",
+        "images": {
+          "aspect16x9": "http://image.oddworks.io/eooyala/s2eGFleTrb-LthCmvutaxPmPGV0Eslgr/QCdjB5HwFOTaWQ8X4xMDoxOjBzMTt2bJ.jpg"
+        },
+        "releaseDate": "2015-12-02T13:32:24Z",
+        "updatedAt": "2015-12-02T15:59:43Z",
+        "createdAt": "2015-12-02T13:32:24Z",
+        "organization": "pbr"
+      }
+    },
+    {
+      "type": "article",
+      "id": "e0118ed834634405ce4b83faaed31a80",
+      "links": {
+        "self": "http://device.oddworks.io/v2/articles/e0118ed834634405ce4b83faaed31a80"
+      },
+      "attributes": {
+        "title": "McBride and Lambert have special friendship",
+        "url": "http://www.pbr.com/macroScripts/mobile/odd/news.cshtml?id=96621",
+        "description": "Two-time World Champion Justin McBride views PBR Director of Livestock Cody Lambert not only as a friend, but as a close mentor.",
+        "createdAt": "2016-01-04T15:13:29+0000",
+        "source": {
+          "title": null,
+          "url": null
+        },
+        "category": "Other Features",
+        "images": {
+          "aspect16x9": "http://www.pbr.com/media/13205946/mcbride-lambert.jpg"
+        },
+        "organization": "pbr"
+      }
+    },
+    {
+      "type": "article",
+      "id": "eed914bcd05c2f1157a72c716961ecdf",
+      "links": {
+        "self": "http://device.oddworks.io/v2/articles/eed914bcd05c2f1157a72c716961ecdf"
+      },
+      "attributes": {
+        "title": "8 riders ready for a New Year",
+        "url": "http://www.pbr.com/macroScripts/mobile/odd/news.cshtml?id=96615",
+        "description": "PBR.com takes a look at eight riders that will be certainly ready for a new year in 2016.",
+        "createdAt": "2016-01-04T15:13:29+0000",
+        "source": {
+          "title": null,
+          "url": null
+        },
+        "category": "Other Features",
+        "images": {
+          "aspect16x9": "http://www.pbr.com/media/13205944/alves-finals.jpg"
+        },
+        "organization": "pbr"
+      }
+    },
+    {
+      "type": "article",
+      "id": "c1d35e739bb79576e0c356d2ed95c80f",
+      "links": {
+        "self": "http://device.oddworks.io/v2/articles/c1d35e739bb79576e0c356d2ed95c80f"
+      },
+      "attributes": {
+        "title": "Schaper hungry for more in 2016",
+        "url": "http://www.pbr.com/macroScripts/mobile/odd/news.cshtml?id=96608",
+        "description": "After a career year in 2015, North Dakota native Nathan Schaper is looking for more success on this year's Built Ford Tough Series.",
+        "createdAt": "2016-01-04T15:13:29+0000",
+        "source": {
+          "title": null,
+          "url": null
+        },
+        "category": "Other Features",
+        "images": {
+          "aspect16x9": "http://www.pbr.com/media/13205938/schaper-garcia.jpg"
+        },
+        "organization": "pbr"
+      }
+    },
+    {
+      "type": "article",
+      "id": "90c254cd57090a59fb7536cd3289364c",
+      "links": {
+        "self": "http://device.oddworks.io/v2/articles/90c254cd57090a59fb7536cd3289364c"
+      },
+      "attributes": {
+        "title": "Robinson energized for 2016 Built Ford Tough Series",
+        "url": "http://www.pbr.com/macroScripts/mobile/odd/news.cshtml?id=96595",
+        "description": "After a trying 2015 campaign, stock contractor Jeff Robinson says he is ready for a strong 2016 Built Ford Tough Series.",
+        "createdAt": "2016-01-04T15:13:29+0000",
+        "source": {
+          "title": null,
+          "url": null
+        },
+        "category": "Other Features",
+        "images": {
+          "aspect16x9": "http://www.pbr.com/media/13205934/jeff-robinson.jpg"
+        },
+        "organization": "pbr"
+      }
+    },
+    {
+      "type": "article",
+      "id": "6e983beaf88ac6e3b76632ee27f22c88",
+      "links": {
+        "self": "http://device.oddworks.io/v2/articles/6e983beaf88ac6e3b76632ee27f22c88"
+      },
+      "attributes": {
+        "title": "Allen opens up about Air Time’s shortcomings",
+        "url": "http://www.pbr.com/macroScripts/mobile/odd/news.cshtml?id=96572",
+        "description": "Carolina Panthers defensive end Jared Allen opens up in this weekend’s CBS one-hour documentary, “PBR: Danger on the Dirt,” about his bull Air Time coming up short of winning the 2015 World Champion Bull title.",
+        "createdAt": "2016-01-04T15:13:29+0000",
+        "source": {
+          "title": null,
+          "url": null
+        },
+        "category": "Other Features",
+        "images": {
+          "aspect16x9": "http://www.pbr.com/media/13205915/allen-15.jpg"
+        },
+        "organization": "pbr"
+      }
+    },
+    {
+      "type": "article",
+      "id": "0dd5b724156120cead4d6a0d4a2726a9",
+      "links": {
+        "self": "http://device.oddworks.io/v2/articles/0dd5b724156120cead4d6a0d4a2726a9"
+      },
+      "attributes": {
+        "title": "Top stories of 2015",
+        "url": "http://www.pbr.com/macroScripts/mobile/odd/news.cshtml?id=96568",
+        "description": "PBR.com takes a look back at five of the most-read stories from 2015.",
+        "createdAt": "2016-01-04T15:13:29+0000",
+        "source": {
+          "title": null,
+          "url": null
+        },
+        "category": "Other Features",
+        "images": {
+          "aspect16x9": "http://www.pbr.com/media/13205914/mick-e-mouse-14.jpg"
+        },
+        "organization": "pbr"
+      }
+    },
+    {
+      "type": "article",
+      "id": "5ab48bc9bc294725860fdb38e13d8247",
+      "links": {
+        "self": "http://device.oddworks.io/v2/articles/5ab48bc9bc294725860fdb38e13d8247"
+      },
+      "attributes": {
+        "title": "Mauney recalls lacerating his liver at 18 years old",
+        "url": "http://www.pbr.com/macroScripts/mobile/odd/news.cshtml?id=96566",
+        "description": "J.B. Mauney defied the odds after being violently stepped on as a young bull rider, showing how truly dangerous bull riding can be.",
+        "createdAt": "2016-01-04T15:13:29+0000",
+        "source": {
+          "title": null,
+          "url": null
+        },
+        "category": "Other Features",
+        "images": {
+          "aspect16x9": "http://www.pbr.com/media/13205913/mauney-finals.jpg"
+        },
+        "organization": "pbr"
+      }
+    },
+    {
+      "type": "article",
+      "id": "5c242292e7e1c96183462ea35b1b6d08",
+      "links": {
+        "self": "http://device.oddworks.io/v2/articles/5c242292e7e1c96183462ea35b1b6d08"
+      },
+      "attributes": {
+        "title": "Outlaw on pace for April return",
+        "url": "http://www.pbr.com/macroScripts/mobile/odd/news.cshtml?id=96559",
+        "description": "Chase Outlaw is eyeing a return to the Built Ford Tough Series in April following offseason shoulder surgery.",
+        "createdAt": "2016-01-04T15:13:29+0000",
+        "source": {
+          "title": null,
+          "url": null
+        },
+        "category": "Other Features",
+        "images": {
+          "aspect16x9": "http://www.pbr.com/media/13205911/outlaw-finals.jpg"
+        },
+        "organization": "pbr"
+      }
+    },
+    {
+      "type": "article",
+      "id": "a629b7bc2e318bee5d6bdebb17346aea",
+      "links": {
+        "self": "http://device.oddworks.io/v2/articles/a629b7bc2e318bee5d6bdebb17346aea"
+      },
+      "attributes": {
+        "title": "\"Danger on the Dirt\" brings fans inside the minds of bull riders",
+        "url": "http://www.pbr.com/macroScripts/mobile/odd/news.cshtml?id=96525",
+        "description": "“From the time I was little, my dad told me, ‘You play the game, you take the pain.’ I’ve always tried to live by that,” said J.B. Mauney in a PBR one-hour CBS special that airs on Dec. 27.",
+        "createdAt": "2016-01-04T15:13:29+0000",
+        "source": {
+          "title": null,
+          "url": null
+        },
+        "category": "Other Features",
+        "images": {
+          "aspect16x9": "http://www.pbr.com/media/13205881/mauney-bruiser-finals.jpg"
+        },
+        "organization": "pbr"
+      }
+    },
+    {
+      "type": "article",
+      "id": "af69c500b856717906fec681598416ae",
+      "links": {
+        "self": "http://device.oddworks.io/v2/articles/af69c500b856717906fec681598416ae"
+      },
+      "attributes": {
+        "title": "\"PBR Danger on the Dirt\" goes behind the scenes on CBS",
+        "url": "http://www.pbr.com/macroScripts/mobile/odd/news.cshtml?id=96520",
+        "description": "One-hour special airing Dec. 27 offers intimate look  at one of the world’s toughest sports.",
+        "createdAt": "2016-01-04T15:13:29+0000",
+        "source": {
+          "title": null,
+          "url": null
+        },
+        "category": "Press Releases",
+        "images": {
+          "aspect16x9": "http://www.pbr.com/media/13205880/DangerDirt_740x416.jpg"
+        },
+        "organization": "pbr"
+      }
+    },
+    {
+      "type": "event",
+      "id": "3b8c8095946d0be8c992e072f684aeba",
+      "links": {
+        "self": "http://device.oddworks.io/v2/events/3b8c8095946d0be8c992e072f684aeba"
+      },
+      "attributes": {
+        "title": "Chicago Invitational",
+        "url": "http://cms.pbr.com/en/bfts/schedule/2016/2016-chicago.aspx",
+        "description": null,
+        "createdAt": "2016-01-09T18:50:00+0000",
+        "source": {
+          "title": "http://cms.pbr.com/handlers/oddevents.aspx",
+          "url": null
+        },
+        "category": "bfts",
+        "images": {
+          "aspect16x9": ""
+        },
+        "ical": {
+          "dtstart": "2016-01-09T18:50:00+0000",
+          "dtend": "2016-01-10T13:50:00+0000"
+        },
+        "organization": "pbr"
+      }
+    },
+    {
+      "type": "event",
+      "id": "e1e03ce1aaf16c15027b15b6fa959230",
+      "links": {
+        "self": "http://device.oddworks.io/v2/events/e1e03ce1aaf16c15027b15b6fa959230"
+      },
+      "attributes": {
+        "title": "Monster Energy Buck Off at the Garden",
+        "url": "http://cms.pbr.com/en/bfts/schedule/2016/2016-new-york.aspx",
+        "description": null,
+        "createdAt": "2016-01-15T20:00:00+0000",
+        "source": {
+          "title": "http://cms.pbr.com/handlers/oddevents.aspx",
+          "url": null
+        },
+        "category": "bfts",
+        "images": {
+          "aspect16x9": ""
+        },
+        "ical": {
+          "dtstart": "2016-01-15T20:00:00+0000",
+          "dtend": "2016-01-17T13:50:00+0000"
+        },
+        "organization": "pbr"
+      }
+    },
+    {
+      "type": "event",
+      "id": "97912ce1c2dade648308bf8d7ee37c7b",
+      "links": {
+        "self": "http://device.oddworks.io/v2/events/97912ce1c2dade648308bf8d7ee37c7b"
+      },
+      "attributes": {
+        "title": "Express Employment Professionals Invitational",
+        "url": "http://cms.pbr.com/en/bfts/schedule/2016/2016-oklahoma-city.aspx",
+        "description": null,
+        "createdAt": "2016-01-22T20:00:00+0000",
+        "source": {
+          "title": "http://cms.pbr.com/handlers/oddevents.aspx",
+          "url": null
+        },
+        "category": "bfts",
+        "images": {
+          "aspect16x9": ""
+        },
+        "ical": {
+          "dtstart": "2016-01-22T20:00:00+0000",
+          "dtend": "2016-01-24T14:00:00+0000"
+        },
+        "organization": "pbr"
+      }
+    },
+    {
+      "type": "event",
+      "id": "66ea6691a819c31136d7631856a11852",
+      "links": {
+        "self": "http://device.oddworks.io/v2/events/66ea6691a819c31136d7631856a11852"
+      },
+      "attributes": {
+        "title": "Anaheim Invitational",
+        "url": "http://cms.pbr.com/en/bfts/schedule/2016/2016-anaheim.aspx",
+        "description": null,
+        "createdAt": "2016-01-29T20:00:00+0000",
+        "source": {
+          "title": "http://cms.pbr.com/handlers/oddevents.aspx",
+          "url": null
+        },
+        "category": "bfts",
+        "images": {
+          "aspect16x9": ""
+        },
+        "ical": {
+          "dtstart": "2016-01-29T20:00:00+0000",
+          "dtend": "2016-01-31T13:50:00+0000"
+        },
+        "organization": "pbr"
+      }
+    },
+    {
+      "type": "event",
+      "id": "5e2a91d9dedcc2e14e6c4e1b6e64be97",
+      "links": {
+        "self": "http://device.oddworks.io/v2/events/5e2a91d9dedcc2e14e6c4e1b6e64be97"
+      },
+      "attributes": {
+        "title": "Sacramento Invitational",
+        "url": "http://cms.pbr.com/en/bfts/schedule/2016/2016-sacramento.aspx",
+        "description": null,
+        "createdAt": "2016-02-05T20:00:00+0000",
+        "source": {
+          "title": "http://cms.pbr.com/handlers/oddevents.aspx",
+          "url": null
+        },
+        "category": "bfts",
+        "images": {
+          "aspect16x9": ""
+        },
+        "ical": {
+          "dtstart": "2016-02-05T20:00:00+0000",
+          "dtend": "2016-02-06T18:50:00+0000"
+        },
+        "organization": "pbr"
+      }
+    },
+    {
+      "type": "event",
+      "id": "f78d14fe7aa559f5e8e0c7e7664da48a",
+      "links": {
+        "self": "http://device.oddworks.io/v2/events/f78d14fe7aa559f5e8e0c7e7664da48a"
+      },
+      "attributes": {
+        "title": "St. Louis Invitational",
+        "url": "http://cms.pbr.com/en/bfts/schedule/2016/2016-st-louis.aspx",
+        "description": null,
+        "createdAt": "2016-02-12T20:00:00+0000",
+        "source": {
+          "title": "http://cms.pbr.com/handlers/oddevents.aspx",
+          "url": null
+        },
+        "category": "bfts",
+        "images": {
+          "aspect16x9": ""
+        },
+        "ical": {
+          "dtstart": "2016-02-12T20:00:00+0000",
+          "dtend": "2016-02-14T13:50:00+0000"
+        },
+        "organization": "pbr"
+      }
+    },
+    {
+      "type": "event",
+      "id": "30577d12128bb2fd917cd32c22a238c6",
+      "links": {
+        "self": "http://device.oddworks.io/v2/events/30577d12128bb2fd917cd32c22a238c6"
+      },
+      "attributes": {
+        "title": "Kansas City Invitational",
+        "url": "http://cms.pbr.com/en/bfts/schedule/2016/2016-kansas-city.aspx",
+        "description": null,
+        "createdAt": "2016-02-20T19:00:00+0000",
+        "source": {
+          "title": "http://cms.pbr.com/handlers/oddevents.aspx",
+          "url": null
+        },
+        "category": "bfts",
+        "images": {
+          "aspect16x9": ""
+        },
+        "ical": {
+          "dtstart": "2016-02-20T19:00:00+0000",
+          "dtend": "2016-02-21T14:00:00+0000"
+        },
+        "organization": "pbr"
+      }
+    },
+    {
+      "type": "event",
+      "id": "6234a744b0c783a4c118b305844c372c",
+      "links": {
+        "self": "http://device.oddworks.io/v2/events/6234a744b0c783a4c118b305844c372c"
+      },
+      "attributes": {
+        "title": "Iron Cowboy VII",
+        "url": "http://cms.pbr.com/en/bfts/schedule/2016/2016-arlington.aspx",
+        "description": null,
+        "createdAt": "2016-02-27T17:50:00+0000",
+        "source": {
+          "title": "http://cms.pbr.com/handlers/oddevents.aspx",
+          "url": null
+        },
+        "category": "bfts",
+        "images": {
+          "aspect16x9": ""
+        },
+        "ical": {
+          "dtstart": "2016-02-27T17:50:00+0000",
+          "dtend": "2016-02-27T17:50:00+0000"
+        },
+        "organization": "pbr"
+      }
+    },
+    {
+      "type": "event",
+      "id": "eb7d96d2d06855ab0c768a0d5d7d7579",
+      "links": {
+        "self": "http://device.oddworks.io/v2/events/eb7d96d2d06855ab0c768a0d5d7d7579"
+      },
+      "attributes": {
+        "title": "Phoenix Invitational",
+        "url": "http://cms.pbr.com/en/bfts/schedule/2016/2016-phoenix.aspx",
+        "description": null,
+        "createdAt": "2016-03-05T19:00:00+0000",
+        "source": {
+          "title": "http://cms.pbr.com/handlers/oddevents.aspx",
+          "url": null
+        },
+        "category": "bfts",
+        "images": {
+          "aspect16x9": ""
+        },
+        "ical": {
+          "dtstart": "2016-03-05T19:00:00+0000",
+          "dtend": "2016-03-06T14:00:00+0000"
+        },
+        "organization": "pbr"
+      }
+    },
+    {
+      "type": "event",
+      "id": "e3f30212eca5ab8aec748f381a04314e",
+      "links": {
+        "self": "http://device.oddworks.io/v2/events/e3f30212eca5ab8aec748f381a04314e"
+      },
+      "attributes": {
+        "title": "Duluth Invitational",
+        "url": "http://cms.pbr.com/en/bfts/schedule/2016/2016-duluth.aspx",
+        "description": null,
+        "createdAt": "2016-03-12T19:00:00+0000",
+        "source": {
+          "title": "http://cms.pbr.com/handlers/oddevents.aspx",
+          "url": null
+        },
+        "category": "bfts",
+        "images": {
+          "aspect16x9": ""
+        },
+        "ical": {
+          "dtstart": "2016-03-12T19:00:00+0000",
+          "dtend": "2016-03-13T14:00:00+0000"
+        },
+        "organization": "pbr"
+      }
+    },
+    {
+      "type": "event",
+      "id": "d1b9251404dd6b922565e7b1464a6826",
+      "links": {
+        "self": "http://device.oddworks.io/v2/events/d1b9251404dd6b922565e7b1464a6826"
+      },
+      "attributes": {
+        "title": "Sandia Resort and Casino presents the Ty Murray Invitational",
+        "url": "http://cms.pbr.com/en/bfts/schedule/2016/2016-albuquerque.aspx",
+        "description": null,
+        "createdAt": "2016-03-18T20:00:00+0000",
+        "source": {
+          "title": "http://cms.pbr.com/handlers/oddevents.aspx",
+          "url": null
+        },
+        "category": "bfts",
+        "images": {
+          "aspect16x9": ""
+        },
+        "ical": {
+          "dtstart": "2016-03-18T20:00:00+0000",
+          "dtend": "2016-03-20T13:50:00+0000"
+        },
+        "organization": "pbr"
+      }
+    },
+    {
+      "type": "event",
+      "id": "e41d7d2d0f80789c9aa572a2e7c6e685",
+      "links": {
+        "self": "http://device.oddworks.io/v2/events/e41d7d2d0f80789c9aa572a2e7c6e685"
+      },
+      "attributes": {
+        "title": "First PREMIER Bank/PREMIER Bankcard Invitational",
+        "url": "http://cms.pbr.com/en/bfts/schedule/2016/2016-sioux-falls.aspx",
+        "description": null,
+        "createdAt": "2016-04-02T18:50:00+0000",
+        "source": {
+          "title": "http://cms.pbr.com/handlers/oddevents.aspx",
+          "url": null
+        },
+        "category": "bfts",
+        "images": {
+          "aspect16x9": ""
+        },
+        "ical": {
+          "dtstart": "2016-04-02T18:50:00+0000",
+          "dtend": "2016-04-03T14:00:00+0000"
+        },
+        "organization": "pbr"
+      }
+    },
+    {
+      "type": "event",
+      "id": "5b421c826af34a588f38dcd138d70377",
+      "links": {
+        "self": "http://device.oddworks.io/v2/events/5b421c826af34a588f38dcd138d70377"
+      },
+      "attributes": {
+        "title": "BAD BOY MOWDOWN",
+        "url": "http://cms.pbr.com/en/bfts/schedule/2016/2016-little-rock.aspx",
+        "description": null,
+        "createdAt": "2016-04-09T19:00:00+0000",
+        "source": {
+          "title": "http://cms.pbr.com/handlers/oddevents.aspx",
+          "url": null
+        },
+        "category": "bfts",
+        "images": {
+          "aspect16x9": ""
+        },
+        "ical": {
+          "dtstart": "2016-04-09T19:00:00+0000",
+          "dtend": "2016-04-10T14:00:00+0000"
+        },
+        "organization": "pbr"
+      }
+    },
+    {
+      "type": "event",
+      "id": "d11114023697ebb63f47cfb9385fd234",
+      "links": {
+        "self": "http://device.oddworks.io/v2/events/d11114023697ebb63f47cfb9385fd234"
+      },
+      "attributes": {
+        "title": "Stanley Performance in Action Invitational",
+        "url": "http://cms.pbr.com/en/bfts/schedule/2016/2016-billings.aspx",
+        "description": null,
+        "createdAt": "2016-04-15T20:00:00+0000",
+        "source": {
+          "title": "http://cms.pbr.com/handlers/oddevents.aspx",
+          "url": null
+        },
+        "category": "bfts",
+        "images": {
+          "aspect16x9": ""
+        },
+        "ical": {
+          "dtstart": "2016-04-15T20:00:00+0000",
+          "dtend": "2016-04-17T13:50:00+0000"
+        },
+        "organization": "pbr"
+      }
+    },
+    {
+      "type": "event",
+      "id": "10edd4e810ef6fe75713529b9e0a46db",
+      "links": {
+        "self": "http://device.oddworks.io/v2/events/10edd4e810ef6fe75713529b9e0a46db"
+      },
+      "attributes": {
+        "title": "Des Moines Invitational",
+        "url": "http://cms.pbr.com/en/bfts/schedule/2016/2016-des-moines.aspx",
+        "description": null,
+        "createdAt": "2016-04-23T19:00:00+0000",
+        "source": {
+          "title": "http://cms.pbr.com/handlers/oddevents.aspx",
+          "url": null
+        },
+        "category": "bfts",
+        "images": {
+          "aspect16x9": ""
+        },
+        "ical": {
+          "dtstart": "2016-04-23T19:00:00+0000",
+          "dtend": "2016-04-24T14:00:00+0000"
+        },
+        "organization": "pbr"
+      }
+    },
+    {
+      "type": "event",
+      "id": "3157a76114617202ee33d12e52cc7aa0",
+      "links": {
+        "self": "http://device.oddworks.io/v2/events/3157a76114617202ee33d12e52cc7aa0"
+      },
+      "attributes": {
+        "title": "Last Cowboy Standing",
+        "url": "http://cms.pbr.com/en/bfts/schedule/2016/2016-las-vegas-helldorado-days.aspx",
+        "description": null,
+        "createdAt": "2016-05-13T19:50:00+0000",
+        "source": {
+          "title": "http://cms.pbr.com/handlers/oddevents.aspx",
+          "url": null
+        },
+        "category": "bfts",
+        "images": {
+          "aspect16x9": ""
+        },
+        "ical": {
+          "dtstart": "2016-05-13T19:50:00+0000",
+          "dtend": "2016-05-14T19:00:00+0000"
+        },
+        "organization": "pbr"
+      }
+    },
+    {
+      "type": "event",
+      "id": "36f980a98eb650828298b54dcadf303a",
+      "links": {
+        "self": "http://device.oddworks.io/v2/events/36f980a98eb650828298b54dcadf303a"
+      },
+      "attributes": {
+        "title": "Nashville Invitational",
+        "url": "http://cms.pbr.com/en/bfts/schedule/2016/2016-nashville.aspx",
+        "description": null,
+        "createdAt": "2016-08-19T20:00:00+0000",
+        "source": {
+          "title": "http://cms.pbr.com/handlers/oddevents.aspx",
+          "url": null
+        },
+        "category": "bfts",
+        "images": {
+          "aspect16x9": ""
+        },
+        "ical": {
+          "dtstart": "2016-08-19T20:00:00+0000",
+          "dtend": "2016-08-20T19:00:00+0000"
+        },
+        "organization": "pbr"
+      }
+    },
+    {
+      "type": "event",
+      "id": "d61b857468868bdb4968672c7c5b60cc",
+      "links": {
+        "self": "http://device.oddworks.io/v2/events/d61b857468868bdb4968672c7c5b60cc"
+      },
+      "attributes": {
+        "title": "Express Employment Professionals Classic",
+        "url": "http://cms.pbr.com/en/bfts/schedule/2016/2016-tulsa.aspx",
+        "description": null,
+        "createdAt": "2016-08-27T19:00:00+0000",
+        "source": {
+          "title": "http://cms.pbr.com/handlers/oddevents.aspx",
+          "url": null
+        },
+        "category": "bfts",
+        "images": {
+          "aspect16x9": ""
+        },
+        "ical": {
+          "dtstart": "2016-08-27T19:00:00+0000",
+          "dtend": "2016-08-28T14:00:00+0000"
+        },
+        "organization": "pbr"
+      }
+    },
+    {
+      "type": "event",
+      "id": "e0ed3ff47a7cb3edbcaaf03d300f4b65",
+      "links": {
+        "self": "http://device.oddworks.io/v2/events/e0ed3ff47a7cb3edbcaaf03d300f4b65"
+      },
+      "attributes": {
+        "title": "Winstar World Casino and Resort Invitational",
+        "url": "http://cms.pbr.com/en/bfts/schedule/2016/2016-thackerville.aspx",
+        "description": null,
+        "createdAt": "2016-09-03T19:00:00+0000",
+        "source": {
+          "title": "http://cms.pbr.com/handlers/oddevents.aspx",
+          "url": null
+        },
+        "category": "bfts",
+        "images": {
+          "aspect16x9": ""
+        },
+        "ical": {
+          "dtstart": "2016-09-03T19:00:00+0000",
+          "dtend": "2016-09-04T19:00:00+0000"
+        },
+        "organization": "pbr"
+      }
+    },
+    {
+      "type": "event",
+      "id": "9fa0773993ae07f058de6982fc3e9669",
+      "links": {
+        "self": "http://device.oddworks.io/v2/events/9fa0773993ae07f058de6982fc3e9669"
+      },
+      "attributes": {
+        "title": "Charlotte Invitational",
+        "url": "http://cms.pbr.com/en/bfts/schedule/2016/2016-charlotte.aspx",
+        "description": null,
+        "createdAt": "2016-09-16T20:00:00+0000",
+        "source": {
+          "title": "http://cms.pbr.com/handlers/oddevents.aspx",
+          "url": null
+        },
+        "category": "bfts",
+        "images": {
+          "aspect16x9": ""
+        },
+        "ical": {
+          "dtstart": "2016-09-16T20:00:00+0000",
+          "dtend": "2016-09-17T19:00:00+0000"
+        },
+        "organization": "pbr"
+      }
+    },
+    {
+      "type": "event",
+      "id": "6ca1fc8718f9ab0bbe18b05291a298e7",
+      "links": {
+        "self": "http://device.oddworks.io/v2/events/6ca1fc8718f9ab0bbe18b05291a298e7"
+      },
+      "attributes": {
+        "title": "RUMBLE IN THE ROCKIES",
+        "url": "http://cms.pbr.com/en/bfts/schedule/2016/2016-colorado-springs.aspx",
+        "description": null,
+        "createdAt": "2016-09-24T19:00:00+0000",
+        "source": {
+          "title": "http://cms.pbr.com/handlers/oddevents.aspx",
+          "url": null
+        },
+        "category": "bfts",
+        "images": {
+          "aspect16x9": ""
+        },
+        "ical": {
+          "dtstart": "2016-09-24T19:00:00+0000",
+          "dtend": "2016-09-25T14:00:00+0000"
+        },
+        "organization": "pbr"
+      }
+    },
+    {
+      "type": "event",
+      "id": "7f571e9f6fa39217f03aaaf7bc7ba4fb",
+      "links": {
+        "self": "http://device.oddworks.io/v2/events/7f571e9f6fa39217f03aaaf7bc7ba4fb"
+      },
+      "attributes": {
+        "title": "Boise Invitational",
+        "url": "http://cms.pbr.com/en/bfts/schedule/2016/2016-boise.aspx",
+        "description": null,
+        "createdAt": "2016-10-08T19:00:00+0000",
+        "source": {
+          "title": "http://cms.pbr.com/handlers/oddevents.aspx",
+          "url": null
+        },
+        "category": "bfts",
+        "images": {
+          "aspect16x9": ""
+        },
+        "ical": {
+          "dtstart": "2016-10-08T19:00:00+0000",
+          "dtend": "2016-10-09T14:00:00+0000"
+        },
+        "organization": "pbr"
+      }
+    },
+    {
+      "type": "event",
+      "id": "008845271ded3be82236a4efee990c86",
+      "links": {
+        "self": "http://device.oddworks.io/v2/events/008845271ded3be82236a4efee990c86"
+      },
+      "attributes": {
+        "title": "San Jose Invitational",
+        "url": "http://cms.pbr.com/en/bfts/schedule/2016/2016-san-jose.aspx",
+        "description": null,
+        "createdAt": "2016-10-14T20:00:00+0000",
+        "source": {
+          "title": "http://cms.pbr.com/handlers/oddevents.aspx",
+          "url": null
+        },
+        "category": "bfts",
+        "images": {
+          "aspect16x9": ""
+        },
+        "ical": {
+          "dtstart": "2016-10-14T20:00:00+0000",
+          "dtend": "2016-10-15T19:00:00+0000"
+        },
+        "organization": "pbr"
+      }
+    },
+    {
+      "type": "event",
+      "id": "fac556ea9574a9c3f32dc49200b13eeb",
+      "links": {
+        "self": "http://device.oddworks.io/v2/events/fac556ea9574a9c3f32dc49200b13eeb"
+      },
+      "attributes": {
+        "title": "Tucson Invitational",
+        "url": "http://cms.pbr.com/en/bfts/schedule/2016/2016-tucson.aspx",
+        "description": null,
+        "createdAt": "2016-10-22T19:00:00+0000",
+        "source": {
+          "title": "http://cms.pbr.com/handlers/oddevents.aspx",
+          "url": null
+        },
+        "category": "bfts",
+        "images": {
+          "aspect16x9": ""
+        },
+        "ical": {
+          "dtstart": "2016-10-22T19:00:00+0000",
+          "dtend": "2016-10-23T14:50:00+0000"
+        },
+        "organization": "pbr"
+      }
+    },
+    {
+      "type": "event",
+      "id": "f79ed03e1a74441e7379d24906df2ce7",
+      "links": {
+        "self": "http://device.oddworks.io/v2/events/f79ed03e1a74441e7379d24906df2ce7"
+      },
+      "attributes": {
+        "title": "2016 Built Ford Tough World Finals",
+        "url": "http://cms.pbr.com/en/bfts/schedule/2016/2016-las-vegas.aspx",
+        "description": null,
+        "createdAt": "2016-11-02T18:00:00+0000",
+        "source": {
+          "title": "http://cms.pbr.com/handlers/oddevents.aspx",
+          "url": null
+        },
+        "category": "bfts",
+        "images": {
+          "aspect16x9": ""
+        },
+        "ical": {
+          "dtstart": "2016-11-02T18:00:00+0000",
+          "dtend": "2016-11-06T11:30:00+0000"
+        },
+        "organization": "pbr"
+      }
+    },
+    {
+      "type": "event",
+      "id": "427ead5b27034c5eca192a26f6353175",
+      "links": {
+        "self": "http://device.oddworks.io/v2/events/427ead5b27034c5eca192a26f6353175"
+      },
+      "attributes": {
+        "title": "PBR Ridin in the Rock Touring Pro Division",
+        "url": "http://cms.pbr.com/en/tpd/schedule/2016/little-rock,-ar.aspx",
+        "description": null,
+        "createdAt": "2015-10-16T19:30:00+0000",
+        "source": {
+          "title": "http://cms.pbr.com/handlers/oddevents.aspx",
+          "url": null
+        },
+        "category": "tpd",
+        "images": {
+          "aspect16x9": ""
+        },
+        "ical": {
+          "dtstart": "2015-10-16T19:30:00+0000",
+          "dtend": "2015-10-17T19:30:00+0000"
+        },
+        "organization": "pbr"
+      }
+    },
+    {
+      "type": "event",
+      "id": "f2f824e488a4af9900b07a0ef8df3ff7",
+      "links": {
+        "self": "http://device.oddworks.io/v2/events/f2f824e488a4af9900b07a0ef8df3ff7"
+      },
+      "attributes": {
+        "title": "Las Vegas, NV Touring Pro Division",
+        "url": "http://cms.pbr.com/en/tpd/schedule/2016/las-vegas,-nv-abbi-derby.aspx",
+        "description": null,
+        "createdAt": "2015-10-22T11:30:00+0000",
+        "source": {
+          "title": "http://cms.pbr.com/handlers/oddevents.aspx",
+          "url": null
+        },
+        "category": "tpd",
+        "images": {
+          "aspect16x9": ""
+        },
+        "ical": {
+          "dtstart": "2015-10-22T11:30:00+0000",
+          "dtend": "2015-10-22T11:30:00+0000"
+        },
+        "organization": "pbr"
+      }
+    },
+    {
+      "type": "event",
+      "id": "9ac84deff123301c6c0640d782182c24",
+      "links": {
+        "self": "http://device.oddworks.io/v2/events/9ac84deff123301c6c0640d782182c24"
+      },
+      "attributes": {
+        "title": "Enid, OK PBR Challenge Touring Pro Division",
+        "url": "http://cms.pbr.com/en/tpd/schedule/2016/enid,-ok.aspx",
+        "description": null,
+        "createdAt": "2015-11-13T19:30:00+0000",
+        "source": {
+          "title": "http://cms.pbr.com/handlers/oddevents.aspx",
+          "url": null
+        },
+        "category": "tpd",
+        "images": {
+          "aspect16x9": ""
+        },
+        "ical": {
+          "dtstart": "2015-11-13T19:30:00+0000",
+          "dtend": "2015-11-14T19:30:00+0000"
+        },
+        "organization": "pbr"
+      }
+    },
+    {
+      "type": "event",
+      "id": "f1f8ccc1a1d7c0228f0084925b3f139f",
+      "links": {
+        "self": "http://device.oddworks.io/v2/events/f1f8ccc1a1d7c0228f0084925b3f139f"
+      },
+      "attributes": {
+        "title": "Goliad, TX  PBR Touring Pro Division",
+        "url": "http://cms.pbr.com/en/tpd/schedule/2016/goliad,-tx.aspx",
+        "description": null,
+        "createdAt": "2015-11-14T19:30:00+0000",
+        "source": {
+          "title": "http://cms.pbr.com/handlers/oddevents.aspx",
+          "url": null
+        },
+        "category": "tpd",
+        "images": {
+          "aspect16x9": ""
+        },
+        "ical": {
+          "dtstart": "2015-11-14T19:30:00+0000",
+          "dtend": "2015-11-14T19:30:00+0000"
+        },
+        "organization": "pbr"
+      }
+    },
+    {
+      "type": "event",
+      "id": "0607ae8fcd25e23fe1a54193b169341c",
+      "links": {
+        "self": "http://device.oddworks.io/v2/events/0607ae8fcd25e23fe1a54193b169341c"
+      },
+      "attributes": {
+        "title": "San Antonio, TX PBR Touring Pro Division",
+        "url": "http://cms.pbr.com/en/tpd/schedule/2016/san-antonio,-tx-112115.aspx",
+        "description": null,
+        "createdAt": "2015-11-21T20:30:00+0000",
+        "source": {
+          "title": "http://cms.pbr.com/handlers/oddevents.aspx",
+          "url": null
+        },
+        "category": "tpd",
+        "images": {
+          "aspect16x9": ""
+        },
+        "ical": {
+          "dtstart": "2015-11-21T20:30:00+0000",
+          "dtend": "2015-11-21T20:30:00+0000"
+        },
+        "organization": "pbr"
+      }
+    },
+    {
+      "type": "event",
+      "id": "c582d5f6e4c476acde8884f8dbd800c1",
+      "links": {
+        "self": "http://device.oddworks.io/v2/events/c582d5f6e4c476acde8884f8dbd800c1"
+      },
+      "attributes": {
+        "title": "Cowboys Dance Hall Luke Snyder Invitational PBR Touring Pro Division",
+        "url": "http://cms.pbr.com/en/tpd/schedule/2016/san-antonio-tx-pbr-12515.aspx",
+        "description": null,
+        "createdAt": "2015-12-05T20:30:00+0000",
+        "source": {
+          "title": "http://cms.pbr.com/handlers/oddevents.aspx",
+          "url": null
+        },
+        "category": "tpd",
+        "images": {
+          "aspect16x9": ""
+        },
+        "ical": {
+          "dtstart": "2015-12-05T20:30:00+0000",
+          "dtend": "2015-12-05T20:30:00+0000"
+        },
+        "organization": "pbr"
+      }
+    },
+    {
+      "type": "event",
+      "id": "53c87a1f36fbcf7c61d09ca3b227f531",
+      "links": {
+        "self": "http://device.oddworks.io/v2/events/53c87a1f36fbcf7c61d09ca3b227f531"
+      },
+      "attributes": {
+        "title": "Prairie Band Casino Topeka, KS PBR Touring Pro Division",
+        "url": "http://cms.pbr.com/en/tpd/schedule/2016/topeka,-ks.aspx",
+        "description": null,
+        "createdAt": "2015-12-18T19:30:00+0000",
+        "source": {
+          "title": "http://cms.pbr.com/handlers/oddevents.aspx",
+          "url": null
+        },
+        "category": "tpd",
+        "images": {
+          "aspect16x9": ""
+        },
+        "ical": {
+          "dtstart": "2015-12-18T19:30:00+0000",
+          "dtend": "2015-12-19T19:30:00+0000"
+        },
+        "organization": "pbr"
+      }
+    },
+    {
+      "type": "event",
+      "id": "6ec80b799c0142de0619b3ab41dfe185",
+      "links": {
+        "self": "http://device.oddworks.io/v2/events/6ec80b799c0142de0619b3ab41dfe185"
+      },
+      "attributes": {
+        "title": "Midway Auto Dealerships PBR Challenge Touring Pro Division",
+        "url": "http://cms.pbr.com/en/tpd/schedule/2016/kearney,-ne.aspx",
+        "description": null,
+        "createdAt": "2015-12-19T19:30:00+0000",
+        "source": {
+          "title": "http://cms.pbr.com/handlers/oddevents.aspx",
+          "url": null
+        },
+        "category": "tpd",
+        "images": {
+          "aspect16x9": ""
+        },
+        "ical": {
+          "dtstart": "2015-12-19T19:30:00+0000",
+          "dtend": "2015-12-19T19:30:00+0000"
+        },
+        "organization": "pbr"
+      }
+    },
+    {
+      "type": "event",
+      "id": "0a574bf492e730c6c08b47d4caa6075a",
+      "links": {
+        "self": "http://device.oddworks.io/v2/events/0a574bf492e730c6c08b47d4caa6075a"
+      },
+      "attributes": {
+        "title": "Bull Bash Rainsville, AL PBR Touring Pro Division",
+        "url": "http://cms.pbr.com/en/tpd/schedule/2016/rainsville,-al.aspx",
+        "description": null,
+        "createdAt": "2016-01-08T19:00:00+0000",
+        "source": {
+          "title": "http://cms.pbr.com/handlers/oddevents.aspx",
+          "url": null
+        },
+        "category": "tpd",
+        "images": {
+          "aspect16x9": ""
+        },
+        "ical": {
+          "dtstart": "2016-01-08T19:00:00+0000",
+          "dtend": "2016-01-09T19:00:00+0000"
+        },
+        "organization": "pbr"
+      }
+    },
+    {
+      "type": "event",
+      "id": "550c4e3470150bf54ac14eb5ebdc339c",
+      "links": {
+        "self": "http://device.oddworks.io/v2/events/550c4e3470150bf54ac14eb5ebdc339c"
+      },
+      "attributes": {
+        "title": "Toledo Invitational PBR Touring Pro Division",
+        "url": "http://cms.pbr.com/en/tpd/schedule/2016/toledo,-oh.aspx",
+        "description": null,
+        "createdAt": "2016-01-08T19:30:00+0000",
+        "source": {
+          "title": "http://cms.pbr.com/handlers/oddevents.aspx",
+          "url": null
+        },
+        "category": "tpd",
+        "images": {
+          "aspect16x9": ""
+        },
+        "ical": {
+          "dtstart": "2016-01-08T19:30:00+0000",
+          "dtend": "2016-01-09T19:30:00+0000"
+        },
+        "organization": "pbr"
+      }
+    },
+    {
+      "type": "event",
+      "id": "e27eb1bc2f1acf2b01f7049cc1aff292",
+      "links": {
+        "self": "http://device.oddworks.io/v2/events/e27eb1bc2f1acf2b01f7049cc1aff292"
+      },
+      "attributes": {
+        "title": "Pueblo, CO PBR Touring Pro Division",
+        "url": "http://cms.pbr.com/en/tpd/schedule/2016/pueblo,-co.aspx",
+        "description": null,
+        "createdAt": "2016-01-14T19:00:00+0000",
+        "source": {
+          "title": "http://cms.pbr.com/handlers/oddevents.aspx",
+          "url": null
+        },
+        "category": "tpd",
+        "images": {
+          "aspect16x9": ""
+        },
+        "ical": {
+          "dtstart": "2016-01-14T19:00:00+0000",
+          "dtend": "2016-01-14T19:00:00+0000"
+        },
+        "organization": "pbr"
+      }
+    },
+    {
+      "type": "event",
+      "id": "e2f95a02f8b881e0daed7383525c06a2",
+      "links": {
+        "self": "http://device.oddworks.io/v2/events/e2f95a02f8b881e0daed7383525c06a2"
+      },
+      "attributes": {
+        "title": "7th Annual Texas Farm Bureau Insurance Cowtown Classic PBR Touring Pro Division",
+        "url": "http://cms.pbr.com/en/tpd/schedule/2016/ft-worth,-tx.aspx",
+        "description": null,
+        "createdAt": "2016-01-15T19:30:00+0000",
+        "source": {
+          "title": "http://cms.pbr.com/handlers/oddevents.aspx",
+          "url": null
+        },
+        "category": "tpd",
+        "images": {
+          "aspect16x9": ""
+        },
+        "ical": {
+          "dtstart": "2016-01-15T19:30:00+0000",
+          "dtend": "2016-01-16T19:30:00+0000"
+        },
+        "organization": "pbr"
+      }
+    },
+    {
+      "type": "event",
+      "id": "ef40c811418ba60953ad8961f7b4f2bb",
+      "links": {
+        "self": "http://device.oddworks.io/v2/events/ef40c811418ba60953ad8961f7b4f2bb"
+      },
+      "attributes": {
+        "title": "San Antonio, TX PBR Touring Pro Division",
+        "url": "http://cms.pbr.com/en/tpd/schedule/2016/san-antonio,-tx-11616.aspx",
+        "description": null,
+        "createdAt": "2016-01-16T20:30:00+0000",
+        "source": {
+          "title": "http://cms.pbr.com/handlers/oddevents.aspx",
+          "url": null
+        },
+        "category": "tpd",
+        "images": {
+          "aspect16x9": ""
+        },
+        "ical": {
+          "dtstart": "2016-01-16T20:30:00+0000",
+          "dtend": "2016-01-16T20:30:00+0000"
+        },
+        "organization": "pbr"
+      }
+    },
+    {
+      "type": "event",
+      "id": "e81e07cf72c0916dedc24ef750537edf",
+      "links": {
+        "self": "http://device.oddworks.io/v2/events/e81e07cf72c0916dedc24ef750537edf"
+      },
+      "attributes": {
+        "title": "Rocky Mountain Extreme PBR Touring Pro Division",
+        "url": "http://cms.pbr.com/en/tpd/schedule/2016/kalispell,-mt.aspx",
+        "description": null,
+        "createdAt": "2016-02-12T19:30:00+0000",
+        "source": {
+          "title": "http://cms.pbr.com/handlers/oddevents.aspx",
+          "url": null
+        },
+        "category": "tpd",
+        "images": {
+          "aspect16x9": ""
+        },
+        "ical": {
+          "dtstart": "2016-02-12T19:30:00+0000",
+          "dtend": "2016-02-13T19:30:00+0000"
+        },
+        "organization": "pbr"
+      }
+    },
+    {
+      "type": "event",
+      "id": "a4b56db79e450f2aa386ccbef47e6806",
+      "links": {
+        "self": "http://device.oddworks.io/v2/events/a4b56db79e450f2aa386ccbef47e6806"
+      },
+      "attributes": {
+        "title": "Bull Madness Laurel, MS PBR Touring Pro Division",
+        "url": "http://cms.pbr.com/en/tpd/schedule/2016/laurel,-ms.aspx",
+        "description": null,
+        "createdAt": "2016-02-13T19:00:00+0000",
+        "source": {
+          "title": "http://cms.pbr.com/handlers/oddevents.aspx",
+          "url": null
+        },
+        "category": "tpd",
+        "images": {
+          "aspect16x9": ""
+        },
+        "ical": {
+          "dtstart": "2016-02-13T19:00:00+0000",
+          "dtend": "2016-02-13T19:00:00+0000"
+        },
+        "organization": "pbr"
+      }
+    },
+    {
+      "type": "event",
+      "id": "3e21938042e9692cdb83cbd9c67868d7",
+      "links": {
+        "self": "http://device.oddworks.io/v2/events/3e21938042e9692cdb83cbd9c67868d7"
+      },
+      "attributes": {
+        "title": "San Antonio, TX PBR Touring Pro Division",
+        "url": "http://cms.pbr.com/en/tpd/schedule/2016/san-antonio,-tx-21316.aspx",
+        "description": null,
+        "createdAt": "2016-02-13T20:30:00+0000",
+        "source": {
+          "title": "http://cms.pbr.com/handlers/oddevents.aspx",
+          "url": null
+        },
+        "category": "tpd",
+        "images": {
+          "aspect16x9": ""
+        },
+        "ical": {
+          "dtstart": "2016-02-13T20:30:00+0000",
+          "dtend": "2016-02-13T20:30:00+0000"
+        },
+        "organization": "pbr"
+      }
+    },
+    {
+      "type": "event",
+      "id": "1a017be8fce7a17cd0aea3a30db91255",
+      "links": {
+        "self": "http://device.oddworks.io/v2/events/1a017be8fce7a17cd0aea3a30db91255"
+      },
+      "attributes": {
+        "title": "San Antonio, TX PBR Touring Pro Division",
+        "url": "http://cms.pbr.com/en/tpd/schedule/2016/san-antonio,-tx-31916.aspx",
+        "description": null,
+        "createdAt": "2016-03-19T20:30:00+0000",
+        "source": {
+          "title": "http://cms.pbr.com/handlers/oddevents.aspx",
+          "url": null
+        },
+        "category": "tpd",
+        "images": {
+          "aspect16x9": ""
+        },
+        "ical": {
+          "dtstart": "2016-03-19T20:30:00+0000",
+          "dtend": "2016-03-19T20:30:00+0000"
+        },
+        "organization": "pbr"
+      }
+    },
+    {
+      "type": "event",
+      "id": "980706663a8ec138c267387bbd58af4b",
+      "links": {
+        "self": "http://device.oddworks.io/v2/events/980706663a8ec138c267387bbd58af4b"
+      },
+      "attributes": {
+        "title": "Ocala, FL Touring Pro Division",
+        "url": "http://cms.pbr.com/en/tpd/schedule/2016/ocala,-fl.aspx",
+        "description": null,
+        "createdAt": "2016-05-20T19:00:00+0000",
+        "source": {
+          "title": "http://cms.pbr.com/handlers/oddevents.aspx",
+          "url": null
+        },
+        "category": "tpd",
+        "images": {
+          "aspect16x9": ""
+        },
+        "ical": {
+          "dtstart": "2016-05-20T19:00:00+0000",
+          "dtend": "2016-05-21T19:00:00+0000"
+        },
+        "organization": "pbr"
+      }
+    },
+    {
+      "type": "event",
+      "id": "d673b5eae404a371720b577e4f9aeebc",
+      "links": {
+        "self": "http://device.oddworks.io/v2/events/d673b5eae404a371720b577e4f9aeebc"
+      },
+      "attributes": {
+        "title": "San Antonio, TX PBR Touring Pro Division",
+        "url": "http://cms.pbr.com/en/tpd/schedule/2016/san-antonio,-tx-52116.aspx",
+        "description": null,
+        "createdAt": "2016-05-21T20:30:00+0000",
+        "source": {
+          "title": "http://cms.pbr.com/handlers/oddevents.aspx",
+          "url": null
+        },
+        "category": "tpd",
+        "images": {
+          "aspect16x9": ""
+        },
+        "ical": {
+          "dtstart": "2016-05-21T20:30:00+0000",
+          "dtend": "2016-05-21T20:30:00+0000"
+        },
+        "organization": "pbr"
+      }
+    },
+    {
+      "type": "event",
+      "id": "25aeedd4aa020d4689d8f898c1a91c8d",
+      "links": {
+        "self": "http://device.oddworks.io/v2/events/25aeedd4aa020d4689d8f898c1a91c8d"
+      },
+      "attributes": {
+        "title": "Vinita, OK PBR Touring Pro Division",
+        "url": "http://cms.pbr.com/en/tpd/schedule/2016/vinita,-ok.aspx",
+        "description": null,
+        "createdAt": "2016-06-04T19:00:00+0000",
+        "source": {
+          "title": "http://cms.pbr.com/handlers/oddevents.aspx",
+          "url": null
+        },
+        "category": "tpd",
+        "images": {
+          "aspect16x9": ""
+        },
+        "ical": {
+          "dtstart": "2016-06-04T19:00:00+0000",
+          "dtend": "2016-06-04T19:00:00+0000"
+        },
+        "organization": "pbr"
+      }
+    },
+    {
+      "type": "event",
+      "id": "2101044491580bd14b2e353a923c28ea",
+      "links": {
+        "self": "http://device.oddworks.io/v2/events/2101044491580bd14b2e353a923c28ea"
+      },
+      "attributes": {
+        "title": "Deadwood, SD PBR Touring Pro Division",
+        "url": "http://cms.pbr.com/en/tpd/schedule/2016/deadwood,-sd.aspx",
+        "description": null,
+        "createdAt": "2016-06-10T19:00:00+0000",
+        "source": {
+          "title": "http://cms.pbr.com/handlers/oddevents.aspx",
+          "url": null
+        },
+        "category": "tpd",
+        "images": {
+          "aspect16x9": ""
+        },
+        "ical": {
+          "dtstart": "2016-06-10T19:00:00+0000",
+          "dtend": "2016-06-11T19:00:00+0000"
+        },
+        "organization": "pbr"
+      }
+    },
+    {
+      "type": "event",
+      "id": "a3005f9a5462b8507f88c029f26559ae",
+      "links": {
+        "self": "http://device.oddworks.io/v2/events/a3005f9a5462b8507f88c029f26559ae"
+      },
+      "attributes": {
+        "title": "San Antonio, TX PBR Touring Pro Division",
+        "url": "http://cms.pbr.com/en/tpd/schedule/2016/san-antonio,-tx-62516.aspx",
+        "description": null,
+        "createdAt": "2016-06-25T20:30:00+0000",
+        "source": {
+          "title": "http://cms.pbr.com/handlers/oddevents.aspx",
+          "url": null
+        },
+        "category": "tpd",
+        "images": {
+          "aspect16x9": ""
+        },
+        "ical": {
+          "dtstart": "2016-06-25T20:30:00+0000",
+          "dtend": "2016-06-25T20:30:00+0000"
+        },
+        "organization": "pbr"
+      }
+    },
+    {
+      "type": "event",
+      "id": "cd8e0f4519b9352920a1f20df967c464",
+      "links": {
+        "self": "http://device.oddworks.io/v2/events/cd8e0f4519b9352920a1f20df967c464"
+      },
+      "attributes": {
+        "title": "Gonzales, TX PBR Touring Pro Division",
+        "url": "http://cms.pbr.com/en/tpd/schedule/2016/gonzales,-tx.aspx",
+        "description": null,
+        "createdAt": "2016-07-09T19:30:00+0000",
+        "source": {
+          "title": "http://cms.pbr.com/handlers/oddevents.aspx",
+          "url": null
+        },
+        "category": "tpd",
+        "images": {
+          "aspect16x9": ""
+        },
+        "ical": {
+          "dtstart": "2016-07-09T19:30:00+0000",
+          "dtend": "2016-07-09T19:30:00+0000"
+        },
+        "organization": "pbr"
+      }
+    },
+    {
+      "type": "event",
+      "id": "5c62f3bcef0340464528cc2dca952db3",
+      "links": {
+        "self": "http://device.oddworks.io/v2/events/5c62f3bcef0340464528cc2dca952db3"
+      },
+      "attributes": {
+        "title": "Thunder On Hooves PBR Touring Pro Division",
+        "url": "http://cms.pbr.com/en/tpd/schedule/2016/thief-river-falls,-mn.aspx",
+        "description": null,
+        "createdAt": "2016-07-15T19:00:00+0000",
+        "source": {
+          "title": "http://cms.pbr.com/handlers/oddevents.aspx",
+          "url": null
+        },
+        "category": "tpd",
+        "images": {
+          "aspect16x9": ""
+        },
+        "ical": {
+          "dtstart": "2016-07-15T19:00:00+0000",
+          "dtend": "2016-07-16T19:00:00+0000"
+        },
+        "organization": "pbr"
+      }
+    },
+    {
+      "type": "event",
+      "id": "40183d35a75a5c36714e1624767f326e",
+      "links": {
+        "self": "http://device.oddworks.io/v2/events/40183d35a75a5c36714e1624767f326e"
+      },
+      "attributes": {
+        "title": "San Antonio, TX PBR Touring Pro Division",
+        "url": "http://cms.pbr.com/en/tpd/schedule/2016/san-antonio,-tx-72316.aspx",
+        "description": null,
+        "createdAt": "2016-07-23T20:30:00+0000",
+        "source": {
+          "title": "http://cms.pbr.com/handlers/oddevents.aspx",
+          "url": null
+        },
+        "category": "tpd",
+        "images": {
+          "aspect16x9": ""
+        },
+        "ical": {
+          "dtstart": "2016-07-23T20:30:00+0000",
+          "dtend": "2016-07-23T20:30:00+0000"
+        },
+        "organization": "pbr"
+      }
+    },
+    {
+      "type": "event",
+      "id": "e67ed3d5522d7b8da0a7539a8f9ba5f8",
+      "links": {
+        "self": "http://device.oddworks.io/v2/events/e67ed3d5522d7b8da0a7539a8f9ba5f8"
+      },
+      "attributes": {
+        "title": "Koben Puckett Invitational Amarillo, TX PBR Touring Pro Division",
+        "url": "http://cms.pbr.com/en/tpd/schedule/2016/amarillo,-tx.aspx",
+        "description": null,
+        "createdAt": "2016-08-06T19:30:00+0000",
+        "source": {
+          "title": "http://cms.pbr.com/handlers/oddevents.aspx",
+          "url": null
+        },
+        "category": "tpd",
+        "images": {
+          "aspect16x9": ""
+        },
+        "ical": {
+          "dtstart": "2016-08-06T19:30:00+0000",
+          "dtend": "2016-08-06T19:30:00+0000"
+        },
+        "organization": "pbr"
+      }
+    },
+    {
+      "type": "event",
+      "id": "c1692265dc3dcea8f101a6b2da753ed9",
+      "links": {
+        "self": "http://device.oddworks.io/v2/events/c1692265dc3dcea8f101a6b2da753ed9"
+      },
+      "attributes": {
+        "title": "Livingston Classic PBR Touring Pro Division",
+        "url": "http://cms.pbr.com/en/tpd/schedule/2016/livingston,-mt.aspx",
+        "description": null,
+        "createdAt": "2016-08-06T19:00:00+0000",
+        "source": {
+          "title": "http://cms.pbr.com/handlers/oddevents.aspx",
+          "url": null
+        },
+        "category": "tpd",
+        "images": {
+          "aspect16x9": ""
+        },
+        "ical": {
+          "dtstart": "2016-08-06T19:00:00+0000",
+          "dtend": "2016-08-06T19:00:00+0000"
+        },
+        "organization": "pbr"
+      }
+    },
+    {
+      "type": "event",
+      "id": "5a2d8b962f9b5880fc93800276feee6a",
+      "links": {
+        "self": "http://device.oddworks.io/v2/events/5a2d8b962f9b5880fc93800276feee6a"
+      },
+      "attributes": {
+        "title": "San Antonio, TX PBR Touring Pro Division",
+        "url": "http://cms.pbr.com/en/tpd/schedule/2016/san-antonio,-tx-82016.aspx",
+        "description": null,
+        "createdAt": "2016-08-20T20:30:00+0000",
+        "source": {
+          "title": "http://cms.pbr.com/handlers/oddevents.aspx",
+          "url": null
+        },
+        "category": "tpd",
+        "images": {
+          "aspect16x9": ""
+        },
+        "ical": {
+          "dtstart": "2016-08-20T20:30:00+0000",
+          "dtend": "2016-08-20T20:30:00+0000"
+        },
+        "organization": "pbr"
+      }
+    },
+    {
+      "type": "event",
+      "id": "7436f14a6a42e7b29de1b21f8d0beb1e",
+      "links": {
+        "self": "http://device.oddworks.io/v2/events/7436f14a6a42e7b29de1b21f8d0beb1e"
+      },
+      "attributes": {
+        "title": "Bull Thing PBR Touring Pro Division",
+        "url": "http://cms.pbr.com/en/tpd/schedule/2016/eureka,-mt.aspx",
+        "description": null,
+        "createdAt": "2016-08-27T19:00:00+0000",
+        "source": {
+          "title": "http://cms.pbr.com/handlers/oddevents.aspx",
+          "url": null
+        },
+        "category": "tpd",
+        "images": {
+          "aspect16x9": ""
+        },
+        "ical": {
+          "dtstart": "2016-08-27T19:00:00+0000",
+          "dtend": "2016-08-27T19:00:00+0000"
+        },
+        "organization": "pbr"
+      }
+    },
+    {
+      "type": "event",
+      "id": "ec03aad42530c868abe5e354940e5f21",
+      "links": {
+        "self": "http://device.oddworks.io/v2/events/ec03aad42530c868abe5e354940e5f21"
+      },
+      "attributes": {
+        "title": "Fredericksburg, TX PBR Touring Pro Division",
+        "url": "http://cms.pbr.com/en/tpd/schedule/2016/fredericksburg,-tx.aspx",
+        "description": null,
+        "createdAt": "2016-09-10T19:30:00+0000",
+        "source": {
+          "title": "http://cms.pbr.com/handlers/oddevents.aspx",
+          "url": null
+        },
+        "category": "tpd",
+        "images": {
+          "aspect16x9": ""
+        },
+        "ical": {
+          "dtstart": "2016-09-10T19:30:00+0000",
+          "dtend": "2016-09-10T19:30:00+0000"
+        },
+        "organization": "pbr"
+      }
+    },
+    {
+      "type": "event",
+      "id": "59274a3347dbaa6adfdfd080334b2804",
+      "links": {
+        "self": "http://device.oddworks.io/v2/events/59274a3347dbaa6adfdfd080334b2804"
+      },
+      "attributes": {
+        "title": "San Antonio, TX PBR Touring Pro Division",
+        "url": "http://cms.pbr.com/en/tpd/schedule/2016/san-antonio,-tx-91716.aspx",
+        "description": null,
+        "createdAt": "2016-09-17T20:30:00+0000",
+        "source": {
+          "title": "http://cms.pbr.com/handlers/oddevents.aspx",
+          "url": null
+        },
+        "category": "tpd",
+        "images": {
+          "aspect16x9": ""
+        },
+        "ical": {
+          "dtstart": "2016-09-17T20:30:00+0000",
+          "dtend": "2016-09-17T20:30:00+0000"
+        },
+        "organization": "pbr"
+      }
+    },
+    {
+      "type": "event",
+      "id": "f2a0f69ab4e546d0850de2714298eb70",
+      "links": {
+        "self": "http://device.oddworks.io/v2/events/f2a0f69ab4e546d0850de2714298eb70"
+      },
+      "attributes": {
+        "title": "Brent Thurman Memorial PBR Touring Pro Division",
+        "url": "http://cms.pbr.com/en/tpd/schedule/2016/dripping-springs,-tx.aspx",
+        "description": null,
+        "createdAt": "2016-10-01T19:30:00+0000",
+        "source": {
+          "title": "http://cms.pbr.com/handlers/oddevents.aspx",
+          "url": null
+        },
+        "category": "tpd",
+        "images": {
+          "aspect16x9": ""
+        },
+        "ical": {
+          "dtstart": "2016-10-01T19:30:00+0000",
+          "dtend": "2016-10-01T19:30:00+0000"
+        },
+        "organization": "pbr"
+      }
+    },
+    {
+      "type": "event",
+      "id": "2d05a9c5d5b50ae4ac88673c11a7a84f",
+      "links": {
+        "self": "http://device.oddworks.io/v2/events/2d05a9c5d5b50ae4ac88673c11a7a84f"
+      },
+      "attributes": {
+        "title": "Sean Willingham Invitational PBR Touring Pro Division",
+        "url": "http://cms.pbr.com/en/tpd/schedule/2016/chatanooga,-tn.aspx",
+        "description": null,
+        "createdAt": "2016-10-01T19:30:00+0000",
+        "source": {
+          "title": "http://cms.pbr.com/handlers/oddevents.aspx",
+          "url": null
+        },
+        "category": "tpd",
+        "images": {
+          "aspect16x9": ""
+        },
+        "ical": {
+          "dtstart": "2016-10-01T19:30:00+0000",
+          "dtend": "2016-10-01T19:30:00+0000"
+        },
+        "organization": "pbr"
+      }
+    },
+    {
+      "type": "event",
+      "id": "6530fe9bc050538ec08bfd4dcd9554fb",
+      "links": {
+        "self": "http://device.oddworks.io/v2/events/6530fe9bc050538ec08bfd4dcd9554fb"
+      },
+      "attributes": {
+        "title": "San Antonio, TX PBR Touring Pro Division",
+        "url": "http://cms.pbr.com/en/tpd/schedule/2016/san-antonio,-tx-102216.aspx",
+        "description": null,
+        "createdAt": "2016-10-22T20:30:00+0000",
+        "source": {
+          "title": "http://cms.pbr.com/handlers/oddevents.aspx",
+          "url": null
+        },
+        "category": "tpd",
+        "images": {
+          "aspect16x9": ""
+        },
+        "ical": {
+          "dtstart": "2016-10-22T20:30:00+0000",
+          "dtend": "2016-10-22T20:30:00+0000"
+        },
+        "organization": "pbr"
+      }
+    },
+    {
+      "type": "event",
+      "id": "fb2e641e6681b95e7dbeae611e9047ac",
+      "links": {
+        "self": "http://device.oddworks.io/v2/events/fb2e641e6681b95e7dbeae611e9047ac"
+      },
+      "attributes": {
+        "title": "L.J. Jenkins Invitational BlueDEF Tour",
+        "url": "http://cms.pbr.com/en/velocity/schedule/2016/clovis,-nm.aspx",
+        "description": null,
+        "createdAt": "2015-10-30T19:30:00+0000",
+        "source": {
+          "title": "http://cms.pbr.com/handlers/oddevents.aspx",
+          "url": null
+        },
+        "category": "bluDef",
+        "images": {
+          "aspect16x9": ""
+        },
+        "ical": {
+          "dtstart": "2015-10-30T19:30:00+0000",
+          "dtend": "2015-10-31T19:30:00+0000"
+        },
+        "organization": "pbr"
+      }
+    },
+    {
+      "type": "event",
+      "id": "c001545b35826c0456bbeea5fa82ae51",
+      "links": {
+        "self": "http://device.oddworks.io/v2/events/c001545b35826c0456bbeea5fa82ae51"
+      },
+      "attributes": {
+        "title": "Ontario, CA BlueDEF Tour",
+        "url": "http://cms.pbr.com/en/velocity/schedule/2016/ontario-ca.aspx",
+        "description": null,
+        "createdAt": "2015-11-14T19:00:00+0000",
+        "source": {
+          "title": "http://cms.pbr.com/handlers/oddevents.aspx",
+          "url": null
+        },
+        "category": "bluDef",
+        "images": {
+          "aspect16x9": ""
+        },
+        "ical": {
+          "dtstart": "2015-11-14T19:00:00+0000",
+          "dtend": "2015-11-14T19:00:00+0000"
+        },
+        "organization": "pbr"
+      }
+    },
+    {
+      "type": "event",
+      "id": "03c4f7084b3b826190bae8adfe461bb6",
+      "links": {
+        "self": "http://device.oddworks.io/v2/events/03c4f7084b3b826190bae8adfe461bb6"
+      },
+      "attributes": {
+        "title": "Bakersfield, CA BlueDEF Tour",
+        "url": "http://cms.pbr.com/en/velocity/schedule/2016/bakersfield-ca.aspx",
+        "description": null,
+        "createdAt": "2015-11-21T19:00:00+0000",
+        "source": {
+          "title": "http://cms.pbr.com/handlers/oddevents.aspx",
+          "url": null
+        },
+        "category": "bluDef",
+        "images": {
+          "aspect16x9": ""
+        },
+        "ical": {
+          "dtstart": "2015-11-21T19:00:00+0000",
+          "dtend": "2015-11-21T19:00:00+0000"
+        },
+        "organization": "pbr"
+      }
+    },
+    {
+      "type": "event",
+      "id": "79dc5a2de85441d3e473d4cc26ebabed",
+      "links": {
+        "self": "http://device.oddworks.io/v2/events/79dc5a2de85441d3e473d4cc26ebabed"
+      },
+      "attributes": {
+        "title": "Cincinnati, OH BlueDEF Tour",
+        "url": "http://cms.pbr.com/en/velocity/schedule/2016/cincinnati,-oh.aspx",
+        "description": null,
+        "createdAt": "2015-12-06T17:30:00+0000",
+        "source": {
+          "title": "http://cms.pbr.com/handlers/oddevents.aspx",
+          "url": null
+        },
+        "category": "bluDef",
+        "images": {
+          "aspect16x9": ""
+        },
+        "ical": {
+          "dtstart": "2015-12-06T17:30:00+0000",
+          "dtend": "2015-12-06T17:30:00+0000"
+        },
+        "organization": "pbr"
+      }
+    },
+    {
+      "type": "event",
+      "id": "fcbf9a3c5fc5cea5880c1f471bab9d11",
+      "links": {
+        "self": "http://device.oddworks.io/v2/events/fcbf9a3c5fc5cea5880c1f471bab9d11"
+      },
+      "attributes": {
+        "title": "Oakland, CA BlueDEF Tour",
+        "url": "http://cms.pbr.com/en/velocity/schedule/2016/oakland,-ca.aspx",
+        "description": null,
+        "createdAt": "2016-01-09T19:00:00+0000",
+        "source": {
+          "title": "http://cms.pbr.com/handlers/oddevents.aspx",
+          "url": null
+        },
+        "category": "bluDef",
+        "images": {
+          "aspect16x9": ""
+        },
+        "ical": {
+          "dtstart": "2016-01-09T19:00:00+0000",
+          "dtend": "2016-01-09T19:00:00+0000"
+        },
+        "organization": "pbr"
+      }
+    },
+    {
+      "type": "event",
+      "id": "4f22829be1af5507166aabe5c5673118",
+      "links": {
+        "self": "http://device.oddworks.io/v2/events/4f22829be1af5507166aabe5c5673118"
+      },
+      "attributes": {
+        "title": "Denver, CO BlueDEF Tour",
+        "url": "http://cms.pbr.com/en/velocity/schedule/2016/denver,-co.aspx",
+        "description": null,
+        "createdAt": "2016-01-11T19:00:00+0000",
+        "source": {
+          "title": "http://cms.pbr.com/handlers/oddevents.aspx",
+          "url": null
+        },
+        "category": "bluDef",
+        "images": {
+          "aspect16x9": ""
+        },
+        "ical": {
+          "dtstart": "2016-01-11T19:00:00+0000",
+          "dtend": "2016-01-13T19:00:00+0000"
+        },
+        "organization": "pbr"
+      }
+    },
+    {
+      "type": "event",
+      "id": "8b9a48d19d1f35528f68f7c5feac4da3",
+      "links": {
+        "self": "http://device.oddworks.io/v2/events/8b9a48d19d1f35528f68f7c5feac4da3"
+      },
+      "attributes": {
+        "title": "Reno, NV BlueDef Tour",
+        "url": "http://cms.pbr.com/en/velocity/schedule/2016/reno,-nv.aspx",
+        "description": null,
+        "createdAt": "2016-01-16T19:00:00+0000",
+        "source": {
+          "title": "http://cms.pbr.com/handlers/oddevents.aspx",
+          "url": null
+        },
+        "category": "bluDef",
+        "images": {
+          "aspect16x9": ""
+        },
+        "ical": {
+          "dtstart": "2016-01-16T19:00:00+0000",
+          "dtend": "2016-01-16T19:00:00+0000"
+        },
+        "organization": "pbr"
+      }
+    },
+    {
+      "type": "event",
+      "id": "b79912e53783968a523f4927dfe80d45",
+      "links": {
+        "self": "http://device.oddworks.io/v2/events/b79912e53783968a523f4927dfe80d45"
+      },
+      "attributes": {
+        "title": "Yakima, WA BlueDef Tour",
+        "url": "http://cms.pbr.com/en/velocity/schedule/2016/yakima,-wa.aspx",
+        "description": null,
+        "createdAt": "2016-01-23T19:00:00+0000",
+        "source": {
+          "title": "http://cms.pbr.com/handlers/oddevents.aspx",
+          "url": null
+        },
+        "category": "bluDef",
+        "images": {
+          "aspect16x9": ""
+        },
+        "ical": {
+          "dtstart": "2016-01-23T19:00:00+0000",
+          "dtend": "2016-01-23T19:00:00+0000"
+        },
+        "organization": "pbr"
+      }
+    },
+    {
+      "type": "event",
+      "id": "bc4b01bb85b8f124e97acad54e753526",
+      "links": {
+        "self": "http://device.oddworks.io/v2/events/bc4b01bb85b8f124e97acad54e753526"
+      },
+      "attributes": {
+        "title": "Wichita, KS BlueDef Tour",
+        "url": "http://cms.pbr.com/en/velocity/schedule/2016/wichita,-ks.aspx",
+        "description": null,
+        "createdAt": "2016-01-30T19:00:00+0000",
+        "source": {
+          "title": "http://cms.pbr.com/handlers/oddevents.aspx",
+          "url": null
+        },
+        "category": "bluDef",
+        "images": {
+          "aspect16x9": ""
+        },
+        "ical": {
+          "dtstart": "2016-01-30T19:00:00+0000",
+          "dtend": "2016-01-30T19:00:00+0000"
+        },
+        "organization": "pbr"
+      }
+    },
+    {
+      "type": "event",
+      "id": "526e9b94df1aa46896a1f6829dac6838",
+      "links": {
+        "self": "http://device.oddworks.io/v2/events/526e9b94df1aa46896a1f6829dac6838"
+      },
+      "attributes": {
+        "title": "Salt Lake City, UT BlueDef Tour",
+        "url": "http://cms.pbr.com/en/velocity/schedule/2016/salt-lake-city,-ut.aspx",
+        "description": null,
+        "createdAt": "2016-02-05T20:00:00+0000",
+        "source": {
+          "title": "http://cms.pbr.com/handlers/oddevents.aspx",
+          "url": null
+        },
+        "category": "bluDef",
+        "images": {
+          "aspect16x9": ""
+        },
+        "ical": {
+          "dtstart": "2016-02-05T20:00:00+0000",
+          "dtend": "2016-02-06T19:00:00+0000"
+        },
+        "organization": "pbr"
+      }
+    },
+    {
+      "type": "event",
+      "id": "43e825f095bc29c585bc227faceef8e8",
+      "links": {
+        "self": "http://device.oddworks.io/v2/events/43e825f095bc29c585bc227faceef8e8"
+      },
+      "attributes": {
+        "title": "Dayton, OH BlueDef Tour",
+        "url": "http://cms.pbr.com/en/velocity/schedule/2016/dayton,-oh.aspx",
+        "description": null,
+        "createdAt": "2016-02-13T19:00:00+0000",
+        "source": {
+          "title": "http://cms.pbr.com/handlers/oddevents.aspx",
+          "url": null
+        },
+        "category": "bluDef",
+        "images": {
+          "aspect16x9": ""
+        },
+        "ical": {
+          "dtstart": "2016-02-13T19:00:00+0000",
+          "dtend": "2016-02-13T19:00:00+0000"
+        },
+        "organization": "pbr"
+      }
+    },
+    {
+      "type": "event",
+      "id": "9ad15bce4f1a41ea4c69202f381fedd6",
+      "links": {
+        "self": "http://device.oddworks.io/v2/events/9ad15bce4f1a41ea4c69202f381fedd6"
+      },
+      "attributes": {
+        "title": "Worcester, MA BlueDef Tour",
+        "url": "http://cms.pbr.com/en/velocity/schedule/2016/worcester,-ma.aspx",
+        "description": null,
+        "createdAt": "2016-02-20T19:00:00+0000",
+        "source": {
+          "title": "http://cms.pbr.com/handlers/oddevents.aspx",
+          "url": null
+        },
+        "category": "bluDef",
+        "images": {
+          "aspect16x9": ""
+        },
+        "ical": {
+          "dtstart": "2016-02-20T19:00:00+0000",
+          "dtend": "2016-02-20T19:00:00+0000"
+        },
+        "organization": "pbr"
+      }
+    },
+    {
+      "type": "event",
+      "id": "fa511dbd968ca36df8893e52471b7894",
+      "links": {
+        "self": "http://device.oddworks.io/v2/events/fa511dbd968ca36df8893e52471b7894"
+      },
+      "attributes": {
+        "title": "Portland, OR BlueDef Tour",
+        "url": "http://cms.pbr.com/en/velocity/schedule/2016/portland,-or.aspx",
+        "description": null,
+        "createdAt": "2016-02-27T19:00:00+0000",
+        "source": {
+          "title": "http://cms.pbr.com/handlers/oddevents.aspx",
+          "url": null
+        },
+        "category": "bluDef",
+        "images": {
+          "aspect16x9": ""
+        },
+        "ical": {
+          "dtstart": "2016-02-27T19:00:00+0000",
+          "dtend": "2016-02-27T19:00:00+0000"
+        },
+        "organization": "pbr"
+      }
+    },
+    {
+      "type": "event",
+      "id": "3733745f636dece91eb252f4cccb638d",
+      "links": {
+        "self": "http://device.oddworks.io/v2/events/3733745f636dece91eb252f4cccb638d"
+      },
+      "attributes": {
+        "title": "Hampton, VA BlueDef Tour",
+        "url": "http://cms.pbr.com/en/velocity/schedule/2016/hampton,-va.aspx",
+        "description": null,
+        "createdAt": "2016-03-05T19:00:00+0000",
+        "source": {
+          "title": "http://cms.pbr.com/handlers/oddevents.aspx",
+          "url": null
+        },
+        "category": "bluDef",
+        "images": {
+          "aspect16x9": ""
+        },
+        "ical": {
+          "dtstart": "2016-03-05T19:00:00+0000",
+          "dtend": "2016-03-05T19:00:00+0000"
+        },
+        "organization": "pbr"
+      }
+    },
+    {
+      "type": "event",
+      "id": "c4a387430f8e9a3302b13bc14e8cf182",
+      "links": {
+        "self": "http://device.oddworks.io/v2/events/c4a387430f8e9a3302b13bc14e8cf182"
+      },
+      "attributes": {
+        "title": "Bangor, ME BlueDef Tour",
+        "url": "http://cms.pbr.com/en/velocity/schedule/2016/bangor,-me.aspx",
+        "description": null,
+        "createdAt": "2016-03-11T19:00:00+0000",
+        "source": {
+          "title": "http://cms.pbr.com/handlers/oddevents.aspx",
+          "url": null
+        },
+        "category": "bluDef",
+        "images": {
+          "aspect16x9": ""
+        },
+        "ical": {
+          "dtstart": "2016-03-11T19:00:00+0000",
+          "dtend": "2016-03-12T19:00:00+0000"
+        },
+        "organization": "pbr"
+      }
+    },
+    {
+      "type": "event",
+      "id": "64528eb74bf5c3a5ab89d17cd0bc25af",
+      "links": {
+        "self": "http://device.oddworks.io/v2/events/64528eb74bf5c3a5ab89d17cd0bc25af"
+      },
+      "attributes": {
+        "title": "Wheeling, WV BlueDef Tour",
+        "url": "http://cms.pbr.com/en/velocity/schedule/2016/wheeling,-wv.aspx",
+        "description": null,
+        "createdAt": "2016-03-18T19:00:00+0000",
+        "source": {
+          "title": "http://cms.pbr.com/handlers/oddevents.aspx",
+          "url": null
+        },
+        "category": "bluDef",
+        "images": {
+          "aspect16x9": ""
+        },
+        "ical": {
+          "dtstart": "2016-03-18T19:00:00+0000",
+          "dtend": "2016-03-19T19:00:00+0000"
+        },
+        "organization": "pbr"
+      }
+    },
+    {
+      "type": "event",
+      "id": "d2a5c4f4dfd2f250aa400da451686c70",
+      "links": {
+        "self": "http://device.oddworks.io/v2/events/d2a5c4f4dfd2f250aa400da451686c70"
+      },
+      "attributes": {
+        "title": "Fresno, CA BlueDef Tour",
+        "url": "http://cms.pbr.com/en/velocity/schedule/2016/fresno,-ca.aspx",
+        "description": null,
+        "createdAt": "2016-04-02T19:00:00+0000",
+        "source": {
+          "title": "http://cms.pbr.com/handlers/oddevents.aspx",
+          "url": null
+        },
+        "category": "bluDef",
+        "images": {
+          "aspect16x9": ""
+        },
+        "ical": {
+          "dtstart": "2016-04-02T19:00:00+0000",
+          "dtend": "2016-04-02T19:00:00+0000"
+        },
+        "organization": "pbr"
+      }
+    },
+    {
+      "type": "event",
+      "id": "adc9c3a66ae3b451c7fc5b923ead183d",
+      "links": {
+        "self": "http://device.oddworks.io/v2/events/adc9c3a66ae3b451c7fc5b923ead183d"
+      },
+      "attributes": {
+        "title": "Milwaukee, WI BlueDef Tour",
+        "url": "http://cms.pbr.com/en/velocity/schedule/2016/milwaukee,-wi.aspx",
+        "description": null,
+        "createdAt": "2016-04-09T19:00:00+0000",
+        "source": {
+          "title": "http://cms.pbr.com/handlers/oddevents.aspx",
+          "url": null
+        },
+        "category": "bluDef",
+        "images": {
+          "aspect16x9": ""
+        },
+        "ical": {
+          "dtstart": "2016-04-09T19:00:00+0000",
+          "dtend": "2016-04-09T19:00:00+0000"
+        },
+        "organization": "pbr"
+      }
+    },
+    {
+      "type": "event",
+      "id": "d4cc04f44b2bb98b92cf49bff515b98c",
+      "links": {
+        "self": "http://device.oddworks.io/v2/events/d4cc04f44b2bb98b92cf49bff515b98c"
+      },
+      "attributes": {
+        "title": "Omaha, NE BlueDef Tour",
+        "url": "http://cms.pbr.com/en/velocity/schedule/2016/omaha,-ne.aspx",
+        "description": null,
+        "createdAt": "2016-04-16T19:00:00+0000",
+        "source": {
+          "title": "http://cms.pbr.com/handlers/oddevents.aspx",
+          "url": null
+        },
+        "category": "bluDef",
+        "images": {
+          "aspect16x9": ""
+        },
+        "ical": {
+          "dtstart": "2016-04-16T19:00:00+0000",
+          "dtend": "2016-04-16T19:00:00+0000"
+        },
+        "organization": "pbr"
+      }
+    },
+    {
+      "type": "event",
+      "id": "b26e4c50890632fe1632320cb7921ec2",
+      "links": {
+        "self": "http://device.oddworks.io/v2/events/b26e4c50890632fe1632320cb7921ec2"
+      },
+      "attributes": {
+        "title": "Big Sky, MT BlueDef Tour",
+        "url": "http://cms.pbr.com/en/velocity/schedule/2016/big-sky,-mt.aspx",
+        "description": null,
+        "createdAt": "2016-07-28T19:00:00+0000",
+        "source": {
+          "title": "http://cms.pbr.com/handlers/oddevents.aspx",
+          "url": null
+        },
+        "category": "bluDef",
+        "images": {
+          "aspect16x9": ""
+        },
+        "ical": {
+          "dtstart": "2016-07-28T19:00:00+0000",
+          "dtend": "2016-07-29T19:00:00+0000"
+        },
+        "organization": "pbr"
+      }
+    },
+    {
+      "type": "event",
+      "id": "655a6e56b16668711fd49482392db174",
+      "links": {
+        "self": "http://device.oddworks.io/v2/events/655a6e56b16668711fd49482392db174"
+      },
+      "attributes": {
+        "title": "Kasey Hayes & Stormy Wing Invitational BlueDEF Tour",
+        "url": "http://cms.pbr.com/en/velocity/schedule/2016/guyman,-ok.aspx",
+        "description": null,
+        "createdAt": "2016-07-23T20:00:00+0000",
+        "source": {
+          "title": "http://cms.pbr.com/handlers/oddevents.aspx",
+          "url": null
+        },
+        "category": "bluDef",
+        "images": {
+          "aspect16x9": ""
+        },
+        "ical": {
+          "dtstart": "2016-07-23T20:00:00+0000",
+          "dtend": "2016-07-23T20:00:00+0000"
+        },
+        "organization": "pbr"
+      }
+    },
+    {
+      "type": "video",
+      "meta": {
+        "sourceId": "xrNmxleTqQaiP5wuFEz_KKBxCYEYXbwK",
+        "source": "ooyala"
+      },
+      "id": "ooyala-xrNmxleTqQaiP5wuFEz_KKBxCYEYXbwK",
+      "links": {
+        "self": "http://device.oddworks.io/v2/videos/ooyala-xrNmxleTqQaiP5wuFEz_KKBxCYEYXbwK"
+      },
+      "attributes": {
+        "title": "Cooper Davis rides Dakota Style’s Hy Test for 89 points ",
+        "description": "Cooper Davis rides Dakota Style’s Hy Test for 89 points in Round 1 of the 2015 PBR BFTS World Finals in Las Vegas, NV.",
+        "images": {
+          "aspect16x9": "http://image.oddworks.io/eooyala/xrNmxleTqQaiP5wuFEz_KKBxCYEYXbwK/3Gduepif0T1UGY8H4zMDoxOjBzMTu0hl.jpg",
+          "aspect4x3": "http://image.oddworks.io/edummyimage/4:3x1440&text=placeholder.png",
+          "aspect3x4": "http://image.oddworks.io/edummyimage/3:4x1920&text=placeholder.png",
+          "aspect1x1": "http://image.oddworks.io/edummyimage/1:1x1920&text=placeholder.png",
+          "aspect2x3": "http://image.oddworks.io/edummyimage/2:3x1920&text=placeholder.png"
+        },
+        "actors": [],
+        "tags": [],
+        "duration": 57490,
+        "releaseDate": "2015-12-08T23:59:44Z",
+        "updatedAt": "2016-01-03T20:54:21Z",
+        "createdAt": "2015-12-08T23:59:44Z",
+        "organization": "pbr",
+        "ads": {
+          "provider": "freewheel",
+          "format": "VAST",
+          "assetId": "xrNmxleTqQaiP5wuFEz_KKBxCYEYXbwK"
+        },
+        "overlays": {},
+        "player": {
+          "type": "ooyala",
+          "pCode": "5meWUyOipwedhLMDFYYFdAYmnGKl",
+          "domain": "http://ooyala.com",
+          "embedCode": "xrNmxleTqQaiP5wuFEz_KKBxCYEYXbwK"
+        },
+        "url": "http://player.ooyala.com/player/appletv/xrNmxleTqQaiP5wuFEz_KKBxCYEYXbwK.m3u8"
+      }
+    },
+    {
+      "type": "video",
+      "meta": {
+        "sourceId": "s4eGFleTogYHG6pImNH-iovoQfbfPX_N",
+        "source": "ooyala"
+      },
+      "id": "ooyala-s4eGFleTogYHG6pImNH-iovoQfbfPX_N",
+      "links": {
+        "self": "http://device.oddworks.io/v2/videos/ooyala-s4eGFleTogYHG6pImNH-iovoQfbfPX_N"
+      },
+      "attributes": {
+        "title": "Wreck: Jessie Byrne takes a hit from Time Bomb for Shane Proctor",
+        "description": "Jessie Byrne takes a hit from Time Bomb for Shane Proctor in Round 5 of the 2015 PBR BFTS World Finals in Las Vegas, NV.",
+        "images": {
+          "aspect16x9": "http://image.oddworks.io/eooyala/s4eGFleTogYHG6pImNH-iovoQfbfPX_N/QCdjB5HwFOTaWQ8X4zMDoxOjBzMTu0hl.jpg",
+          "aspect4x3": "http://image.oddworks.io/edummyimage/4:3x1440&text=placeholder.png",
+          "aspect3x4": "http://image.oddworks.io/edummyimage/3:4x1920&text=placeholder.png",
+          "aspect1x1": "http://image.oddworks.io/edummyimage/1:1x1920&text=placeholder.png",
+          "aspect2x3": "http://image.oddworks.io/edummyimage/2:3x1920&text=placeholder.png"
+        },
+        "actors": [],
+        "tags": [],
+        "duration": 89022,
+        "releaseDate": "2015-12-08T16:53:34Z",
+        "updatedAt": "2016-01-03T19:14:44Z",
+        "createdAt": "2015-12-08T16:53:34Z",
+        "organization": "pbr",
+        "ads": {
+          "provider": "freewheel",
+          "format": "VAST",
+          "assetId": "s4eGFleTogYHG6pImNH-iovoQfbfPX_N"
+        },
+        "overlays": {},
+        "player": {
+          "type": "ooyala",
+          "pCode": "5meWUyOipwedhLMDFYYFdAYmnGKl",
+          "domain": "http://ooyala.com",
+          "embedCode": "s4eGFleTogYHG6pImNH-iovoQfbfPX_N"
+        },
+        "url": "http://player.ooyala.com/player/appletv/s4eGFleTogYHG6pImNH-iovoQfbfPX_N.m3u8"
+      }
+    },
+    {
+      "type": "video",
+      "meta": {
+        "sourceId": "s2eGFleTrb-LthCmvutaxPmPGV0Eslgr",
+        "source": "ooyala"
+      },
+      "id": "ooyala-s2eGFleTrb-LthCmvutaxPmPGV0Eslgr",
+      "links": {
+        "self": "http://device.oddworks.io/v2/videos/ooyala-s2eGFleTrb-LthCmvutaxPmPGV0Eslgr"
+      },
+      "attributes": {
+        "title": "Top Bull: Long John gets a 47.25 bull score",
+        "description": "Long John bucks off Fabiano Vieira for a 47.25 point bull score in the Championship Round of the 2015 PBR BFTS World Finals in Las Vegas, NV",
+        "images": {
+          "aspect16x9": "http://image.oddworks.io/eooyala/s2eGFleTrb-LthCmvutaxPmPGV0Eslgr/QCdjB5HwFOTaWQ8X4zMDoxOjBzMTu0hl.jpg",
+          "aspect4x3": "http://image.oddworks.io/edummyimage/4:3x1440&text=placeholder.png",
+          "aspect3x4": "http://image.oddworks.io/edummyimage/3:4x1920&text=placeholder.png",
+          "aspect1x1": "http://image.oddworks.io/edummyimage/1:1x1920&text=placeholder.png",
+          "aspect2x3": "http://image.oddworks.io/edummyimage/2:3x1920&text=placeholder.png"
+        },
+        "actors": [],
+        "tags": [],
+        "duration": 95528,
+        "releaseDate": "2015-12-08T16:53:34Z",
+        "updatedAt": "2016-01-03T19:18:56Z",
+        "createdAt": "2015-12-08T16:53:34Z",
+        "organization": "pbr",
+        "ads": {
+          "provider": "freewheel",
+          "format": "VAST",
+          "assetId": "s2eGFleTrb-LthCmvutaxPmPGV0Eslgr"
+        },
+        "overlays": {},
+        "player": {
+          "type": "ooyala",
+          "pCode": "5meWUyOipwedhLMDFYYFdAYmnGKl",
+          "domain": "http://ooyala.com",
+          "embedCode": "s2eGFleTrb-LthCmvutaxPmPGV0Eslgr"
+        },
+        "url": "http://player.ooyala.com/player/appletv/s2eGFleTrb-LthCmvutaxPmPGV0Eslgr.m3u8"
+      }
+    },
+    {
+      "type": "video",
+      "meta": {
+        "sourceId": "s0eGFleTrZGKCCn61tuoOTcDZB-BH0Sl",
+        "source": "ooyala"
+      },
+      "id": "ooyala-s0eGFleTrZGKCCn61tuoOTcDZB-BH0Sl",
+      "links": {
+        "self": "http://device.oddworks.io/v2/videos/ooyala-s0eGFleTrZGKCCn61tuoOTcDZB-BH0Sl"
+      },
+      "attributes": {
+        "title": "Eduardo Aparecido posts 73-point ride on Lane's Magic Train",
+        "description": "Eduardo Aparecido posts 73-point ride on Lane’s Magic Train in the Championship Round of the 2015 PBR BFTS World Finals in Las Vegas, NV.",
+        "images": {
+          "aspect16x9": "http://image.oddworks.io/eooyala/s0eGFleTrZGKCCn61tuoOTcDZB-BH0Sl/PE3O6Z9ojHeNSk7H4zMDoxOjBzMTu0hl.jpg",
+          "aspect4x3": "http://image.oddworks.io/edummyimage/4:3x1440&text=placeholder.png",
+          "aspect3x4": "http://image.oddworks.io/edummyimage/3:4x1920&text=placeholder.png",
+          "aspect1x1": "http://image.oddworks.io/edummyimage/1:1x1920&text=placeholder.png",
+          "aspect2x3": "http://image.oddworks.io/edummyimage/2:3x1920&text=placeholder.png"
+        },
+        "actors": [],
+        "tags": [],
+        "duration": 64497,
+        "releaseDate": "2015-12-08T16:53:34Z",
+        "updatedAt": "2016-01-03T19:20:46Z",
+        "createdAt": "2015-12-08T16:53:34Z",
+        "organization": "pbr",
+        "ads": {
+          "provider": "freewheel",
+          "format": "VAST",
+          "assetId": "s0eGFleTrZGKCCn61tuoOTcDZB-BH0Sl"
+        },
+        "overlays": {},
+        "player": {
+          "type": "ooyala",
+          "pCode": "5meWUyOipwedhLMDFYYFdAYmnGKl",
+          "domain": "http://ooyala.com",
+          "embedCode": "s0eGFleTrZGKCCn61tuoOTcDZB-BH0Sl"
+        },
+        "url": "http://player.ooyala.com/player/appletv/s0eGFleTrZGKCCn61tuoOTcDZB-BH0Sl.m3u8"
+      }
+    },
+    {
+      "type": "video",
+      "meta": {
+        "sourceId": "syeGFleTqVEpqs6OMSAAPiWMZ_LLjV0H",
+        "source": "ooyala"
+      },
+      "id": "ooyala-syeGFleTqVEpqs6OMSAAPiWMZ_LLjV0H",
+      "links": {
+        "self": "http://device.oddworks.io/v2/videos/ooyala-syeGFleTqVEpqs6OMSAAPiWMZ_LLjV0H"
+      },
+      "attributes": {
+        "title": "Wreck: Ben Jones on Sheep Creek",
+        "description": "Ben Jones takes a massive hit by Sheep Creek and gets knocked out during the Championship Round of the 2015 PBR World Finals in Las Vegas",
+        "images": {
+          "aspect16x9": "http://image.oddworks.io/eooyala/syeGFleTqVEpqs6OMSAAPiWMZ_LLjV0H/YUAndpMCbXk_9hvX4zMDoxOjBzMTu0hl.jpg",
+          "aspect4x3": "http://image.oddworks.io/edummyimage/4:3x1440&text=placeholder.png",
+          "aspect3x4": "http://image.oddworks.io/edummyimage/3:4x1920&text=placeholder.png",
+          "aspect1x1": "http://image.oddworks.io/edummyimage/1:1x1920&text=placeholder.png",
+          "aspect2x3": "http://image.oddworks.io/edummyimage/2:3x1920&text=placeholder.png"
+        },
+        "actors": [],
+        "tags": [],
+        "duration": 153086,
+        "releaseDate": "2015-12-08T16:53:34Z",
+        "updatedAt": "2016-01-03T19:22:47Z",
+        "createdAt": "2015-12-08T16:53:34Z",
+        "organization": "pbr",
+        "ads": {
+          "provider": "freewheel",
+          "format": "VAST",
+          "assetId": "syeGFleTqVEpqs6OMSAAPiWMZ_LLjV0H"
+        },
+        "overlays": {},
+        "player": {
+          "type": "ooyala",
+          "pCode": "5meWUyOipwedhLMDFYYFdAYmnGKl",
+          "domain": "http://ooyala.com",
+          "embedCode": "syeGFleTqVEpqs6OMSAAPiWMZ_LLjV0H"
+        },
+        "url": "http://player.ooyala.com/player/appletv/syeGFleTqVEpqs6OMSAAPiWMZ_LLjV0H.m3u8"
+      }
+    },
+    {
+      "type": "video",
+      "meta": {
+        "sourceId": "t4d2FleToTdd933e36QKsNXzLGCtRmRh",
+        "source": "ooyala"
+      },
+      "id": "ooyala-t4d2FleToTdd933e36QKsNXzLGCtRmRh",
+      "links": {
+        "self": "http://device.oddworks.io/v2/videos/ooyala-t4d2FleToTdd933e36QKsNXzLGCtRmRh"
+      },
+      "attributes": {
+        "title": "Top Ride: Eduardo Aparecido rides Beaver Creek Beau for 88.75 points",
+        "description": "Eduardo Aparecido rides Beaver Creek Beau for 88.75 points in Round 5 of the 2015 PBR BFTS World Finals in Las Vegas, NV.",
+        "images": {
+          "aspect16x9": "http://image.oddworks.io/eooyala/t4d2FleToTdd933e36QKsNXzLGCtRmRh/DLOokYc8UKM-fB9H4zMDoxOjBzMTu0hl.jpg",
+          "aspect4x3": "http://image.oddworks.io/edummyimage/4:3x1440&text=placeholder.png",
+          "aspect3x4": "http://image.oddworks.io/edummyimage/3:4x1920&text=placeholder.png",
+          "aspect1x1": "http://image.oddworks.io/edummyimage/1:1x1920&text=placeholder.png",
+          "aspect2x3": "http://image.oddworks.io/edummyimage/2:3x1920&text=placeholder.png"
+        },
+        "actors": [],
+        "tags": [],
+        "duration": 79012,
+        "releaseDate": "2015-12-08T16:53:34Z",
+        "updatedAt": "2016-01-03T20:57:00Z",
+        "createdAt": "2015-12-08T16:53:34Z",
+        "organization": "pbr",
+        "ads": {
+          "provider": "freewheel",
+          "format": "VAST",
+          "assetId": "t4d2FleToTdd933e36QKsNXzLGCtRmRh"
+        },
+        "overlays": {},
+        "player": {
+          "type": "ooyala",
+          "pCode": "5meWUyOipwedhLMDFYYFdAYmnGKl",
+          "domain": "http://ooyala.com",
+          "embedCode": "t4d2FleToTdd933e36QKsNXzLGCtRmRh"
+        },
+        "url": "http://player.ooyala.com/player/appletv/t4d2FleToTdd933e36QKsNXzLGCtRmRh.m3u8"
+      }
+    },
+    {
+      "type": "video",
+      "meta": {
+        "sourceId": "t2d2FleTprAKlWLibX4D_EchOxMIJ069",
+        "source": "ooyala"
+      },
+      "id": "ooyala-t2d2FleTprAKlWLibX4D_EchOxMIJ069",
+      "links": {
+        "self": "http://device.oddworks.io/v2/videos/ooyala-t2d2FleTprAKlWLibX4D_EchOxMIJ069"
+      },
+      "attributes": {
+        "title": "WINNING RIDE: Cooper Davis rides Moto Moto for 85.75 points",
+        "description": "Cooper Davis rides Moto Moto for 85.75 points in Round 5 of the 2015 PBR BFTS World Finals in Las Vegas, NV.",
+        "images": {
+          "aspect16x9": "http://image.oddworks.io/eooyala/t2d2FleTprAKlWLibX4D_EchOxMIJ069/DLOokYc8UKM-fB9H4zMDoxOjBzMTu0hl.jpg",
+          "aspect4x3": "http://image.oddworks.io/edummyimage/4:3x1440&text=placeholder.png",
+          "aspect3x4": "http://image.oddworks.io/edummyimage/3:4x1920&text=placeholder.png",
+          "aspect1x1": "http://image.oddworks.io/edummyimage/1:1x1920&text=placeholder.png",
+          "aspect2x3": "http://image.oddworks.io/edummyimage/2:3x1920&text=placeholder.png"
+        },
+        "actors": [],
+        "tags": [],
+        "duration": 65999,
+        "releaseDate": "2015-12-08T16:53:34Z",
+        "updatedAt": "2016-01-03T22:10:18Z",
+        "createdAt": "2015-12-08T16:53:34Z",
+        "organization": "pbr",
+        "ads": {
+          "provider": "freewheel",
+          "format": "VAST",
+          "assetId": "t2d2FleTprAKlWLibX4D_EchOxMIJ069"
+        },
+        "overlays": {},
+        "player": {
+          "type": "ooyala",
+          "pCode": "5meWUyOipwedhLMDFYYFdAYmnGKl",
+          "domain": "http://ooyala.com",
+          "embedCode": "t2d2FleTprAKlWLibX4D_EchOxMIJ069"
+        },
+        "url": "http://player.ooyala.com/player/appletv/t2d2FleTprAKlWLibX4D_EchOxMIJ069.m3u8"
+      }
+    },
+    {
+      "type": "video",
+      "meta": {
+        "sourceId": "9wd2FleTpqaztocs2Q74HYbqdqW4tRgD",
+        "source": "ooyala"
+      },
+      "id": "ooyala-9wd2FleTpqaztocs2Q74HYbqdqW4tRgD",
+      "links": {
+        "self": "http://device.oddworks.io/v2/videos/ooyala-9wd2FleTpqaztocs2Q74HYbqdqW4tRgD"
+      },
+      "attributes": {
+        "title": "Eduardo Aparecido covers Red Moon for 88.5 points ",
+        "description": "Eduardo Aparecido covers Red Moon for 88.5 points in Round 4 of the 2015 PBR BFTS World Finals in Las Vegas, NV",
+        "images": {
+          "aspect16x9": "http://image.oddworks.io/eooyala/9wd2FleTpqaztocs2Q74HYbqdqW4tRgD/DLOokYc8UKM-fB9H4zMDoxOjBzMTu0hl.jpg",
+          "aspect4x3": "http://image.oddworks.io/edummyimage/4:3x1440&text=placeholder.png",
+          "aspect3x4": "http://image.oddworks.io/edummyimage/3:4x1920&text=placeholder.png",
+          "aspect1x1": "http://image.oddworks.io/edummyimage/1:1x1920&text=placeholder.png",
+          "aspect2x3": "http://image.oddworks.io/edummyimage/2:3x1920&text=placeholder.png"
+        },
+        "actors": [],
+        "tags": [
+          "ad"
+        ],
+        "duration": 48982,
+        "releaseDate": "2015-12-08T16:53:18Z",
+        "updatedAt": "2016-01-03T22:14:02Z",
+        "createdAt": "2015-12-08T16:53:18Z",
+        "organization": "pbr",
+        "ads": {
+          "provider": "freewheel",
+          "format": "VAST",
+          "assetId": "9wd2FleTpqaztocs2Q74HYbqdqW4tRgD"
+        },
+        "overlays": {},
+        "player": {
+          "type": "ooyala",
+          "pCode": "5meWUyOipwedhLMDFYYFdAYmnGKl",
+          "domain": "http://ooyala.com",
+          "embedCode": "9wd2FleTpqaztocs2Q74HYbqdqW4tRgD"
+        },
+        "url": "http://player.ooyala.com/player/appletv/9wd2FleTpqaztocs2Q74HYbqdqW4tRgD.m3u8"
+      }
+    },
+    {
+      "type": "video",
+      "meta": {
+        "sourceId": "1ud2FleTovwgVrp0tf_CmhmBHOok0jpI",
+        "source": "ooyala"
+      },
+      "id": "ooyala-1ud2FleTovwgVrp0tf_CmhmBHOok0jpI",
+      "links": {
+        "self": "http://device.oddworks.io/v2/videos/ooyala-1ud2FleTovwgVrp0tf_CmhmBHOok0jpI"
+      },
+      "attributes": {
+        "title": "Wreck: Neil Holmes gets slammed by Pure Bull",
+        "description": "Neil Holmes takes a hit and gets injured by Pure Bull in round 4 of the 2015 PBR World Finals in Las Vegas",
+        "images": {
+          "aspect16x9": "http://image.oddworks.io/eooyala/1ud2FleTovwgVrp0tf_CmhmBHOok0jpI/3Gduepif0T1UGY8H4zMDoxOjBzMTu0hl.jpg",
+          "aspect4x3": "http://image.oddworks.io/edummyimage/4:3x1440&text=placeholder.png",
+          "aspect3x4": "http://image.oddworks.io/edummyimage/3:4x1920&text=placeholder.png",
+          "aspect1x1": "http://image.oddworks.io/edummyimage/1:1x1920&text=placeholder.png",
+          "aspect2x3": "http://image.oddworks.io/edummyimage/2:3x1920&text=placeholder.png"
+        },
+        "actors": [],
+        "tags": [],
+        "duration": 194627,
+        "releaseDate": "2015-12-08T16:53:18Z",
+        "updatedAt": "2016-01-03T19:24:24Z",
+        "createdAt": "2015-12-08T16:53:18Z",
+        "organization": "pbr",
+        "ads": {
+          "provider": "freewheel",
+          "format": "VAST",
+          "assetId": "1ud2FleTovwgVrp0tf_CmhmBHOok0jpI"
+        },
+        "overlays": {},
+        "player": {
+          "type": "ooyala",
+          "pCode": "5meWUyOipwedhLMDFYYFdAYmnGKl",
+          "domain": "http://ooyala.com",
+          "embedCode": "1ud2FleTovwgVrp0tf_CmhmBHOok0jpI"
+        },
+        "url": "http://player.ooyala.com/player/appletv/1ud2FleTovwgVrp0tf_CmhmBHOok0jpI.m3u8"
+      }
+    },
+    {
+      "type": "video",
+      "meta": {
+        "sourceId": "1sd2FleToMA211LFX9iR84Af16QW-ub3",
+        "source": "ooyala"
+      },
+      "id": "ooyala-1sd2FleToMA211LFX9iR84Af16QW-ub3",
+      "links": {
+        "self": "http://device.oddworks.io/v2/videos/ooyala-1sd2FleToMA211LFX9iR84Af16QW-ub3"
+      },
+      "attributes": {
+        "title": "WRECK: Renato Nunes takes a hit from Gangster’s Wildside",
+        "description": "Renato Nunes takes a hit from Gangster’s Wildside in Round 4 of the 2015 PBR BFTS World Finals in Las Vegas, NV.",
+        "images": {
+          "aspect16x9": "http://image.oddworks.io/eooyala/1sd2FleToMA211LFX9iR84Af16QW-ub3/DLOokYc8UKM-fB9H4zMDoxOjBzMTu0hl.jpg",
+          "aspect4x3": "http://image.oddworks.io/edummyimage/4:3x1440&text=placeholder.png",
+          "aspect3x4": "http://image.oddworks.io/edummyimage/3:4x1920&text=placeholder.png",
+          "aspect1x1": "http://image.oddworks.io/edummyimage/1:1x1920&text=placeholder.png",
+          "aspect2x3": "http://image.oddworks.io/edummyimage/2:3x1920&text=placeholder.png"
+        },
+        "actors": [],
+        "tags": [
+          "ad"
+        ],
+        "duration": 55488,
+        "releaseDate": "2015-12-08T16:53:18Z",
+        "updatedAt": "2016-01-03T22:14:57Z",
+        "createdAt": "2015-12-08T16:53:18Z",
+        "organization": "pbr",
+        "ads": {
+          "provider": "freewheel",
+          "format": "VAST",
+          "assetId": "1sd2FleToMA211LFX9iR84Af16QW-ub3"
+        },
+        "overlays": {},
+        "player": {
+          "type": "ooyala",
+          "pCode": "5meWUyOipwedhLMDFYYFdAYmnGKl",
+          "domain": "http://ooyala.com",
+          "embedCode": "1sd2FleToMA211LFX9iR84Af16QW-ub3"
+        },
+        "url": "http://player.ooyala.com/player/appletv/1sd2FleToMA211LFX9iR84Af16QW-ub3.m3u8"
+      }
+    },
+    {
+      "type": "video",
+      "meta": {
+        "sourceId": "1qd2FleTrzMt77qQ7OyQAzdbazAAHbdY",
+        "source": "ooyala"
+      },
+      "id": "ooyala-1qd2FleTrzMt77qQ7OyQAzdbazAAHbdY",
+      "links": {
+        "self": "http://device.oddworks.io/v2/videos/ooyala-1qd2FleTrzMt77qQ7OyQAzdbazAAHbdY"
+      },
+      "attributes": {
+        "title": "WRECK: Chase Outlaw takes a hit from Mr. U",
+        "description": "Chase Outlaw takes a hit from Mr. U in Round 4 of the 2015 PBR BFTS World Finals in Las Vegas, NV.",
+        "images": {
+          "aspect16x9": "http://image.oddworks.io/eooyala/1qd2FleTrzMt77qQ7OyQAzdbazAAHbdY/Ut_HKthATH4eww8X4zMDoxOjBzMTu0hl.jpg",
+          "aspect4x3": "http://image.oddworks.io/edummyimage/4:3x1440&text=placeholder.png",
+          "aspect3x4": "http://image.oddworks.io/edummyimage/3:4x1920&text=placeholder.png",
+          "aspect1x1": "http://image.oddworks.io/edummyimage/1:1x1920&text=placeholder.png",
+          "aspect2x3": "http://image.oddworks.io/edummyimage/2:3x1920&text=placeholder.png"
+        },
+        "actors": [],
+        "tags": [],
+        "duration": 148548,
+        "releaseDate": "2015-12-08T16:53:18Z",
+        "updatedAt": "2016-01-03T19:23:23Z",
+        "createdAt": "2015-12-08T16:53:18Z",
+        "organization": "pbr",
+        "ads": {
+          "provider": "freewheel",
+          "format": "VAST",
+          "assetId": "1qd2FleTrzMt77qQ7OyQAzdbazAAHbdY"
+        },
+        "overlays": {},
+        "player": {
+          "type": "ooyala",
+          "pCode": "5meWUyOipwedhLMDFYYFdAYmnGKl",
+          "domain": "http://ooyala.com",
+          "embedCode": "1qd2FleTrzMt77qQ7OyQAzdbazAAHbdY"
+        },
+        "url": "http://player.ooyala.com/player/appletv/1qd2FleTrzMt77qQ7OyQAzdbazAAHbdY.m3u8"
+      }
+    },
+    {
+      "type": "video",
+      "meta": {
+        "sourceId": "1od2FleTqiB-0jwZgsXLtI7gDoJo9luT",
+        "source": "ooyala"
+      },
+      "id": "ooyala-1od2FleTqiB-0jwZgsXLtI7gDoJo9luT",
+      "links": {
+        "self": "http://device.oddworks.io/v2/videos/ooyala-1od2FleTqiB-0jwZgsXLtI7gDoJo9luT"
+      },
+      "attributes": {
+        "title": "Ben Jones rides Handsome Jeff for 89.5 points",
+        "description": "Ben Jones rides Handsome Jeff for 89.5 points in Round 4 of the 2015 PBR BFTS World Finals in Las Vegas, NV",
+        "images": {
+          "aspect16x9": "http://image.oddworks.io/eooyala/1od2FleTqiB-0jwZgsXLtI7gDoJo9luT/PE3O6Z9ojHeNSk7H4zMDoxOjBzMTu0hl.jpg",
+          "aspect4x3": "http://image.oddworks.io/edummyimage/4:3x1440&text=placeholder.png",
+          "aspect3x4": "http://image.oddworks.io/edummyimage/3:4x1920&text=placeholder.png",
+          "aspect1x1": "http://image.oddworks.io/edummyimage/1:1x1920&text=placeholder.png",
+          "aspect2x3": "http://image.oddworks.io/edummyimage/2:3x1920&text=placeholder.png"
+        },
+        "actors": [],
+        "tags": [],
+        "duration": 82515,
+        "releaseDate": "2015-12-08T16:53:18Z",
+        "updatedAt": "2016-01-03T19:22:53Z",
+        "createdAt": "2015-12-08T16:53:18Z",
+        "organization": "pbr",
+        "ads": {
+          "provider": "freewheel",
+          "format": "VAST",
+          "assetId": "1od2FleTqiB-0jwZgsXLtI7gDoJo9luT"
+        },
+        "overlays": {},
+        "player": {
+          "type": "ooyala",
+          "pCode": "5meWUyOipwedhLMDFYYFdAYmnGKl",
+          "domain": "http://ooyala.com",
+          "embedCode": "1od2FleTqiB-0jwZgsXLtI7gDoJo9luT"
+        },
+        "url": "http://player.ooyala.com/player/appletv/1od2FleTqiB-0jwZgsXLtI7gDoJo9luT.m3u8"
+      }
+    },
+    {
+      "type": "video",
+      "meta": {
+        "sourceId": "1md2FleTrGdiuicFAhUOUk93wEfI-rng",
+        "source": "ooyala"
+      },
+      "id": "ooyala-1md2FleTrGdiuicFAhUOUk93wEfI-rng",
+      "links": {
+        "self": "http://device.oddworks.io/v2/videos/ooyala-1md2FleTrGdiuicFAhUOUk93wEfI-rng"
+      },
+      "attributes": {
+        "title": "WINNING RIDE: J.B. Mauney rides Bruiser for 92.75 points",
+        "description": "J.B. Mauney rides Bruiser for 92.75 points to win Round 4 of the 2015 PBR BFTS World Finals in Las Vegas, NV.",
+        "images": {
+          "aspect16x9": "http://image.oddworks.io/eooyala/1md2FleTrGdiuicFAhUOUk93wEfI-rng/QCdjB5HwFOTaWQ8X4zMDoxOjBzMTu0hl.jpg",
+          "aspect4x3": "http://image.oddworks.io/edummyimage/4:3x1440&text=placeholder.png",
+          "aspect3x4": "http://image.oddworks.io/edummyimage/3:4x1920&text=placeholder.png",
+          "aspect1x1": "http://image.oddworks.io/edummyimage/1:1x1920&text=placeholder.png",
+          "aspect2x3": "http://image.oddworks.io/edummyimage/2:3x1920&text=placeholder.png"
+        },
+        "actors": [],
+        "tags": [],
+        "duration": 104037,
+        "releaseDate": "2015-12-08T16:53:18Z",
+        "updatedAt": "2016-01-03T19:25:26Z",
+        "createdAt": "2015-12-08T16:53:18Z",
+        "organization": "pbr",
+        "ads": {
+          "provider": "freewheel",
+          "format": "VAST",
+          "assetId": "1md2FleTrGdiuicFAhUOUk93wEfI-rng"
+        },
+        "overlays": {},
+        "player": {
+          "type": "ooyala",
+          "pCode": "5meWUyOipwedhLMDFYYFdAYmnGKl",
+          "domain": "http://ooyala.com",
+          "embedCode": "1md2FleTrGdiuicFAhUOUk93wEfI-rng"
+        },
+        "url": "http://player.ooyala.com/player/appletv/1md2FleTrGdiuicFAhUOUk93wEfI-rng.m3u8"
+      }
+    },
+    {
+      "type": "video",
+      "meta": {
+        "sourceId": "93dmFleTr2fsGp0QfB23C1H0oKJ2WqQ3",
+        "source": "ooyala"
+      },
+      "id": "ooyala-93dmFleTr2fsGp0QfB23C1H0oKJ2WqQ3",
+      "links": {
+        "self": "http://device.oddworks.io/v2/videos/ooyala-93dmFleTr2fsGp0QfB23C1H0oKJ2WqQ3"
+      },
+      "attributes": {
+        "title": "WRECK: Robson Palermo takes a hit from Fire Rock",
+        "description": "Robson Palermo takes a hit from Fire Rock in round 3 of the 2015 PBR BFTS Finals in Las Vegas. He sustained a neck injury but recovered quickly.",
+        "images": {
+          "aspect16x9": "http://image.oddworks.io/eooyala/93dmFleTr2fsGp0QfB23C1H0oKJ2WqQ3/AZ2ZgMjz0LFGHCPn4zMDoxOjBzMTu0hl.jpg",
+          "aspect4x3": "http://image.oddworks.io/edummyimage/4:3x1440&text=placeholder.png",
+          "aspect3x4": "http://image.oddworks.io/edummyimage/3:4x1920&text=placeholder.png",
+          "aspect1x1": "http://image.oddworks.io/edummyimage/1:1x1920&text=placeholder.png",
+          "aspect2x3": "http://image.oddworks.io/edummyimage/2:3x1920&text=placeholder.png"
+        },
+        "actors": [],
+        "tags": [],
+        "duration": 169102,
+        "releaseDate": "2015-12-08T16:52:54Z",
+        "updatedAt": "2016-01-03T19:52:42Z",
+        "createdAt": "2015-12-08T16:52:54Z",
+        "organization": "pbr",
+        "ads": {
+          "provider": "freewheel",
+          "format": "VAST",
+          "assetId": "93dmFleTr2fsGp0QfB23C1H0oKJ2WqQ3"
+        },
+        "overlays": {},
+        "player": {
+          "type": "ooyala",
+          "pCode": "5meWUyOipwedhLMDFYYFdAYmnGKl",
+          "domain": "http://ooyala.com",
+          "embedCode": "93dmFleTr2fsGp0QfB23C1H0oKJ2WqQ3"
+        },
+        "url": "http://player.ooyala.com/player/appletv/93dmFleTr2fsGp0QfB23C1H0oKJ2WqQ3.m3u8"
+      }
+    },
+    {
+      "type": "video",
+      "meta": {
+        "sourceId": "91dmFleToMOcx8zz99W7YSGUBRAjb0v6",
+        "source": "ooyala"
+      },
+      "id": "ooyala-91dmFleToMOcx8zz99W7YSGUBRAjb0v6",
+      "links": {
+        "self": "http://device.oddworks.io/v2/videos/ooyala-91dmFleToMOcx8zz99W7YSGUBRAjb0v6"
+      },
+      "attributes": {
+        "title": "WRECK Alexandre Cardozo gets hit by Fire House",
+        "description": "Fire House bucks off Alexandre Cardozo to cause a neck injury during round 3 of the 2015 PBR BFTS Finals in Las Vegas.",
+        "images": {
+          "aspect16x9": "http://image.oddworks.io/eooyala/91dmFleToMOcx8zz99W7YSGUBRAjb0v6/3Gduepif0T1UGY8H41MDoxOjBzMTt_Du.jpg",
+          "aspect4x3": "http://image.oddworks.io/edummyimage/4:3x1440&text=placeholder.png",
+          "aspect3x4": "http://image.oddworks.io/edummyimage/3:4x1920&text=placeholder.png",
+          "aspect1x1": "http://image.oddworks.io/edummyimage/1:1x1920&text=placeholder.png",
+          "aspect2x3": "http://image.oddworks.io/edummyimage/2:3x1920&text=placeholder.png"
+        },
+        "actors": [],
+        "tags": [],
+        "duration": 95261,
+        "releaseDate": "2015-12-08T16:52:53Z",
+        "updatedAt": "2016-01-03T20:08:33Z",
+        "createdAt": "2015-12-08T16:52:53Z",
+        "organization": "pbr",
+        "ads": {
+          "provider": "freewheel",
+          "format": "VAST",
+          "assetId": "91dmFleToMOcx8zz99W7YSGUBRAjb0v6"
+        },
+        "overlays": {},
+        "player": {
+          "type": "ooyala",
+          "pCode": "5meWUyOipwedhLMDFYYFdAYmnGKl",
+          "domain": "http://ooyala.com",
+          "embedCode": "91dmFleToMOcx8zz99W7YSGUBRAjb0v6"
+        },
+        "url": "http://player.ooyala.com/player/appletv/91dmFleToMOcx8zz99W7YSGUBRAjb0v6.m3u8"
+      }
+    },
+    {
+      "type": "video",
+      "meta": {
+        "sourceId": "9xdmFleTrJ5Yg9TVJPZVgz1G1daaGPE2",
+        "source": "ooyala"
+      },
+      "id": "ooyala-9xdmFleTrJ5Yg9TVJPZVgz1G1daaGPE2",
+      "links": {
+        "self": "http://device.oddworks.io/v2/videos/ooyala-9xdmFleTrJ5Yg9TVJPZVgz1G1daaGPE2"
+      },
+      "attributes": {
+        "title": "WINNING RIDE: Silvano Alves earns 89 points on Rebel Yell",
+        "description": "Silvano Alves earns 89 points to win Round 3 of the 2015 PBR BFTS World Finals in Las Vegas, NV.",
+        "images": {
+          "aspect16x9": "http://image.oddworks.io/eooyala/9xdmFleTrJ5Yg9TVJPZVgz1G1daaGPE2/Ut_HKthATH4eww8X4zMDoxOjBzMTu0hl.jpg",
+          "aspect4x3": "http://image.oddworks.io/edummyimage/4:3x1440&text=placeholder.png",
+          "aspect3x4": "http://image.oddworks.io/edummyimage/3:4x1920&text=placeholder.png",
+          "aspect1x1": "http://image.oddworks.io/edummyimage/1:1x1920&text=placeholder.png",
+          "aspect2x3": "http://image.oddworks.io/edummyimage/2:3x1920&text=placeholder.png"
+        },
+        "actors": [],
+        "tags": [],
+        "duration": 57490,
+        "releaseDate": "2015-12-08T16:52:53Z",
+        "updatedAt": "2016-01-03T19:55:26Z",
+        "createdAt": "2015-12-08T16:52:53Z",
+        "organization": "pbr",
+        "ads": {
+          "provider": "freewheel",
+          "format": "VAST",
+          "assetId": "9xdmFleTrJ5Yg9TVJPZVgz1G1daaGPE2"
+        },
+        "overlays": {},
+        "player": {
+          "type": "ooyala",
+          "pCode": "5meWUyOipwedhLMDFYYFdAYmnGKl",
+          "domain": "http://ooyala.com",
+          "embedCode": "9xdmFleTrJ5Yg9TVJPZVgz1G1daaGPE2"
+        },
+        "url": "http://player.ooyala.com/player/appletv/9xdmFleTrJ5Yg9TVJPZVgz1G1daaGPE2.m3u8"
+      }
+    },
+    {
+      "type": "video",
+      "meta": {
+        "sourceId": "9vdmFleTrhBljZB6EJPQ5AKkmVfIXALd",
+        "source": "ooyala"
+      },
+      "id": "ooyala-9vdmFleTrhBljZB6EJPQ5AKkmVfIXALd",
+      "links": {
+        "self": "http://device.oddworks.io/v2/videos/ooyala-9vdmFleTrhBljZB6EJPQ5AKkmVfIXALd"
+      },
+      "attributes": {
+        "title": "Matt Triplett rides Little Willie for 88 points",
+        "description": "Matt Triplett rides Little Willie for 88 points in Round 3 of the 2015 PBR BFTS World Finals in Las Vegas, NV.",
+        "images": {
+          "aspect16x9": "http://image.oddworks.io/eooyala/9vdmFleTrhBljZB6EJPQ5AKkmVfIXALd/DLOokYc8UKM-fB9H4zMDoxOjBzMTu0hl.jpg",
+          "aspect4x3": "http://image.oddworks.io/edummyimage/4:3x1440&text=placeholder.png",
+          "aspect3x4": "http://image.oddworks.io/edummyimage/3:4x1920&text=placeholder.png",
+          "aspect1x1": "http://image.oddworks.io/edummyimage/1:1x1920&text=placeholder.png",
+          "aspect2x3": "http://image.oddworks.io/edummyimage/2:3x1920&text=placeholder.png"
+        },
+        "actors": [],
+        "tags": [],
+        "duration": 81014,
+        "releaseDate": "2015-12-08T16:52:53Z",
+        "updatedAt": "2016-01-03T20:01:58Z",
+        "createdAt": "2015-12-08T16:52:53Z",
+        "organization": "pbr",
+        "ads": {
+          "provider": "freewheel",
+          "format": "VAST",
+          "assetId": "9vdmFleTrhBljZB6EJPQ5AKkmVfIXALd"
+        },
+        "overlays": {},
+        "player": {
+          "type": "ooyala",
+          "pCode": "5meWUyOipwedhLMDFYYFdAYmnGKl",
+          "domain": "http://ooyala.com",
+          "embedCode": "9vdmFleTrhBljZB6EJPQ5AKkmVfIXALd"
+        },
+        "url": "http://player.ooyala.com/player/appletv/9vdmFleTrhBljZB6EJPQ5AKkmVfIXALd.m3u8"
+      }
+    },
+    {
+      "type": "video",
+      "meta": {
+        "sourceId": "9tdmFleTpN_hwyb-RLMn48uIXJ2qA0iB",
+        "source": "ooyala"
+      },
+      "id": "ooyala-9tdmFleTpN_hwyb-RLMn48uIXJ2qA0iB",
+      "links": {
+        "self": "http://device.oddworks.io/v2/videos/ooyala-9tdmFleTpN_hwyb-RLMn48uIXJ2qA0iB"
+      },
+      "attributes": {
+        "title": "J. B. Mauney covers Say Goodbye for 86.5 points",
+        "description": "J. B. Mauney covers Say Goodbye for 86.5 points in Round 3 of the 2015 PBR BFTS World Finals in Las Vegas, NV",
+        "images": {
+          "aspect16x9": "http://image.oddworks.io/eooyala/9tdmFleTpN_hwyb-RLMn48uIXJ2qA0iB/PE3O6Z9ojHeNSk7H4zMDoxOjBzMTu0hl.jpg",
+          "aspect4x3": "http://image.oddworks.io/edummyimage/4:3x1440&text=placeholder.png",
+          "aspect3x4": "http://image.oddworks.io/edummyimage/3:4x1920&text=placeholder.png",
+          "aspect1x1": "http://image.oddworks.io/edummyimage/1:1x1920&text=placeholder.png",
+          "aspect2x3": "http://image.oddworks.io/edummyimage/2:3x1920&text=placeholder.png"
+        },
+        "actors": [],
+        "tags": [],
+        "duration": 76509,
+        "releaseDate": "2015-12-08T16:52:53Z",
+        "updatedAt": "2016-01-03T20:03:54Z",
+        "createdAt": "2015-12-08T16:52:53Z",
+        "organization": "pbr",
+        "ads": {
+          "provider": "freewheel",
+          "format": "VAST",
+          "assetId": "9tdmFleTpN_hwyb-RLMn48uIXJ2qA0iB"
+        },
+        "overlays": {},
+        "player": {
+          "type": "ooyala",
+          "pCode": "5meWUyOipwedhLMDFYYFdAYmnGKl",
+          "domain": "http://ooyala.com",
+          "embedCode": "9tdmFleTpN_hwyb-RLMn48uIXJ2qA0iB"
+        },
+        "url": "http://player.ooyala.com/player/appletv/9tdmFleTpN_hwyb-RLMn48uIXJ2qA0iB.m3u8"
+      }
+    },
+    {
+      "type": "video",
+      "meta": {
+        "sourceId": "9rdmFleTorcLMjI0wyXu1e2m73oJVq2S",
+        "source": "ooyala"
+      },
+      "id": "ooyala-9rdmFleTorcLMjI0wyXu1e2m73oJVq2S",
+      "links": {
+        "self": "http://device.oddworks.io/v2/videos/ooyala-9rdmFleTorcLMjI0wyXu1e2m73oJVq2S"
+      },
+      "attributes": {
+        "title": "Cooper Davis covers Compact for 87.50 points",
+        "description": "Cooper Davis covers Compact for 87.50 points in Round 3 of the 2015 PBR BFTS World Finals in Las Vegas, NV.",
+        "images": {
+          "aspect16x9": "http://image.oddworks.io/eooyala/9rdmFleTorcLMjI0wyXu1e2m73oJVq2S/Ut_HKthATH4eww8X4zMDoxOjBzMTu0hl.jpg",
+          "aspect4x3": "http://image.oddworks.io/edummyimage/4:3x1440&text=placeholder.png",
+          "aspect3x4": "http://image.oddworks.io/edummyimage/3:4x1920&text=placeholder.png",
+          "aspect1x1": "http://image.oddworks.io/edummyimage/1:1x1920&text=placeholder.png",
+          "aspect2x3": "http://image.oddworks.io/edummyimage/2:3x1920&text=placeholder.png"
+        },
+        "actors": [],
+        "tags": [],
+        "duration": 67000,
+        "releaseDate": "2015-12-08T16:52:53Z",
+        "updatedAt": "2016-01-03T20:10:53Z",
+        "createdAt": "2015-12-08T16:52:53Z",
+        "organization": "pbr",
+        "ads": {
+          "provider": "freewheel",
+          "format": "VAST",
+          "assetId": "9rdmFleTorcLMjI0wyXu1e2m73oJVq2S"
+        },
+        "overlays": {},
+        "player": {
+          "type": "ooyala",
+          "pCode": "5meWUyOipwedhLMDFYYFdAYmnGKl",
+          "domain": "http://ooyala.com",
+          "embedCode": "9rdmFleTorcLMjI0wyXu1e2m73oJVq2S"
+        },
+        "url": "http://player.ooyala.com/player/appletv/9rdmFleTorcLMjI0wyXu1e2m73oJVq2S.m3u8"
+      }
+    },
+    {
+      "type": "video",
+      "meta": {
+        "sourceId": "A4dmFleTqR_rWXOpIjoHF8bv7UliQN66",
+        "source": "ooyala"
+      },
+      "id": "ooyala-A4dmFleTqR_rWXOpIjoHF8bv7UliQN66",
+      "links": {
+        "self": "http://device.oddworks.io/v2/videos/ooyala-A4dmFleTqR_rWXOpIjoHF8bv7UliQN66"
+      },
+      "attributes": {
+        "title": "WINNING RIDE: Bonner Bolton rides Walk Off for 90.5 points",
+        "description": "Bonner Bolton rides Walk Off for 90.5 points to win Round 2 of the PBR BFTS World Finals in Las Vegas, NV.",
+        "images": {
+          "aspect16x9": "http://image.oddworks.io/eooyala/A4dmFleTqR_rWXOpIjoHF8bv7UliQN66/QCdjB5HwFOTaWQ8X4zMDoxOjBzMTu0hl.jpg",
+          "aspect4x3": "http://image.oddworks.io/edummyimage/4:3x1440&text=placeholder.png",
+          "aspect3x4": "http://image.oddworks.io/edummyimage/3:4x1920&text=placeholder.png",
+          "aspect1x1": "http://image.oddworks.io/edummyimage/1:1x1920&text=placeholder.png",
+          "aspect2x3": "http://image.oddworks.io/edummyimage/2:3x1920&text=placeholder.png"
+        },
+        "actors": [],
+        "tags": [],
+        "duration": 58491,
+        "releaseDate": "2015-12-08T16:52:40Z",
+        "updatedAt": "2016-01-03T20:14:56Z",
+        "createdAt": "2015-12-08T16:52:40Z",
+        "organization": "pbr",
+        "ads": {
+          "provider": "freewheel",
+          "format": "VAST",
+          "assetId": "A4dmFleTqR_rWXOpIjoHF8bv7UliQN66"
+        },
+        "overlays": {},
+        "player": {
+          "type": "ooyala",
+          "pCode": "5meWUyOipwedhLMDFYYFdAYmnGKl",
+          "domain": "http://ooyala.com",
+          "embedCode": "A4dmFleTqR_rWXOpIjoHF8bv7UliQN66"
+        },
+        "url": "http://player.ooyala.com/player/appletv/A4dmFleTqR_rWXOpIjoHF8bv7UliQN66.m3u8"
+      }
+    },
+    {
+      "type": "video",
+      "meta": {
+        "sourceId": "82dmFleTr-v3JpcaJ0tYNoRiEYUUxdjW",
+        "source": "ooyala"
+      },
+      "id": "ooyala-82dmFleTr-v3JpcaJ0tYNoRiEYUUxdjW",
+      "links": {
+        "self": "http://device.oddworks.io/v2/videos/ooyala-82dmFleTr-v3JpcaJ0tYNoRiEYUUxdjW"
+      },
+      "attributes": {
+        "title": "Gage Gay covers Sasquatch for 88.25 points",
+        "description": "Gage Gay covers Sasquatch for 88.25 points in Round 2 of the PBR BFTS World Finals in Las Vegas, NV.",
+        "images": {
+          "aspect16x9": "http://image.oddworks.io/eooyala/82dmFleTr-v3JpcaJ0tYNoRiEYUUxdjW/Ut_HKthATH4eww8X41MDoxOjBzMTt_Du.jpg",
+          "aspect4x3": "http://image.oddworks.io/edummyimage/4:3x1440&text=placeholder.png",
+          "aspect3x4": "http://image.oddworks.io/edummyimage/3:4x1920&text=placeholder.png",
+          "aspect1x1": "http://image.oddworks.io/edummyimage/1:1x1920&text=placeholder.png",
+          "aspect2x3": "http://image.oddworks.io/edummyimage/2:3x1920&text=placeholder.png"
+        },
+        "actors": [],
+        "tags": [],
+        "duration": 56489,
+        "releaseDate": "2015-12-08T16:52:39Z",
+        "updatedAt": "2016-01-03T20:18:23Z",
+        "createdAt": "2015-12-08T16:52:39Z",
+        "organization": "pbr",
+        "ads": {
+          "provider": "freewheel",
+          "format": "VAST",
+          "assetId": "82dmFleTr-v3JpcaJ0tYNoRiEYUUxdjW"
+        },
+        "overlays": {},
+        "player": {
+          "type": "ooyala",
+          "pCode": "5meWUyOipwedhLMDFYYFdAYmnGKl",
+          "domain": "http://ooyala.com",
+          "embedCode": "82dmFleTr-v3JpcaJ0tYNoRiEYUUxdjW"
+        },
+        "url": "http://player.ooyala.com/player/appletv/82dmFleTr-v3JpcaJ0tYNoRiEYUUxdjW.m3u8"
+      }
+    },
+    {
+      "type": "video",
+      "meta": {
+        "sourceId": "80dmFleTra9_8J5O5VaeSIukKEFY_tB1",
+        "source": "ooyala"
+      },
+      "id": "ooyala-80dmFleTra9_8J5O5VaeSIukKEFY_tB1",
+      "links": {
+        "self": "http://device.oddworks.io/v2/videos/ooyala-80dmFleTra9_8J5O5VaeSIukKEFY_tB1"
+      },
+      "attributes": {
+        "title": "WRECK: Chase Outlaw takes a hit from Modified Clyde ",
+        "description": "Chase Outlaw takes a hit from Modified Clyde in Round 2 of the PBR BFTS World Finals in Las Vegas, NV",
+        "images": {
+          "aspect16x9": "http://image.oddworks.io/eooyala/80dmFleTra9_8J5O5VaeSIukKEFY_tB1/QCdjB5HwFOTaWQ8X40MDoxOjBzMTtbGs.jpg",
+          "aspect4x3": "http://image.oddworks.io/edummyimage/4:3x1440&text=placeholder.png",
+          "aspect3x4": "http://image.oddworks.io/edummyimage/3:4x1920&text=placeholder.png",
+          "aspect1x1": "http://image.oddworks.io/edummyimage/1:1x1920&text=placeholder.png",
+          "aspect2x3": "http://image.oddworks.io/edummyimage/2:3x1920&text=placeholder.png"
+        },
+        "actors": [],
+        "tags": [],
+        "duration": 69002,
+        "releaseDate": "2015-12-08T16:52:39Z",
+        "updatedAt": "2016-01-03T20:20:47Z",
+        "createdAt": "2015-12-08T16:52:39Z",
+        "organization": "pbr",
+        "ads": {
+          "provider": "freewheel",
+          "format": "VAST",
+          "assetId": "80dmFleTra9_8J5O5VaeSIukKEFY_tB1"
+        },
+        "overlays": {},
+        "player": {
+          "type": "ooyala",
+          "pCode": "5meWUyOipwedhLMDFYYFdAYmnGKl",
+          "domain": "http://ooyala.com",
+          "embedCode": "80dmFleTra9_8J5O5VaeSIukKEFY_tB1"
+        },
+        "url": "http://player.ooyala.com/player/appletv/80dmFleTra9_8J5O5VaeSIukKEFY_tB1.m3u8"
+      }
+    },
+    {
+      "type": "video",
+      "meta": {
+        "sourceId": "8ydmFleToFRSmfAOzDTDZq1JxDDxw_Kd",
+        "source": "ooyala"
+      },
+      "id": "ooyala-8ydmFleToFRSmfAOzDTDZq1JxDDxw_Kd",
+      "links": {
+        "self": "http://device.oddworks.io/v2/videos/ooyala-8ydmFleToFRSmfAOzDTDZq1JxDDxw_Kd"
+      },
+      "attributes": {
+        "title": "Long John earns 45.25-point bull score",
+        "description": "Sweet Pro’s Long John earns 45.25-point bull score and bucks off Alexander Cardozo in Round 2 of the PBR BFTS World Finals in Las Vegas, NV.",
+        "images": {
+          "aspect16x9": "http://image.oddworks.io/eooyala/8ydmFleToFRSmfAOzDTDZq1JxDDxw_Kd/DLOokYc8UKM-fB9H4zMDoxOjBzMTu0hl.jpg",
+          "aspect4x3": "http://image.oddworks.io/edummyimage/4:3x1440&text=placeholder.png",
+          "aspect3x4": "http://image.oddworks.io/edummyimage/3:4x1920&text=placeholder.png",
+          "aspect1x1": "http://image.oddworks.io/edummyimage/1:1x1920&text=placeholder.png",
+          "aspect2x3": "http://image.oddworks.io/edummyimage/2:3x1920&text=placeholder.png"
+        },
+        "actors": [],
+        "tags": [],
+        "duration": 46880,
+        "releaseDate": "2015-12-08T16:52:39Z",
+        "updatedAt": "2016-01-03T20:16:28Z",
+        "createdAt": "2015-12-08T16:52:39Z",
+        "organization": "pbr",
+        "ads": {
+          "provider": "freewheel",
+          "format": "VAST",
+          "assetId": "8ydmFleToFRSmfAOzDTDZq1JxDDxw_Kd"
+        },
+        "overlays": {},
+        "player": {
+          "type": "ooyala",
+          "pCode": "5meWUyOipwedhLMDFYYFdAYmnGKl",
+          "domain": "http://ooyala.com",
+          "embedCode": "8ydmFleToFRSmfAOzDTDZq1JxDDxw_Kd"
+        },
+        "url": "http://player.ooyala.com/player/appletv/8ydmFleToFRSmfAOzDTDZq1JxDDxw_Kd.m3u8"
+      }
+    },
+    {
+      "type": "video",
+      "meta": {
+        "sourceId": "8wdmFleTqghM8KlrfpwI7dodo8xekebZ",
+        "source": "ooyala"
+      },
+      "id": "ooyala-8wdmFleTqghM8KlrfpwI7dodo8xekebZ",
+      "links": {
+        "self": "http://device.oddworks.io/v2/videos/ooyala-8wdmFleTqghM8KlrfpwI7dodo8xekebZ"
+      },
+      "attributes": {
+        "title": "Kaique Pacheco rides Born Sinner",
+        "description": "Kaique Pacheco covers Born Sinner for 81.75 points in round 2 of the 2015 PBR BFTS World Finals in Las Vegas, NV.",
+        "images": {
+          "aspect16x9": "http://image.oddworks.io/eooyala/8wdmFleTqghM8KlrfpwI7dodo8xekebZ/MGngRNnbuHoiqTJH40MDoxOjBzMTtbGs.jpg",
+          "aspect4x3": "http://image.oddworks.io/edummyimage/4:3x1440&text=placeholder.png",
+          "aspect3x4": "http://image.oddworks.io/edummyimage/3:4x1920&text=placeholder.png",
+          "aspect1x1": "http://image.oddworks.io/edummyimage/1:1x1920&text=placeholder.png",
+          "aspect2x3": "http://image.oddworks.io/edummyimage/2:3x1920&text=placeholder.png"
+        },
+        "actors": [],
+        "tags": [],
+        "duration": 93026,
+        "releaseDate": "2015-12-08T16:52:39Z",
+        "updatedAt": "2016-01-03T20:29:58Z",
+        "createdAt": "2015-12-08T16:52:39Z",
+        "organization": "pbr",
+        "ads": {
+          "provider": "freewheel",
+          "format": "VAST",
+          "assetId": "8wdmFleTqghM8KlrfpwI7dodo8xekebZ"
+        },
+        "overlays": {},
+        "player": {
+          "type": "ooyala",
+          "pCode": "5meWUyOipwedhLMDFYYFdAYmnGKl",
+          "domain": "http://ooyala.com",
+          "embedCode": "8wdmFleTqghM8KlrfpwI7dodo8xekebZ"
+        },
+        "url": "http://player.ooyala.com/player/appletv/8wdmFleTqghM8KlrfpwI7dodo8xekebZ.m3u8"
+      }
+    },
+    {
+      "type": "video",
+      "meta": {
+        "sourceId": "94dWFleTr-rBRuvW8Z3u3vA3duVJ4Iw6",
+        "source": "ooyala"
+      },
+      "id": "ooyala-94dWFleTr-rBRuvW8Z3u3vA3duVJ4Iw6",
+      "links": {
+        "self": "http://device.oddworks.io/v2/videos/ooyala-94dWFleTr-rBRuvW8Z3u3vA3duVJ4Iw6"
+      },
+      "attributes": {
+        "title": "TOP BULL: Air Time bucks off Renato Nunes for 47 points",
+        "description": "Air Time bucks off Renato Nunes for 47 points in Round 2 of the PBR BFTS World Finals in Las Vegas, NV.",
+        "images": {
+          "aspect16x9": "http://image.oddworks.io/eooyala/94dWFleTr-rBRuvW8Z3u3vA3duVJ4Iw6/3Gduepif0T1UGY8H4xNTA6MTowczE7zm.jpg",
+          "aspect4x3": "http://image.oddworks.io/edummyimage/4:3x1440&text=placeholder.png",
+          "aspect3x4": "http://image.oddworks.io/edummyimage/3:4x1920&text=placeholder.png",
+          "aspect1x1": "http://image.oddworks.io/edummyimage/1:1x1920&text=placeholder.png",
+          "aspect2x3": "http://image.oddworks.io/edummyimage/2:3x1920&text=placeholder.png"
+        },
+        "actors": [],
+        "tags": [],
+        "duration": 79512,
+        "releaseDate": "2015-12-08T16:52:39Z",
+        "updatedAt": "2016-01-03T21:03:56Z",
+        "createdAt": "2015-12-08T16:52:39Z",
+        "organization": "pbr",
+        "ads": {
+          "provider": "freewheel",
+          "format": "VAST",
+          "assetId": "94dWFleTr-rBRuvW8Z3u3vA3duVJ4Iw6"
+        },
+        "overlays": {},
+        "player": {
+          "type": "ooyala",
+          "pCode": "5meWUyOipwedhLMDFYYFdAYmnGKl",
+          "domain": "http://ooyala.com",
+          "embedCode": "94dWFleTr-rBRuvW8Z3u3vA3duVJ4Iw6"
+        },
+        "url": "http://player.ooyala.com/player/appletv/94dWFleTr-rBRuvW8Z3u3vA3duVJ4Iw6.m3u8"
+      }
+    },
+    {
+      "type": "video",
+      "meta": {
+        "sourceId": "tydWFleTpHbU7RuW5tB7hGwHbNnus4s4",
+        "source": "ooyala"
+      },
+      "id": "ooyala-tydWFleTpHbU7RuW5tB7hGwHbNnus4s4",
+      "links": {
+        "self": "http://device.oddworks.io/v2/videos/ooyala-tydWFleTpHbU7RuW5tB7hGwHbNnus4s4"
+      },
+      "attributes": {
+        "title": "WRECK: Luis Blanco gets stepped on by Cowtown Rock ",
+        "description": "Luis Blanco gets stepped on by Cowtown Rock in Round 1 of the 2015 PBR BFTS World Finals in Las Vegas, NV.\n",
+        "images": {
+          "aspect16x9": "http://image.oddworks.io/eooyala/tydWFleTpHbU7RuW5tB7hGwHbNnus4s4/PE3O6Z9ojHeNSk7H40MDoxOjBzMTtbGs.jpg",
+          "aspect4x3": "http://image.oddworks.io/edummyimage/4:3x1440&text=placeholder.png",
+          "aspect3x4": "http://image.oddworks.io/edummyimage/3:4x1920&text=placeholder.png",
+          "aspect1x1": "http://image.oddworks.io/edummyimage/1:1x1920&text=placeholder.png",
+          "aspect2x3": "http://image.oddworks.io/edummyimage/2:3x1920&text=placeholder.png"
+        },
+        "actors": [],
+        "tags": [],
+        "duration": 67500,
+        "releaseDate": "2015-12-08T16:52:18Z",
+        "updatedAt": "2016-01-03T20:48:20Z",
+        "createdAt": "2015-12-08T16:52:18Z",
+        "organization": "pbr",
+        "ads": {
+          "provider": "freewheel",
+          "format": "VAST",
+          "assetId": "tydWFleTpHbU7RuW5tB7hGwHbNnus4s4"
+        },
+        "overlays": {},
+        "player": {
+          "type": "ooyala",
+          "pCode": "5meWUyOipwedhLMDFYYFdAYmnGKl",
+          "domain": "http://ooyala.com",
+          "embedCode": "tydWFleTpHbU7RuW5tB7hGwHbNnus4s4"
+        },
+        "url": "http://player.ooyala.com/player/appletv/tydWFleTpHbU7RuW5tB7hGwHbNnus4s4.m3u8"
+      }
+    },
+    {
+      "type": "video",
+      "meta": {
+        "sourceId": "twdWFleTruhQ2fFOWXmufOU6xDCiqoKP",
+        "source": "ooyala"
+      },
+      "id": "ooyala-twdWFleTruhQ2fFOWXmufOU6xDCiqoKP",
+      "links": {
+        "self": "http://device.oddworks.io/v2/videos/ooyala-twdWFleTruhQ2fFOWXmufOU6xDCiqoKP"
+      },
+      "attributes": {
+        "title": "WRECK: Matt Triplett takes a hit from Cracker Jack",
+        "description": "Matt Triplett takes a hit from Cracker Jack in Round 1 of the 2015 PBR BFTS World Finals in Las Vegas, NV.",
+        "images": {
+          "aspect16x9": "http://image.oddworks.io/eooyala/twdWFleTruhQ2fFOWXmufOU6xDCiqoKP/Ut_HKthATH4eww8X40MDoxOjBzMTtbGs.jpg",
+          "aspect4x3": "http://image.oddworks.io/edummyimage/4:3x1440&text=placeholder.png",
+          "aspect3x4": "http://image.oddworks.io/edummyimage/3:4x1920&text=placeholder.png",
+          "aspect1x1": "http://image.oddworks.io/edummyimage/1:1x1920&text=placeholder.png",
+          "aspect2x3": "http://image.oddworks.io/edummyimage/2:3x1920&text=placeholder.png"
+        },
+        "actors": [],
+        "tags": [],
+        "duration": 56089,
+        "releaseDate": "2015-12-08T16:52:18Z",
+        "updatedAt": "2016-01-03T20:48:35Z",
+        "createdAt": "2015-12-08T16:52:18Z",
+        "organization": "pbr",
+        "ads": {
+          "provider": "freewheel",
+          "format": "VAST",
+          "assetId": "twdWFleTruhQ2fFOWXmufOU6xDCiqoKP"
+        },
+        "overlays": {},
+        "player": {
+          "type": "ooyala",
+          "pCode": "5meWUyOipwedhLMDFYYFdAYmnGKl",
+          "domain": "http://ooyala.com",
+          "embedCode": "twdWFleTruhQ2fFOWXmufOU6xDCiqoKP"
+        },
+        "url": "http://player.ooyala.com/player/appletv/twdWFleTruhQ2fFOWXmufOU6xDCiqoKP.m3u8"
+      }
+    },
+    {
+      "type": "video",
+      "meta": {
+        "sourceId": "tudWFleToyO84qwhVhuXGmU5Czi-vNfR",
+        "source": "ooyala"
+      },
+      "id": "ooyala-tudWFleToyO84qwhVhuXGmU5Czi-vNfR",
+      "links": {
+        "self": "http://device.oddworks.io/v2/videos/ooyala-tudWFleToyO84qwhVhuXGmU5Czi-vNfR"
+      },
+      "attributes": {
+        "title": "WRECK: Kasey Hayes has a close call with Brutus",
+        "description": "Kasey Hayes has a near miss with Brutus in Round 1 of the 2015 PBR BFTS World Finals in Las Vegas, NV.",
+        "images": {
+          "aspect16x9": "http://image.oddworks.io/eooyala/tudWFleToyO84qwhVhuXGmU5Czi-vNfR/DLOokYc8UKM-fB9H4zMDoxOjBzMTu0hl.jpg",
+          "aspect4x3": "http://image.oddworks.io/edummyimage/4:3x1440&text=placeholder.png",
+          "aspect3x4": "http://image.oddworks.io/edummyimage/3:4x1920&text=placeholder.png",
+          "aspect1x1": "http://image.oddworks.io/edummyimage/1:1x1920&text=placeholder.png",
+          "aspect2x3": "http://image.oddworks.io/edummyimage/2:3x1920&text=placeholder.png"
+        },
+        "actors": [],
+        "tags": [],
+        "duration": 56489,
+        "releaseDate": "2015-12-08T16:52:18Z",
+        "updatedAt": "2016-01-03T20:44:26Z",
+        "createdAt": "2015-12-08T16:52:18Z",
+        "organization": "pbr",
+        "ads": {
+          "provider": "freewheel",
+          "format": "VAST",
+          "assetId": "tudWFleToyO84qwhVhuXGmU5Czi-vNfR"
+        },
+        "overlays": {},
+        "player": {
+          "type": "ooyala",
+          "pCode": "5meWUyOipwedhLMDFYYFdAYmnGKl",
+          "domain": "http://ooyala.com",
+          "embedCode": "tudWFleToyO84qwhVhuXGmU5Czi-vNfR"
+        },
+        "url": "http://player.ooyala.com/player/appletv/tudWFleToyO84qwhVhuXGmU5Czi-vNfR.m3u8"
+      }
+    },
+    {
+      "type": "video",
+      "meta": {
+        "sourceId": "tsdWFleTpGYt71UAfpzWUOQVRcGgaov8",
+        "source": "ooyala"
+      },
+      "id": "ooyala-tsdWFleTpGYt71UAfpzWUOQVRcGgaov8",
+      "links": {
+        "self": "http://device.oddworks.io/v2/videos/ooyala-tsdWFleTpGYt71UAfpzWUOQVRcGgaov8"
+      },
+      "attributes": {
+        "title": "Fabiano Vieira rides Crazy Days for 86.75 points",
+        "description": "Fabiano Vieira posts 86.75 points in Round 1 on Crazy Days at the 2015 PBR BFTS World Finals in Las Vegas, NV.",
+        "images": {
+          "aspect16x9": "http://image.oddworks.io/eooyala/tsdWFleTpGYt71UAfpzWUOQVRcGgaov8/QCdjB5HwFOTaWQ8X4zMDoxOjBzMTu0hl.jpg",
+          "aspect4x3": "http://image.oddworks.io/edummyimage/4:3x1440&text=placeholder.png",
+          "aspect3x4": "http://image.oddworks.io/edummyimage/3:4x1920&text=placeholder.png",
+          "aspect1x1": "http://image.oddworks.io/edummyimage/1:1x1920&text=placeholder.png",
+          "aspect2x3": "http://image.oddworks.io/edummyimage/2:3x1920&text=placeholder.png"
+        },
+        "actors": [],
+        "tags": [],
+        "duration": 69002,
+        "releaseDate": "2015-12-08T16:52:18Z",
+        "updatedAt": "2016-01-03T20:48:38Z",
+        "createdAt": "2015-12-08T16:52:18Z",
+        "organization": "pbr",
+        "ads": {
+          "provider": "freewheel",
+          "format": "VAST",
+          "assetId": "tsdWFleTpGYt71UAfpzWUOQVRcGgaov8"
+        },
+        "overlays": {},
+        "player": {
+          "type": "ooyala",
+          "pCode": "5meWUyOipwedhLMDFYYFdAYmnGKl",
+          "domain": "http://ooyala.com",
+          "embedCode": "tsdWFleTpGYt71UAfpzWUOQVRcGgaov8"
+        },
+        "url": "http://player.ooyala.com/player/appletv/tsdWFleTpGYt71UAfpzWUOQVRcGgaov8.m3u8"
+      }
+    },
+    {
+      "type": "video",
+      "meta": {
+        "sourceId": "tqdWFleTolrls93OBDqc4a0t-tXCzGgG",
+        "source": "ooyala"
+      },
+      "id": "ooyala-tqdWFleTolrls93OBDqc4a0t-tXCzGgG",
+      "links": {
+        "self": "http://device.oddworks.io/v2/videos/ooyala-tqdWFleTolrls93OBDqc4a0t-tXCzGgG"
+      },
+      "attributes": {
+        "title": "WINNING RIDE: J.B. Mauney earns a 91-point ride on Wicked Stick",
+        "description": "J.B. Mauney makes monster ride for 91 points on Wicked Stick to win Round 1 of the 2015 PBR BFTS World Finals in Las Vegas, NV",
+        "images": {
+          "aspect16x9": "http://image.oddworks.io/eooyala/tqdWFleTolrls93OBDqc4a0t-tXCzGgG/3Gduepif0T1UGY8H4zMDoxOjBzMTu0hl.jpg",
+          "aspect4x3": "http://image.oddworks.io/edummyimage/4:3x1440&text=placeholder.png",
+          "aspect3x4": "http://image.oddworks.io/edummyimage/3:4x1920&text=placeholder.png",
+          "aspect1x1": "http://image.oddworks.io/edummyimage/1:1x1920&text=placeholder.png",
+          "aspect2x3": "http://image.oddworks.io/edummyimage/2:3x1920&text=placeholder.png"
+        },
+        "actors": [],
+        "tags": [],
+        "duration": 109042,
+        "releaseDate": "2015-12-08T16:52:17Z",
+        "updatedAt": "2016-01-03T20:52:14Z",
+        "createdAt": "2015-12-08T16:52:17Z",
+        "organization": "pbr",
+        "ads": {
+          "provider": "freewheel",
+          "format": "VAST",
+          "assetId": "tqdWFleTolrls93OBDqc4a0t-tXCzGgG"
+        },
+        "overlays": {},
+        "player": {
+          "type": "ooyala",
+          "pCode": "5meWUyOipwedhLMDFYYFdAYmnGKl",
+          "domain": "http://ooyala.com",
+          "embedCode": "tqdWFleTolrls93OBDqc4a0t-tXCzGgG"
+        },
+        "url": "http://player.ooyala.com/player/appletv/tqdWFleTolrls93OBDqc4a0t-tXCzGgG.m3u8"
+      }
+    },
+    {
+      "type": "video",
+      "meta": {
+        "sourceId": "todWFleTp8yD5OATrWITNoxnRvIazmTj",
+        "source": "ooyala"
+      },
+      "id": "ooyala-todWFleTp8yD5OATrWITNoxnRvIazmTj",
+      "links": {
+        "self": "http://device.oddworks.io/v2/videos/ooyala-todWFleTp8yD5OATrWITNoxnRvIazmTj"
+      },
+      "attributes": {
+        "title": "TOP BULL: Bruiser bucks off Eduardo Aparecido posting 44.75 (PBR)",
+        "description": "Eduardo Aparecido bucks off of Bruiser in 2.94 earning a bull score of 44.75 in Round 1 of the 2015 PBR BFTS World Finals in Las Vegas, NV.",
+        "images": {
+          "aspect16x9": "http://image.oddworks.io/eooyala/todWFleTp8yD5OATrWITNoxnRvIazmTj/QCdjB5HwFOTaWQ8X4zMDoxOjBzMTu0hl.jpg",
+          "aspect4x3": "http://image.oddworks.io/edummyimage/4:3x1440&text=placeholder.png",
+          "aspect3x4": "http://image.oddworks.io/edummyimage/3:4x1920&text=placeholder.png",
+          "aspect1x1": "http://image.oddworks.io/edummyimage/1:1x1920&text=placeholder.png",
+          "aspect2x3": "http://image.oddworks.io/edummyimage/2:3x1920&text=placeholder.png"
+        },
+        "actors": [],
+        "tags": [],
+        "duration": 72138,
+        "releaseDate": "2015-12-08T16:52:17Z",
+        "updatedAt": "2016-01-03T19:12:32Z",
+        "createdAt": "2015-12-08T16:52:17Z",
+        "organization": "pbr",
+        "ads": {
+          "provider": "freewheel",
+          "format": "VAST",
+          "assetId": "todWFleTp8yD5OATrWITNoxnRvIazmTj"
+        },
+        "overlays": {},
+        "player": {
+          "type": "ooyala",
+          "pCode": "5meWUyOipwedhLMDFYYFdAYmnGKl",
+          "domain": "http://ooyala.com",
+          "embedCode": "todWFleTp8yD5OATrWITNoxnRvIazmTj"
+        },
+        "url": "http://player.ooyala.com/player/appletv/todWFleTp8yD5OATrWITNoxnRvIazmTj.m3u8"
+      }
+    }
+  ],
+  "meta": {
+    "device": "GOOGLE_ANDROID",
+    "queryParams": {
+      "include": [
+        "true"
+      ]
+    },
+    "userEntitlements": []
+  },
+  "links": {
+    "self": "http://device.oddworks.io/v2/views/pbr-menu%3Finclude=true"
+  }
+}

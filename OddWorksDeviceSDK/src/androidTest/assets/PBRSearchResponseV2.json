@@ -1,0 +1,191 @@
+{
+  "data": [
+    {
+      "type": "video",
+      "meta": {
+        "sourceId": "1md2FleTrGdiuicFAhUOUk93wEfI-rng",
+        "source": "ooyala"
+      },
+      "id": "ooyala-1md2FleTrGdiuicFAhUOUk93wEfI-rng",
+      "links": {
+        "self": "http://device.oddworks.io/v2/videos/ooyala-1md2FleTrGdiuicFAhUOUk93wEfI-rng"
+      },
+      "attributes": {
+        "title": "WINNING RIDE: J.B. Mauney rides Bruiser for 92.75 points",
+        "description": "J.B. Mauney rides Bruiser for 92.75 points to win Round 4 of the 2015 PBR BFTS World Finals in Las Vegas, NV.",
+        "images": {
+          "aspect16x9": "http://image.oddworks.io/eooyala/1md2FleTrGdiuicFAhUOUk93wEfI-rng/QCdjB5HwFOTaWQ8X4zMDoxOjBzMTu0hl.jpg",
+          "aspect4x3": "http://image.oddworks.io/edummyimage/4:3x1440&text=placeholder.png",
+          "aspect3x4": "http://image.oddworks.io/edummyimage/3:4x1920&text=placeholder.png",
+          "aspect1x1": "http://image.oddworks.io/edummyimage/1:1x1920&text=placeholder.png",
+          "aspect2x3": "http://image.oddworks.io/edummyimage/2:3x1920&text=placeholder.png"
+        },
+        "actors": [],
+        "tags": [],
+        "duration": 104037,
+        "releaseDate": "2015-12-08T16:53:18Z",
+        "updatedAt": "2016-01-03T19:25:26Z",
+        "createdAt": "2015-12-08T16:53:18Z",
+        "organization": "pbr",
+        "ads": {
+          "provider": "freewheel",
+          "format": "VAST",
+          "assetId": "1md2FleTrGdiuicFAhUOUk93wEfI-rng"
+        },
+        "overlays": {},
+        "player": {
+          "type": "ooyala",
+          "pCode": "5meWUyOipwedhLMDFYYFdAYmnGKl",
+          "domain": "http://ooyala.com",
+          "embedCode": "1md2FleTrGdiuicFAhUOUk93wEfI-rng"
+        },
+        "url": "http://player.ooyala.com/player/appletv/1md2FleTrGdiuicFAhUOUk93wEfI-rng.m3u8"
+      }
+    },
+    {
+      "type": "video",
+      "meta": {
+        "sourceId": "9tdmFleTpN_hwyb-RLMn48uIXJ2qA0iB",
+        "source": "ooyala"
+      },
+      "id": "ooyala-9tdmFleTpN_hwyb-RLMn48uIXJ2qA0iB",
+      "links": {
+        "self": "http://device.oddworks.io/v2/videos/ooyala-9tdmFleTpN_hwyb-RLMn48uIXJ2qA0iB"
+      },
+      "attributes": {
+        "title": "J. B. Mauney covers Say Goodbye for 86.5 points",
+        "description": "J. B. Mauney covers Say Goodbye for 86.5 points in Round 3 of the 2015 PBR BFTS World Finals in Las Vegas, NV",
+        "images": {
+          "aspect16x9": "http://image.oddworks.io/eooyala/9tdmFleTpN_hwyb-RLMn48uIXJ2qA0iB/PE3O6Z9ojHeNSk7H4zMDoxOjBzMTu0hl.jpg",
+          "aspect4x3": "http://image.oddworks.io/edummyimage/4:3x1440&text=placeholder.png",
+          "aspect3x4": "http://image.oddworks.io/edummyimage/3:4x1920&text=placeholder.png",
+          "aspect1x1": "http://image.oddworks.io/edummyimage/1:1x1920&text=placeholder.png",
+          "aspect2x3": "http://image.oddworks.io/edummyimage/2:3x1920&text=placeholder.png"
+        },
+        "actors": [],
+        "tags": [],
+        "duration": 76509,
+        "releaseDate": "2015-12-08T16:52:53Z",
+        "updatedAt": "2016-01-03T20:03:54Z",
+        "createdAt": "2015-12-08T16:52:53Z",
+        "organization": "pbr",
+        "ads": {
+          "provider": "freewheel",
+          "format": "VAST",
+          "assetId": "9tdmFleTpN_hwyb-RLMn48uIXJ2qA0iB"
+        },
+        "overlays": {},
+        "player": {
+          "type": "ooyala",
+          "pCode": "5meWUyOipwedhLMDFYYFdAYmnGKl",
+          "domain": "http://ooyala.com",
+          "embedCode": "9tdmFleTpN_hwyb-RLMn48uIXJ2qA0iB"
+        },
+        "url": "http://player.ooyala.com/player/appletv/9tdmFleTpN_hwyb-RLMn48uIXJ2qA0iB.m3u8"
+      }
+    },
+    {
+      "type": "video",
+      "meta": {
+        "sourceId": "V3cDdmeTrFp1DZUt_ddbgHbLPlg3P0fl",
+        "source": "ooyala"
+      },
+      "id": "ooyala-V3cDdmeTrFp1DZUt_ddbgHbLPlg3P0fl",
+      "links": {
+        "self": "http://device.oddworks.io/v2/videos/ooyala-V3cDdmeTrFp1DZUt_ddbgHbLPlg3P0fl"
+      },
+      "attributes": {
+        "title": "J.B. Mauney wins Round 2 with an 88-point ride on HD ",
+        "description": "J.B. Mauney wins Round 2 on HD for 88 points in the 2015 PBR BFTS Cooper Tires Take the Money and Ride in Tucson, AZ.",
+        "images": {
+          "aspect16x9": "http://image.oddworks.io/eooyala/V3cDdmeTrFp1DZUt_ddbgHbLPlg3P0fl/DLOokYc8UKM-fB9H40MDoxOjBzMTtbGs.jpg",
+          "aspect4x3": "http://image.oddworks.io/edummyimage/4:3x1440&text=placeholder.png",
+          "aspect3x4": "http://image.oddworks.io/edummyimage/3:4x1920&text=placeholder.png",
+          "aspect1x1": "http://image.oddworks.io/edummyimage/1:1x1920&text=placeholder.png",
+          "aspect2x3": "http://image.oddworks.io/edummyimage/2:3x1920&text=placeholder.png"
+        },
+        "actors": [],
+        "tags": [],
+        "duration": 65999,
+        "releaseDate": "2015-12-09T18:11:32Z",
+        "updatedAt": "2016-01-03T22:00:51Z",
+        "createdAt": "2015-12-09T18:11:32Z",
+        "organization": "pbr",
+        "ads": {
+          "provider": "freewheel",
+          "format": "VAST",
+          "assetId": "V3cDdmeTrFp1DZUt_ddbgHbLPlg3P0fl"
+        },
+        "overlays": {},
+        "player": {
+          "type": "ooyala",
+          "pCode": "5meWUyOipwedhLMDFYYFdAYmnGKl",
+          "domain": "http://ooyala.com",
+          "embedCode": "V3cDdmeTrFp1DZUt_ddbgHbLPlg3P0fl"
+        },
+        "url": "http://player.ooyala.com/player/appletv/V3cDdmeTrFp1DZUt_ddbgHbLPlg3P0fl.m3u8"
+      }
+    },
+    {
+      "type": "video",
+      "meta": {
+        "sourceId": "tqdWFleTolrls93OBDqc4a0t-tXCzGgG",
+        "source": "ooyala"
+      },
+      "id": "ooyala-tqdWFleTolrls93OBDqc4a0t-tXCzGgG",
+      "links": {
+        "self": "http://device.oddworks.io/v2/videos/ooyala-tqdWFleTolrls93OBDqc4a0t-tXCzGgG"
+      },
+      "attributes": {
+        "title": "WINNING RIDE: J.B. Mauney earns a 91-point ride on Wicked Stick",
+        "description": "J.B. Mauney makes monster ride for 91 points on Wicked Stick to win Round 1 of the 2015 PBR BFTS World Finals in Las Vegas, NV",
+        "images": {
+          "aspect16x9": "http://image.oddworks.io/eooyala/tqdWFleTolrls93OBDqc4a0t-tXCzGgG/3Gduepif0T1UGY8H4zMDoxOjBzMTu0hl.jpg",
+          "aspect4x3": "http://image.oddworks.io/edummyimage/4:3x1440&text=placeholder.png",
+          "aspect3x4": "http://image.oddworks.io/edummyimage/3:4x1920&text=placeholder.png",
+          "aspect1x1": "http://image.oddworks.io/edummyimage/1:1x1920&text=placeholder.png",
+          "aspect2x3": "http://image.oddworks.io/edummyimage/2:3x1920&text=placeholder.png"
+        },
+        "actors": [],
+        "tags": [],
+        "duration": 109042,
+        "releaseDate": "2015-12-08T16:52:17Z",
+        "updatedAt": "2016-01-03T20:52:14Z",
+        "createdAt": "2015-12-08T16:52:17Z",
+        "organization": "pbr",
+        "ads": {
+          "provider": "freewheel",
+          "format": "VAST",
+          "assetId": "tqdWFleTolrls93OBDqc4a0t-tXCzGgG"
+        },
+        "overlays": {},
+        "player": {
+          "type": "ooyala",
+          "pCode": "5meWUyOipwedhLMDFYYFdAYmnGKl",
+          "domain": "http://ooyala.com",
+          "embedCode": "tqdWFleTolrls93OBDqc4a0t-tXCzGgG"
+        },
+        "url": "http://player.ooyala.com/player/appletv/tqdWFleTolrls93OBDqc4a0t-tXCzGgG.m3u8"
+      }
+    }
+  ],
+  "meta": {
+    "device": "GOOGLE_ANDROID",
+    "queryParams": {
+      "term": "Mauney"
+    },
+    "userEntitlements": [],
+    "term": "Mauney",
+    "limit": 10,
+    "offset": 0,
+    "total": 4,
+    "entityTypes": [
+      "video",
+      "videoCollection",
+      "collection"
+    ]
+  },
+  "links": {
+    "self": "http://device.oddworks.io/v2/search%3Fterm=Mauney"
+  }
+}
