@@ -6,6 +6,7 @@ public class OddAppInitMetric extends OddMetric {
 
     private OddAppInitMetric(){
         mAction = ACTION_APP_INIT;
+        mEnabled = true;
         // singleton
     }
 
