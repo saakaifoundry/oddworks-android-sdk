@@ -54,7 +54,7 @@ public class RequestHandler {
 
     protected void getConfig(final Callback callback) {
         Request request = getOddRequest(
-                mContext.getString(R.string.endpoint_odd_config),
+                withIncluded(mContext.getString(R.string.endpoint_odd_config)),
                 RequestMethod.GET,
                 RequestBody.create(JSON, ""),
                 true);
@@ -62,7 +62,7 @@ public class RequestHandler {
     }
 
     protected void getView(final String id, final Callback callback) {
-        Request request = getOddGetRequest(mContext.getString(R.string.endpoint_odd_views) + "/" + id);
+        Request request = getOddGetRequest(withIncluded(mContext.getString(R.string.endpoint_odd_views) + "/" + id));
         enqueueOddCall(request, callback);
     }
 
@@ -73,7 +73,7 @@ public class RequestHandler {
 
     private Request getOddRequest(String endpoint, RequestMethod method, RequestBody body, boolean forceNoAuth) {
         Request.Builder builder = new Request.Builder();
-        builder.url(mBaseUrl + endpoint + "?include=true")
+        builder.url(mBaseUrl + endpoint)
                 .addHeader("x-access-token", mAccessToken)
                 .addHeader("x-odd-user-agent", getOddUserAgent())
                 .addHeader("accept", mAccept)
@@ -111,12 +111,13 @@ public class RequestHandler {
     }
 
     protected void getSearch(String term, int limit, int offset, Callback callback) {
-        Request request = getOddGetRequest("search?term=" + term + "&limit=" + limit + "&offset=" + offset);
+        Request request = getOddGetRequest(
+                "search?term=" + term + "&limit=" + limit + "&offset=" + offset);
         enqueueOddCall(request, callback);
     }
 
     protected void getCollection(String collectionId, Callback callback) {
-        Request request = getOddGetRequest("collections/" + collectionId);
+        Request request = getOddGetRequest(withIncluded("collections/" + collectionId));
         enqueueOddCall(request, callback);
     }
 
@@ -156,5 +157,17 @@ public class RequestHandler {
      */
     public boolean isAuthTokenSet() {
         return this.authToken != null;
+    }
+
+    /**
+     * adds query parameter includ=true to endpoint string.
+     * @param endpoint endpoint string can optionally contain query params
+     */
+    private String withIncluded(String endpoint) {
+        if(endpoint.contains("?")) {
+            return endpoint + "&include=true";
+        } else {
+            return endpoint + "?include=true";
+        }
     }
 }
