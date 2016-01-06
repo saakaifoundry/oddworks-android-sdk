@@ -9,7 +9,6 @@ import org.junit.runner.RunWith;
 
 import java.util.HashMap;
 
-
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.is;

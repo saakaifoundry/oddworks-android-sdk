@@ -1,7 +1,6 @@
 package io.oddworks.device.metric;
 
 import android.support.test.runner.AndroidJUnit4;
-import android.util.Log;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

@@ -28,12 +28,12 @@ import io.oddworks.device.model.Event;
 import io.oddworks.device.model.Identifier;
 import io.oddworks.device.model.Media;
 import io.oddworks.device.model.MediaImage;
-import io.oddworks.device.model.players.ExternalPlayer;
-import io.oddworks.device.model.players.OoyalaPlayer;
-import io.oddworks.device.model.players.Player;
 import io.oddworks.device.model.OddObject;
 import io.oddworks.device.model.OddView;
 import io.oddworks.device.model.Promotion;
+import io.oddworks.device.model.players.ExternalPlayer;
+import io.oddworks.device.model.players.OoyalaPlayer;
+import io.oddworks.device.model.players.Player;
 import io.oddworks.device.testutils.AssetUtils;
 
 import static org.hamcrest.CoreMatchers.is;
@@ -103,6 +103,24 @@ public class OddParserTest extends AndroidTestCase {
     }
 
     @Test
+    public void testParsePBRMenuViewResponseV2() throws Exception {
+        String json = AssetUtils.readFileToString(mContext, "PBRMenuViewResponseV2.json");
+
+        OddView menu = oddParser.parseView(json);
+        ArrayList<OddObject> items = menu.getIncludedByRelationship("items");
+    }
+
+    @Test
+    public void testParsePBRHomepageViewResponseV2() throws Exception {
+        String json = AssetUtils.readFileToString(mContext, "PBRHomepageViewResponseV2.json");
+
+        OddView homepage = oddParser.parseView(json);
+        ArrayList<OddObject> promotions = homepage.getIncludedByRelationship("promotion");
+        ArrayList<OddObject> featuredMedia = homepage.getIncludedByRelationship("featuredMedia");
+        ArrayList<OddObject> featuredCollections = homepage.getIncludedByRelationship("featuredCollections");
+    }
+
+    @Test
     public void testParseAuthToken() throws Exception {
 
     }
@@ -113,8 +131,10 @@ public class OddParserTest extends AndroidTestCase {
     }
 
     @Test
-    public void testParseSearch() throws Exception {
+    public void testParseSearchV2() throws Exception {
+        String json = AssetUtils.readFileToString(mContext, "PBRSearchResponseV2.json");
 
+        ArrayList<OddObject> results = oddParser.parseSearch(json);
     }
 
     @Test
