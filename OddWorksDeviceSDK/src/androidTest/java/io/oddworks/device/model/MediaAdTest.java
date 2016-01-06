@@ -17,6 +17,7 @@ public class MediaAdTest {
     private String provider = "provider";
     private String freewheel = "freewheel";
     private String vmap = "vmap";
+    private String dfp = "dfp";
     private String url = "http://what.ev.er";
     private int networkId = 123;
     private String profileName = "profile123";
@@ -140,5 +141,21 @@ public class MediaAdTest {
         MediaAd mediaAd = new MediaAd(attributes);
 
         assertFalse(mediaAd.isFreeWheel());
+    }
+
+    @Test
+    public void testIsDFPTrue() throws Exception {
+        attributes.put("format", dfp);
+        MediaAd mediaAd = new MediaAd(attributes);
+
+        assertTrue(mediaAd.isDFP());
+    }
+
+    @Test
+    public void testIsDFPFalse() throws Exception {
+        attributes.put("format", vmap);
+        MediaAd mediaAd = new MediaAd(attributes);
+
+        assertFalse(mediaAd.isDFP());
     }
 }

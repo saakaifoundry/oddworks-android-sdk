@@ -6,6 +6,7 @@ public class MediaAd {
     public static final String TAG = MediaAd.class.getSimpleName();
     private static final String FORMAT_VMAP = "vmap";
     private static final String FORMAT_FREEWHEEL = "freewheel";
+    private static final String FORMAT_DFP = "dfp";
 
     private String mProvider;
     private String mFormat;
@@ -87,5 +88,13 @@ public class MediaAd {
         }
 
         return getFormat().equals(FORMAT_FREEWHEEL);
+    }
+
+    public Boolean isDFP() {
+        if (getFormat() == null) {
+            return false;
+        }
+
+        return getFormat().equals(FORMAT_DFP);
     }
 }
