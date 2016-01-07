@@ -56,7 +56,7 @@ public class OddStore {
     /** Checks if the store contains all objects that are related to the oddObject non recursively
      * @return true if all related objects are stored, otherwise false.
      */
-    boolean containsAllRelatedObjects(OddObject oddObject) {
+    public boolean containsAllRelatedObjects(OddObject oddObject) {
         for (Relationship relationship : oddObject.getRelationships()) {
             for (Identifier identifier : relationship.getIdentifiers()) {
                 if (getObject(identifier) == null)
