@@ -84,11 +84,11 @@ abstract public class OddObject {
         for(Relationship relationship : getRelationships()) {
             for(Identifier identifier : relationship.getIdentifiers()) {
                 if (findIncludedByIdentifier(identifier) == null) {
-                    return false;
+                    return true;
                 }
             }
         }
-        return true;
+        return false;
     }
 
     public void addIncluded(OddObject oddObject) {
