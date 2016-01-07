@@ -91,6 +91,15 @@ abstract public class OddObject {
         return false;
     }
 
+    /** @return the count of OddObject directly related to this OddObject */
+    public int getRelatedObjectCount() {
+        int count = 0;
+        for (Relationship relationship : mRelationships) {
+            count += relationship.getIdentifiers().size();
+        }
+        return count;
+    }
+
     public void addIncluded(OddObject oddObject) {
         getIncluded().add(oddObject);
     }
