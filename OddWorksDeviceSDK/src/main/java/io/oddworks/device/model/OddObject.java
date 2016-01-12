@@ -2,6 +2,7 @@ package io.oddworks.device.model;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 abstract public class OddObject {
     public static final String TAG = OddObject.class.getSimpleName();
@@ -145,6 +146,12 @@ abstract public class OddObject {
             }
         }
         return includedOfRelationship;
+    }
+
+    /** @return  all identifiers for relationship, or null if that relationship doesn't exist */
+    public List<Identifier> getIndentifiersByRelationship(String name) {
+        Relationship rel = getRelationship(name);
+        return rel == null ? null : rel.getIdentifiers();
     }
 
     public OddObject findIncludedByIdentifier(Identifier identifier) {
