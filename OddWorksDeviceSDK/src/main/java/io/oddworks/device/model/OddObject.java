@@ -149,7 +149,7 @@ abstract public class OddObject {
     }
 
     /** @return  all identifiers for relationship, or null if that relationship doesn't exist */
-    public List<Identifier> getIndentifiersByRelationship(String name) {
+    public List<Identifier> getIdentifiersByRelationship(String name) {
         Relationship rel = getRelationship(name);
         return rel == null ? null : rel.getIdentifiers();
     }
