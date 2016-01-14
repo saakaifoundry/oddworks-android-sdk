@@ -3,6 +3,7 @@ package io.oddworks.device.metric;
 
 import android.support.test.runner.AndroidJUnit4;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.skyscreamer.jsonassert.JSONAssert;
@@ -12,38 +13,43 @@ import static org.junit.Assert.assertEquals;
 @RunWith(AndroidJUnit4.class)
 public class OddAppInitMetricTest {
     private String orgId = "odd-networks";
+    private OddAppInitMetric oddAppInitMetric;
+
+    @Before
+    public void beforeEach() {
+        oddAppInitMetric = new OddAppInitMetric();
+    }
 
     @Test
 	public void testGetType() throws Exception {
-        assertEquals("event", OddAppInitMetric.getInstance().getType());
+        assertEquals("event", oddAppInitMetric.getType());
     }
 
     @Test
 	public void testGetOrganizationId() throws Exception {
-        OddAppInitMetric.getInstance().setOrganizationId(orgId);
-        assertEquals(orgId, OddAppInitMetric.getInstance().getOrganizationId());
+        oddAppInitMetric.setOrganizationId(orgId);
+        assertEquals(orgId, oddAppInitMetric.getOrganizationId());
     }
 
     @Test
 	public void testGetAction() throws Exception {
-        assertEquals(OddAppInitMetric.ACTION_APP_INIT, OddAppInitMetric.getInstance().getAction());
+        assertEquals(OddAppInitMetric.ACTION_APP_INIT, oddAppInitMetric.getAction());
     }
 
     @Test
 	public void testGetContentType() throws Exception {
-        assertEquals(null, OddAppInitMetric.getInstance().getContentType());
+        assertEquals(null, oddAppInitMetric.getContentType());
     }
 
     @Test
 	public void testGetContentId() throws Exception {
-        assertEquals(null, OddAppInitMetric.getInstance().getContentId());
+        assertEquals(null, oddAppInitMetric.getContentId());
     }
 
     @Test
 	public void testToJSONObject() throws Exception {
-        OddAppInitMetric metric = (OddAppInitMetric) OddAppInitMetric
-                .getInstance()
-                .setOrganizationId(orgId);
+        OddAppInitMetric metric = new OddAppInitMetric();
+        metric.setOrganizationId(orgId);
 
         String expected = "{" +
                 "type: \"" + metric.getType() + "\"," +

@@ -7,19 +7,25 @@ import org.json.JSONObject;
 
 public class OddVideoStopMetric extends OddMetric {
     private static final String TAG = OddVideoStopMetric.class.getSimpleName();
-    private static final OddVideoStopMetric INSTANCE = new OddVideoStopMetric();
+
+    protected static String videoStopAction = ACTION_VIDEO_STOP;
+    protected static boolean videoStopEnabled = false;
 
     private int mElapsed;
     private int mDuration;
 
-    private OddVideoStopMetric() {
-        mAction = ACTION_VIDEO_STOP;
-        // singleton
+    public OddVideoStopMetric() {
+
     }
 
-    public static OddVideoStopMetric getInstance() {
-        return INSTANCE;
+    public static void setAction(String action) {
+        videoStopAction = action;
     }
+
+    public static void setEnabled(boolean enabled) {
+        videoStopEnabled = enabled;
+    }
+
 
     public OddVideoStopMetric setElapsed(int elapsed) {
         mElapsed = elapsed;
@@ -32,21 +38,13 @@ public class OddVideoStopMetric extends OddMetric {
     }
 
     @Override
-    public OddVideoStopMetric setContentId(String contentId) {
-        super.setContentId(contentId);
-        return this;
+    public String getAction() {
+        return videoStopAction;
     }
 
     @Override
-    public OddVideoStopMetric setContentType(String contentType) {
-        super.setContentType(contentType);
-        return this;
-    }
-
-    @Override
-    public OddVideoStopMetric setOrganizationId(String organizationId) {
-        super.setOrganizationId(organizationId);
-        return this;
+    public boolean getEnabled() {
+        return videoStopEnabled;
     }
 
     @Override

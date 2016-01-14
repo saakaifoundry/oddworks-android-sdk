@@ -171,24 +171,30 @@ public class OddParserTest extends AndroidTestCase {
 
         assertFalse(config.isAuthEnabled());
 
-        assertThat(OddAppInitMetric.getInstance().getAction(), is("wacky:init"));
-        assertTrue(OddAppInitMetric.getInstance().getEnabled());
+        OddAppInitMetric oddAppInitMetric = new OddAppInitMetric();
+        assertThat(oddAppInitMetric.getAction(), is("wacky:init"));
+        assertTrue(oddAppInitMetric.getEnabled());
 
-        assertThat(OddViewLoadMetric.getInstance().getAction(), is("wacky:load"));
-        assertTrue(OddViewLoadMetric.getInstance().getEnabled());
+        OddViewLoadMetric oddViewLoadMetric = new OddViewLoadMetric();
+        assertThat(oddViewLoadMetric.getAction(), is("wacky:load"));
+        assertTrue(oddViewLoadMetric.getEnabled());
 
-        assertThat(OddVideoPlayMetric.getInstance().getAction(), is("wacky:play"));
-        assertTrue(OddVideoPlayMetric.getInstance().getEnabled());
+        OddVideoPlayMetric oddVideoPlayMetric = new OddVideoPlayMetric();
+        assertThat(oddVideoPlayMetric.getAction(), is("wacky:play"));
+        assertTrue(oddVideoPlayMetric.getEnabled());
 
-        assertThat(OddVideoPlayingMetric.getInstance().getAction(), is("wacky:playing"));
-        assertThat(OddVideoPlayingMetric.getInstance().getInterval(), is(30000));
-        assertTrue(OddVideoPlayingMetric.getInstance().getEnabled());
+        OddVideoPlayingMetric oddVideoPlayingMetric = new OddVideoPlayingMetric();
+        assertThat(oddVideoPlayingMetric.getAction(), is("wacky:playing"));
+        assertThat(oddVideoPlayingMetric.getInterval(), is(30000));
+        assertTrue(oddVideoPlayingMetric.getEnabled());
 
-        assertThat(OddVideoStopMetric.getInstance().getAction(), is("wacky:stop"));
-        assertTrue(OddVideoStopMetric.getInstance().getEnabled());
+        OddVideoStopMetric oddVideoStopMetric = new OddVideoStopMetric();
+        assertThat(oddVideoStopMetric.getAction(), is("wacky:stop"));
+        assertTrue(oddVideoStopMetric.getEnabled());
 
-        assertThat(OddVideoErrorMetric.getInstance().getAction(), is("wacky:error"));
-        assertFalse(OddVideoErrorMetric.getInstance().getEnabled());
+        OddVideoErrorMetric oddVideoErrorMetric = new OddVideoErrorMetric();
+        assertThat(oddVideoErrorMetric.getAction(), is("wacky:error"));
+        assertFalse(oddVideoErrorMetric.getEnabled());
     }
 
     @Test
