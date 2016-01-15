@@ -18,6 +18,7 @@ public class OddVideoPlayingMetricTest {
     private String contentId = "thingId";
     private int elapsed = 456;
     private int duration = 1234;
+    private int customInterval = 312;
     private OddVideoPlayingMetric oddVideoPlayingMetric;
 
     @Before
@@ -51,6 +52,19 @@ public class OddVideoPlayingMetricTest {
     public void testGetContentId() throws Exception {
         oddVideoPlayingMetric.setContentId(contentId);
         assertEquals(contentId, oddVideoPlayingMetric.getContentId());
+    }
+
+    @Test
+    public void testGetInterval() throws Exception {
+        OddVideoPlayingMetric.setInterval(OddVideoPlayingMetric.DEFAULT_INTERVAL);
+        assertEquals(OddVideoPlayingMetric.DEFAULT_INTERVAL, OddVideoPlayingMetric.getInterval());
+    }
+
+    @Test
+    public void testGetIntervalCustom() throws Exception {
+        OddVideoPlayingMetric.setInterval(customInterval);
+        assertEquals(customInterval, OddVideoPlayingMetric.getInterval());
+        assertEquals(customInterval, oddVideoPlayingMetric.getInterval());
     }
 
     @Test
