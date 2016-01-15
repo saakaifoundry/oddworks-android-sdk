@@ -29,7 +29,7 @@ public class MetricsConfig {
     }
 
     public void setupOddMetrics() {
-        if (mMetrics != null || !mMetrics.isEmpty()) {
+        if (mMetrics != null && !mMetrics.isEmpty()) {
             for(Metric metric : mMetrics) {
                 setupOddMetric(metric);
             }
@@ -42,42 +42,29 @@ public class MetricsConfig {
 
         switch (metric.getType()) {
             case ACTION_APP_INIT:
-                OddAppInitMetric
-                        .getInstance()
-                        .setEnabled(enabled)
-                        .setAction(action);
+                OddAppInitMetric.setAction(action);
                 break;
             case ACTION_VIEW_LOAD:
-                OddViewLoadMetric
-                        .getInstance()
-                        .setEnabled(enabled)
-                        .setAction(action);
+                OddViewLoadMetric.setEnabled(enabled);
+                OddViewLoadMetric.setAction(action);
                 break;
             case ACTION_VIDEO_PLAY:
-                OddVideoPlayMetric
-                        .getInstance()
-                        .setEnabled(enabled)
-                        .setAction(action);
+                OddVideoPlayMetric.setEnabled(enabled);
+                OddVideoPlayMetric.setAction(action);
                 break;
             case ACTION_VIDEO_PLAYING:
                 Integer interval = metric.get(Metric.INTERVAL);
-                OddVideoPlayingMetric
-                        .getInstance()
-                        .setEnabled(enabled)
-                        .setAction(action)
-                        .setInterval(interval);
+                OddVideoPlayingMetric.setEnabled(enabled);
+                OddVideoPlayingMetric.setAction(action);
+                OddVideoPlayingMetric.setInterval(interval);
                 break;
             case ACTION_VIDEO_STOP:
-                OddVideoStopMetric
-                        .getInstance()
-                        .setEnabled(enabled)
-                        .setAction(action);
+                OddVideoStopMetric.setEnabled(enabled);
+                OddVideoStopMetric.setAction(action);
                 break;
             case ACTION_VIDEO_ERROR:
-                OddVideoErrorMetric
-                        .getInstance()
-                        .setEnabled(enabled)
-                        .setAction(action);
+                OddVideoErrorMetric.setEnabled(enabled);
+                OddVideoErrorMetric.setAction(action);
                 break;
             default:
                 // no-op

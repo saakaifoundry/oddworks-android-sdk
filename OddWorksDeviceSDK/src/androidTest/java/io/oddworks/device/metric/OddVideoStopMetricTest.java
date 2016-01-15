@@ -2,6 +2,7 @@ package io.oddworks.device.metric;
 
 import android.support.test.runner.AndroidJUnit4;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.skyscreamer.jsonassert.JSONAssert;
@@ -15,44 +16,49 @@ public class OddVideoStopMetricTest {
     private String contentId = "thingId";
     private int elapsed = 456;
     private int duration = 1234;
+    private OddVideoStopMetric oddVideoStopMetric;
+
+    @Before
+    public void beforeEach() {
+        oddVideoStopMetric = new OddVideoStopMetric();
+    }
 
     @Test
     public void testGetType() throws Exception {
-        assertEquals("event", OddVideoStopMetric.getInstance().getType());
+        assertEquals("event", oddVideoStopMetric.getType());
     }
 
     @Test
     public void testGetOrganizationId() throws Exception {
-        OddVideoStopMetric.getInstance().setOrganizationId(orgId);
-        assertEquals(orgId, OddVideoStopMetric.getInstance().getOrganizationId());
+        oddVideoStopMetric.setOrganizationId(orgId);
+        assertEquals(orgId, oddVideoStopMetric.getOrganizationId());
     }
 
     @Test
     public void testGetAction() throws Exception {
-        assertEquals(OddAppInitMetric.ACTION_VIDEO_STOP, OddVideoStopMetric.getInstance().getAction());
+        assertEquals(OddAppInitMetric.ACTION_VIDEO_STOP, oddVideoStopMetric.getAction());
     }
 
     @Test
     public void testGetContentType() throws Exception {
-        OddVideoStopMetric.getInstance().setContentType(contentType);
-        assertEquals(contentType, OddVideoStopMetric.getInstance().getContentType());
+        oddVideoStopMetric.setContentType(contentType);
+        assertEquals(contentType, oddVideoStopMetric.getContentType());
     }
 
     @Test
     public void testGetContentId() throws Exception {
-        OddVideoStopMetric.getInstance().setContentId(contentId);
-        assertEquals(contentId, OddVideoStopMetric.getInstance().getContentId());
+        oddVideoStopMetric.setContentId(contentId);
+        assertEquals(contentId, oddVideoStopMetric.getContentId());
     }
 
     @Test
     public void testToJSONObject() throws Exception {
-        OddVideoStopMetric metric = (OddVideoStopMetric) OddVideoStopMetric
-                .getInstance()
-                .setOrganizationId(orgId)
-                .setContentType(contentType)
-                .setContentId(contentId)
-                .setElapsed(elapsed)
-                .setDuration(duration);
+        OddVideoStopMetric metric = new OddVideoStopMetric();
+        metric.setOrganizationId(orgId);
+        metric.setContentType(contentType);
+        metric.setContentId(contentId);
+        metric.setElapsed(elapsed);
+        metric.setDuration(duration);
 
         String expected = "{" +
                 "type: \"" + metric.getType() + "\"," +
