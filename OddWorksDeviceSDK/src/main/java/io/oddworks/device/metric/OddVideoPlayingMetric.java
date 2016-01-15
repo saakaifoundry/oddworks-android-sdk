@@ -8,9 +8,11 @@ import org.json.JSONObject;
 public class OddVideoPlayingMetric extends OddMetric {
     private static final String TAG = OddVideoPlayingMetric.class.getSimpleName();
 
+    public static final int DEFAULT_INTERVAL = 10000;
+
     private static String videoPlayingAction = ACTION_VIDEO_PLAYING;
     private static boolean videoPlayingEnabled = false;
-    private static int mInterval = 10000;
+    private static int mInterval = DEFAULT_INTERVAL;
 
     private int mElapsed;
     private int mDuration;
@@ -31,6 +33,10 @@ public class OddVideoPlayingMetric extends OddMetric {
         mInterval = interval;
     }
 
+    public static int getInterval() {
+        return mInterval;
+    }
+
 
     public OddVideoPlayingMetric setElapsed(int elapsed) {
         mElapsed = elapsed;
@@ -40,10 +46,6 @@ public class OddVideoPlayingMetric extends OddMetric {
     public OddVideoPlayingMetric setDuration(int duration) {
         mDuration = duration;
         return this;
-    }
-
-    public int getInterval() {
-        return mInterval;
     }
 
     @Override
