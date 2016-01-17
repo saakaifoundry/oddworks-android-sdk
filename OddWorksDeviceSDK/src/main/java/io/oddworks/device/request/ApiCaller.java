@@ -16,9 +16,9 @@ import io.oddworks.device.exception.OddAuthTokenUserMismatch;
 import io.oddworks.device.exception.OddParseException;
 import io.oddworks.device.metric.OddMetric;
 import io.oddworks.device.model.AuthToken;
-import io.oddworks.device.model.Collection;
 import io.oddworks.device.model.Config;
 import io.oddworks.device.model.DeviceCodeResponse;
+import io.oddworks.device.model.OddCollection;
 import io.oddworks.device.model.OddObject;
 import io.oddworks.device.model.OddView;
 
@@ -64,7 +64,7 @@ public class ApiCaller {
         requestHandler.getView(id, requestCallback);
     }
 
-    public void getCollectionEntities(final Collection col, final OddCallback<List<OddObject>> cb) {
+    public void getCollectionEntities(final OddCollection col, final OddCallback<List<OddObject>> cb) {
         Callback requestCallback = getRequestCallback(cb, new ParseCall<List<OddObject>>() {
             @Override
             public List<OddObject> parse(String responseBody) {
@@ -74,11 +74,11 @@ public class ApiCaller {
         requestHandler.getCollectionEntities(col.getId(), requestCallback);
     }
 
-    /** gets Collection and all entities within **/
-    public void getCollection(String collectionId, final OddCallback<Collection> cb) {
-        Callback requestCallback = getRequestCallback(cb, new ParseCall<Collection>() {
+    /** gets OddCollection and all entities within **/
+    public void getCollection(String collectionId, final OddCallback<OddCollection> cb) {
+        Callback requestCallback = getRequestCallback(cb, new ParseCall<OddCollection>() {
             @Override
-            public Collection parse(String responseBody) {
+            public OddCollection parse(String responseBody) {
                 return parser.parseCollectionResponse(responseBody);
             }
         });

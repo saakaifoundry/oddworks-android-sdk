@@ -1,8 +1,8 @@
 package io.oddworks.device.model;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 abstract public class OddObject {
     public static final String TAG = OddObject.class.getSimpleName();
@@ -45,13 +45,9 @@ abstract public class OddObject {
         return mIdentifier;
     }
 
-    public void setAttributes(HashMap<String, Object> attributes) {
+    public abstract void setAttributes(Map<String, Object> attributes);
 
-    }
-
-    public HashMap<String, Object> getAttributes() {
-        return new HashMap<>();
-    }
+    public abstract Map<String, Object> getAttributes();
 
     public void fillData(OddObject oddObject) {
         setAttributes(oddObject.getAttributes());
@@ -61,7 +57,7 @@ abstract public class OddObject {
         getRelationships().add(relationship);
     }
 
-    public ArrayList<Relationship> getRelationships() {
+    public List<Relationship> getRelationships() {
         if (mRelationships == null) {
             mRelationships = new ArrayList<>();
         }
@@ -105,14 +101,14 @@ abstract public class OddObject {
         getIncluded().add(oddObject);
     }
 
-    public ArrayList<OddObject> getIncluded() {
+    public List<OddObject> getIncluded() {
         if (mIncluded == null) {
             mIncluded = new ArrayList<>();
         }
         return mIncluded;
     }
 
-    public ArrayList<OddObject> getIncludedByType(String type) {
+    public List<OddObject> getIncludedByType(String type) {
         ArrayList<OddObject> includedOfType = new ArrayList<>();
         for(OddObject oddObject : getIncluded()) {
             if (oddObject.getType().equals(type)) {
@@ -122,7 +118,7 @@ abstract public class OddObject {
         return includedOfType;
     }
 
-    public ArrayList<OddObject> getIncludedByType(ArrayList<String> types) {
+    public List<OddObject> getIncludedByType(List<String> types) {
         ArrayList<OddObject> includedOfType = new ArrayList<>();
         for(OddObject oddObject : getIncluded()) {
             if (types.indexOf(oddObject.getType()) > -1) {
@@ -132,7 +128,7 @@ abstract public class OddObject {
         return includedOfType;
     }
 
-    public ArrayList<OddObject> getIncludedByRelationship(String name) {
+    public List<OddObject> getIncludedByRelationship(String name) {
         ArrayList<OddObject> includedOfRelationship = new ArrayList<>();
         Relationship relationship = getRelationship(name);
         if (relationship == null) {
@@ -199,9 +195,12 @@ abstract public class OddObject {
 
     @Override
     public String toString() {
-        return getClass().getSimpleName() + "(" +
-                "id='" + getId() + "', " +
-                "type='" + getType() + "')";
+        return "OddObject{" +
+                "mIdentifier=" + mIdentifier +
+                ", mId='" + mId + '\'' +
+                ", mType='" + mType + '\'' +
+                ", mRelationships=" + mRelationships +
+                ", mIncluded=" + mIncluded +
+                '}';
     }
-
 }

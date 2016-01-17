@@ -6,12 +6,14 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.isA;
 import static org.hamcrest.CoreMatchers.nullValue;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertThat;
 
 public class CollectionTest {
     private String id = "123";
@@ -20,8 +22,8 @@ public class CollectionTest {
     private String description = "Odd is good! Odd is great!";
     private DateTime releaseDate = new DateTime("2015-04-20T16:20:00-0400");
     private MediaImage mediaImage = new MediaImage("a", "b", "c", "d", "e");
-    private Collection collection = new Collection(id, type);
-    private HashMap<String, Object> attributes = new HashMap<>();
+    private OddCollection collection = new OddCollection(id, type);
+    private Map<String, Object> attributes = new HashMap<>();
 
     @Before
     public void beforeEach() {
@@ -69,7 +71,7 @@ public class CollectionTest {
 
     @Test
     public void testSetAttributesWhenNotSet() throws Exception {
-        Collection collection = new Collection(id, type);
+        OddCollection collection = new OddCollection(id, type);
 
         assertThat(collection.getTitle(), is(nullValue()));
         assertThat(collection.getDescription(), is(nullValue()));
@@ -79,7 +81,7 @@ public class CollectionTest {
 
     @Test
     public void testSetAttributesWhenSet() throws Exception {
-        Collection collection = new Collection(id, type);
+        OddCollection collection = new OddCollection(id, type);
         collection.setAttributes(attributes);
 
         assertThat(collection.getTitle(), is(equalTo(title)));
@@ -95,13 +97,13 @@ public class CollectionTest {
 
     @Test
     public void testFillData() throws Exception {
-        HashMap<String, Object> otherAttributes = new HashMap<>();
+        Map<String, Object> otherAttributes = new HashMap<>();
         otherAttributes.put("title", "AAA");
         otherAttributes.put("description", "ZZZ");
         otherAttributes.put("releaseDate", new DateTime("2012-11-13T09:30:00+0100"));
         otherAttributes.put("mediaImage", new MediaImage("e", "d", "c", "b", "a"));
 
-        Collection collection2 = new Collection("1", "type");
+        OddCollection collection2 = new OddCollection("1", "type");
         collection2.setAttributes(otherAttributes);
 
         collection.fillData(collection2);
@@ -115,7 +117,7 @@ public class CollectionTest {
 
         collection.addRelationship(rel);
 
-        ArrayList<Relationship> expected = new ArrayList<>();
+        List<Relationship> expected = new ArrayList<>();
         expected.add(rel);
 
         assertThat(collection.getRelationships(), is(equalTo(expected)));
@@ -136,7 +138,7 @@ public class CollectionTest {
     public void testAddIncludedGetIncluded() throws Exception {
         Media media = new Media("1", "video");
 
-        ArrayList<OddObject> expected = new ArrayList<>();
+        List<OddObject> expected = new ArrayList<>();
         assertThat(collection.getIncluded(), is(equalTo(expected)));
 
         collection.addIncluded(media);
@@ -152,7 +154,7 @@ public class CollectionTest {
         collection.addIncluded(video);
         collection.addIncluded(live);
 
-        ArrayList<OddObject> expected = new ArrayList<>();
+        List<OddObject> expected = new ArrayList<>();
         expected.add(live);
 
         assertThat(collection.getIncludedByType("liveStream"), is(equalTo(expected)));
@@ -166,7 +168,7 @@ public class CollectionTest {
         collection.addIncluded(video);
         collection.addIncluded(live);
 
-        ArrayList<OddObject> expected = new ArrayList<>();
+        List<OddObject> expected = new ArrayList<>();
         expected.add(video);
         expected.add(live);
 
@@ -179,7 +181,7 @@ public class CollectionTest {
 
     @Test
     public void testGetIncludedByRelationshipNotPresent() throws Exception {
-        ArrayList<OddObject> expected = new ArrayList<>();
+        List<OddObject> expected = new ArrayList<>();
 
         assertThat(collection.getIncludedByRelationship("liveStrema"), is(equalTo(expected)));
     }
@@ -203,7 +205,7 @@ public class CollectionTest {
         collection.addRelationship(liveRel);
 
 
-        ArrayList<OddObject> expected = new ArrayList<>();
+        List<OddObject> expected = new ArrayList<>();
         expected.add(video);
 
         assertThat(collection.getIncludedByRelationship("videos"), is(equalTo(expected)));

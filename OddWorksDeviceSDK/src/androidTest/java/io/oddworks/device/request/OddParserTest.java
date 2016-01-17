@@ -11,7 +11,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.List;
 
 import io.oddworks.device.exception.UnhandledPlayerTypeException;
 import io.oddworks.device.metric.OddAppInitMetric;
@@ -22,12 +22,12 @@ import io.oddworks.device.metric.OddVideoStopMetric;
 import io.oddworks.device.metric.OddViewLoadMetric;
 import io.oddworks.device.model.AdsConfig;
 import io.oddworks.device.model.Article;
-import io.oddworks.device.model.Collection;
 import io.oddworks.device.model.Config;
 import io.oddworks.device.model.Event;
 import io.oddworks.device.model.Identifier;
 import io.oddworks.device.model.Media;
 import io.oddworks.device.model.MediaImage;
+import io.oddworks.device.model.OddCollection;
 import io.oddworks.device.model.OddObject;
 import io.oddworks.device.model.OddView;
 import io.oddworks.device.model.Promotion;
@@ -58,9 +58,9 @@ public class OddParserTest extends AndroidTestCase {
         String viewResponseV2 = AssetUtils.readFileToString(mContext, "ViewResponseV2.json");
 
         OddView view = oddParser.parseView(viewResponseV2);
-        ArrayList<OddObject> promotions = view.getIncludedByRelationship("promotion");
-        ArrayList<OddObject> featuredMedia = view.getIncludedByRelationship("featuredMedia");
-        ArrayList<OddObject> featuredCollections = view.getIncludedByRelationship("featuredCollections");
+        List<OddObject> promotions = view.getIncludedByRelationship("promotion");
+        List<OddObject> featuredMedia = view.getIncludedByRelationship("featuredMedia");
+        List<OddObject> featuredCollections = view.getIncludedByRelationship("featuredCollections");
 
         assertFalse(promotions.isEmpty());
         assertThat(((Promotion) promotions.get(0)).getTitle(), is("Share your best poker face using #POKERCENTRALCONTEST"));
@@ -69,11 +69,11 @@ public class OddParserTest extends AndroidTestCase {
         assertThat(((Media) featuredMedia.get(0)).getDescription(), is("Louder, come on"));
 
         assertFalse(featuredCollections.isEmpty());
-        Collection collection = (Collection) featuredCollections.get(0);
+        OddCollection collection = (OddCollection) featuredCollections.get(0);
         assertThat(collection.getTitle(), is("PBR Featured Collections"));
 
-        ArrayList<OddObject> subCollections = collection.getIncludedByRelationship("entities");
-        Collection subCollection = (Collection) subCollections.get(0);
+        List<OddObject> subCollections = collection.getIncludedByRelationship("entities");
+        OddCollection subCollection = (OddCollection) subCollections.get(0);
         assertThat(subCollection.getTitle(), is("The Black Eyed Peas"));
     }
 
@@ -82,18 +82,18 @@ public class OddParserTest extends AndroidTestCase {
         String json = AssetUtils.readFileToString(mContext, "MenuViewResponseV2.json");
 
         OddView menu = oddParser.parseView(json);
-        ArrayList<OddObject> items = menu.getIncludedByRelationship("items");
+        List<OddObject> items = menu.getIncludedByRelationship("items");
 
         assertFalse(items.isEmpty());
 
-        Collection articles = (Collection) items.get(1);
+        OddCollection articles = (OddCollection) items.get(1);
         assertNull(articles.getMediaImage());
         assertThat(articles.getTitle(), is("News"));
         Article article = (Article) articles.getIncludedByRelationship("entities").get(0);
         assertThat(article.getTitle(), is("Stock Contractor of the Year Berger has bulls at NFR"));
         assertNull(article.getMediaImage());
 
-        Collection events = (Collection) items.get(2);
+        OddCollection events = (OddCollection) items.get(2);
         assertThat(events.getTitle(), is("Built Ford Tough Series - Schedule"));
         assertNull(events.getMediaImage());
         Event event = (Event) events.getIncludedByRelationship("entities").get(0);
@@ -107,7 +107,7 @@ public class OddParserTest extends AndroidTestCase {
         String json = AssetUtils.readFileToString(mContext, "PBRMenuViewResponseV2.json");
 
         OddView menu = oddParser.parseView(json);
-        ArrayList<OddObject> items = menu.getIncludedByRelationship("items");
+        List<OddObject> items = menu.getIncludedByRelationship("items");
     }
 
     @Test
@@ -115,9 +115,9 @@ public class OddParserTest extends AndroidTestCase {
         String json = AssetUtils.readFileToString(mContext, "PBRHomepageViewResponseV2.json");
 
         OddView homepage = oddParser.parseView(json);
-        ArrayList<OddObject> promotions = homepage.getIncludedByRelationship("promotion");
-        ArrayList<OddObject> featuredMedia = homepage.getIncludedByRelationship("featuredMedia");
-        ArrayList<OddObject> featuredCollections = homepage.getIncludedByRelationship("featuredCollections");
+        List<OddObject> promotions = homepage.getIncludedByRelationship("promotion");
+        List<OddObject> featuredMedia = homepage.getIncludedByRelationship("featuredMedia");
+        List<OddObject> featuredCollections = homepage.getIncludedByRelationship("featuredCollections");
     }
 
     @Test
@@ -134,7 +134,7 @@ public class OddParserTest extends AndroidTestCase {
     public void testParseSearchV2() throws Exception {
         String json = AssetUtils.readFileToString(mContext, "PBRSearchResponseV2.json");
 
-        ArrayList<OddObject> results = oddParser.parseSearch(json);
+        List<OddObject> results = oddParser.parseSearch(json);
     }
 
     @Test
@@ -208,11 +208,11 @@ public class OddParserTest extends AndroidTestCase {
     @Test
     public void testParseCollectionWithIncludedV2() throws Exception {
         String json = AssetUtils.readFileToString(mContext, "CollectionWithIncludedV2.json");
-        Collection mc = oddParser.parseCollectionResponse(json);
+        OddCollection mc = oddParser.parseCollectionResponse(json);
         assertThat(mc.getId(), is("ooyala-pbr-featured-collections"));
         assertThat(mc.getAttributes(), is(notNullValue()));
         assertThat(mc.getRelationships().size(), is(1));
-        ArrayList<Identifier> relationshipIds = mc.getRelationships().get(0).getIdentifiers();
+        List<Identifier> relationshipIds = mc.getRelationships().get(0).getIdentifiers();
         Identifier firstRelationship = relationshipIds.get(0);
         assertThat(firstRelationship.getId(), is("ooyala-w4MGV5eDpoE0rmbrcHEeDEEuhQMypB0u"));
         assertThat(mc.findIncludedByIdentifier(firstRelationship), is(notNullValue()));

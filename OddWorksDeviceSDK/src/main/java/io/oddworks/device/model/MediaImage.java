@@ -23,12 +23,6 @@ public class MediaImage {
         mAspect2x3 = aspect2x3;
     }
 
-    @Override
-    public String toString() {
-        return TAG + "(" +
-                "aspect16x9='" + getAspect16x9() + "')";
-    }
-
     public URI getBackgroundImageURI() {
         try {
             return new URI(getAspect16x9());
@@ -65,5 +59,16 @@ public class MediaImage {
 
     public String getAspect2x3() {
         return mAspect2x3;
+    }
+
+    @Override
+    public String toString() {
+        return "MediaImage{" +
+                "mAspect16x9='" + mAspect16x9 + '\'' +
+                ", mAspect3x4='" + mAspect3x4 + '\'' +
+                ", mAspect4x3='" + mAspect4x3 + '\'' +
+                ", mAspect1x1='" + mAspect1x1 + '\'' +
+                ", mAspect2x3='" + mAspect2x3 + '\'' +
+                '}';
     }
 }
