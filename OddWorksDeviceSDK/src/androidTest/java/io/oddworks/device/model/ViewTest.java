@@ -98,7 +98,7 @@ public class ViewTest {
     @Test
 	public void testGetIncludedByType() throws Exception {
         Media media = new Media("foo", OddObject.TYPE_VIDEO);
-        Collection collection = new Collection("foo", OddObject.TYPE_COLLECTION);
+        OddCollection collection = new OddCollection("foo", OddObject.TYPE_COLLECTION);
 
         view.addIncluded(media);
         view.addIncluded(collection);
@@ -116,7 +116,7 @@ public class ViewTest {
         String mcType = "collection";
         Identifier mcIdentifier = new Identifier(mcId, mcType);
 
-        Collection mediaCollection = new Collection(mcIdentifier);
+        OddCollection mediaCollection = new OddCollection(mcIdentifier);
 
         ArrayList<Identifier> mcIdentifiers = new ArrayList<>();
         mcIdentifiers.add(mcIdentifier);
@@ -135,7 +135,7 @@ public class ViewTest {
         view.addIncluded(media);
 
 
-        Collection foundMediaCollection = (Collection) view.getIncludedByRelationship("featured").get(0);
+        OddCollection foundMediaCollection = (OddCollection) view.getIncludedByRelationship("featured").get(0);
         assertEquals(0, foundMediaCollection.getIncludedByRelationship("videos").size());
 
         view.fillIncludedCollections();

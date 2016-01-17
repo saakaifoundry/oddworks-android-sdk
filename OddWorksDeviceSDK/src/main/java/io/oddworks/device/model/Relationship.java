@@ -1,6 +1,7 @@
 package io.oddworks.device.model;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Relationship {
     public static final String TAG = Relationship.class.getSimpleName();
@@ -24,7 +25,7 @@ public class Relationship {
         getIdentifiers().add(identifier);
     }
 
-    public ArrayList<Identifier> getIdentifiers() {
+    public List<Identifier> getIdentifiers() {
         if (mIdentifiers == null) {
             mIdentifiers = new ArrayList<>();
         }

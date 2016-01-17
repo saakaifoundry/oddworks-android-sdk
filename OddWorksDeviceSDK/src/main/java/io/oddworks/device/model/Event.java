@@ -1,10 +1,9 @@
 package io.oddworks.device.model;
 
 import org.joda.time.DateTime;
-import org.joda.time.Days;
-import org.joda.time.Interval;
 
 import java.util.HashMap;
+import java.util.Map;
 
 public class Event extends OddObject {
     public static final String TAG = Event.class.getSimpleName();
@@ -81,7 +80,7 @@ public class Event extends OddObject {
     }
 
     @Override
-    public void setAttributes(HashMap<String, Object> attributes) {
+    public void setAttributes(Map<String, Object> attributes) {
         mTitle = (String) attributes.get("title");
         mDescription = (String) attributes.get("description");
         mMediaImage = (MediaImage) attributes.get("mediaImage");
@@ -95,7 +94,7 @@ public class Event extends OddObject {
     }
 
     @Override
-    public HashMap<String, Object> getAttributes() {
+    public Map<String, Object> getAttributes() {
         HashMap<String, Object> attributes = new HashMap<>();
         attributes.put("title", getTitle());
         attributes.put("description", getDescription());
@@ -122,9 +121,17 @@ public class Event extends OddObject {
 
     @Override
     public String toString() {
-        return getClass().getSimpleName() + "(" +
-                "id='" + getId() + "', " +
-                "type='" + getType() + "', " +
-                "title='" + getTitle() + "')";
+        return "Event{" +
+                "mTitle='" + mTitle + '\'' +
+                ", mDescription='" + mDescription + '\'' +
+                ", mMediaImage=" + mMediaImage +
+                ", mUrl='" + mUrl + '\'' +
+                ", mCategory='" + mCategory + '\'' +
+                ", mSource='" + mSource + '\'' +
+                ", mCreatedAt=" + mCreatedAt +
+                ", mDateTimeStart=" + mDateTimeStart +
+                ", mDateTimeEnd=" + mDateTimeEnd +
+                ", mLocation='" + mLocation + '\'' +
+                '}';
     }
 }

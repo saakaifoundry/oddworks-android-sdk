@@ -3,6 +3,7 @@ package io.oddworks.device.model;
 import org.joda.time.DateTime;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import io.oddworks.device.model.players.Player;
 
@@ -45,7 +46,7 @@ public class Media extends OddObject {
         return mUrl;
     }
 
-    public Integer getDuration() {
+    public int getDuration() {
         if (mDuration == null) {
             mDuration = 0;
         }
@@ -62,7 +63,7 @@ public class Media extends OddObject {
     }
 
     @Override
-    public void setAttributes(HashMap<String, Object> attributes) {
+    public void setAttributes(Map<String, Object> attributes) {
         mTitle = (String) attributes.get("title");
         mDescription = (String) attributes.get("description");
         mMediaImage = (MediaImage) attributes.get("mediaImage");
@@ -73,7 +74,7 @@ public class Media extends OddObject {
     }
 
     @Override
-    public HashMap<String, Object> getAttributes() {
+    public Map<String, Object> getAttributes() {
         HashMap<String, Object> attributes = new HashMap<>();
         attributes.put("title", getTitle());
         attributes.put("description", getDescription());
@@ -109,7 +110,7 @@ public class Media extends OddObject {
                 "mTitle='" + mTitle + '\'' +
                 ", mDescription='" + mDescription + '\'' +
                 ", mMediaImage=" + mMediaImage +
-                ", mReleaseDate='" + mReleaseDate + '\'' +
+                ", mReleaseDate=" + mReleaseDate +
                 ", mMediaAd=" + mMediaAd +
                 ", mDuration=" + mDuration +
                 ", mUrl='" + mUrl + '\'' +

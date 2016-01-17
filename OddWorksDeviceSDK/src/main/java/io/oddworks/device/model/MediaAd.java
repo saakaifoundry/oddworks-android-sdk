@@ -1,6 +1,6 @@
 package io.oddworks.device.model;
 
-import java.util.HashMap;
+import java.util.Map;
 
 public class MediaAd {
     public static final String TAG = MediaAd.class.getSimpleName();
@@ -19,7 +19,7 @@ public class MediaAd {
 
     public MediaAd(){};
 
-    public MediaAd(final HashMap<String, Object> properties) {
+    public MediaAd(final Map<String, Object> properties) {
         mProvider = (String) properties.get("provider");
         mFormat = (String) properties.get("format");
         mUrl = (String) properties.get("url");
@@ -28,14 +28,6 @@ public class MediaAd {
         mSiteSectionId = (String) properties.get("siteSectionId");
         mVHost = (String) properties.get("vHost");
         mAssetId = (String) properties.get("assetId");
-    }
-
-    @Override
-    public String toString() {
-        return TAG + "(" +
-                "provider='" + getProvider() + "', " +
-                "format='" + getFormat() + "', " +
-                "url='" + getUrl() + "')";
     }
 
     public String getProvider() {
@@ -70,11 +62,11 @@ public class MediaAd {
         return mAssetId;
     }
 
-    public Boolean isAvailable() {
+    public boolean isAvailable() {
         return getProvider() != null && getFormat() != null;
     }
 
-    public Boolean isVMAP() {
+    public boolean isVMAP() {
         if (getFormat() == null) {
             return false;
         }
@@ -82,7 +74,7 @@ public class MediaAd {
         return getFormat().equals(FORMAT_VMAP);
     }
 
-    public Boolean isFreeWheel() {
+    public boolean isFreeWheel() {
         if (getFormat() == null) {
             return false;
         }
@@ -90,11 +82,25 @@ public class MediaAd {
         return getFormat().equals(FORMAT_FREEWHEEL);
     }
 
-    public Boolean isDFP() {
+    public boolean isDFP() {
         if (getFormat() == null) {
             return false;
         }
 
         return getFormat().equals(FORMAT_DFP);
+    }
+
+    @Override
+    public String toString() {
+        return "MediaAd{" +
+                "mProvider='" + mProvider + '\'' +
+                ", mFormat='" + mFormat + '\'' +
+                ", mUrl='" + mUrl + '\'' +
+                ", mNetworkId=" + mNetworkId +
+                ", mProfileName='" + mProfileName + '\'' +
+                ", mSiteSectionId='" + mSiteSectionId + '\'' +
+                ", mVHost='" + mVHost + '\'' +
+                ", mAssetId='" + mAssetId + '\'' +
+                '}';
     }
 }

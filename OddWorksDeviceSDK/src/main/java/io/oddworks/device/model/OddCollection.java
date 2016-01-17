@@ -3,9 +3,10 @@ package io.oddworks.device.model;
 import org.joda.time.DateTime;
 
 import java.util.HashMap;
+import java.util.Map;
 
-public class Collection extends OddObject {
-    private static final String TAG = Collection.class.getSimpleName();
+public class OddCollection extends OddObject {
+    private static final String TAG = OddCollection.class.getSimpleName();
     public static final String ENTITIES = "entities";
 
     private String mTitle;
@@ -13,11 +14,11 @@ public class Collection extends OddObject {
     private MediaImage mMediaImage;
     private DateTime mReleaseDate;
 
-    public Collection(final Identifier identifier) {
+    public OddCollection(final Identifier identifier) {
         super(identifier);
     }
 
-    public Collection(final String id, final String type) {
+    public OddCollection(final String id, final String type) {
         super(id, type);
     }
 
@@ -38,7 +39,7 @@ public class Collection extends OddObject {
     }
 
     @Override
-    public void setAttributes(HashMap<String, Object> attributes) {
+    public void setAttributes(Map<String, Object> attributes) {
         mTitle = (String) attributes.get("title");
         mDescription = (String) attributes.get("description");
         mMediaImage = (MediaImage) attributes.get("mediaImage");
@@ -46,7 +47,7 @@ public class Collection extends OddObject {
     }
 
     @Override
-    public HashMap<String, Object> getAttributes() {
+    public Map<String, Object> getAttributes() {
         HashMap<String, Object> attributes = new HashMap<>();
         attributes.put("title", getTitle());
         attributes.put("description", getDescription());
@@ -67,9 +68,11 @@ public class Collection extends OddObject {
 
     @Override
     public String toString() {
-        return TAG + "(" +
-                "id='" + getId() + "', " +
-                "type='" + getType() + "', " +
-                "title='" + getTitle() + "')";
+        return "OddCollection{" +
+                "mTitle='" + mTitle + '\'' +
+                ", mDescription='" + mDescription + '\'' +
+                ", mMediaImage=" + mMediaImage +
+                ", mReleaseDate=" + mReleaseDate +
+                '}';
     }
 }

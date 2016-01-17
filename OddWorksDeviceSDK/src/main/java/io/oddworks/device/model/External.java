@@ -1,6 +1,7 @@
 package io.oddworks.device.model;
 
 import java.util.HashMap;
+import java.util.Map;
 
 public class External extends OddObject {
     public static final String TAG = External.class.getSimpleName();
@@ -34,7 +35,7 @@ public class External extends OddObject {
     }
 
     @Override
-    public void setAttributes(HashMap<String, Object> attributes) {
+    public void setAttributes(Map<String, Object> attributes) {
         mTitle = (String) attributes.get("title");
         mDescription = (String) attributes.get("description");
         mMediaImage = (MediaImage) attributes.get("mediaImage");
@@ -42,7 +43,7 @@ public class External extends OddObject {
     }
 
     @Override
-    public HashMap<String, Object> getAttributes() {
+    public Map<String, Object> getAttributes() {
         HashMap<String, Object> attributes = new HashMap<>();
         attributes.put("title", getTitle());
         attributes.put("description", getDescription());
@@ -63,9 +64,11 @@ public class External extends OddObject {
 
     @Override
     public String toString() {
-        return getClass().getSimpleName() + "(" +
-                "id='" + getId() + "', " +
-                "type='" + getType() + "', " +
-                "title='" + getTitle() + "')";
+        return "External{" +
+                "mTitle='" + mTitle + '\'' +
+                ", mDescription='" + mDescription + '\'' +
+                ", mMediaImage=" + mMediaImage +
+                ", mUrl='" + mUrl + '\'' +
+                '}';
     }
 }

@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 import io.oddworks.device.exception.OddParseException;
@@ -17,7 +18,6 @@ import io.oddworks.device.exception.UnhandledPlayerTypeException;
 import io.oddworks.device.model.AdsConfig;
 import io.oddworks.device.model.Article;
 import io.oddworks.device.model.AuthToken;
-import io.oddworks.device.model.Collection;
 import io.oddworks.device.model.Config;
 import io.oddworks.device.model.DeviceCodeResponse;
 import io.oddworks.device.model.Event;
@@ -28,6 +28,7 @@ import io.oddworks.device.model.MediaAd;
 import io.oddworks.device.model.MediaImage;
 import io.oddworks.device.model.Metric;
 import io.oddworks.device.model.MetricsConfig;
+import io.oddworks.device.model.OddCollection;
 import io.oddworks.device.model.OddObject;
 import io.oddworks.device.model.OddView;
 import io.oddworks.device.model.Promotion;
@@ -80,7 +81,7 @@ public class OddParser {
         }
     }
 
-    public Collection parseCollection(final JSONObject data) throws JSONException {
+    public OddCollection parseCollection(final JSONObject data) throws JSONException {
         JSONObject rawAttributes = JSON.getJSONObject(data, "attributes", true);
         JSONObject images = JSON.getJSONObject(rawAttributes, "images", false);
 
@@ -93,7 +94,7 @@ public class OddParser {
         attributes.put("releaseDate", JSON.getDateTime(rawAttributes, "releaseDate"));
         attributes.put("mediaImage", parseMediaImage(images));
 
-        Collection collection = new Collection(id, type);
+        OddCollection collection = new OddCollection(id, type);
         collection.setAttributes(attributes);
 
 
@@ -291,7 +292,7 @@ public class OddParser {
         return promotion;
     }
 
-    protected ArrayList<OddObject> parseEntityList(final String result) {
+    protected List<OddObject> parseEntityList(final String result) {
         ArrayList<OddObject> entities = new ArrayList<>();
         try {
             JSONObject entitiesResponse = new JSONObject(result);
@@ -472,8 +473,8 @@ public class OddParser {
         return new DeviceCodeResponse(deviceCode, userCode, verificationUrl, expiresIn, interval);
     }
 
-    public Collection parseCollectionResponse(String responseBody) {
-        Collection collection = null;
+    public OddCollection parseCollectionResponse(String responseBody) {
+        OddCollection collection = null;
         try {
             JSONObject raw = new JSONObject(responseBody);
             JSONObject data = JSON.getJSONObject(raw, "data", true);
@@ -486,7 +487,7 @@ public class OddParser {
         return collection;
     }
 
-    protected ArrayList<OddObject> parseSearch(final String result) {
+    protected List<OddObject> parseSearch(final String result) {
         ArrayList<OddObject> searchResult = new ArrayList<>();
         try {
             JSONObject resultObject = new JSONObject(result);
@@ -522,7 +523,7 @@ public class OddParser {
                         }
                         break;
                     case OddObject.TYPE_COLLECTION:
-                        Collection collection = parseCollection(pokerObj);
+                        OddCollection collection = parseCollection(pokerObj);
                         if (collection != null) {
                                 searchResult.add(collection);
                         }

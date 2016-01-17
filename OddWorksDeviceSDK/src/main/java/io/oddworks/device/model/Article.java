@@ -3,6 +3,7 @@ package io.oddworks.device.model;
 import org.joda.time.DateTime;
 
 import java.util.HashMap;
+import java.util.Map;
 
 
 public class Article extends OddObject {
@@ -56,7 +57,7 @@ public class Article extends OddObject {
     }
 
     @Override
-    public void setAttributes(HashMap<String, Object> attributes) {
+    public void setAttributes(Map<String, Object> attributes) {
         mTitle = (String) attributes.get("title");
         mDescription = (String) attributes.get("description");
         mMediaImage = (MediaImage) attributes.get("mediaImage");
@@ -67,7 +68,7 @@ public class Article extends OddObject {
     }
 
     @Override
-    public HashMap<String, Object> getAttributes() {
+    public Map<String, Object> getAttributes() {
         HashMap<String, Object> attributes = new HashMap<>();
         attributes.put("title", getTitle());
         attributes.put("description", getDescription());
