@@ -1,0 +1,431 @@
+{
+  "data": {
+    "relationships": {
+      "entities": {
+        "links": {
+          "self": "https://device-staging.oddworks.io/v1/collections/ooyala-featured-collections/collections"
+        },
+        "data": [
+          {
+            "id": "ooyala-w4MGV5eDpoE0rmbrcHEeDEEuhQMypB0u",
+            "type": "collection"
+          },
+          {
+            "id": "ooyala-02ZWV5eDqBpEbc9ooAspnWFIIycMZWfK",
+            "type": "collection"
+          },
+          {
+            "id": "ooyala-1sb3lyeDqceL2bg9n92QLrx70spWE_-E",
+            "type": "collection"
+          }
+        ]
+      }
+    },
+    "type": "collection",
+    "id": "ooyala-pbr-featured-collections",
+    "links": {
+      "self": "https://device-staging.oddworks.io/v1/collections/ooyala-pbr-featured-collections"
+    },
+    "attributes": {
+      "title": "PBR Featured Collections",
+      "description": "",
+      "images": {
+        "aspect16x9": "http://image.oddworks.io/eooyala/w4MGV5eDpoE0rmbrcHEeDEEuhQMypB0u/promo272218855.jpg"
+      },
+      "releaseDate": "2015-12-02T13:32:24Z",
+      "updatedAt": "2015-12-02T15:59:43Z",
+      "createdAt": "2015-12-02T13:32:24Z",
+      "organization": "pbr"
+    }
+  },
+  "included": [
+    {
+      "relationships": {
+        "videos": {
+          "links": {
+            "self": "/v1/collections/ooyala-w4MGV5eDpoE0rmbrcHEeDEEuhQMypB0u/videos"
+          },
+          "data": [
+            {
+              "id": "ooyala-xpam8yeTp9y3UlSD1LYj-e8DGTe-NoB7",
+              "type": "video"
+            },
+            {
+              "id": "ooyala-I4am8yeTp8jka7BRtcECqpuJHFNg2Nl-",
+              "type": "video"
+            },
+            {
+              "id": "ooyala-BqaW8yeToh8HjQzrMZVAxuUMFnpxNdbR",
+              "type": "video"
+            }
+          ]
+        }
+      },
+      "type": "collection",
+      "id": "ooyala-w4MGV5eDpoE0rmbrcHEeDEEuhQMypB0u",
+      "links": {
+        "self": "https://device-staging.oddworks.io/v1/collections/ooyala-w4MGV5eDpoE0rmbrcHEeDEEuhQMypB0u"
+      },
+      "attributes": {
+        "title": "The Black Eyed Peas",
+        "description": "Lorem Ipsum bacon helvetica grilled pickle tomato milk soup cookie",
+        "images": {
+          "aspect16x9": "http://image.oddworks.io/eooyala/w4MGV5eDpoE0rmbrcHEeDEEuhQMypB0u/promo272218855.jpg"
+        },
+        "releaseDate": "2015-11-19T16:19:53Z",
+        "updatedAt": "2015-11-23T18:54:50Z",
+        "createdAt": "2015-11-19T16:19:53Z",
+        "organization": "odd-networks"
+      }
+    },
+    {
+      "relationships": {
+        "videos": {
+          "links": {
+            "self": "/v1/collections/ooyala-02ZWV5eDqBpEbc9ooAspnWFIIycMZWfK/videos"
+          },
+          "data": [
+            {
+              "id": "ooyala-xvam8yeTqpPr9C_Mpa7MX6oYbKoWDiEF",
+              "type": "video"
+            },
+            {
+              "id": "ooyala-82am8yeTpdP4bsVwpeIDmMZN1R0f823w",
+              "type": "video"
+            }
+          ]
+        }
+      },
+      "type": "collection",
+      "id": "ooyala-02ZWV5eDqBpEbc9ooAspnWFIIycMZWfK",
+      "links": {
+        "self": "https://device-staging.oddworks.io/v1/collections/ooyala-02ZWV5eDqBpEbc9ooAspnWFIIycMZWfK"
+      },
+      "attributes": {
+        "title": "Lynyrd Skynyrd",
+        "description": "Some birds you just cannot change",
+        "images": {
+          "aspect16x9": "http://image.oddworks.io/eooyala/02ZWV5eDqBpEbc9ooAspnWFIIycMZWfK/promo272219498.jpg"
+        },
+        "releaseDate": "2015-11-19T16:29:55Z",
+        "updatedAt": "2015-11-23T18:54:51Z",
+        "createdAt": "2015-11-19T16:29:55Z",
+        "organization": "odd-networks"
+      }
+    },
+    {
+      "relationships": {
+        "videos": {
+          "links": {
+            "self": "/v1/collections/ooyala-1sb3lyeDqceL2bg9n92QLrx70spWE_-E/videos"
+          },
+          "data": [
+            {
+              "id": "ooyala-RwaW8yeTqohoLkNMj-46VPyvJQKDMY6q",
+              "type": "video"
+            }
+          ]
+        }
+      },
+      "type": "collection",
+      "id": "ooyala-1sb3lyeDqceL2bg9n92QLrx70spWE_-E",
+      "links": {
+        "self": "https://device-staging.oddworks.io/v1/collections/ooyala-1sb3lyeDqceL2bg9n92QLrx70spWE_-E"
+      },
+      "attributes": {
+        "title": "Action Action",
+        "description": "Zombie ipsum reversus ab viral inferno, nam rick grimes malum cerebro. De carne lumbering animata corpora quaeritis. Summus brains sit , morbo vel maleficia? De apocalypsi gorger omero undead survivor dictum mauris. Hi mindless mortuis soulless creaturas, imo evil stalking monstra adventus resi dentevil vultus comedat cerebella viventium",
+        "images": {
+          "aspect16x9": "http://image.oddworks.io/eooyala/1sb3lyeDqceL2bg9n92QLrx70spWE_-E/promo271524327.jpg"
+        },
+        "releaseDate": "2015-11-11T15:23:00Z",
+        "updatedAt": "2015-11-23T18:54:41Z",
+        "createdAt": "2015-11-11T15:23:00Z",
+        "organization": "odd-networks"
+      }
+    },
+    {
+      "type": "video",
+      "meta": {
+        "sourceId": "xpam8yeTp9y3UlSD1LYj-e8DGTe-NoB7",
+        "source": "ooyala"
+      },
+      "id": "ooyala-xpam8yeTp9y3UlSD1LYj-e8DGTe-NoB7",
+      "links": {
+        "self": "https://device-staging.oddworks.io/v1/videos/ooyala-xpam8yeTp9y3UlSD1LYj-e8DGTe-NoB7"
+      },
+      "attributes": {
+        "title": "Let's Get It Started.mp4",
+        "description": "Let us gathered here today begin the process to which we are about to receive from the bounty of the harvest.",
+        "images": {
+          "aspect16x9": "http://image.oddworks.io/eooyala/xpam8yeTp9y3UlSD1LYj-e8DGTe-NoB7/3Gduepif0T1UGY8H4xMDoxOjA4MTsiGN.jpg",
+          "aspect4x3": "http://image.oddworks.io/edummyimage/4:3x1440&text=placeholder.png",
+          "aspect3x4": "http://image.oddworks.io/edummyimage/3:4x1920&text=placeholder.png",
+          "aspect1x1": "http://image.oddworks.io/edummyimage/1:1x1920&text=placeholder.png",
+          "aspect2x3": "http://image.oddworks.io/edummyimage/2:3x1920&text=placeholder.png"
+        },
+        "actors": [],
+        "tags": [],
+        "duration": 229479,
+        "releaseDate": "2015-11-23T18:51:32Z",
+        "updatedAt": "2015-11-23T18:54:55Z",
+        "createdAt": "2015-11-23T18:51:32Z",
+        "organization": "odd-networks",
+        "ads": {
+          "enabled": false,
+          "provider": "freewheel",
+          "format": "vast",
+          "assetId": "xpam8yeTp9y3UlSD1LYj-e8DGTe-NoB7"
+        },
+        "overlays": {
+          "enabled": false
+        },
+        "player": {
+          "type": "ooyala",
+          "pCode": "5meWUyOipwedhLMDFYYFdAYmnGKl",
+          "domain": "ooyala.com",
+          "embedCode": "xpam8yeTp9y3UlSD1LYj-e8DGTe-NoB7"
+        },
+        "url": "http://player.ooyala.com/player/appletv/xpam8yeTp9y3UlSD1LYj-e8DGTe-NoB7.m3u8"
+      }
+    },
+    {
+      "type": "video",
+      "meta": {
+        "sourceId": "I4am8yeTp8jka7BRtcECqpuJHFNg2Nl-",
+        "source": "ooyala"
+      },
+      "id": "ooyala-I4am8yeTp8jka7BRtcECqpuJHFNg2Nl-",
+      "links": {
+        "self": "https://device-staging.oddworks.io/v1/videos/ooyala-I4am8yeTp8jka7BRtcECqpuJHFNg2Nl-"
+      },
+      "attributes": {
+        "title": "Pump It.mp4",
+        "description": "louder, come on",
+        "images": {
+          "aspect16x9": "http://image.oddworks.io/eooyala/I4am8yeTp8jka7BRtcECqpuJHFNg2Nl-/3Gduepif0T1UGY8H4xMDoxOjA4MTsiGN.jpg",
+          "aspect4x3": "http://image.oddworks.io/edummyimage/4:3x1440&text=placeholder.png",
+          "aspect3x4": "http://image.oddworks.io/edummyimage/3:4x1920&text=placeholder.png",
+          "aspect1x1": "http://image.oddworks.io/edummyimage/1:1x1920&text=placeholder.png",
+          "aspect2x3": "http://image.oddworks.io/edummyimage/2:3x1920&text=placeholder.png"
+        },
+        "actors": [],
+        "tags": [],
+        "duration": 225767,
+        "releaseDate": "2015-11-23T18:51:18Z",
+        "updatedAt": "2015-11-23T18:54:52Z",
+        "createdAt": "2015-11-23T18:51:18Z",
+        "organization": "odd-networks",
+        "ads": {
+          "enabled" : true,
+          "provider" : "freewheel",
+          "format" : "freewheel",
+          "networkId" : 393946,
+          "profileName" : "393946:crtv_android_test",
+          "siteSectionId" : "pc_android_all",
+          "vHost" : "602da.v.fwmrm.net"
+        },
+        "overlays": {
+          "enabled": false
+        },
+        "player": {
+          "type": "ooyala",
+          "pCode": "5meWUyOipwedhLMDFYYFdAYmnGKl",
+          "domain": "ooyala.com",
+          "embedCode": "I4am8yeTp8jka7BRtcECqpuJHFNg2Nl-"
+        },
+        "url": "http://player.ooyala.com/player/appletv/I4am8yeTp8jka7BRtcECqpuJHFNg2Nl-.m3u8"
+      }
+    },
+    {
+      "type": "video",
+      "meta": {
+        "sourceId": "BqaW8yeToh8HjQzrMZVAxuUMFnpxNdbR",
+        "source": "ooyala"
+      },
+      "id": "ooyala-BqaW8yeToh8HjQzrMZVAxuUMFnpxNdbR",
+      "links": {
+        "self": "https://device-staging.oddworks.io/v1/videos/ooyala-BqaW8yeToh8HjQzrMZVAxuUMFnpxNdbR"
+      },
+      "attributes": {
+        "title": "Where Is The Love.mp4",
+        "description": "Show us the Luhvre",
+        "images": {
+          "aspect16x9": "http://image.oddworks.io/eooyala/BqaW8yeToh8HjQzrMZVAxuUMFnpxNdbR/3Gduepif0T1UGY8H4xMDoxOjA4MTsiGN.jpg",
+          "aspect4x3": "http://image.oddworks.io/edummyimage/4:3x1440&text=placeholder.png",
+          "aspect3x4": "http://image.oddworks.io/edummyimage/3:4x1920&text=placeholder.png",
+          "aspect1x1": "http://image.oddworks.io/edummyimage/1:1x1920&text=placeholder.png",
+          "aspect2x3": "http://image.oddworks.io/edummyimage/2:3x1920&text=placeholder.png"
+        },
+        "actors": [],
+        "tags": [],
+        "duration": 252252,
+        "releaseDate": "2015-11-23T18:50:38Z",
+        "updatedAt": "2015-11-23T18:54:09Z",
+        "createdAt": "2015-11-23T18:50:38Z",
+        "organization": "odd-networks",
+        "ads": {
+          "enabled": true,
+          "provider": "dfp"
+        },
+        "overlays": {
+          "enabled": false
+        },
+        "player": {
+          "type": "ooyala",
+          "pCode": "5meWUyOipwedhLMDFYYFdAYmnGKl",
+          "domain": "ooyala.com",
+          "embedCode": "BqaW8yeToh8HjQzrMZVAxuUMFnpxNdbR"
+        },
+        "url": "http://player.ooyala.com/player/appletv/BqaW8yeToh8HjQzrMZVAxuUMFnpxNdbR.m3u8"
+      }
+    },
+    {
+      "type": "video",
+      "meta": {
+        "sourceId": "xvam8yeTqpPr9C_Mpa7MX6oYbKoWDiEF",
+        "source": "ooyala"
+      },
+      "id": "ooyala-xvam8yeTqpPr9C_Mpa7MX6oYbKoWDiEF",
+      "links": {
+        "self": "https://device-staging.oddworks.io/v1/videos/ooyala-xvam8yeTqpPr9C_Mpa7MX6oYbKoWDiEF"
+      },
+      "attributes": {
+        "title": "Free Bird (Live August 21st, 1976).mp4",
+        "description": "Guitar Hero.",
+        "images": {
+          "aspect16x9": "http://image.oddworks.io/eooyala/xvam8yeTqpPr9C_Mpa7MX6oYbKoWDiEF/3Gduepif0T1UGY8H4xMDoxOjA4MTsiGN.jpg",
+          "aspect4x3": "http://image.oddworks.io/edummyimage/4:3x1440&text=placeholder.png",
+          "aspect3x4": "http://image.oddworks.io/edummyimage/3:4x1920&text=placeholder.png",
+          "aspect1x1": "http://image.oddworks.io/edummyimage/1:1x1920&text=placeholder.png",
+          "aspect2x3": "http://image.oddworks.io/edummyimage/2:3x1920&text=placeholder.png"
+        },
+        "actors": [],
+        "tags": [],
+        "duration": 838200,
+        "releaseDate": "2015-11-23T18:51:38Z",
+        "updatedAt": "2015-11-23T19:02:25Z",
+        "createdAt": "2015-11-23T18:51:38Z",
+        "organization": "odd-networks",
+        "ads": {
+          "enabled": true,
+          "provider": "videoplaza",
+          "format": "vast",
+          "url": "http://this.is.my.vast.url.com"
+        },
+        "overlays": {
+          "enabled": false
+        },
+        "player": {
+          "type": "ooyala",
+          "pCode": "5meWUyOipwedhLMDFYYFdAYmnGKl",
+          "domain": "ooyala.com",
+          "embedCode": "xvam8yeTqpPr9C_Mpa7MX6oYbKoWDiEF"
+        },
+        "url": "http://player.ooyala.com/player/appletv/xvam8yeTqpPr9C_Mpa7MX6oYbKoWDiEF.m3u8"
+      }
+    },
+    {
+      "type": "video",
+      "meta": {
+        "sourceId": "82am8yeTpdP4bsVwpeIDmMZN1R0f823w",
+        "source": "ooyala"
+      },
+      "id": "ooyala-82am8yeTpdP4bsVwpeIDmMZN1R0f823w",
+      "links": {
+        "self": "https://device-staging.oddworks.io/v1/videos/ooyala-82am8yeTpdP4bsVwpeIDmMZN1R0f823w"
+      },
+      "attributes": {
+        "title": "Simple Man.mp4",
+        "description": "Do this if you can",
+        "images": {
+          "aspect16x9": "http://image.oddworks.io/eooyala/82am8yeTpdP4bsVwpeIDmMZN1R0f823w/3Gduepif0T1UGY8H4xMDoxOjA4MTsiGN.jpg",
+          "aspect4x3": "http://image.oddworks.io/edummyimage/4:3x1440&text=placeholder.png",
+          "aspect3x4": "http://image.oddworks.io/edummyimage/3:4x1920&text=placeholder.png",
+          "aspect1x1": "http://image.oddworks.io/edummyimage/1:1x1920&text=placeholder.png",
+          "aspect2x3": "http://image.oddworks.io/edummyimage/2:3x1920&text=placeholder.png"
+        },
+        "actors": [],
+        "tags": [],
+        "duration": 459926,
+        "releaseDate": "2015-11-23T18:51:12Z",
+        "updatedAt": "2015-11-23T18:58:56Z",
+        "createdAt": "2015-11-23T18:51:12Z",
+        "organization": "odd-networks",
+        "ads": {
+          "enabled": false,
+          "provider": "freewheel",
+          "format": "vast",
+          "assetId": "82am8yeTpdP4bsVwpeIDmMZN1R0f823w"
+        },
+        "overlays": {
+          "enabled": false
+        },
+        "player": {
+          "type": "ooyala",
+          "pCode": "5meWUyOipwedhLMDFYYFdAYmnGKl",
+          "domain": "ooyala.com",
+          "embedCode": "82am8yeTpdP4bsVwpeIDmMZN1R0f823w"
+        },
+        "url": "http://player.ooyala.com/player/appletv/82am8yeTpdP4bsVwpeIDmMZN1R0f823w.m3u8"
+      }
+    },
+    {
+      "type": "video",
+      "meta": {
+        "sourceId": "RwaW8yeTqohoLkNMj-46VPyvJQKDMY6q",
+        "source": "ooyala"
+      },
+      "id": "ooyala-RwaW8yeTqohoLkNMj-46VPyvJQKDMY6q",
+      "links": {
+        "self": "https://device-staging.oddworks.io/v1/videos/ooyala-RwaW8yeTqohoLkNMj-46VPyvJQKDMY6q"
+      },
+      "attributes": {
+        "title": "The Game.mp4",
+        "description": "Clarke is a retired rock godess",
+        "images": {
+          "aspect16x9": "http://image.oddworks.io/eooyala/RwaW8yeTqohoLkNMj-46VPyvJQKDMY6q/3Gduepif0T1UGY8H4xMDoxOjA4MTsiGN.jpg",
+          "aspect4x3": "http://image.oddworks.io/edummyimage/4:3x1440&text=placeholder.png",
+          "aspect3x4": "http://image.oddworks.io/edummyimage/3:4x1920&text=placeholder.png",
+          "aspect1x1": "http://image.oddworks.io/edummyimage/1:1x1920&text=placeholder.png",
+          "aspect2x3": "http://image.oddworks.io/edummyimage/2:3x1920&text=placeholder.png"
+        },
+        "actors": [],
+        "tags": [],
+        "duration": 200000,
+        "releaseDate": "2015-11-23T18:50:46Z",
+        "updatedAt": "2015-11-23T18:53:51Z",
+        "createdAt": "2015-11-23T18:50:46Z",
+        "organization": "odd-networks",
+        "ads": {
+          "enabled": false,
+          "provider": "freewheel",
+          "format": "vast",
+          "assetId": "RwaW8yeTqohoLkNMj-46VPyvJQKDMY6q"
+        },
+        "overlays": {
+          "enabled": false
+        },
+        "player": {
+          "type": "ooyala",
+          "pCode": "5meWUyOipwedhLMDFYYFdAYmnGKl",
+          "domain": "ooyala.com",
+          "embedCode": "RwaW8yeTqohoLkNMj-46VPyvJQKDMY6q"
+        },
+        "url": "http://player.ooyala.com/player/appletv/RwaW8yeTqohoLkNMj-46VPyvJQKDMY6q.m3u8"
+      }
+    }
+  ],
+  "meta": {
+    "device": "APPLE_IOS",
+    "queryParams": {
+      "include": [
+        "true"
+      ]
+    },
+    "userEntitlements": []
+  },
+  "links": {
+    "self": "https://device-staging.oddworks.io/v1/collections/ooyala-pbr-featured-collections%3Finclude=true"
+  }
+}
