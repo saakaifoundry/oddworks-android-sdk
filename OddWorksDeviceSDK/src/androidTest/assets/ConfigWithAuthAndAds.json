@@ -10,6 +10,7 @@
           "enabled": true
         },
         "ads": {
+          "enabled": true,
           "provider": "freewheel",
           "format": "VAST",
           "url": "http://vp-validation.videoplaza.tv/proxy/distributor/v2?tt=p&rt=vast_2.0&rnd={random}&t=standard&s=validation"
