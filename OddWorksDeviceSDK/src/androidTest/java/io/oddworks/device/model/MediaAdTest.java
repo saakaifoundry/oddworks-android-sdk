@@ -96,19 +96,18 @@ public class MediaAdTest {
     }
 
     @Test
-    public void testIsAvailableFalse() throws Exception {
+    public void testIsEnabledFalse() throws Exception {
         MediaAd mediaAd = new MediaAd(attributes);
 
-        assertFalse(mediaAd.isAvailable());
+        assertFalse(mediaAd.isEnabled());
     }
 
     @Test
-    public void testIsAvailableTrue() throws Exception {
-        attributes.put("provider", provider);
-        attributes.put("format", freewheel);
+    public void testIsEnabledTrue() throws Exception {
+        attributes.put("enabled", true);
         MediaAd mediaAd = new MediaAd(attributes);
 
-        assertTrue(mediaAd.isAvailable());
+        assertTrue(mediaAd.isEnabled());
     }
 
     @Test

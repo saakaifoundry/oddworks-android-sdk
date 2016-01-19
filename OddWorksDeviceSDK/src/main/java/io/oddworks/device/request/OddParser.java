@@ -73,7 +73,13 @@ public class OddParser {
             Iterator<String> adKeys = rawAds.keys();
             while(adKeys.hasNext()) {
                 String adProperty = adKeys.next();
-                properties.put(adProperty, JSON.getString(rawAds, adProperty));
+                if (adProperty.equals("enabled")) {
+                    properties.put(adProperty, JSON.getBoolean(rawAds, adProperty));
+                } else if (adProperty.equals("networkId")) {
+                    properties.put(adProperty, JSON.getInt(rawAds, adProperty));
+                } else {
+                    properties.put(adProperty, JSON.getString(rawAds, adProperty));
+                }
             }
             return new MediaAd(properties);
         } catch (Exception e) {

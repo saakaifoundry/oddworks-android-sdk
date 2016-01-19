@@ -8,6 +8,7 @@ public class MediaAd {
     private static final String FORMAT_FREEWHEEL = "freewheel";
     private static final String FORMAT_DFP = "dfp";
 
+    private boolean mEnabled;
     private String mProvider;
     private String mFormat;
     private String mUrl;
@@ -20,10 +21,13 @@ public class MediaAd {
     public MediaAd(){};
 
     public MediaAd(final Map<String, Object> properties) {
+        mEnabled = properties.containsKey("enabled") && (boolean) properties.get("enabled");
         mProvider = (String) properties.get("provider");
         mFormat = (String) properties.get("format");
         mUrl = (String) properties.get("url");
-        mNetworkId = Integer.valueOf((String) properties.get("networkId"));
+        if (properties.containsKey("networkId")) {
+            mNetworkId = (int) properties.get("networkId");
+        }
         mProfileName = (String) properties.get("profileName");
         mSiteSectionId = (String) properties.get("siteSectionId");
         mVHost = (String) properties.get("vHost");
@@ -62,8 +66,8 @@ public class MediaAd {
         return mAssetId;
     }
 
-    public boolean isAvailable() {
-        return getProvider() != null && getFormat() != null;
+    public boolean isEnabled() {
+        return mEnabled;
     }
 
     public boolean isVMAP() {

@@ -220,7 +220,7 @@ public class OddParserTest extends AndroidTestCase {
 
     @Test
     public void testParseCollectionWithIncludedV2() throws Exception {
-        String json = AssetUtils.readFileToString(mContext, "CollectionWithIncludedV2.json");
+        String json = AssetUtils.readFileToString(mContext, "NestedCollectionWithIncludedV2.json");
         OddCollection mc = oddParser.parseCollectionResponse(json);
         assertThat(mc.getId(), is("ooyala-pbr-featured-collections"));
         assertThat(mc.getAttributes(), is(notNullValue()));
@@ -232,6 +232,33 @@ public class OddParserTest extends AndroidTestCase {
         Identifier secondRelationship = relationshipIds.get(1);
         assertThat(secondRelationship.getId(), is("ooyala-02ZWV5eDqBpEbc9ooAspnWFIIycMZWfK"));
         assertThat(mc.findIncludedByIdentifier(secondRelationship), is(notNullValue()));
+    }
+
+    @Test
+    public void testMediaAdParsing() throws Exception {
+        String json = AssetUtils.readFileToString(mContext, "CollectionWithIncludedV2.json");
+        OddCollection collection = oddParser.parseCollectionResponse(json);
+
+        List<OddObject> videos = collection.getIncludedByRelationship("entities");
+        Media vid1 = (Media) videos.get(0);
+        Media vid2 = (Media) videos.get(1);
+        Media vid3 = (Media) videos.get(2);
+        Media vid4 = (Media) videos.get(3);
+
+        assertThat(vid1.getTitle(), is("Let's Get It Started.mp4"));
+        assertFalse(vid1.getMediaAd().isEnabled());
+
+        assertThat(vid2.getTitle(), is("Pump It.mp4"));
+        assertTrue(vid2.getMediaAd().isEnabled());
+        assertTrue(vid2.getMediaAd().isFreeWheel());
+
+        assertThat(vid3.getTitle(), is("Free Bird (Live August 21st, 1976).mp4"));
+        assertTrue(vid3.getMediaAd().isEnabled());
+        assertTrue(vid3.getMediaAd().isDFP());
+
+        assertThat(vid4.getTitle(), is("Simple Man.mp4"));
+        assertTrue(vid4.getMediaAd().isEnabled());
+        assertTrue(vid4.getMediaAd().isVMAP());
     }
 
     @Test
