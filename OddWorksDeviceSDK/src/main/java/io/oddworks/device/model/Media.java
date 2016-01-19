@@ -17,6 +17,7 @@ public class Media extends OddObject {
     private Integer mDuration;
     private String mUrl;
     private Player mPlayer;
+    private Sharing mSharing;
 
     public Media(Identifier identifier) {
         super(identifier);
@@ -99,6 +100,14 @@ public class Media extends OddObject {
         mPlayer = player;
     }
 
+    public Sharing getSharing() {
+        return mSharing;
+    }
+
+    public void setSharing(Sharing sharing) {
+        mSharing = sharing;
+    }
+
     @Override
     public Presentable toPresentable() {
         return new Presentable(mTitle, mDescription, mMediaImage);
@@ -115,6 +124,7 @@ public class Media extends OddObject {
                 ", mDuration=" + mDuration +
                 ", mUrl='" + mUrl + '\'' +
                 ", mPlayer=" + mPlayer +
+                ", mSharing=" + mSharing +
                 '}';
     }
 }

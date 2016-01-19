@@ -12,10 +12,20 @@
         }
       },
       "featuredMedia": {
-        "data": {
-          "id": "pbr-live-web-video",
-          "type": "video"
-        }
+        "data": [
+          {
+            "id": "sharing-enabled",
+            "type": "video"
+          },
+          {
+            "id": "no-sharing",
+            "type": "video"
+          },
+          {
+            "id": "sharing-disabled",
+            "type": "video"
+          }
+        ]
       },
       "featuredCollections": {
         "data": {
@@ -54,9 +64,9 @@
     },
     {
       "type": "video",
-      "id": "pbr-live-web-video",
+      "id": "sharing-enabled",
       "links": {
-        "self": "https://device-staging.oddworks.io/v1/videos/pbr-live-web-video"
+        "self": "https://device-staging.oddworks.io/v1/videos/sharing-enabled"
       },
       "attributes": {
         "title": "Live",
@@ -80,7 +90,87 @@
           "enabled": false,
           "provider": "freewheel",
           "format": "vast",
-          "assetId": "pbr-live-web-video"
+          "assetId": "sharing-enabled"
+        },
+        "sharing": {
+          "enabled": true,
+          "text": "Share this with your friends."
+        },
+        "overlays": {
+          "enabled": false
+        },
+        "url": null
+      }
+    },
+    {
+      "type": "video",
+      "id": "no-sharing",
+      "links": {
+        "self": "https://device-staging.oddworks.io/v1/videos/no-sharing"
+      },
+      "attributes": {
+        "title": "Live",
+        "description": "Louder, come on",
+        "images": {
+          "aspect16x9": "http://image.oddworks.io/eooyala/dkMWV5eDrsp7GH4AnSW9ywCVuDI_-9yx/3Gduepif0T1UGY8H4xMDoxOjBrO-I4W8.jpg",
+          "aspect4x3": "http://image.oddworks.io/edummyimage/4:3x1440&text=placeholder.png",
+          "aspect3x4": "http://image.oddworks.io/edummyimage/3:4x1920&text=placeholder.png",
+          "aspect1x1": "http://image.oddworks.io/edummyimage/1:1x1920&text=placeholder.png",
+          "aspect2x3": "http://image.oddworks.io/edummyimage/2:3x1920&text=placeholder.png"
+        },
+        "player": {
+          "type": "external",
+          "pCode": "5meWUyOipwedhLMDFYYFdAYmnGKl",
+          "domain": "ooyala.com",
+          "url": "https://player.vimeo.com/video/103640686"
+        },
+        "tags": [],
+        "organization": "pbr",
+        "ads": {
+          "enabled": false,
+          "provider": "freewheel",
+          "format": "vast",
+          "assetId": "no-sharing"
+        },
+        "overlays": {
+          "enabled": false
+        },
+        "url": null
+      }
+    },
+    {
+      "type": "video",
+      "id": "sharing-disabled",
+      "links": {
+        "self": "https://device-staging.oddworks.io/v1/videos/sharing-disabled"
+      },
+      "attributes": {
+        "title": "Live",
+        "description": "Louder, come on",
+        "images": {
+          "aspect16x9": "http://image.oddworks.io/eooyala/dkMWV5eDrsp7GH4AnSW9ywCVuDI_-9yx/3Gduepif0T1UGY8H4xMDoxOjBrO-I4W8.jpg",
+          "aspect4x3": "http://image.oddworks.io/edummyimage/4:3x1440&text=placeholder.png",
+          "aspect3x4": "http://image.oddworks.io/edummyimage/3:4x1920&text=placeholder.png",
+          "aspect1x1": "http://image.oddworks.io/edummyimage/1:1x1920&text=placeholder.png",
+          "aspect2x3": "http://image.oddworks.io/edummyimage/2:3x1920&text=placeholder.png"
+        },
+        "player": {
+          "type": "external",
+          "pCode": "5meWUyOipwedhLMDFYYFdAYmnGKl",
+          "domain": "ooyala.com",
+          "url": "https://player.vimeo.com/video/103640686"
+        },
+        "tags": [],
+        "organization": "pbr",
+        "ads": {
+          "enabled": false,
+          "provider": "freewheel",
+          "format": "vast",
+          "assetId": "sharing-disabled"
+        },
+        "sharing": {
+          "enabled": false,
+          "text": "Share this with your friends."
         },
         "overlays": {
           "enabled": false

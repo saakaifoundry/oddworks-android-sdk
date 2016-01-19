@@ -20,7 +20,6 @@ import io.oddworks.device.metric.OddVideoPlayMetric;
 import io.oddworks.device.metric.OddVideoPlayingMetric;
 import io.oddworks.device.metric.OddVideoStopMetric;
 import io.oddworks.device.metric.OddViewLoadMetric;
-import io.oddworks.device.model.AdsConfig;
 import io.oddworks.device.model.Article;
 import io.oddworks.device.model.Config;
 import io.oddworks.device.model.Event;
@@ -66,7 +65,16 @@ public class OddParserTest extends AndroidTestCase {
         assertThat(((Promotion) promotions.get(0)).getTitle(), is("Share your best poker face using #POKERCENTRALCONTEST"));
 
         assertFalse(featuredMedia.isEmpty());
-        assertThat(((Media) featuredMedia.get(0)).getDescription(), is("Louder, come on"));
+        Media mediaSharingEnabled = (Media) featuredMedia.get(0);
+        assertThat(mediaSharingEnabled.getDescription(), is("Louder, come on"));
+        assertTrue(mediaSharingEnabled.getSharing().isEnabled());
+        assertThat(mediaSharingEnabled.getSharing().getText(), is("Share this with your friends."));
+
+        Media mediaNoSharing = (Media) featuredMedia.get(1);
+        assertFalse(mediaNoSharing.getSharing().isEnabled());
+
+        Media mediaSharingDisabled = (Media) featuredMedia.get(2);
+        assertFalse(mediaSharingDisabled.getSharing().isEnabled());
 
         assertFalse(featuredCollections.isEmpty());
         OddCollection collection = (OddCollection) featuredCollections.get(0);
@@ -152,17 +160,11 @@ public class OddParserTest extends AndroidTestCase {
         assertThat(config.getViews().values().iterator().next(), is(spashpageId));
         assertThat(config.getViews().get("splash"), is("2a019789-2475-4674-84f0-764bca8b8f66"));
         assertThat(config.isAuthEnabled(), is(true));
-        AdsConfig ads = config.getAdsConfig();
-        assertThat(ads.getProvider(), is(AdsConfig.AdProvider.FREEWHEEL));
-        assertThat(ads.getFormat(), is(AdsConfig.AdFormat.VAST));
-        String adsUrl = "http://vp-validation.videoplaza.tv/proxy/distributor/v2" +
-                "?tt=p&rt=vast_2.0&rnd={random}&t=standard&s=validation";
-        assertThat(ads.getUrl(), is(adsUrl));
     }
 
     @Test
     public  void testParseConfigWithAuthNoAds() throws Exception {
-        String json = AssetUtils.readFileToString(mContext, "ConfigWithAuthNoAds.json");
+        String json = AssetUtils.readFileToString(mContext, "ConfigWithAuthNoAdsAndSharing.json");
         Config config = oddParser.parseConfig(json);
         assertThat(config.getViews().size(), is(3));
         String spashpageId = "levintv-homepage";
@@ -170,8 +172,6 @@ public class OddParserTest extends AndroidTestCase {
         assertThat(config.getViews().values().iterator().next(), is(spashpageId));
         assertThat(config.getViews().get("splash"), is("levintv-splash"));
         assertThat(config.isAuthEnabled(), is(true));
-        AdsConfig ads = config.getAdsConfig();
-        assertNull(ads);
     }
 
     @Test
@@ -216,7 +216,6 @@ public class OddParserTest extends AndroidTestCase {
         String json = AssetUtils.readFileToString(mContext, "ConfigWithoutAuthAndWithoutAds.json");
         Config config = oddParser.parseConfig(json);
         assertThat(config.isAuthEnabled(), is(false));
-        assertThat(config.getAdsConfig(), is(nullValue()));
     }
 
     @Test
