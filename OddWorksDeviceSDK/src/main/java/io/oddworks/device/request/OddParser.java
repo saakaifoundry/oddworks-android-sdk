@@ -15,7 +15,6 @@ import java.util.Map;
 
 import io.oddworks.device.exception.OddParseException;
 import io.oddworks.device.exception.UnhandledPlayerTypeException;
-import io.oddworks.device.model.AdsConfig;
 import io.oddworks.device.model.Article;
 import io.oddworks.device.model.AuthToken;
 import io.oddworks.device.model.Config;
@@ -33,6 +32,7 @@ import io.oddworks.device.model.OddObject;
 import io.oddworks.device.model.OddView;
 import io.oddworks.device.model.Promotion;
 import io.oddworks.device.model.Relationship;
+import io.oddworks.device.model.Sharing;
 import io.oddworks.device.model.players.ExternalPlayer;
 import io.oddworks.device.model.players.OoyalaPlayer;
 import io.oddworks.device.model.players.Player;
@@ -233,6 +233,7 @@ public class OddParser {
         attributes.put("mediaAd", parseMediaAd(rawAttributes));
         media.setAttributes(attributes);
         media.setPlayer(parsePlayer(JSON.getJSONObject(rawAttributes, "player", true)));
+        media.setSharing(parseSharing(JSON.getJSONObject(rawAttributes, "sharing", false)));
 
         return media;
     }
@@ -261,6 +262,16 @@ public class OddParser {
                 throw new UnhandledPlayerTypeException("unsupported player type: " + type);
         }
         return player;
+    }
+
+    protected Sharing parseSharing(final JSONObject rawSharing) throws JSONException {
+        boolean enabled = false;
+        String text = "";
+        if (rawSharing != null) {
+            enabled = JSON.getBoolean(rawSharing, "enabled");
+            text = JSON.getString(rawSharing, "text");
+        }
+        return new Sharing(enabled, text);
     }
 
     private OoyalaPlayer parseOoyalaPlayer(JSONObject rawPlayer) throws JSONException {
@@ -367,27 +378,6 @@ public class OddParser {
         }
     }
 
-    protected AdsConfig parseAds(JSONObject rawFeatures) {
-        try {
-            JSONObject rawAds = JSON.getJSONObject(rawFeatures, "ads", true);
-            boolean enabled = JSON.getBoolean(rawAds, "enabled");
-
-            if (enabled) {
-                String providerStr = JSON.getString(rawAds, "provider");
-                AdsConfig.AdProvider provider = AdsConfig.AdProvider.valueOf(providerStr.toUpperCase());
-                String adFormatStr = JSON.getString(rawAds, "format");
-                AdsConfig.AdFormat format = AdsConfig.AdFormat.valueOf(adFormatStr.toUpperCase());
-                String url = JSON.getString(rawAds, "url");
-                return new AdsConfig(provider, format, url);
-            } else {
-                return null;
-            }
-        } catch (JSONException e) {
-            Log.w(TAG, "failed to parse ads feature from config");
-            return null;
-        }
-    }
-
     protected Config parseConfig(final String result) {
         try {
             JSONObject resultJSONObject = new JSONObject(result);
@@ -403,11 +393,10 @@ public class OddParser {
             }
 
             JSONObject rawFeatures = parseFeatures(rawAttributes);
-            AdsConfig ads = parseAds(rawFeatures);
             MetricsConfig metrics = parseMetrics(rawFeatures);
 
             boolean authEnabled = isAuthEnabled(rawFeatures);
-            return new Config(views, authEnabled, ads, metrics);
+            return new Config(views, authEnabled, metrics);
         } catch (JSONException e) {
             e.printStackTrace();
         }
