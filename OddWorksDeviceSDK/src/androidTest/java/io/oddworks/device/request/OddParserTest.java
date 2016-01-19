@@ -161,6 +161,20 @@ public class OddParserTest extends AndroidTestCase {
     }
 
     @Test
+    public  void testParseConfigWithAuthNoAds() throws Exception {
+        String json = AssetUtils.readFileToString(mContext, "ConfigWithAuthNoAds.json");
+        Config config = oddParser.parseConfig(json);
+        assertThat(config.getViews().size(), is(3));
+        String spashpageId = "levintv-homepage";
+        assertThat(config.getViews().get("homepage"), is(spashpageId));
+        assertThat(config.getViews().values().iterator().next(), is(spashpageId));
+        assertThat(config.getViews().get("splash"), is("levintv-splash"));
+        assertThat(config.isAuthEnabled(), is(true));
+        AdsConfig ads = config.getAdsConfig();
+        assertNull(ads);
+    }
+
+    @Test
     public  void testParseConfigWithMetrics() throws Exception {
         String json = AssetUtils.readFileToString(mContext, "ConfigWithMetrics.json");
         Config config = oddParser.parseConfig(json);

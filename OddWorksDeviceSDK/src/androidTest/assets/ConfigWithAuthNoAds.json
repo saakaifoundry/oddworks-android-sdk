@@ -1,0 +1,62 @@
+{
+  "data": {
+    "type": "config",
+    "links": {
+      "self": "https://device-staging.oddworks.io/v2/configs/"
+    },
+    "attributes": {
+      "features": {
+        "authentication": {
+          "enabled": true
+        },
+        "ads": {
+          "enabled": false
+        },
+        "metrics": {
+          "appInit": {
+            "action": "app:init",
+            "enabled": true
+          },
+          "viewLoad": {
+            "action": "view:load",
+            "enabled": true
+          },
+          "videoPlay": {
+            "action": "video:play",
+            "enabled": true
+          },
+          "videoPlaying": {
+            "action": "video:playing",
+            "enabled": true,
+            "interval": 30000
+          },
+          "videoStop": {
+            "action": "video:stop",
+            "enabled": true
+          },
+          "videoError": {
+            "action": "video:error",
+            "enabled": true
+          }
+        },
+        "sharing": {
+          "enabled": true,
+          "text": "Watch the @marklevinshow Live on mobile and TV connected devices!"
+        }
+      },
+      "views": {
+        "homepage": "levintv-homepage",
+        "menu": "levintv-menu",
+        "splash": "levintv-splash"
+      }
+    }
+  },
+  "meta": {
+    "device": "GOOGLE_ANDROID",
+    "queryParams": {},
+    "userEntitlements": []
+  },
+  "links": {
+    "self": "https://device-staging.oddworks.io/v2/config"
+  }
+}

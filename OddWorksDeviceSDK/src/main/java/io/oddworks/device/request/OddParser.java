@@ -369,12 +369,18 @@ public class OddParser {
     protected AdsConfig parseAds(JSONObject rawFeatures) {
         try {
             JSONObject rawAds = JSON.getJSONObject(rawFeatures, "ads", true);
-            String providerStr = JSON.getString(rawAds, "provider");
-            AdsConfig.AdProvider provider = AdsConfig.AdProvider.valueOf(providerStr.toUpperCase());
-            String adFormatStr = JSON.getString(rawAds, "format");
-            AdsConfig.AdFormat format = AdsConfig.AdFormat.valueOf(adFormatStr.toUpperCase());
-            String url = JSON.getString(rawAds, "url");
-            return new AdsConfig(provider, format, url);
+            boolean enabled = JSON.getBoolean(rawAds, "enabled");
+
+            if (enabled) {
+                String providerStr = JSON.getString(rawAds, "provider");
+                AdsConfig.AdProvider provider = AdsConfig.AdProvider.valueOf(providerStr.toUpperCase());
+                String adFormatStr = JSON.getString(rawAds, "format");
+                AdsConfig.AdFormat format = AdsConfig.AdFormat.valueOf(adFormatStr.toUpperCase());
+                String url = JSON.getString(rawAds, "url");
+                return new AdsConfig(provider, format, url);
+            } else {
+                return null;
+            }
         } catch (JSONException e) {
             Log.w(TAG, "failed to parse ads feature from config");
             return null;
