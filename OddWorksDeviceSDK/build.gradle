@@ -3,7 +3,7 @@ apply plugin: 'com.github.dcendents.android-maven'
 
 android {
     compileSdkVersion 23
-    buildToolsVersion "23.0.1"
+    buildToolsVersion "23.0.2"
 
     defaultConfig {
         minSdkVersion 16
@@ -26,7 +26,7 @@ android {
 
 group = 'com.github.oddnetworks'
 
-version = '1.0.0-beta-45'
+version = '1.0.0-beta-48'
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
