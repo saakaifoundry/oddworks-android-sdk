@@ -1,0 +1,34 @@
+{
+    "docs": [
+        {
+            "location": "/", 
+            "text": "Oddworks SDK for Android\n\n\nDocument version: February 3, 2016\n\nSDK Version: beta-1.0.0\n\n\nThe Oddworks SDK for Android is a wrapper for the Odd Networks...\n\n\nFeatures\n\n\nThe Oddworks SDK fro Android supports the following features:\n\n\n\n\nitem 1\n\n\nitem 2\n\n\nitem 3\n\n\n\n\nIntended Audience\n\n\nThis guide assumes that you have the necessary Java and Android development skills to work successfully with Oddworks for Android. You should know how to build and compile Android applications using Android Studio and the latest tools from the Android Developers Kit.", 
+            "title": "Introduction"
+        }, 
+        {
+            "location": "/#oddworks-sdk-for-android", 
+            "text": "Document version: February 3, 2016 \nSDK Version: beta-1.0.0  The Oddworks SDK for Android is a wrapper for the Odd Networks...", 
+            "title": "Oddworks SDK for Android"
+        }, 
+        {
+            "location": "/#features", 
+            "text": "The Oddworks SDK fro Android supports the following features:   item 1  item 2  item 3", 
+            "title": "Features"
+        }, 
+        {
+            "location": "/#intended-audience", 
+            "text": "This guide assumes that you have the necessary Java and Android development skills to work successfully with Oddworks for Android. You should know how to build and compile Android applications using Android Studio and the latest tools from the Android Developers Kit.", 
+            "title": "Intended Audience"
+        }, 
+        {
+            "location": "/setup/", 
+            "text": "", 
+            "title": "Library and Project Setup"
+        }, 
+        {
+            "location": "/config/", 
+            "text": "", 
+            "title": "Configuring your Device"
+        }
+    ]
+}
