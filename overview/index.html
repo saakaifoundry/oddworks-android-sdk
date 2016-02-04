@@ -8,7 +8,7 @@
   
   
   
-  <title>Library and Project Setup - Oddworks SDK for Android</title>
+  <title>Oddworks Overview - Oddworks SDK for Android</title>
   
 
   <link rel="shortcut icon" href="../img/favicon.ico">
@@ -23,9 +23,9 @@
   
   <script>
     // Current page data
-    var mkdocs_page_name = "Library and Project Setup";
-    var mkdocs_page_input_path = "setup.md";
-    var mkdocs_page_url = "/setup/";
+    var mkdocs_page_name = "Oddworks Overview";
+    var mkdocs_page_input_path = "overview.md";
+    var mkdocs_page_url = "/overview/";
   </script>
   
   <script src="../js/jquery-2.1.1.min.js"></script>
@@ -67,8 +67,17 @@
 
         
             
-    <li class="toctree-l1 ">
-        <a class="" href="../overview/">Oddworks Overview</a>
+    <li class="toctree-l1 current">
+        <a class="current" href="./">Oddworks Overview</a>
+        
+            <ul>
+            
+                <li class="toctree-l3"><a href="#about-oddworks">About Oddworks</a></li>
+                
+                    <li><a class="toctree-l4" href="#oddworks-entities">Oddworks Entities</a></li>
+                
+            
+            </ul>
         
     </li>
 
@@ -82,18 +91,8 @@
 
         
             
-    <li class="toctree-l1 current">
-        <a class="current" href="./">Library and Project Setup</a>
-        
-            <ul>
-            
-                <li class="toctree-l3"><a href="#integrate-the-oddworks-sdk">Integrate the Oddworks SDK</a></li>
-                
-            
-                <li class="toctree-l3"><a href="#configure-your-access-token">Configure Your Access Token</a></li>
-                
-            
-            </ul>
+    <li class="toctree-l1 ">
+        <a class="" href="../setup/">Library and Project Setup</a>
         
     </li>
 
@@ -145,11 +144,11 @@
     
       
         
-          <li>Getting Started &raquo;</li>
+          <li>Welcome &raquo;</li>
         
       
     
-    <li>Library and Project Setup</li>
+    <li>Oddworks Overview</li>
     <li class="wy-breadcrumbs-aside">
       
     </li>
@@ -159,51 +158,20 @@
           <div role="main">
             <div class="section">
               
-                <h1 id="integrate-the-oddworks-sdk">Integrate the Oddworks SDK</h1>
-<p>Our SDK is built and hosted via <a href="https://jitpack.io">Jitpack</a>. Include Jitpack at the end of the <code>repositories</code> section of the app module's <code>build.gradle</code> file:</p>
-<pre><code>// app/build.gradle
-
-repositories {
-    // ...
-    maven { url "https://jitpack.io" }
-}
-</code></pre>
-<p>Now at the end of the  <code>dependencies</code> section of the app module's <code>build.gradle</code> file add the Oddworks SDK:</p>
-<pre><code>// app/build.gradle
-
-dependencies {
-    // ...
-    compile "com.github.oddnetworks:OddWorksDeviceSDK:beta-1.0.0"
-}
-</code></pre>
-<p>There's one more thing you'll need to add to this <code>build.gradle</code> file that will be used in the next step. The SDK expects an app version when it's being initialized. To create this app version we'll use Git.</p>
-<pre><code>// app/build.gradle
-
-android {
-    // ...
-    defaultConfig {
-        // ...
-        resValue "string", "git_revision", gitRevision()
-    }
-    // ...
-}
-
-// ...
-
-def gitRevision() {
-    def cmd = "git rev-parse --short HEAD"
-    return cmd.execute().text.trim()
-}
-</code></pre>
-<p>Sync your project with Gradle files and you will have the OddworksDeviceSDK added to your External Libraries.</p>
-<h1 id="configure-your-access-token">Configure Your Access Token</h1>
-<p>The SDK also will need an access token to use when accessing the API. For instructions on how to receive your own access token check out our <a href="http://TODO.com">API Guide</a>. For this guide we'll use a sample access token which accesses NASA content. Create a file in <code>app/res/values/</code> called <code>sdk_strings.xml</code>.</p>
-<pre><code>&lt;?xml version="1.0" encoding="utf-8"?&gt;
-&lt;resources&gt;
-    &lt;string name="x_access_token"&gt;eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ2ZXJzaW9uIjoxLCJkZXZpY2VJRCI6IjBhODFjNmEwLWJiYjUtMTFlNS05ZWY4LWNiYmI0OWM4OTI1NiIsInNjb3BlIjpbImRldmljZSJdLCJpYXQiOjE0NTI4ODIxOTR9.iM26knCfqoPggNMeEUgH6_sW1kpwqmE9Hrso02g4LyQ&lt;/string&gt;
-&lt;/resources&gt;
-</code></pre>
-<p>Be sure to add this to your <code>.gitignore</code> in your own project. This access token should be super secret and not kept in version control. Anybody with access to it will also be able to access your data.</p>
+                <h1 id="about-oddworks">About Oddworks</h1>
+<p>Oddworks is, at its core, a Video Management System (VMS). It provides a central location to organize media and configure the devices that serve it.</p>
+<h2 id="oddworks-entities">Oddworks Entities</h2>
+<p>Oddworks has a handful of specific entity types that are used in concert to construct media applications. No matter which Online Video Provider (OVP) is used to provide media to Oddworks, the data will be massaged into one of these standardized objects. Our thought is that consumer applications should not need to change when adding a new OVP or changing where a video is stored.</p>
+<h3 id="config">config</h3>
+<p>The <code>config</code> entity will contain device-specific configuration data.</p>
+<h3 id="video-and-livestream">video and liveStream</h3>
+<p>The <code>video</code> and <code>liveStream</code> entities are the media objects that are the meat and potatoes of Odd Networks. If the media being served is a linear or live stream, it will be of type <code>liveStream</code>. If the media is an on-demand stream then it will be of type <code>video</code>.</p>
+<h3 id="promotion">promotion</h3>
+<p>The <code>promotion</code> entity is an object that is essentially the same as a <code>video</code> or <code>liveStream</code> without the stream.</p>
+<h3 id="collection">collection</h3>
+<p>A <code>collection</code> entity is an object that contains other entities.</p>
+<h3 id="view">view</h3>
+<p>A <code>view</code> entity is an object that can contain other entities through user-defined custom relationships.</p>
               
             </div>
           </div>
@@ -211,10 +179,10 @@ def gitRevision() {
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../getting_started/" class="btn btn-neutral float-right" title="Configuring your App">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../setup/" class="btn btn-neutral float-right" title="Library and Project Setup">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
-        <a href="../overview/" class="btn btn-neutral" title="Oddworks Overview"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href=".." class="btn btn-neutral" title="Introduction"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
@@ -240,10 +208,10 @@ def gitRevision() {
     <span class="rst-current-version" data-toggle="rst-current-version">
       
       
-        <span><a href="../overview/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+        <span><a href=".." style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
-        <span style="margin-left: 15px"><a href="../getting_started/" style="color: #fcfcfc">Next &raquo;</a></span>
+        <span style="margin-left: 15px"><a href="../setup/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>

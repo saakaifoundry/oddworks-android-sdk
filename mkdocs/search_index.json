@@ -21,6 +21,46 @@
             "title": "Intended Audience"
         }, 
         {
+            "location": "/overview/", 
+            "text": "About Oddworks\n\n\nOddworks is, at its core, a Video Management System (VMS). It provides a central location to organize media and configure the devices that serve it.\n\n\nOddworks Entities\n\n\nOddworks has a handful of specific entity types that are used in concert to construct media applications. No matter which Online Video Provider (OVP) is used to provide media to Oddworks, the data will be massaged into one of these standardized objects. Our thought is that consumer applications should not need to change when adding a new OVP or changing where a video is stored.\n\n\nconfig\n\n\nThe \nconfig\n entity will contain device-specific configuration data.\n\n\nvideo and liveStream\n\n\nThe \nvideo\n and \nliveStream\n entities are the media objects that are the meat and potatoes of Odd Networks. If the media being served is a linear or live stream, it will be of type \nliveStream\n. If the media is an on-demand stream then it will be of type \nvideo\n.\n\n\npromotion\n\n\nThe \npromotion\n entity is an object that is essentially the same as a \nvideo\n or \nliveStream\n without the stream.\n\n\ncollection\n\n\nA \ncollection\n entity is an object that contains other entities.\n\n\nview\n\n\nA \nview\n entity is an object that can contain other entities through user-defined custom relationships.", 
+            "title": "Oddworks Overview"
+        }, 
+        {
+            "location": "/overview/#about-oddworks", 
+            "text": "Oddworks is, at its core, a Video Management System (VMS). It provides a central location to organize media and configure the devices that serve it.", 
+            "title": "About Oddworks"
+        }, 
+        {
+            "location": "/overview/#oddworks-entities", 
+            "text": "Oddworks has a handful of specific entity types that are used in concert to construct media applications. No matter which Online Video Provider (OVP) is used to provide media to Oddworks, the data will be massaged into one of these standardized objects. Our thought is that consumer applications should not need to change when adding a new OVP or changing where a video is stored.", 
+            "title": "Oddworks Entities"
+        }, 
+        {
+            "location": "/overview/#config", 
+            "text": "The  config  entity will contain device-specific configuration data.", 
+            "title": "config"
+        }, 
+        {
+            "location": "/overview/#video-and-livestream", 
+            "text": "The  video  and  liveStream  entities are the media objects that are the meat and potatoes of Odd Networks. If the media being served is a linear or live stream, it will be of type  liveStream . If the media is an on-demand stream then it will be of type  video .", 
+            "title": "video and liveStream"
+        }, 
+        {
+            "location": "/overview/#promotion", 
+            "text": "The  promotion  entity is an object that is essentially the same as a  video  or  liveStream  without the stream.", 
+            "title": "promotion"
+        }, 
+        {
+            "location": "/overview/#collection", 
+            "text": "A  collection  entity is an object that contains other entities.", 
+            "title": "collection"
+        }, 
+        {
+            "location": "/overview/#view", 
+            "text": "A  view  entity is an object that can contain other entities through user-defined custom relationships.", 
+            "title": "view"
+        }, 
+        {
             "location": "/setup/", 
             "text": "Integrate the Oddworks SDK\n\n\nOur SDK is built and hosted via \nJitpack\n. Include Jitpack at the end of the \nrepositories\n section of the app module's \nbuild.gradle\n file:\n\n\n// app/build.gradle\n\nrepositories {\n    // ...\n    maven { url \"https://jitpack.io\" }\n}\n\n\n\nNow at the end of the  \ndependencies\n section of the app module's \nbuild.gradle\n file add the Oddworks SDK:\n\n\n// app/build.gradle\n\ndependencies {\n    // ...\n    compile \"com.github.oddnetworks:OddWorksDeviceSDK:beta-1.0.0\"\n}\n\n\n\nThere's one more thing you'll need to add to this \nbuild.gradle\n file that will be used in the next step. The SDK expects an app version when it's being initialized. To create this app version we'll use Git.\n\n\n// app/build.gradle\n\nandroid {\n    // ...\n    defaultConfig {\n        // ...\n        resValue \"string\", \"git_revision\", gitRevision()\n    }\n    // ...\n}\n\n// ...\n\ndef gitRevision() {\n    def cmd = \"git rev-parse --short HEAD\"\n    return cmd.execute().text.trim()\n}\n\n\n\nSync your project with Gradle files and you will have the OddworksDeviceSDK added to your External Libraries.\n\n\nConfigure Your Access Token\n\n\nThe SDK also will need an access token to use when accessing the API. For instructions on how to receive your own access token check out our \nAPI Guide\n. For this guide we'll use a sample access token which accesses NASA content. Create a file in \napp/res/values/\n called \nsdk_strings.xml\n.\n\n\n?xml version=\"1.0\" encoding=\"utf-8\"?\n\n\nresources\n\n    \nstring name=\"x_access_token\"\neyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ2ZXJzaW9uIjoxLCJkZXZpY2VJRCI6IjBhODFjNmEwLWJiYjUtMTFlNS05ZWY4LWNiYmI0OWM4OTI1NiIsInNjb3BlIjpbImRldmljZSJdLCJpYXQiOjE0NTI4ODIxOTR9.iM26knCfqoPggNMeEUgH6_sW1kpwqmE9Hrso02g4LyQ\n/string\n\n\n/resources\n\n\n\n\nBe sure to add this to your \n.gitignore\n in your own project. This access token should be super secret and not kept in version control. Anybody with access to it will also be able to access your data.", 
             "title": "Library and Project Setup"
