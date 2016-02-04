@@ -167,30 +167,32 @@
             <div class="section">
               
                 <h1 id="integrate-the-oddworks-sdk">Integrate the Oddworks SDK</h1>
-<p>Our SDK is built and hosted via <a href="https://jitpack.io">Jitpack</a>. Include Jitpack at the end of the <code>repositories</code> section of the app module's <code>build.gradle</code> file:</p>
-<pre><code>// app/build.gradle
+<p>Our SDK is built and hosted via <a href="https://jitpack.io">Jitpack</a>. Include Jitpack in the <code>repositories</code> section of your app module's <code>build.gradle</code> file:</p>
+<pre><code class="groovy">// app/build.gradle
 
 repositories {
     // ...
-    maven { url "https://jitpack.io" }
+    maven { url &quot;https://jitpack.io&quot; }
 }
 </code></pre>
-<p>Now at the end of the  <code>dependencies</code> section of the app module's <code>build.gradle</code> file add the Oddworks SDK:</p>
-<pre><code>// app/build.gradle
+
+<p>Now in the  <code>dependencies</code> section of your app module's <code>build.gradle</code> file add the Oddworks SDK:</p>
+<pre><code class="groovy">// app/build.gradle
 
 dependencies {
     // ...
-    compile "com.github.oddnetworks:OddWorksDeviceSDK:beta-1.0.0"
+    compile &quot;com.github.oddnetworks:OddWorksDeviceSDK:beta-1.0.0&quot;
 }
 </code></pre>
-<p>There's one more thing you'll need to add to this <code>build.gradle</code> file that will be used in the next step. The SDK expects an app version when it's being initialized. To create this app version we'll use Git.</p>
-<pre><code>// app/build.gradle
+
+<p>There's one more <em>optional</em> thing you can do to your application's <code>build.gradle</code> file that will be used in the next step. The SDK expects an app version when it's being initialized. One option would be to use your app module's <code>BuildConfig.VERSION_NAME</code>. Another might be to send your git revision.</p>
+<pre><code class="groovy">// app/build.gradle
 
 android {
     // ...
     defaultConfig {
         // ...
-        resValue "string", "git_revision", gitRevision()
+        resValue &quot;string&quot;, &quot;git_revision&quot;, gitRevision()
     }
     // ...
 }
@@ -198,19 +200,25 @@ android {
 // ...
 
 def gitRevision() {
-    def cmd = "git rev-parse --short HEAD"
+    def cmd = &quot;git rev-parse --short HEAD&quot;
     return cmd.execute().text.trim()
 }
 </code></pre>
+
 <p>Sync your project with Gradle files and you will have the OddworksDeviceSDK added to your External Libraries.</p>
 <h1 id="configure-your-access-token">Configure Your Access Token</h1>
-<p>The SDK also will need an access token to use when accessing the API. For instructions on how to receive your own access token check out our <a href="http://TODO.com">API Guide</a>. For this guide we'll use a sample access token which accesses NASA content. Create a file in <code>app/res/values/</code> called <code>sdk_strings.xml</code>.</p>
-<pre><code>&lt;?xml version="1.0" encoding="utf-8"?&gt;
-&lt;resources&gt;
-    &lt;string name="x_access_token"&gt;eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ2ZXJzaW9uIjoxLCJkZXZpY2VJRCI6IjBhODFjNmEwLWJiYjUtMTFlNS05ZWY4LWNiYmI0OWM4OTI1NiIsInNjb3BlIjpbImRldmljZSJdLCJpYXQiOjE0NTI4ODIxOTR9.iM26knCfqoPggNMeEUgH6_sW1kpwqmE9Hrso02g4LyQ&lt;/string&gt;
-&lt;/resources&gt;
+<p>The SDK also will need an access token to use when accessing the API. For instructions on how to receive your own access token check out our <a href="http://TODO.com">API Guide</a>.  Create a file in <code>app/res/values/</code> called <code>sdk_strings.xml</code>.</p>
+<pre><code class="xml">    &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+    &lt;resources&gt;
+        &lt;string name=&quot;x_access_token&quot;&gt;your-access-token-here&lt;/string&gt;
+    &lt;/resources&gt;
 </code></pre>
-<p>Be sure to add this to your <code>.gitignore</code> in your own project. This access token should be super secret and not kept in version control. Anybody with access to it will also be able to access your data.</p>
+
+<p><em>For this guide we'll use the sample access token below, which accesses NASA content.</em></p>
+<pre><code>eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ2ZXJzaW9uIjoxLCJkZXZpY2VJRCI6IjBhODFjNmEwLWJiYjUtMTFlNS05ZWY4LWNiYmI0OWM4OTI1NiIsInNjb3BlIjpbImRldmljZSJdLCJpYXQiOjE0NTI4ODIxOTR9.iM26knCfqoPggNMeEUgH6_sW1kpwqmE9Hrso02g4LyQ
+</code></pre>
+
+<p>We strongly recommend adding any file that contains sensitive information to your project's <code>.gitignore</code> file. This access token should be kept private and not checked in to version control. Anyone who has your access token will be able to fetch your data.</p>
               
             </div>
           </div>

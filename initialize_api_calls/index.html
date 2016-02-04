@@ -119,9 +119,6 @@
                 <li class="toctree-l3"><a href="#get-config-data-from-api">Get Config Data from API</a></li>
                 
             
-                <li class="toctree-l3"><a href="#getting-view-data-from-api">Getting View Data from API</a></li>
-                
-            
             </ul>
         
     </li>
@@ -169,13 +166,12 @@
                 <h1 id="get-config-data-from-api">Get Config Data from API</h1>
 <p><strong><em>Note: We've configured the NASA test organization to send config information down with the use of <code>OddView</code>s as the main way of constructing data in the application. This is completely optional. You may format your data however you like on the Oddworks dashboard. For example: you may just want to call all collections or videos directly.</em></strong></p>
 <p>Now it's time to make our <code>SplashActivity</code> actually do somthing. First we'll set up the member variables...</p>
-<pre><code>// app/java/sample.oddworks.com.oddsampleapp/SplashActivity
+<pre><code class="java">// app/java/sample.oddworks.com.oddsampleapp/SplashActivity
 
 // ...
 public class SplashActivity extends AppCompatActivity {
     // Constants
-    private static final String HOME_VIEW = "homepage";
-    private static final String MENU_VIEW = "menu";
+    private static final String HOME_VIEW_NAME = &quot;home-view&quot;;
 
     // Data
     private RestServiceProvider restServiceProvider = RestServiceProvider.getInstance();
@@ -184,9 +180,10 @@ public class SplashActivity extends AppCompatActivity {
     // ...
 }
 </code></pre>
+
 <p>There's a new class that we're interacting with called <code>ApiCaller</code>. This does exactly what it sounds like and is the class used to make calls to the API.</p>
 <p>The first thing we'll want to do in our <code>onCreate</code> method after setting the content view is set our context.</p>
-<pre><code>// app/java/sample.oddworks.com.oddsampleapp/SplashActivity
+<pre><code class="java">// app/java/sample.oddworks.com.oddsampleapp/SplashActivity
 
 // ...
 @Override
@@ -197,8 +194,9 @@ protected void onCreate(Bundle savedInstanceState) {
 }
 // ...
 </code></pre>
+
 <p>The next thing check to see if the application is connected to the internet. This method may be useful in other classes in our application so instead of creating a method for it in our <code>SplashActivity</code> we'll create a <code>Utility</code> class with a method to check if there is internet connectivity.</p>
-<pre><code>package sample.oddworks.com.myoddworksapplication;
+<pre><code class="java">package sample.oddworks.com.myoddworksapplication;
 
 import android.content.Context;
 import android.net.ConnectivityManager;
@@ -215,60 +213,65 @@ public class Utility {
     }
 }
 </code></pre>
+
 <p>In order for this to work, we'll need to add some permissions to our <code>AndroidManifest</code> file right before the opening <code>application</code> tag.</p>
-<pre><code>// app/manifests/AndroidManifest.xml
+<pre><code class="xml">// app/manifests/AndroidManifest.xml
 
-// ...
-&lt;uses-permission android:name="android.permission.INTERNET" /&gt;
-&lt;uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" /&gt;
-// ...
+
+    &lt;uses-permission android:name=&quot;android.permission.INTERNET&quot; /&gt;
+    &lt;uses-permission android:name=&quot;android.permission.ACCESS_NETWORK_STATE&quot; /&gt;
+
 </code></pre>
-<p>Now we can check to see if the app has connectivity in the <code>SplashActivity</code>'s <code>onCreate</code> method:</p>
-<pre><code>// app/java/sample.oddworks.com.oddsampleapp/SplashActivity
 
-// ...
+<p>Now we can check to see if the app has connectivity in the <code>SplashActivity</code>'s <code>onCreate</code> method:</p>
+<p>``java
+// app/java/sample.oddworks.com.oddsampleapp/SplashActivity</p>
+<p>// ...
 @Override
 protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_splash);
-    context = this;
-
-    if (Utility.hasInternetConnection(getApplicationContext())) {
-        apiCaller.getConfig(new ConfigRequestCallback());
-    } else {
-        // handle failure by notifying user on UI
-        // consider giving them a "retry" button
-    }
+    context = this;</p>
+<pre><code>if (Utility.hasInternetConnection(getApplicationContext())) {
+    apiCaller.getConfig(new ConfigRequestCallback());
+} else {
+    // handle failure by notifying user on UI
+    // consider giving them a "retry" button
+    // perhaps via a Snackbar
 }
-
-private final class ConfigRequestCallback implements OddCallback&lt;Config&gt; {
+</code></pre>
+<p>}</p>
+<p>private final class ConfigRequestCallback implements OddCallback<Config> {
     @Override
     public void onSuccess(Config config) {
         // handle success
-    }
-
-    @Override
-    public void onFailure(final Exception exception) {
-        // handle failure
-    }
+    }</p>
+<pre><code>@Override
+public void onFailure(final Exception exception) {
+    // handle failure
 }
-// ...
 </code></pre>
-<p>If the app is connected to the internet we use the <code>apiCaller</code> to request configuration from the API and pass it a callback class that implements an <code>OddCallback</code>. If there's a failure we should notify the user of this and give them the option to retry. <em>Warning: if you try to manipulate the UI within this callback you will crash the application since you aren't running on the main thread. You must specify that you'd like to run on the main thread if you'd like to make any UI updates.</em></p>
-<h1 id="getting-view-data-from-api">Getting View Data from API</h1>
-<p>Assuming the config request returns successful we can use the config object to set up many things about our app. For now, we'll only focus on the views that the config sends us.</p>
-<pre><code>// app/java/sample.oddworks.com.oddsampleapp/SplashActivity
+<p>}
+// ...</p>
+<pre><code>
+If the app is connected to the internet we use the `apiCaller` to request configuration from the API and pass it a callback class that implements an `OddCallback`. If there's a failure we should notify the user of this and give them the option to retry. *Warning: if you try to manipulate the UI within this callback you will crash the application since you aren't running on the main thread. You must specify that you'd like to run on the main thread if you'd like to make any UI updates.*
+
+
+# Getting View Data from API
+
+Assuming the config request returns successful we can use the config object to set up many things about our app. For now, we'll only focus on the views that the config sends us.
+
+```java
+// app/java/sample.oddworks.com.oddsampleapp/SplashActivity
 
 // ...
 private final class ConfigRequestCallback implements OddCallback&lt;Config&gt; {
     @Override
     public void onSuccess(Config config) {
         Map&lt;String, String&gt; views = config.getViews();
-        String homeView = views.get(HOME_VIEW);
-        String menuView = views.get(MENU_VIEW);
+        String homeView = views.get(HOME_VIEW_NAME);
 
-        apiCaller.getView(homeView, new ViewRequestCallback(HOME_VIEW));
-        apiCaller.getView(menuView, new ViewRequestCallback(MENU_VIEW));
+        apiCaller.getView(homeView, new HomeViewRequestCallback(HOME_VIEW_NAME));
     }
 
     @Override
@@ -277,22 +280,17 @@ private final class ConfigRequestCallback implements OddCallback&lt;Config&gt; {
     }
 }
 
-private final class ViewRequestCallback implements OddCallback&lt;OddView&gt; {
-    private String mViewType;
+private final class HomeViewRequestCallback implements OddCallback&lt;OddView&gt; {
 
-    public ViewRequestCallback(String viewType) {
-        mViewType = viewType;
+    public HomeViewRequestCallback() {
+
     }
 
     @Override
     public void onSuccess(OddView view) {
         OddApp oddApp = OddApp.getInstance();
 
-        if (getViewType().equals(HOME_VIEW)) {
-            oddApp.setHomeView(view);
-        } else if (getViewType().equals(MENU_VIEW)) {
-            oddApp.setMenuView(view);
-        }
+        oddApp.setHomeView(view);
     }
 
     @Override
@@ -306,23 +304,18 @@ private final class ViewRequestCallback implements OddCallback&lt;OddView&gt; {
 }
 // ...
 </code></pre>
-<p>Here, we're creating a new <code>OddCallback</code> for the views that we're requesting through the <code>apiCaller</code>. This callback accepts a <code>viewType</code> parameter that will determine which view we're setting in our <code>OddApp</code> instance. Remember, the setter metods for each view utilize the <code>OddStore</code> so we'll have access to this information throughout the app if the member variables in <code>OddApp</code> get leaked from memory.</p>
-<p>The last thing we need to do in our <code>SplashActivity</code> is launch a new Activity that will make use of all the data we've fetched. First we'll need to create a new Activity, we'll call ours <code>HomeActivity</code>. Now in the <code>ViewRequestCallback</code> section of our <code>SplashActivity</code> we'll make sure we have all our data and launch a new Intent:</p>
-<pre><code>// ...
+
+<p>Here, we're creating a custom <code>OddCallback</code> for the view that we're requesting through the <code>apiCaller</code>. Remember, the setter methods for each view utilize the <code>OddStore</code> so we'll have access to this information throughout the app if the member variables in <code>OddApp</code> get collected from memory.</p>
+<p>The last thing we need to do in our <code>SplashActivity</code> is launch a new Activity that will make use of all the data we've fetched. First we'll need to create a new Activity, we'll call ours <code>HomeActivity</code>. Now in the <code>HomeViewRequestCallback</code> section of our <code>SplashActivity</code> we'll make sure we have all our data and launch a new Intent:</p>
+<pre><code class="java">// ...
 @Override
 public void onSuccess(OddView view) {
     OddApp oddApp = OddApp.getInstance();
 
-    if (getViewType().equals(HOME_VIEW)) {
-        oddApp.setHomeView(view);
-    } else if (getViewType().equals(MENU_VIEW)) {
-        oddApp.setMenuView(view);
-    }
+    oddApp.setHomeView(view);
 
-    if (oddApp.getHomeView() != null &amp;&amp; oddApp.getMenuView() != null) {
-        Intent home = new Intent(context, HomeActivity.class);
-        startActivity(home);
-    }
+    Intent home = new Intent(context, HomeActivity.class);
+    startActivity(home);
 }
 // ...
 </code></pre>
