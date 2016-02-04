@@ -183,7 +183,6 @@ public class OddApp extends Application {
     }
 
     private OddView homeView;
-    private OddView menuView;
 
     @Override
     public void onCreate() {
@@ -207,7 +206,7 @@ public class OddApp extends Application {
 }
 </code></pre>
 
-<p>We've finally written the first code that interacts with the SDK. You'll notice we utilize the <code>OddView</code>, <code>RestServiceProvider</code>, and <code>OddStore</code> classes. The <code>OddView</code> class is the main way large amounts of data are passed from the SDK to the app. We have a view that represents all of the data needed to construct a dynamic menu/navigation called <code>menuView</code> and one for all of the content shown on application load called <code>homeView</code>. The <code>RestServiceProvider</code> initializes everything we need in order to interact with the API. In the setter methods for each view we're utilizing the <code>OddStore</code> so that we can minimize API calls if the <code>homeView</code> and <code>menuView</code> variables get released from memory.</p>
+<p>We've finally written the first code that interacts with the SDK. You'll notice we utilize the <code>OddView</code>, <code>RestServiceProvider</code>, and <code>OddStore</code> classes. The <code>OddView</code> class is the main way large amounts of data are passed from the SDK to the app. We have a view that represents all of the content shown on application load called <code>homeView</code>. The <code>RestServiceProvider</code> initializes everything we need in order to interact with the API. In the setter methods for each view we're utilizing the <code>OddStore</code> so that we can minimize API calls if the <code>homeView</code> variables get collected from memory.</p>
 <p>In our <code>AndroidManifest</code> file we'll add this new class by adding it as the name attribute to the opening <code>application</code> tag. By placing this attribute in the XML <code>OddApp</code> will run when the app first initializes.</p>
 <pre><code class="xml">&lt;application
     android:name=&quot;.OddApp&quot;
