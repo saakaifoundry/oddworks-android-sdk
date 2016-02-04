@@ -1,2 +1,2 @@
 # OddworksDevice
-An Android SDK for the OddWorks Device API
+An Android SDK for the Oddworks Device API
