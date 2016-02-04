@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  
+  <title>Initialize API Calls - Oddworks SDK for Android</title>
+  
+
+  <link rel="shortcut icon" href="../img/favicon.ico">
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="../css/highlight.css">
+
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Initialize API Calls";
+    var mkdocs_page_input_path = "initialize_api_calls.md";
+    var mkdocs_page_url = "/initialize_api_calls/";
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js"></script>
+  <script src="../js/modernizr-2.8.3.min.js"></script>
+  <script type="text/javascript" src="../js/highlight.pack.js"></script>
+  <script src="../js/theme.js"></script> 
+
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href=".." class="icon icon-home"> Oddworks SDK for Android</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        <ul class="current">
+          
+            <li>
+    <ul class="subnav">
+    <li><span>Welcome</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="..">Introduction</a>
+        
+    </li>
+
+        
+    </ul>
+<li>
+          
+            <li>
+    <ul class="subnav">
+    <li><span>Getting Started</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../setup/">Library and Project Setup</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../getting_started/">Configuring your App</a>
+        
+    </li>
+
+        
+    </ul>
+<li>
+          
+            <li>
+    <ul class="subnav">
+    <li><span>Interacting with Oddworks</span></li>
+
+        
+            
+    <li class="toctree-l1 current">
+        <a class="current" href="./">Initialize API Calls</a>
+        
+            <ul>
+            
+                <li class="toctree-l3"><a href="#get-config-data-from-api">Get Config Data from API</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#getting-view-data-from-api">Getting View Data from API</a></li>
+                
+            
+            </ul>
+        
+    </li>
+
+        
+    </ul>
+<li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="..">Oddworks SDK for Android</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>Interacting with Oddworks &raquo;</li>
+        
+      
+    
+    <li>Initialize API Calls</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="get-config-data-from-api">Get Config Data from API</h1>
+<p>Now it's time to make our <code>SplashActivity</code> actually do somthing. First we'll set up the member variables...</p>
+<pre><code>// app/java/sample.oddworks.com.oddsampleapp/SplashActivity
+
+// ...
+public class SplashActivity extends AppCompatActivity {
+    // Constants
+    private static final String HOME_VIEW = "homepage";
+    private static final String MENU_VIEW = "menu";
+
+    // Data
+    private RestServiceProvider restServiceProvider = RestServiceProvider.getInstance();
+    private ApiCaller apiCaller = restServiceProvider.getApiCaller();
+
+    // ...
+}
+</code></pre>
+<p>There's a new class that we're interacting with called <code>ApiCaller</code>. This does exactly what it sounds like and is the class used to make calls to the API.</p>
+<p>The first thing we'll want to do in our <code>onCreate</code> method after setting the content view is set our context.</p>
+<pre><code>// app/java/sample.oddworks.com.oddsampleapp/SplashActivity
+
+// ...
+@Override
+protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    setContentView(R.layout.activity_splash);
+    context = this;
+}
+// ...
+</code></pre>
+<p>The next thing check to see if the application is connected to the internet. This method may be useful in other classes in our application so instead of creating a method for it in our <code>SplashActivity</code> we'll create a <code>Utility</code> class with a method to check if there is internet connectivity.</p>
+<pre><code>package sample.oddworks.com.myoddworksapplication;
+
+import android.content.Context;
+import android.net.ConnectivityManager;
+
+public class Utility {
+    public static boolean hasInternetConnection(Context context) {
+        ConnectivityManager con_manager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        if (con_manager.getActiveNetworkInfo() != null &amp;&amp; con_manager.getActiveNetworkInfo().isAvailable() &amp;&amp; con_manager.getActiveNetworkInfo().isConnected()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+}
+</code></pre>
+<p>In order for this to work, we'll need to add some permissions to our <code>AndroidManifest</code> file right before the opening <code>application</code> tag.</p>
+<pre><code>// app/manifests/AndroidManifest.xml
+
+// ...
+&lt;uses-permission android:name="android.permission.INTERNET" /&gt;
+&lt;uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" /&gt;
+// ...
+</code></pre>
+<p>Now we can check to see if the app has connectivity in the <code>SplashActivity</code>'s <code>onCreate</code> method:</p>
+<pre><code>// app/java/sample.oddworks.com.oddsampleapp/SplashActivity
+
+// ...
+@Override
+protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    setContentView(R.layout.activity_splash);
+    context = this;
+
+    if (Utility.hasInternetConnection(getApplicationContext())) {
+        apiCaller.getConfig(new ConfigRequestCallback());
+    } else {
+        // handle failure by notifying user on UI
+        // consider giving them a "retry" button
+    }
+}
+
+private final class ConfigRequestCallback implements OddCallback&lt;Config&gt; {
+    @Override
+    public void onSuccess(Config config) {
+        // handle success
+    }
+
+    @Override
+    public void onFailure(final Exception exception) {
+        // handle failure
+    }
+}
+// ...
+</code></pre>
+<p>If the app is connected to the internet we use the <code>apiCaller</code> to request configuration from the API and pass it a callback class that implements an <code>OddCallback</code>. If there's a failure we should notify the user of this and give them the option to retry. <em>Warning: if you try to manipulate the UI within this callback you will crash the application since you aren't running on the main thread. You must specify that you'd like to run on the main thread if you'd like to make any UI updates.</em></p>
+<h1 id="getting-view-data-from-api">Getting View Data from API</h1>
+<p>Assuming the config request returns successful we can use the config object to set up many things about our app. For now, we'll only focus on the views that the config sends us.</p>
+<pre><code>// app/java/sample.oddworks.com.oddsampleapp/SplashActivity
+
+// ...
+private final class ConfigRequestCallback implements OddCallback&lt;Config&gt; {
+    @Override
+    public void onSuccess(Config config) {
+        Map&lt;String, String&gt; views = config.getViews();
+        String homeView = views.get(HOME_VIEW);
+        String menuView = views.get(MENU_VIEW);
+
+        apiCaller.getView(homeView, new ViewRequestCallback(HOME_VIEW));
+        apiCaller.getView(menuView, new ViewRequestCallback(MENU_VIEW));
+    }
+
+    @Override
+    public void onFailure(final Exception exception) {
+        // handle failure
+    }
+}
+
+private final class ViewRequestCallback implements OddCallback&lt;OddView&gt; {
+    private String mViewType;
+
+    public ViewRequestCallback(String viewType) {
+        mViewType = viewType;
+    }
+
+    @Override
+    public void onSuccess(OddView view) {
+        OddApp oddApp = OddApp.getInstance();
+
+        if (getViewType().equals(HOME_VIEW)) {
+            oddApp.setHomeView(view);
+        } else if (getViewType().equals(MENU_VIEW)) {
+            oddApp.setMenuView(view);
+        }
+    }
+
+    @Override
+    public void onFailure(final Exception exception) {
+        // handle failure
+    }
+
+    public String getViewType() {
+        return mViewType;
+    }
+}
+// ...
+</code></pre>
+<p>Here, we're creating a new <code>OddCallback</code> for the views that we're requesting through the <code>apiCaller</code>. This callback accepts a <code>viewType</code> parameter that will determine which view we're setting in our <code>OddApp</code> instance. Remember, the setter metods for each view utilize the <code>OddStore</code> so we'll have access to this information throughout the app if the member variables in <code>OddApp</code> get leaked from memory.</p>
+<p>The last thing we need to do in our <code>SplashActivity</code> is launch a new Activity that will make use of all the data we've fetched. First we'll need to create a new Activity, we'll call ours <code>HomeActivity</code>. Now in the <code>ViewRequestCallback</code> section of our <code>SplashActivity</code> we'll make sure we have all our data and launch a new Intent:</p>
+<pre><code>// ...
+@Override
+public void onSuccess(OddView view) {
+    OddApp oddApp = OddApp.getInstance();
+
+    if (getViewType().equals(HOME_VIEW)) {
+        oddApp.setHomeView(view);
+    } else if (getViewType().equals(MENU_VIEW)) {
+        oddApp.setMenuView(view);
+    }
+
+    if (oddApp.getHomeView() != null &amp;&amp; oddApp.getMenuView() != null) {
+        Intent home = new Intent(context, HomeActivity.class);
+        startActivity(home);
+    }
+}
+// ...
+</code></pre>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="../getting_started/" class="btn btn-neutral" title="Configuring your App"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+	  
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+<div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+        <span><a href="../getting_started/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+    </span>
+</div>
+
+</body>
+</html>

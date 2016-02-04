@@ -5,7 +5,7 @@
         
     <url>
      <loc>None/</loc>
-     <lastmod>2016-02-03</lastmod>
+     <lastmod>2016-02-04</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
@@ -15,7 +15,13 @@
         
     <url>
      <loc>None/setup/</loc>
-     <lastmod>2016-02-03</lastmod>
+     <lastmod>2016-02-04</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/getting_started/</loc>
+     <lastmod>2016-02-04</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
@@ -24,8 +30,8 @@
     
         
     <url>
-     <loc>None/config/</loc>
-     <lastmod>2016-02-03</lastmod>
+     <loc>None/initialize_api_calls/</loc>
+     <lastmod>2016-02-04</lastmod>
      <changefreq>daily</changefreq>
     </url>
         

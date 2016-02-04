@@ -80,7 +80,20 @@
         
             <ul>
             
+                <li class="toctree-l3"><a href="#integrate-the-oddworks-sdk">Integrate the Oddworks SDK</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#configure-your-access-token">Configure Your Access Token</a></li>
+                
+            
             </ul>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../getting_started/">Configuring your App</a>
         
     </li>
 
@@ -95,7 +108,7 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../config/">Configuring your Device</a>
+        <a class="" href="../initialize_api_calls/">Initialize API Calls</a>
         
     </li>
 
@@ -139,7 +152,51 @@
           <div role="main">
             <div class="section">
               
-                
+                <h1 id="integrate-the-oddworks-sdk">Integrate the Oddworks SDK</h1>
+<p>Our SDK is built and hosted via <a href="https://jitpack.io">Jitpack</a>. Include Jitpack at the end of the <code>repositories</code> section of the app module's <code>build.gradle</code> file:</p>
+<pre><code>// app/build.gradle
+
+repositories {
+    // ...
+    maven { url "https://jitpack.io" }
+}
+</code></pre>
+<p>Now at the end of the  <code>dependencies</code> section of the app module's <code>build.gradle</code> file add the Oddworks SDK:</p>
+<pre><code>// app/build.gradle
+
+dependencies {
+    // ...
+    compile "com.github.oddnetworks:OddWorksDeviceSDK:beta-1.0.0"
+}
+</code></pre>
+<p>There's one more thing you'll need to add to this <code>build.gradle</code> file that will be used in the next step. The SDK expects an app version when it's being initialized. To create this app version we'll use Git.</p>
+<pre><code>// app/build.gradle
+
+android {
+    // ...
+    defaultConfig {
+        // ...
+        resValue "string", "git_revision", gitRevision()
+    }
+    // ...
+}
+
+// ...
+
+def gitRevision() {
+    def cmd = "git rev-parse --short HEAD"
+    return cmd.execute().text.trim()
+}
+</code></pre>
+<p>Sync your project with Gradle files and you will have the OddworksDeviceSDK added to your External Libraries.</p>
+<h1 id="configure-your-access-token">Configure Your Access Token</h1>
+<p>The SDK also will need an access token to use when accessing the API. For instructions on how to receive your own access token check out our <a href="http://TODO.com">API Guide</a>. For this guide we'll use a sample access token which accesses NASA content. Create a file in <code>app/res/values/</code> called <code>sdk_strings.xml</code>.</p>
+<pre><code>&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;resources&gt;
+    &lt;string name="x_access_token"&gt;eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ2ZXJzaW9uIjoxLCJkZXZpY2VJRCI6IjBhODFjNmEwLWJiYjUtMTFlNS05ZWY4LWNiYmI0OWM4OTI1NiIsInNjb3BlIjpbImRldmljZSJdLCJpYXQiOjE0NTI4ODIxOTR9.iM26knCfqoPggNMeEUgH6_sW1kpwqmE9Hrso02g4LyQ&lt;/string&gt;
+&lt;/resources&gt;
+</code></pre>
+<p>Be sure to add this to your <code>.gitignore</code> in your own project. This access token should be super secret and not kept in version control. Anybody with access to it will also be able to access your data.</p>
               
             </div>
           </div>
@@ -147,7 +204,7 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../config/" class="btn btn-neutral float-right" title="Configuring your Device">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../getting_started/" class="btn btn-neutral float-right" title="Configuring your App">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
         <a href=".." class="btn btn-neutral" title="Introduction"><span class="icon icon-circle-arrow-left"></span> Previous</a>
@@ -179,7 +236,7 @@
         <span><a href=".." style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
-        <span style="margin-left: 15px"><a href="../config/" style="color: #fcfcfc">Next &raquo;</a></span>
+        <span style="margin-left: 15px"><a href="../getting_started/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>
