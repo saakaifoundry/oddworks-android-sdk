@@ -5,13 +5,19 @@
         
     <url>
      <loc>None/</loc>
-     <lastmod>2016-02-04</lastmod>
+     <lastmod>2016-02-05</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
      <loc>None/overview/</loc>
-     <lastmod>2016-02-04</lastmod>
+     <lastmod>2016-02-05</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/sample_application/</loc>
+     <lastmod>2016-02-05</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
@@ -21,19 +27,19 @@
         
     <url>
      <loc>None/setup/</loc>
-     <lastmod>2016-02-04</lastmod>
+     <lastmod>2016-02-05</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
      <loc>None/getting_started/</loc>
-     <lastmod>2016-02-04</lastmod>
+     <lastmod>2016-02-05</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
      <loc>None/data_models/</loc>
-     <lastmod>2016-02-04</lastmod>
+     <lastmod>2016-02-05</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
@@ -43,7 +49,7 @@
         
     <url>
      <loc>None/initialize_api_calls/</loc>
-     <lastmod>2016-02-04</lastmod>
+     <lastmod>2016-02-05</lastmod>
      <changefreq>daily</changefreq>
     </url>
         

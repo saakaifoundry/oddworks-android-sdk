@@ -61,6 +61,46 @@
             "title": "view"
         }, 
         {
+            "location": "/sample_application/", 
+            "text": "Get up and running on Android devices in 5 easy steps with the Odd Android Sample Application\n\n\nStep 1\n\n\nClone the GitHub project to your local machine.\n\n\nOdd Android Sample App\n\n\n    $ git clone git@github.com:oddnetworks/odd-andorid-sample-app\n\n\n\nStep 2\n\n\nOpen the application in Android Studio.\n\n\n\n\nStep 3\n\n\nOnce Gradle has synced the dependencies, you are ready to start the application.\n\n\n\n\nStep 4\n\n\nSelect your deployment target.\n\n\n\n\nStep 5\n\n\nEnjoy some NASA space goodness!\n\n\n\n\nFor More Information\n\n\nSee our \nDeveloper Guide\n which will give an overview of Oddworks and take you through the Oddworks SDK for Android. Also check out the \nOddworks SDK for Android Java documentation", 
+            "title": "Android Sample Application"
+        }, 
+        {
+            "location": "/sample_application/#get-up-and-running-on-android-devices-in-5-easy-steps-with-the-odd-android-sample-application", 
+            "text": "", 
+            "title": "Get up and running on Android devices in 5 easy steps with the Odd Android Sample Application"
+        }, 
+        {
+            "location": "/sample_application/#step-1", 
+            "text": "Clone the GitHub project to your local machine.  Odd Android Sample App      $ git clone git@github.com:oddnetworks/odd-andorid-sample-app", 
+            "title": "Step 1"
+        }, 
+        {
+            "location": "/sample_application/#step-2", 
+            "text": "Open the application in Android Studio.", 
+            "title": "Step 2"
+        }, 
+        {
+            "location": "/sample_application/#step-3", 
+            "text": "Once Gradle has synced the dependencies, you are ready to start the application.", 
+            "title": "Step 3"
+        }, 
+        {
+            "location": "/sample_application/#step-4", 
+            "text": "Select your deployment target.", 
+            "title": "Step 4"
+        }, 
+        {
+            "location": "/sample_application/#step-5", 
+            "text": "Enjoy some NASA space goodness!", 
+            "title": "Step 5"
+        }, 
+        {
+            "location": "/sample_application/#for-more-information", 
+            "text": "See our  Developer Guide  which will give an overview of Oddworks and take you through the Oddworks SDK for Android. Also check out the  Oddworks SDK for Android Java documentation", 
+            "title": "For More Information"
+        }, 
+        {
             "location": "/setup/", 
             "text": "Integrate the Oddworks SDK\n\n\nOur SDK is built and hosted via \nJitpack\n. Include Jitpack in the \nrepositories\n section of your app module's \nbuild.gradle\n file:\n\n\n// app/build.gradle\n\nrepositories {\n    // ...\n    maven { url \nhttps://jitpack.io\n }\n}\n\n\n\n\nNow in the  \ndependencies\n section of your app module's \nbuild.gradle\n file add the Oddworks SDK:\n\n\n// app/build.gradle\n\ndependencies {\n    // ...\n    compile \ncom.github.oddnetworks:OddWorksDeviceSDK:beta-1.0.0\n\n}\n\n\n\n\nThere's one more \noptional\n thing you can do to your application's \nbuild.gradle\n file that will be used in the next step. The SDK expects an app version when it's being initialized. One option would be to use your app module's \nBuildConfig.VERSION_NAME\n. Another might be to send your git revision.\n\n\n// app/build.gradle\n\nandroid {\n    // ...\n    defaultConfig {\n        // ...\n        resValue \nstring\n, \ngit_revision\n, gitRevision()\n    }\n    // ...\n}\n\n// ...\n\ndef gitRevision() {\n    def cmd = \ngit rev-parse --short HEAD\n\n    return cmd.execute().text.trim()\n}\n\n\n\n\nSync your project with Gradle files and you will have the OddworksDeviceSDK added to your External Libraries.\n\n\nConfigure Your Access Token\n\n\nThe SDK also will need an access token to use when accessing the API. For instructions on how to receive your own access token check out our \nAPI Guide\n.  Create a file in \napp/res/values/\n called \nsdk_strings.xml\n.\n\n\n    \n?xml version=\n1.0\n encoding=\nutf-8\n?\n\n    \nresources\n\n        \nstring name=\nx_access_token\nyour-access-token-here\n/string\n\n    \n/resources\n\n\n\n\n\nFor this guide we'll use the sample access token below, which accesses NASA content.\n\n\neyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ2ZXJzaW9uIjoxLCJkZXZpY2VJRCI6IjBhODFjNmEwLWJiYjUtMTFlNS05ZWY4LWNiYmI0OWM4OTI1NiIsInNjb3BlIjpbImRldmljZSJdLCJpYXQiOjE0NTI4ODIxOTR9.iM26knCfqoPggNMeEUgH6_sW1kpwqmE9Hrso02g4LyQ\n\n\n\n\nWe strongly recommend adding any file that contains sensitive information to your project's \n.gitignore\n file. This access token should be kept private and not checked in to version control. Anyone who has your access token will be able to fetch your data.", 
             "title": "Library and Project Setup"

@@ -8,7 +8,7 @@
   
   
   
-  <title>Oddworks Overview - Oddworks SDK for Android</title>
+  <title>Android Sample Application - Oddworks SDK for Android</title>
   
 
   <link rel="shortcut icon" href="../img/favicon.ico">
@@ -23,9 +23,9 @@
   
   <script>
     // Current page data
-    var mkdocs_page_name = "Oddworks Overview";
-    var mkdocs_page_input_path = "overview.md";
-    var mkdocs_page_url = "/overview/";
+    var mkdocs_page_name = "Android Sample Application";
+    var mkdocs_page_input_path = "sample_application.md";
+    var mkdocs_page_url = "/sample_application/";
   </script>
   
   <script src="../js/jquery-2.1.1.min.js"></script>
@@ -67,24 +67,32 @@
 
         
             
-    <li class="toctree-l1 current">
-        <a class="current" href="./">Oddworks Overview</a>
-        
-            <ul>
-            
-                <li class="toctree-l3"><a href="#about-oddworks">About Oddworks</a></li>
-                
-                    <li><a class="toctree-l4" href="#oddworks-entities">Oddworks Entities</a></li>
-                
-            
-            </ul>
+    <li class="toctree-l1 ">
+        <a class="" href="../overview/">Oddworks Overview</a>
         
     </li>
 
         
             
-    <li class="toctree-l1 ">
-        <a class="" href="../sample_application/">Android Sample Application</a>
+    <li class="toctree-l1 current">
+        <a class="current" href="./">Android Sample Application</a>
+        
+            <ul>
+            
+                <li class="toctree-l3"><a href="#get-up-and-running-on-android-devices-in-5-easy-steps-with-the-odd-android-sample-application">Get up and running on Android devices in 5 easy steps with the Odd Android Sample Application</a></li>
+                
+                    <li><a class="toctree-l4" href="#step-1">Step 1</a></li>
+                
+                    <li><a class="toctree-l4" href="#step-2">Step 2</a></li>
+                
+                    <li><a class="toctree-l4" href="#step-3">Step 3</a></li>
+                
+                    <li><a class="toctree-l4" href="#step-4">Step 4</a></li>
+                
+                    <li><a class="toctree-l4" href="#step-5">Step 5</a></li>
+                
+            
+            </ul>
         
     </li>
 
@@ -162,7 +170,7 @@
         
       
     
-    <li>Oddworks Overview</li>
+    <li>Android Sample Application</li>
     <li class="wy-breadcrumbs-aside">
       
     </li>
@@ -172,21 +180,26 @@
           <div role="main">
             <div class="section">
               
-                <h1 id="about-oddworks">About Oddworks</h1>
-<p>Oddworks is, at its core, a Video Management System (VMS). It provides a central location to organize media and configure the devices that serve it.</p>
-<h2 id="oddworks-entities">Oddworks Entities</h2>
-<p>Oddworks has a handful of specific entity types that are used in concert to construct media applications. No matter which Online Video Provider (OVP) is used to provide media to Oddworks, the data will be massaged into one of these standardized objects. Our thought is that consumer applications should not need to change when adding a new OVP or changing where a video is stored.</p>
-<h3 id="config">config</h3>
-<p>The <code>config</code> entity will contain device-specific configuration data.</p>
-<h3 id="video-and-livestream">video and liveStream</h3>
-<p>The <code>video</code> and <code>liveStream</code> entities are the media objects that are the meat and potatoes of Odd Networks. If the media being served is a linear or live stream, it will be of type <code>liveStream</code>. If the media is an on-demand stream then it will be of type <code>video</code>.</p>
-<h3 id="promotion">promotion</h3>
-<p>The <code>promotion</code> entity is an object that is essentially the same as a <code>video</code> or <code>liveStream</code> without the stream.</p>
-<h3 id="collection">collection</h3>
-<p>A <code>collection</code> entity is an object that contains other entities.</p>
-<h3 id="view">view</h3>
-<p>A <code>view</code> entity is an object that can contain other entities through user-defined custom relationships.</p>
-<p>For a more in-depth look at all entities that you can interact with through the SDK and their properties, <a href="../data_models">look here</a>.</p>
+                <h1 id="get-up-and-running-on-android-devices-in-5-easy-steps-with-the-odd-android-sample-application">Get up and running on Android devices in 5 easy steps with the Odd Android Sample Application</h1>
+<h2 id="step-1">Step 1</h2>
+<p><strong>Clone the GitHub project to your local machine.</strong></p>
+<p><a href="https://github.com/oddnetworks/odd-android-sample-app">Odd Android Sample App</a></p>
+<pre><code>    $ git clone git@github.com:oddnetworks/odd-andorid-sample-app
+</code></pre>
+<h2 id="step-2">Step 2</h2>
+<p><strong>Open the application in Android Studio.</strong></p>
+<p><img alt="open-existing-project" src="http://odd-guide-images.s3.amazonaws.com/open-existing-project.png" /></p>
+<h2 id="step-3">Step 3</h2>
+<p><strong>Once Gradle has synced the dependencies, you are ready to start the application.</strong></p>
+<p><img alt="app-build-gradle" src="http://odd-guide-images.s3.amazonaws.com/app-build-gradle.png" /></p>
+<h2 id="step-4">Step 4</h2>
+<p><strong>Select your deployment target.</strong></p>
+<p><img alt="select-deployment-target" src="http://odd-guide-images.s3.amazonaws.com/select-deployment-target.png" /></p>
+<h2 id="step-5">Step 5</h2>
+<p><strong>Enjoy some NASA space goodness!</strong></p>
+<p><img alt="nasa-space-goodness" src="http://odd-guide-images.s3.amazonaws.com/nasa-space-goodness.png" /></p>
+<h3 id="for-more-information">For More Information</h3>
+<p>See our <a href="http://oddnetworks.github.io/OddworksDeviceSDK/">Developer Guide</a> which will give an overview of Oddworks and take you through the Oddworks SDK for Android. Also check out the <a href="https://jitpack.io/com/github/oddnetworks/OddworksDeviceSDK/beta-1.0.0/javadoc/">Oddworks SDK for Android Java documentation</a></p>
               
             </div>
           </div>
@@ -194,10 +207,10 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../sample_application/" class="btn btn-neutral float-right" title="Android Sample Application">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../setup/" class="btn btn-neutral float-right" title="Library and Project Setup">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
-        <a href=".." class="btn btn-neutral" title="Introduction"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../overview/" class="btn btn-neutral" title="Oddworks Overview"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
@@ -223,10 +236,10 @@
     <span class="rst-current-version" data-toggle="rst-current-version">
       
       
-        <span><a href=".." style="color: #fcfcfc;">&laquo; Previous</a></span>
+        <span><a href="../overview/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
-        <span style="margin-left: 15px"><a href="../sample_application/" style="color: #fcfcfc">Next &raquo;</a></span>
+        <span style="margin-left: 15px"><a href="../setup/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>
