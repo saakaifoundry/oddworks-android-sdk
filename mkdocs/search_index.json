@@ -62,13 +62,13 @@
         }, 
         {
             "location": "/sample_application/", 
-            "text": "Get up and running on Android devices in 5 easy steps with the Odd Android Sample Application\n\n\nStep 1\n\n\nClone the GitHub project to your local machine.\n\n\nOdd Android Sample App\n\n\n    $ git clone git@github.com:oddnetworks/odd-andorid-sample-app\n\n\n\nStep 2\n\n\nOpen the application in Android Studio.\n\n\n\n\nStep 3\n\n\nOnce Gradle has synced the dependencies, you are ready to start the application.\n\n\n\n\nStep 4\n\n\nSelect your deployment target.\n\n\n\n\nStep 5\n\n\nEnjoy some NASA space goodness!\n\n\n\n\nFor More Information\n\n\nSee our \nDeveloper Guide\n which will give an overview of Oddworks and take you through the Oddworks SDK for Android. Also check out the \nOddworks SDK for Android Java documentation", 
-            "title": "Android Sample Application"
+            "text": "Geting Up and Running\n\n\nGetting up and running with Odd Networks on Android is as easy as following these 5 simple steps.\n\n\nStep 1\n\n\nClone the GitHub project to your local machine.\n\n\nOdd Android Sample App\n\n\n    $ git clone git@github.com:oddnetworks/odd-andorid-sample-app\n\n\n\nStep 2\n\n\nOpen the application in Android Studio.\n\n\n\n\nStep 3\n\n\nOnce Gradle has synced the dependencies, you are ready to start the application.\n\n\n\n\nStep 4\n\n\nSelect your deployment target.\n\n\n\n\nStep 5\n\n\nEnjoy some NASA space goodness!\n\n\n\n\nFor More Information\n\n\nSee our \nDeveloper Guide\n which will give an overview of Oddworks and take you through the Oddworks SDK for Android. Also check out the \nOddworks SDK for Android Java documentation", 
+            "title": "Sample Application"
         }, 
         {
-            "location": "/sample_application/#get-up-and-running-on-android-devices-in-5-easy-steps-with-the-odd-android-sample-application", 
-            "text": "", 
-            "title": "Get up and running on Android devices in 5 easy steps with the Odd Android Sample Application"
+            "location": "/sample_application/#geting-up-and-running", 
+            "text": "Getting up and running with Odd Networks on Android is as easy as following these 5 simple steps.", 
+            "title": "Geting Up and Running"
         }, 
         {
             "location": "/sample_application/#step-1", 
