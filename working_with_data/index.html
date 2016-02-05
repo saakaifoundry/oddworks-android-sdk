@@ -8,7 +8,7 @@
   
   
   
-  <title>Sample Application - Oddworks SDK for Android</title>
+  <title>Working with Data - Oddworks SDK for Android</title>
   
 
   <link rel="shortcut icon" href="../img/favicon.ico">
@@ -23,9 +23,9 @@
   
   <script>
     // Current page data
-    var mkdocs_page_name = "Sample Application";
-    var mkdocs_page_input_path = "sample_application.md";
-    var mkdocs_page_url = "/sample_application/";
+    var mkdocs_page_name = "Working with Data";
+    var mkdocs_page_input_path = "working_with_data.md";
+    var mkdocs_page_url = "/working_with_data/";
   </script>
   
   <script src="../js/jquery-2.1.1.min.js"></script>
@@ -74,25 +74,8 @@
 
         
             
-    <li class="toctree-l1 current">
-        <a class="current" href="./">Sample Application</a>
-        
-            <ul>
-            
-                <li class="toctree-l3"><a href="#geting-up-and-running">Geting Up and Running</a></li>
-                
-                    <li><a class="toctree-l4" href="#step-1">Step 1</a></li>
-                
-                    <li><a class="toctree-l4" href="#step-2">Step 2</a></li>
-                
-                    <li><a class="toctree-l4" href="#step-3">Step 3</a></li>
-                
-                    <li><a class="toctree-l4" href="#step-4">Step 4</a></li>
-                
-                    <li><a class="toctree-l4" href="#step-5">Step 5</a></li>
-                
-            
-            </ul>
+    <li class="toctree-l1 ">
+        <a class="" href="../sample_application/">Sample Application</a>
         
     </li>
 
@@ -142,8 +125,15 @@
 
         
             
-    <li class="toctree-l1 ">
-        <a class="" href="../working_with_data/">Working with Data</a>
+    <li class="toctree-l1 current">
+        <a class="current" href="./">Working with Data</a>
+        
+            <ul>
+            
+                <li class="toctree-l3"><a href="#extracting-information-from-views">Extracting Information from Views</a></li>
+                
+            
+            </ul>
         
     </li>
 
@@ -173,11 +163,11 @@
     
       
         
-          <li>Welcome &raquo;</li>
+          <li>Interacting with Oddworks &raquo;</li>
         
       
     
-    <li>Sample Application</li>
+    <li>Working with Data</li>
     <li class="wy-breadcrumbs-aside">
       
     </li>
@@ -187,27 +177,50 @@
           <div role="main">
             <div class="section">
               
-                <h1 id="geting-up-and-running">Geting Up and Running</h1>
-<p>Getting up and running with Odd Networks on Android is as easy as following these 5 simple steps.</p>
-<h3 id="step-1">Step 1</h3>
-<p><strong>Clone the GitHub project to your local machine.</strong></p>
-<p><a href="https://github.com/oddnetworks/odd-android-sample-app">Odd Android Sample App</a></p>
-<pre><code>    $ git clone git@github.com:oddnetworks/odd-andorid-sample-app
+                <h1 id="extracting-information-from-views">Extracting Information from Views</h1>
+<p>In our sample application, we've pulled down two <code>OddView</code>s, a <code>homeView</code> and a <code>menuView</code>. In order to extract information from them we'll use some convienence methods from the superclass of <code>OddView</code>, <code>OddObject</code>. Before we do that, we'll need to setup some variables in our <code>HomeActivity</code>.</p>
+<pre><code>// app/java/sample.oddworks.com.myoddworksapplication
+
+// ...
+public class HomeActivity extends AppCompatActivity {
+    // Constants
+    private static final String FEATURED_MEDIA = "featuredMedia";
+    private static final String FEATURED_COLLECTION = "featuredCollections";
+    private static final String FEATURED_OBJECTS = "entities";
+
+    // Data
+    private Context context;
+    private OddView homeView;
+    private Media featuredMedia;
+    private OddCollection featuredCollection;
+    private List&lt;OddObject&gt; featuredCollectionEntities;
+
+    // ...
 </code></pre>
-<h3 id="step-2">Step 2</h3>
-<p><strong>Open the application in Android Studio.</strong></p>
-<p><img alt="open-existing-project" src="http://odd-guide-images.s3.amazonaws.com/open-existing-project.png" /></p>
-<h3 id="step-3">Step 3</h3>
-<p><strong>Once Gradle has synced the dependencies, you are ready to start the application.</strong></p>
-<p><img alt="app-build-gradle" src="http://odd-guide-images.s3.amazonaws.com/app-build-gradle.png" /></p>
-<h3 id="step-4">Step 4</h3>
-<p><strong>Select your deployment target.</strong></p>
-<p><img alt="select-deployment-target" src="http://odd-guide-images.s3.amazonaws.com/select-deployment-target.png" /></p>
-<h3 id="step-5">Step 5</h3>
-<p><strong>Enjoy some NASA space goodness!</strong></p>
-<p><img alt="nasa-space-goodness" src="http://odd-guide-images.s3.amazonaws.com/nasa-space-goodness.png" /></p>
-<h4 id="for-more-information">For More Information</h4>
-<p>See our <a href="http://oddnetworks.github.io/OddworksDeviceSDK/">Developer Guide</a> which will give an overview of Oddworks and take you through the Oddworks SDK for Android. Also check out the <a href="https://jitpack.io/com/github/oddnetworks/OddworksDeviceSDK/beta-1.0.0/javadoc/">Oddworks SDK for Android Java documentation</a></p>
+<p>Now, in our <code>onCreate</code> method after <code>setContentView</code> is called, we'll call a new method called <code>configureData</code>.</p>
+<pre><code>// app/java/sample.oddworks.com.myoddworksapplication
+
+// ...
+private void configureData() {
+    homeView = OddApp.getInstance().getHomeView();
+    List&lt;Identifier&gt; mediaIds = homeView.getIdentifiersByRelationship(FEATURED_MEDIA);
+    List&lt;Identifier&gt; collectionIds = homeView.getIdentifiersByRelationship(FEATURED_COLLECTION);
+
+    if (mediaIds != null &amp;&amp; !mediaIds.isEmpty()) {
+        Identifier featuredMediaId = mediaIds.get(0);
+        featuredMedia = (Media) OddStore.getInstance().getObject(featuredMediaId);
+    }
+    if (collectionIds != null &amp;&amp; !collectionIds.isEmpty()) {
+        Identifier featuredCollectionId = collectionIds.get(0);
+        featuredCollection = (OddCollection) OddStore.getInstance().getObject(featuredCollectionId);
+    }
+    if (featuredCollection != null) {
+        featuredCollectionObjects = featuredCollection.getIncludedByRelationship(FEATURED_OBJECTS);
+    }
+}
+// ...
+</code></pre>
+<p>There's a lot going on here, so let's take a minute to walk through the code. We are first getting the <code>homeView</code> from our main application class. In the Oddworks dashboard we've set up relationships on this View with the keys of "featuredMedia and "featuredCollections". We use the <code>getIdentifiersByRelationship</code> so that we can use the <code>OddStore</code>'s <code>getObject</code> method to retrieve the featured media and featured collection objects later in the method. We check to make sure that each List of Identifiers is not null or empty and grab the object from the <code>OddStore</code>. We take this a step further with the <code>getIncludedByRelationship</code> method called on the <code>featuredCollection</code>. This will give us a list of <code>OddObject</code>s that can be used in a RecyclerView. <em>Note: We're casting the objects in the <code>featuredCollectionObjects</code> to <code>OddObject</code>s because it may contain any combination of types.</em></p>
               
             </div>
           </div>
@@ -215,10 +228,8 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../setup/" class="btn btn-neutral float-right" title="Library and Project Setup">Next <span class="icon icon-circle-arrow-right"></span></a>
       
-      
-        <a href="../overview/" class="btn btn-neutral" title="Oddworks Overview"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../initialize_api_calls/" class="btn btn-neutral" title="Initialize API Calls"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
@@ -244,10 +255,8 @@
     <span class="rst-current-version" data-toggle="rst-current-version">
       
       
-        <span><a href="../overview/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+        <span><a href="../initialize_api_calls/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
-      
-        <span style="margin-left: 15px"><a href="../setup/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>
