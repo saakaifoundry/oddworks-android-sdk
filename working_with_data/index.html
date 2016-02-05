@@ -130,10 +130,43 @@
         
             <ul>
             
-                <li class="toctree-l3"><a href="#extracting-information-from-views">Extracting Information from Views</a></li>
+                <li class="toctree-l3"><a href="#getting-information-from-views">Getting Information from Views</a></li>
+                
+                    <li><a class="toctree-l4" href="#configure-data">Configure Data</a></li>
+                
+                    <li><a class="toctree-l4" href="#apply-data">Apply Data</a></li>
                 
             
             </ul>
+        
+    </li>
+
+        
+    </ul>
+<li>
+          
+            <li>
+    <ul class="subnav">
+    <li><span>Playing Media</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../brightcove_player/">Brightcove Player</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../ooyala_player/">Ooyala Player</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../exo_player/">Exo Player</a>
         
     </li>
 
@@ -177,16 +210,17 @@
           <div role="main">
             <div class="section">
               
-                <h1 id="extracting-information-from-views">Extracting Information from Views</h1>
-<p>In our sample application, we've pulled down two <code>OddView</code>s, a <code>homeView</code> and a <code>menuView</code>. In order to extract information from them we'll use some convienence methods from the superclass of <code>OddView</code>, <code>OddObject</code>. Before we do that, we'll need to setup some variables in our <code>HomeActivity</code>.</p>
-<pre><code>// app/java/sample.oddworks.com.myoddworksapplication
+                <h1 id="getting-information-from-views">Getting Information from Views</h1>
+<h2 id="configure-data">Configure Data</h2>
+<p>In our sample application, we've pulled down an <code>OddView</code> and called it <code>homeView</code>. In order to extract information from it we'll use some convienence methods from the superclass of <code>OddView</code>, <code>OddObject</code>. Before we do that, we'll need to setup some variables in our <code>HomeActivity</code>.</p>
+<pre><code class="java">// app/java/sample.oddworks.com.myoddworksapplication/HomeActivity
 
 // ...
 public class HomeActivity extends AppCompatActivity {
     // Constants
-    private static final String FEATURED_MEDIA = "featuredMedia";
-    private static final String FEATURED_COLLECTION = "featuredCollections";
-    private static final String FEATURED_OBJECTS = "entities";
+    private static final String FEATURED_MEDIA = &quot;featuredMedia&quot;;
+    private static final String FEATURED_COLLECTION = &quot;featuredCollections&quot;;
+    private static final String FEATURED_ENTITIES = &quot;entities&quot;;
 
     // Data
     private Context context;
@@ -197,8 +231,18 @@ public class HomeActivity extends AppCompatActivity {
 
     // ...
 </code></pre>
-<p>Now, in our <code>onCreate</code> method after <code>setContentView</code> is called, we'll call a new method called <code>configureData</code>.</p>
-<pre><code>// app/java/sample.oddworks.com.myoddworksapplication
+
+<p>Now, in our <code>onCreate</code> method after <code>setContentView</code> is called, we need to set our <code>context</code>.</p>
+<pre><code class="java">@Override
+protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    setContentView(R.layout.activity_home);
+    context = this;
+}
+</code></pre>
+
+<p>After setting our context we'll call a new method called <code>configureData</code>.</p>
+<pre><code class="java">// app/java/sample.oddworks.com.myoddworksapplication/HomeActivity
 
 // ...
 private void configureData() {
@@ -215,18 +259,131 @@ private void configureData() {
         featuredCollection = (OddCollection) OddStore.getInstance().getObject(featuredCollectionId);
     }
     if (featuredCollection != null) {
-        featuredCollectionObjects = featuredCollection.getIncludedByRelationship(FEATURED_OBJECTS);
+        featuredCollectionEntities = featuredCollection.getIncludedByRelationship(FEATURED_ENTITIES);
     }
 }
 // ...
 </code></pre>
-<p>There's a lot going on here, so let's take a minute to walk through the code. We are first getting the <code>homeView</code> from our main application class. In the Oddworks dashboard we've set up relationships on this View with the keys of "featuredMedia and "featuredCollections". We use the <code>getIdentifiersByRelationship</code> so that we can use the <code>OddStore</code>'s <code>getObject</code> method to retrieve the featured media and featured collection objects later in the method. We check to make sure that each List of Identifiers is not null or empty and grab the object from the <code>OddStore</code>. We take this a step further with the <code>getIncludedByRelationship</code> method called on the <code>featuredCollection</code>. This will give us a list of <code>OddObject</code>s that can be used in a RecyclerView. <em>Note: We're casting the objects in the <code>featuredCollectionObjects</code> to <code>OddObject</code>s because it may contain any combination of types.</em></p>
+
+<p>There's a lot going on here, so let's take a minute to walk through the code. We are first getting the <code>homeView</code> from our main application class. In the Oddworks dashboard we've set up relationships on this View with the keys of "featuredMedia and "featuredCollections". We use the <code>getIdentifiersByRelationship</code> so that we can use the <code>OddStore</code>'s <code>getObject</code> method to retrieve the featured media and featured collection objects later in the method. We check to make sure that each List of Identifiers is not null or empty and grab the object from the <code>OddStore</code>. We take this a step further with the <code>getIncludedByRelationship</code> method called on the <code>featuredCollection</code>. This will give us a list of <code>OddObject</code>s that can be used in a RecyclerView. <em>Note: We're casting the objects in the <code>featuredCollectionEntities</code> to <code>OddObject</code>s because it may contain any combination of data types.</em></p>
+<h2 id="apply-data">Apply Data</h2>
+<h3 id="displaying-a-preview-image">Displaying a Preview Image</h3>
+<p>Now that we've extracted the data we need from the <code>homeView</code> we're going to show the user the preview image for the <code>featuredMedia</code> object. In order to render an image, we're going to rely on the <a href="https://github.com/bumptech/glide">Glide</a> library, though there are many other options such as <a href="https://github.com/square/picasso">Picasso</a>, <a href="https://github.com/nostra13/Android-Universal-Image-Loader">ImageLoader</a>, and <a href="https://github.com/facebook/fresco">Fresco</a>. Add the Glide library to your project via Gradle or Maven.</p>
+<p>After calling the <code>configureData</code> method, we're going to call a new method called <code>configureView</code>.</p>
+<pre><code class="java">// app/java/sample.oddworks.com.myoddworksapplication/HomeActivity
+
+// ...
+private void configureView() {
+    ImageView featuredMediaPreviewImage = (ImageView) findViewById(R.id.featuredMediaPreviewImage);
+    Glide.with(context)
+            .load(featuredMedia.getMediaImage().getAspect16x9())
+            .placeholder(R.drawable.preview_tile_16x9)
+            .into(featuredMediaPreviewImage);
+}
+// ...
+</code></pre>
+
+<p>We've created an <code>ImageView</code> with an ID of <code>featuredMediaPreviewImage</code> in the <code>activity_home</code> layout file that is being targeted in the <code>configureView</code> method. We want to use an image with an aspect ratio of 16x9, although we do have other options. You'll also notice that we have set a placeholder via a drawable file. This is best practice because it allows for the view layout to have the correct structure on load instead of changing it after Glide has loaded the image from the <code>featuredMedia</code> object.</p>
+<h3 id="creating-a-dynamic-recycler-view">Creating a Dynamic Recycler View</h3>
+<p>Since the <code>featuredCollectionEntities</code> list can contain different types of <code>OddObject</code>s we'll need to create a dynamic <code>RecyclerView</code> to handle anything that gets put into it. For this example, we'll handle the case of the List containing <code>Media</code> and <code>OddCollection</code> objects. In order to make use of the <code>RecyclerView</code> class we'll need to add it to our dependencies in our <code>build.gradle</code> file:</p>
+<pre><code>dependencies {
+    // ...
+    compile 'com.android.support:recyclerview-v7:+'
+}
+</code></pre>
+<p>We'll add a <code>RecyclerView</code> to our <code>activity_home</code> layout file and then add to our <code>configureView</code> method:</p>
+<pre><code class="java">private void configureView() {
+    // ...
+
+    RecyclerView featuredEntitiesRecyclerView = (RecyclerView) findViewById(R.id.featuredEntitiesRecyclerView);
+    OddListAdapter oddListAdapter = new OddListAdapter(featuredCollectionEntities);
+    LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+    layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+    featuredEntitiesRecyclerView.setLayoutManager(layoutManager);
+    featuredEntitiesRecyclerView.setAdapter(oddListAdapter);
+}
+</code></pre>
+
+<p>The <code>OddListAdapter</code> doesn't currently exist, so let's create that class.</p>
+<pre><code class="java">// app/java/sample.oddworks.com.myoddworksapplication/OddListAdapter
+
+package sample.oddworks.com.myoddworksapplication;
+
+import android.content.Context;
+import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
+
+import java.util.List;
+
+import io.oddworks.device.model.Media;
+import io.oddworks.device.model.OddCollection;
+import io.oddworks.device.model.OddObject;
+
+public class OddListAdapter extends RecyclerView.Adapter&lt;OddListAdapter.ListItemViewHolder&gt; {
+    private List&lt;OddObject&gt; oddObjects;
+
+    public OddListAdapter(List&lt;OddObject&gt; oddObjects) {
+        super();
+
+        this.oddObjects = oddObjects;
+    }
+
+    @Override
+    public ListItemViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item, parent, false);
+        return new ListItemViewHolder(itemView);
+    }
+
+    @Override
+    public void onBindViewHolder(ListItemViewHolder holder, int position) {
+        OddObject oddObject = oddObjects.get(position);
+
+        switch (oddObject.getType()) {
+            case (OddObject.TYPE_LIVE_STREAM):
+            case (OddObject.TYPE_VIDEO):
+                Media oddMedia = (Media) oddObject;
+                holder.title.setText(oddMedia.getTitle());
+                break;
+            case (OddObject.TYPE_COLLECTION):
+                OddCollection oddCollection = (OddCollection) oddObject;
+                holder.title.setText(oddCollection.getTitle());
+                break;
+        }
+    }
+
+    @Override
+    public int getItemCount() {
+        if (oddObjects == null) {
+            return 0;
+        } else {
+            return oddObjects.size();
+        }
+    }
+
+    public final static class ListItemViewHolder extends RecyclerView.ViewHolder {
+        TextView title;
+
+        public ListItemViewHolder(View itemView) {
+            super(itemView);
+
+            title = (TextView) itemView.findViewById(R.id.listItemTitle);
+        }
+    }
+}
+</code></pre>
+
+<p>Everything in this adapter is pretty standard. What deserves attention is the switch statement in the <code>onBindViewHolder</code>. We use the <code>getType</code> method on our <code>oddObject</code> and compare it against any type that it could be. Based on what type it is, we case the <code>oddObject</code> to a <code>Media</code> or <code>OddCollection</code> object.</p>
               
             </div>
           </div>
           <footer>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../brightcove_player/" class="btn btn-neutral float-right" title="Brightcove Player">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
         <a href="../initialize_api_calls/" class="btn btn-neutral" title="Initialize API Calls"><span class="icon icon-circle-arrow-left"></span> Previous</a>
@@ -257,6 +414,8 @@ private void configureData() {
       
         <span><a href="../initialize_api_calls/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
+      
+        <span style="margin-left: 15px"><a href="../brightcove_player/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>

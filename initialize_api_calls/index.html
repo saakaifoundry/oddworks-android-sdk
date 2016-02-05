@@ -126,6 +126,9 @@
                 <li class="toctree-l3"><a href="#get-config-data-from-api">Get Config Data from API</a></li>
                 
             
+                <li class="toctree-l3"><a href="#getting-view-data-from-api">Getting View Data from API</a></li>
+                
+            
             </ul>
         
     </li>
@@ -134,6 +137,35 @@
             
     <li class="toctree-l1 ">
         <a class="" href="../working_with_data/">Working with Data</a>
+        
+    </li>
+
+        
+    </ul>
+<li>
+          
+            <li>
+    <ul class="subnav">
+    <li><span>Playing Media</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../brightcove_player/">Brightcove Player</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../ooyala_player/">Ooyala Player</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../exo_player/">Exo Player</a>
         
     </li>
 
@@ -179,17 +211,18 @@
               
                 <h1 id="get-config-data-from-api">Get Config Data from API</h1>
 <p><strong><em>Note: We've configured the NASA test organization to send config information down with the use of <code>OddView</code>s as the main way of constructing data in the application. This is completely optional. You may format your data however you like on the Oddworks dashboard. For example: you may just want to call all collections or videos directly.</em></strong></p>
-<p>Now it's time to make our <code>SplashActivity</code> actually do somthing. First we'll set up the member variables...</p>
+<p>Now it's time to make our <code>SplashActivity</code> actually do something. First we'll set up the member variables...</p>
 <pre><code class="java">// app/java/sample.oddworks.com.oddsampleapp/SplashActivity
 
 // ...
 public class SplashActivity extends AppCompatActivity {
     // Constants
-    private static final String HOME_VIEW_NAME = &quot;home-view&quot;;
+    private static final String HOME_VIEW_NAME = &quot;homepage&quot;;
 
     // Data
     private RestServiceProvider restServiceProvider = RestServiceProvider.getInstance();
     private ApiCaller apiCaller = restServiceProvider.getApiCaller();
+    private Context context;
 
     // ...
 }
@@ -210,7 +243,9 @@ protected void onCreate(Bundle savedInstanceState) {
 </code></pre>
 
 <p>The next thing check to see if the application is connected to the internet. This method may be useful in other classes in our application so instead of creating a method for it in our <code>SplashActivity</code> we'll create a <code>Utility</code> class with a method to check if there is internet connectivity.</p>
-<pre><code class="java">package sample.oddworks.com.myoddworksapplication;
+<pre><code class="java">// app/java/sample.oddworks.com.oddsampleapp/Utility
+
+package sample.oddworks.com.myoddworksapplication;
 
 import android.content.Context;
 import android.net.ConnectivityManager;
@@ -231,52 +266,47 @@ public class Utility {
 <p>In order for this to work, we'll need to add some permissions to our <code>AndroidManifest</code> file right before the opening <code>application</code> tag.</p>
 <pre><code class="xml">// app/manifests/AndroidManifest.xml
 
-
-    &lt;uses-permission android:name=&quot;android.permission.INTERNET&quot; /&gt;
-    &lt;uses-permission android:name=&quot;android.permission.ACCESS_NETWORK_STATE&quot; /&gt;
-
+&lt;uses-permission android:name=&quot;android.permission.INTERNET&quot; /&gt;
+&lt;uses-permission android:name=&quot;android.permission.ACCESS_NETWORK_STATE&quot; /&gt;
 </code></pre>
 
 <p>Now we can check to see if the app has connectivity in the <code>SplashActivity</code>'s <code>onCreate</code> method:</p>
-<p>``java
-// app/java/sample.oddworks.com.oddsampleapp/SplashActivity</p>
-<p>// ...
+<pre><code class="java">// app/java/sample.oddworks.com.oddsampleapp/SplashActivity
+
+// ...
 @Override
 protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_splash);
-    context = this;</p>
-<pre><code>if (Utility.hasInternetConnection(getApplicationContext())) {
-    apiCaller.getConfig(new ConfigRequestCallback());
-} else {
-    // handle failure by notifying user on UI
-    // consider giving them a "retry" button
-    // perhaps via a Snackbar
+    context = this;
+
+    if (Utility.hasInternetConnection(getApplicationContext())) {
+        apiCaller.getConfig(new ConfigRequestCallback());
+    } else {
+        // handle failure by notifying user on UI
+        // consider giving them a &quot;retry&quot; button
+        // perhaps via a Snackbar
+    }
 }
-</code></pre>
-<p>}</p>
-<p>private final class ConfigRequestCallback implements OddCallback<Config> {
+
+private final class ConfigRequestCallback implements OddCallback&lt;Config&gt; {
     @Override
     public void onSuccess(Config config) {
         // handle success
-    }</p>
-<pre><code>@Override
-public void onFailure(final Exception exception) {
-    // handle failure
+    }
+
+    @Override
+    public void onFailure(final Exception exception) {
+        // handle failure
+    }
 }
+// ...
 </code></pre>
-<p>}
-// ...</p>
-<pre><code>
-If the app is connected to the internet we use the `apiCaller` to request configuration from the API and pass it a callback class that implements an `OddCallback`. If there's a failure we should notify the user of this and give them the option to retry. *Warning: if you try to manipulate the UI within this callback you will crash the application since you aren't running on the main thread. You must specify that you'd like to run on the main thread if you'd like to make any UI updates.*
 
-
-# Getting View Data from API
-
-Assuming the config request returns successful we can use the config object to set up many things about our app. For now, we'll only focus on the views that the config sends us.
-
-```java
-// app/java/sample.oddworks.com.oddsampleapp/SplashActivity
+<p>If the app is connected to the internet we use the <code>apiCaller</code> to request configuration from the API and pass it a callback class that implements an <code>OddCallback</code>. If there's a failure we should notify the user of this and give them the option to retry. <em>Warning: if you try to manipulate the UI within this callback you will crash the application since you aren't running on the main thread. You must specify that you'd like to run on the main thread if you'd like to make any UI updates.</em></p>
+<h1 id="getting-view-data-from-api">Getting View Data from API</h1>
+<p>Assuming the config request returns successful we can use the config object to set up many things about our app. For now, we'll only focus on the views that the config sends us.</p>
+<pre><code class="java">// app/java/sample.oddworks.com.oddsampleapp/SplashActivity
 
 // ...
 private final class ConfigRequestCallback implements OddCallback&lt;Config&gt; {

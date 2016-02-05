@@ -8,7 +8,7 @@
   
   
   
-  <title>Configuring your App - Oddworks SDK for Android</title>
+  <title>Ooyala Player - Oddworks SDK for Android</title>
   
 
   <link rel="shortcut icon" href="../img/favicon.ico">
@@ -23,9 +23,9 @@
   
   <script>
     // Current page data
-    var mkdocs_page_name = "Configuring your App";
-    var mkdocs_page_input_path = "getting_started.md";
-    var mkdocs_page_url = "/getting_started/";
+    var mkdocs_page_name = "Ooyala Player";
+    var mkdocs_page_input_path = "ooyala_player.md";
+    var mkdocs_page_url = "/ooyala_player/";
   </script>
   
   <script src="../js/jquery-2.1.1.min.js"></script>
@@ -96,18 +96,8 @@
 
         
             
-    <li class="toctree-l1 current">
-        <a class="current" href="./">Configuring your App</a>
-        
-            <ul>
-            
-                <li class="toctree-l3"><a href="#application-activity-and-android-manifest">Application Activity and Android Manifest</a></li>
-                
-            
-                <li class="toctree-l3"><a href="#launcher-activity">Launcher Activity</a></li>
-                
-            
-            </ul>
+    <li class="toctree-l1 ">
+        <a class="" href="../getting_started/">Configuring your App</a>
         
     </li>
 
@@ -157,8 +147,12 @@
 
         
             
-    <li class="toctree-l1 ">
-        <a class="" href="../ooyala_player/">Ooyala Player</a>
+    <li class="toctree-l1 current">
+        <a class="current" href="./">Ooyala Player</a>
+        
+            <ul>
+            
+            </ul>
         
     </li>
 
@@ -195,11 +189,11 @@
     
       
         
-          <li>Getting Started &raquo;</li>
+          <li>Playing Media &raquo;</li>
         
       
     
-    <li>Configuring your App</li>
+    <li>Ooyala Player</li>
     <li class="wy-breadcrumbs-aside">
       
     </li>
@@ -209,69 +203,7 @@
           <div role="main">
             <div class="section">
               
-                <h1 id="application-activity-and-android-manifest">Application Activity and Android Manifest</h1>
-<p>We want to extend the <code>Application</code> class so that we can handle global state. Create a new Java class in your app's main package naming it whatever you like, we'll call ours <code>OddApp</code>. This will be a singleton class so we'll configure it as such:</p>
-<pre><code class="java">package sample.oddworks.com.myoddworksapplication;
-
-import android.app.Application;
-
-import io.oddworks.device.model.OddView;
-import io.oddworks.device.request.RestServiceProvider;
-import io.oddworks.device.service.OddStore;
-
-public class OddApp extends Application {
-    private static OddApp singleton;
-    public static OddApp getInstance() {
-        return singleton;
-    }
-
-    private OddView homeView;
-
-    @Override
-    public void onCreate() {
-        super.onCreate();
-        singleton = this;
-
-        RestServiceProvider.init(getApplicationContext(),
-                getString(R.string.x_access_token),
-                getString(R.string.git_revision));
-        // Alternatively you could use BuildConfig.VERSION_NAME instead of R.string.git_revision
-    }
-
-    public OddView getHomeView() {
-        return homeView;
-    }
-
-    public void setHomeView(OddView homeView) {
-        OddStore.getInstance().storeObjects(homeView.getIncluded());
-        this.homeView = homeView;
-    }
-}
-</code></pre>
-
-<p>We've finally written the first code that interacts with the SDK. You'll notice we utilize the <code>OddView</code>, <code>RestServiceProvider</code>, and <code>OddStore</code> classes. The <code>OddView</code> class is the main way large amounts of data are passed from the SDK to the app. We have a view that represents all of the content shown on application load called <code>homeView</code>. The <code>RestServiceProvider</code> initializes everything we need in order to interact with the API. In the setter methods for each view we're utilizing the <code>OddStore</code> so that we can minimize API calls if the <code>homeView</code> variables get collected from memory.</p>
-<p>In our <code>AndroidManifest</code> file we'll add this new class by adding it as the name attribute to the opening <code>application</code> tag. By placing this attribute in the XML <code>OddApp</code> will run when the app first initializes.</p>
-<pre><code class="xml">&lt;application
-    android:name=&quot;.OddApp&quot;
-    android:allowBackup=&quot;true&quot;
-    android:icon=&quot;@mipmap/ic_launcher&quot;
-    android:label=&quot;@string/app_name&quot;
-    android:supportsRtl=&quot;true&quot;
-    android:theme=&quot;@style/AppTheme&quot; &gt;
-&lt;/application&gt;
-</code></pre>
-
-<h1 id="launcher-activity">Launcher Activity</h1>
-<p>We need an Activity to handle fetching initial data from the API when the application is first launched. We'll create a new Empty Activity called <code>SplashActivity</code> with a corresponding <code>activity_splash</code> layout file, making sure to check the "Launcher Activity" option. Make sure to add an attribute to this Activity in the <code>AndroidManifest</code> that disables it from history:</p>
-<pre><code class="xml">&lt;activity
-    android:name=&quot;.SplashActivity&quot;
-    android:noHistory=&quot;true&quot;&gt;
-    &lt;intent-filter&gt;
-        &lt;action android:name=&quot;android.intent.action.MAIN&quot; /&gt;
-        &lt;category android:name=&quot;android.intent.category.LAUNCHER&quot; /&gt;
-    &lt;/intent-filter&gt;
-&lt;/activity&gt;
-</code></pre>
+                <p>Coming Soon!</p>
               
             </div>
           </div>
@@ -279,10 +211,10 @@ public class OddApp extends Application {
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../data_models/" class="btn btn-neutral float-right" title="Understanding the SDK Data Models">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../exo_player/" class="btn btn-neutral float-right" title="Exo Player">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
-        <a href="../setup/" class="btn btn-neutral" title="Library and Project Setup"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../brightcove_player/" class="btn btn-neutral" title="Brightcove Player"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
@@ -308,10 +240,10 @@ public class OddApp extends Application {
     <span class="rst-current-version" data-toggle="rst-current-version">
       
       
-        <span><a href="../setup/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+        <span><a href="../brightcove_player/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
-        <span style="margin-left: 15px"><a href="../data_models/" style="color: #fcfcfc">Next &raquo;</a></span>
+        <span style="margin-left: 15px"><a href="../exo_player/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>
