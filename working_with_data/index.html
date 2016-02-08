@@ -114,7 +114,7 @@
           
             <li>
     <ul class="subnav">
-    <li><span>Interacting with Oddworks</span></li>
+    <li><span>The Basics of Oddworks</span></li>
 
         
             
@@ -138,6 +138,57 @@
                 
             
             </ul>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../search/">Search</a>
+        
+    </li>
+
+        
+    </ul>
+<li>
+          
+            <li>
+    <ul class="subnav">
+    <li><span>Authenticating Users</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../auth_process/">Authentication Process</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../entitlements/">Entitlements</a>
+        
+    </li>
+
+        
+    </ul>
+<li>
+          
+            <li>
+    <ul class="subnav">
+    <li><span>Capturing Metrics</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../metrics_configuration/">Configuration</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../sending_metrics/">Sending Metrics</a>
         
     </li>
 
@@ -196,7 +247,7 @@
     
       
         
-          <li>Interacting with Oddworks &raquo;</li>
+          <li>The Basics of Oddworks &raquo;</li>
         
       
     
@@ -375,7 +426,7 @@ public class OddListAdapter extends RecyclerView.Adapter&lt;OddListAdapter.ListI
 }
 </code></pre>
 
-<p>Everything in this adapter is pretty standard. What deserves attention is the switch statement in the <code>onBindViewHolder</code>. We use the <code>getType</code> method on our <code>oddObject</code> and compare it against any type that it could be. Based on what type it is, we case the <code>oddObject</code> to a <code>Media</code> or <code>OddCollection</code> object.</p>
+<p>Everything in this adapter is pretty standard. What deserves attention is the switch statement in the <code>onBindViewHolder</code>. We use the <code>getType</code> method on our <code>oddObject</code> and compare it against any type that it could be. Based on what type it is, we cast the <code>oddObject</code> to a <code>Media</code> or <code>OddCollection</code> object.</p>
               
             </div>
           </div>
@@ -383,7 +434,7 @@ public class OddListAdapter extends RecyclerView.Adapter&lt;OddListAdapter.ListI
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../brightcove_player/" class="btn btn-neutral float-right" title="Brightcove Player">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../search/" class="btn btn-neutral float-right" title="Search">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
         <a href="../initialize_api_calls/" class="btn btn-neutral" title="Initialize API Calls"><span class="icon icon-circle-arrow-left"></span> Previous</a>
@@ -415,7 +466,7 @@ public class OddListAdapter extends RecyclerView.Adapter&lt;OddListAdapter.ListI
         <span><a href="../initialize_api_calls/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
-        <span style="margin-left: 15px"><a href="../brightcove_player/" style="color: #fcfcfc">Next &raquo;</a></span>
+        <span style="margin-left: 15px"><a href="../search/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>
