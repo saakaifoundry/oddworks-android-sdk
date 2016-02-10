@@ -99,26 +99,4 @@
         
     
 
-    
-        
-    <url>
-     <loc>None/brightcove_player/</loc>
-     <lastmod>2016-02-10</lastmod>
-     <changefreq>daily</changefreq>
-    </url>
-        
-    <url>
-     <loc>None/ooyala_player/</loc>
-     <lastmod>2016-02-10</lastmod>
-     <changefreq>daily</changefreq>
-    </url>
-        
-    <url>
-     <loc>None/exo_player/</loc>
-     <lastmod>2016-02-10</lastmod>
-     <changefreq>daily</changefreq>
-    </url>
-        
-    
-
 </urlset>

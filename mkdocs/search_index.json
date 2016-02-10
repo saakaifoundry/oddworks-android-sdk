@@ -2,7 +2,7 @@
     "docs": [
         {
             "location": "/", 
-            "text": "Oddworks SDK for Android\n\n\nDocument version: February 3, 2016\n\nSDK Version: beta-1.0.0\n\n\nThe Oddworks SDK for Android is a wrapper for the Odd Networks.\n\n\nSDK Documentation\n\n\nFeatures\n\n\nThe Oddworks SDK for Android supports the following features:\n\n\n\n\nA wrapper for the Odd API that parses returned JSON into Java Objects\n\n\nA data store for objects received from the API\n\n\nA way to post metrics back to the API\n\n\n\n\nIntended Audience\n\n\nThis guide assumes that you have the necessary Java and Android development skills to work successfully with Oddworks for Android. You should know how to build and compile Android applications using Android Studio and the latest tools from the Android Developers Kit.", 
+            "text": "Oddworks SDK for Android\n\n\nDocument version: February 3, 2016\n\nSDK Version: beta-1.0.0\n\n\nThe Oddworks SDK for Android is a wrapper for the Odd Networks.\n\n\nSDK API Documentation\n\n\nFeatures\n\n\nThe Oddworks SDK for Android supports the following features:\n\n\n\n\nA wrapper for the Odd API that parses returned JSON into Java Objects\n\n\nA data store for objects received from the API\n\n\nA way to post metrics back to the API\n\n\n\n\nIntended Audience\n\n\nThis guide assumes that you have the necessary Java and Android development skills to work successfully with Oddworks for Android. You should know how to build and compile Android applications using Android Studio and the latest tools from the Android Developers Kit.", 
             "title": "Introduction"
         }, 
         {
@@ -11,9 +11,9 @@
             "title": "Oddworks SDK for Android"
         }, 
         {
-            "location": "/#sdk-documentation", 
+            "location": "/#sdk-api-documentation", 
             "text": "", 
-            "title": "SDK Documentation"
+            "title": "SDK API Documentation"
         }, 
         {
             "location": "/#features", 
@@ -82,12 +82,12 @@
         }, 
         {
             "location": "/setup/", 
-            "text": "Integrate the Oddworks SDK\n\n\nOur SDK is built and hosted via \nJitpack\n. Include Jitpack in the \nrepositories\n section of your app module's \nbuild.gradle\n file:\n\n\n// app/build.gradle\n\nrepositories {\n    // ...\n    maven { url \nhttps://jitpack.io\n }\n}\n\n\n\n\nNow in the  \ndependencies\n section of your app module's \nbuild.gradle\n file add the Oddworks SDK:\n\n\n// app/build.gradle\n\ndependencies {\n    // ...\n    compile \ncom.github.oddnetworks:OddWorksDeviceSDK:beta-1.0.0\n\n}\n\n\n\n\nThere's one more \noptional\n thing you can do to your application's \nbuild.gradle\n file that will be used in the next step. The SDK expects an app version when it's being initialized. One option would be to use your app module's \nBuildConfig.VERSION_NAME\n. Another might be to send your git revision.\n\n\n// app/build.gradle\n\nandroid {\n    // ...\n    defaultConfig {\n        // ...\n        resValue \nstring\n, \ngit_revision\n, gitRevision()\n    }\n    // ...\n}\n\n// ...\n\ndef gitRevision() {\n    def cmd = \ngit rev-parse --short HEAD\n\n    return cmd.execute().text.trim()\n}\n\n\n\n\nSync your project with Gradle files and you will have the OddworksDeviceSDK added to your External Libraries.\n\n\nConfigure Your Access Token\n\n\nThe SDK also will need an access token to use when accessing the API. For instructions on how to receive your own access token check out our \nAPI Guide\n.  Create a file in \napp/res/values/\n called \nsdk_strings.xml\n.\n\n\n    \n?xml version=\n1.0\n encoding=\nutf-8\n?\n\n    \nresources\n\n        \nstring name=\nx_access_token\nyour-access-token-here\n/string\n\n    \n/resources\n\n\n\n\n\nFor this guide we'll use a sample access token, which accesses NASA content.\n\n\nTo receive this access token, \nsign up for our beta program here\n.\n\n\nWe strongly recommend adding any file that contains sensitive information to your project's \n.gitignore\n file. This access token should be kept private and not checked in to version control. Anyone who has your access token will be able to fetch your data.", 
+            "text": "Integrate the Oddworks SDK\n\n\nOur SDK is hosted on \nBintray\n.\n\n\nInclude our oddworks repository in the \nrepositories\n section of your app module's \nbuild.gradle\n file:\n\n\n// app/build.gradle\n\nrepositories {\n    // ...\n    maven {\n        url  \nhttp://oddnetworks.bintray.com/oddworks\n \n    }\n}\n\n\n\n\nNow in the  \ndependencies\n section of your app module's \nbuild.gradle\n file add the Oddworks SDK:\n\n\n// app/build.gradle\n\ndependencies {\n    // ...\n    compile \nio.oddworks:device-sdk:beta-1.0.0\n\n}\n\n\n\n\nThere's one more \noptional\n thing you can do to your application's \nbuild.gradle\n file that will be used in the next step. The SDK expects an app version when it's being initialized. One option would be to use your app module's \nBuildConfig.VERSION_NAME\n. Another might be to send your git revision.\n\n\n// app/build.gradle\n\nandroid {\n    // ...\n    defaultConfig {\n        // ...\n        resValue \nstring\n, \ngit_revision\n, gitRevision()\n    }\n    // ...\n}\n\n// ...\n\ndef gitRevision() {\n    def cmd = \ngit rev-parse --short HEAD\n\n    return cmd.execute().text.trim()\n}\n\n\n\n\nSync your project with Gradle files and you will have the OddworksDeviceSDK added to your External Libraries.\n\n\nConfigure Your Access Token\n\n\nThe SDK also will need an access token to use when accessing the API. For instructions on how to receive your own access token check out our \nAPI Guide\n.  Create a file in \napp/res/values/\n called \nsdk_strings.xml\n.\n\n\n    \n?xml version=\n1.0\n encoding=\nutf-8\n?\n\n    \nresources\n\n        \nstring name=\nx_access_token\nyour-access-token-here\n/string\n\n    \n/resources\n\n\n\n\n\nFor this guide we'll use a sample access token, which accesses NASA content.\n\n\nTo receive this access token, \nsign up for our beta program here\n.\n\n\nWe strongly recommend adding any file that contains sensitive information to your project's \n.gitignore\n file. This access token should be kept private and not checked in to version control. Anyone who has your access token will be able to fetch your data.", 
             "title": "Library and Project Setup"
         }, 
         {
             "location": "/setup/#integrate-the-oddworks-sdk", 
-            "text": "Our SDK is built and hosted via  Jitpack . Include Jitpack in the  repositories  section of your app module's  build.gradle  file:  // app/build.gradle\n\nrepositories {\n    // ...\n    maven { url  https://jitpack.io  }\n}  Now in the   dependencies  section of your app module's  build.gradle  file add the Oddworks SDK:  // app/build.gradle\n\ndependencies {\n    // ...\n    compile  com.github.oddnetworks:OddWorksDeviceSDK:beta-1.0.0 \n}  There's one more  optional  thing you can do to your application's  build.gradle  file that will be used in the next step. The SDK expects an app version when it's being initialized. One option would be to use your app module's  BuildConfig.VERSION_NAME . Another might be to send your git revision.  // app/build.gradle\n\nandroid {\n    // ...\n    defaultConfig {\n        // ...\n        resValue  string ,  git_revision , gitRevision()\n    }\n    // ...\n}\n\n// ...\n\ndef gitRevision() {\n    def cmd =  git rev-parse --short HEAD \n    return cmd.execute().text.trim()\n}  Sync your project with Gradle files and you will have the OddworksDeviceSDK added to your External Libraries.", 
+            "text": "Our SDK is hosted on  Bintray .  Include our oddworks repository in the  repositories  section of your app module's  build.gradle  file:  // app/build.gradle\n\nrepositories {\n    // ...\n    maven {\n        url   http://oddnetworks.bintray.com/oddworks  \n    }\n}  Now in the   dependencies  section of your app module's  build.gradle  file add the Oddworks SDK:  // app/build.gradle\n\ndependencies {\n    // ...\n    compile  io.oddworks:device-sdk:beta-1.0.0 \n}  There's one more  optional  thing you can do to your application's  build.gradle  file that will be used in the next step. The SDK expects an app version when it's being initialized. One option would be to use your app module's  BuildConfig.VERSION_NAME . Another might be to send your git revision.  // app/build.gradle\n\nandroid {\n    // ...\n    defaultConfig {\n        // ...\n        resValue  string ,  git_revision , gitRevision()\n    }\n    // ...\n}\n\n// ...\n\ndef gitRevision() {\n    def cmd =  git rev-parse --short HEAD \n    return cmd.execute().text.trim()\n}  Sync your project with Gradle files and you will have the OddworksDeviceSDK added to your External Libraries.", 
             "title": "Integrate the Oddworks SDK"
         }, 
         {
@@ -224,21 +224,6 @@
             "location": "/sending_metrics/", 
             "text": "Coming soon!", 
             "title": "Sending Metrics"
-        }, 
-        {
-            "location": "/brightcove_player/", 
-            "text": "Coming soon!", 
-            "title": "Brightcove Player"
-        }, 
-        {
-            "location": "/ooyala_player/", 
-            "text": "Coming soon!", 
-            "title": "Ooyala Player"
-        }, 
-        {
-            "location": "/exo_player/", 
-            "text": "Coming soon!", 
-            "title": "Exo Player"
         }
     ]
 }
