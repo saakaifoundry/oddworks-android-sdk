@@ -5,19 +5,19 @@
         
     <url>
      <loc>None/</loc>
-     <lastmod>2016-02-09</lastmod>
+     <lastmod>2016-02-10</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
      <loc>None/overview/</loc>
-     <lastmod>2016-02-09</lastmod>
+     <lastmod>2016-02-10</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
      <loc>None/sample_application/</loc>
-     <lastmod>2016-02-09</lastmod>
+     <lastmod>2016-02-10</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
@@ -27,19 +27,19 @@
         
     <url>
      <loc>None/setup/</loc>
-     <lastmod>2016-02-09</lastmod>
+     <lastmod>2016-02-10</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
      <loc>None/getting_started/</loc>
-     <lastmod>2016-02-09</lastmod>
+     <lastmod>2016-02-10</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
      <loc>None/data_models/</loc>
-     <lastmod>2016-02-09</lastmod>
+     <lastmod>2016-02-10</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
@@ -49,19 +49,19 @@
         
     <url>
      <loc>None/initialize_api_calls/</loc>
-     <lastmod>2016-02-09</lastmod>
+     <lastmod>2016-02-10</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
      <loc>None/working_with_data/</loc>
-     <lastmod>2016-02-09</lastmod>
+     <lastmod>2016-02-10</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
      <loc>None/search/</loc>
-     <lastmod>2016-02-09</lastmod>
+     <lastmod>2016-02-10</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
@@ -71,13 +71,13 @@
         
     <url>
      <loc>None/auth_process/</loc>
-     <lastmod>2016-02-09</lastmod>
+     <lastmod>2016-02-10</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
      <loc>None/entitlements/</loc>
-     <lastmod>2016-02-09</lastmod>
+     <lastmod>2016-02-10</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
@@ -87,13 +87,13 @@
         
     <url>
      <loc>None/metrics_configuration/</loc>
-     <lastmod>2016-02-09</lastmod>
+     <lastmod>2016-02-10</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
      <loc>None/sending_metrics/</loc>
-     <lastmod>2016-02-09</lastmod>
+     <lastmod>2016-02-10</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
@@ -103,19 +103,19 @@
         
     <url>
      <loc>None/brightcove_player/</loc>
-     <lastmod>2016-02-09</lastmod>
+     <lastmod>2016-02-10</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
      <loc>None/ooyala_player/</loc>
-     <lastmod>2016-02-09</lastmod>
+     <lastmod>2016-02-10</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
      <loc>None/exo_player/</loc>
-     <lastmod>2016-02-09</lastmod>
+     <lastmod>2016-02-10</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
