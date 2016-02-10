@@ -1,6 +1,7 @@
 package io.oddworks.device.request;
 
 import android.content.Context;
+import android.net.Uri;
 import android.os.Build;
 import android.util.Log;
 
@@ -68,7 +69,8 @@ public class RequestHandler {
 
     /** get an authorized (if AuthToken is set) get request for the endpoint */
     private Request getOddGetRequest(String endpoint) {
-        return getOddRequest(endpoint, RequestMethod.GET, null, false);
+
+        return getOddRequest(endpoint), RequestMethod.GET, null, false);
     }
 
     private Request getOddRequest(String endpoint, RequestMethod method, RequestBody body, boolean forceNoAuth) {
@@ -112,7 +114,7 @@ public class RequestHandler {
 
     protected void getSearch(String term, int limit, int offset, Callback callback) {
         Request request = getOddGetRequest(
-                "search?term=" + term + "&limit=" + limit + "&offset=" + offset);
+                "search?term=" + Uri.encode(term) + "&limit=" + limit + "&offset=" + offset);
         enqueueOddCall(request, callback);
     }
 
