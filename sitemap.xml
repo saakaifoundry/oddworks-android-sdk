@@ -4,41 +4,19 @@
     
         
     <url>
-     <loc>None/</loc>
+     <loc>http://android.guide.oddworks.io/</loc>
      <lastmod>2016-02-10</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
-     <loc>None/overview/</loc>
+     <loc>http://android.guide.oddworks.io/overview/</loc>
      <lastmod>2016-02-10</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
-     <loc>None/sample_application/</loc>
-     <lastmod>2016-02-10</lastmod>
-     <changefreq>daily</changefreq>
-    </url>
-        
-    
-
-    
-        
-    <url>
-     <loc>None/setup/</loc>
-     <lastmod>2016-02-10</lastmod>
-     <changefreq>daily</changefreq>
-    </url>
-        
-    <url>
-     <loc>None/getting_started/</loc>
-     <lastmod>2016-02-10</lastmod>
-     <changefreq>daily</changefreq>
-    </url>
-        
-    <url>
-     <loc>None/data_models/</loc>
+     <loc>http://android.guide.oddworks.io/sample_application/</loc>
      <lastmod>2016-02-10</lastmod>
      <changefreq>daily</changefreq>
     </url>
@@ -48,35 +26,19 @@
     
         
     <url>
-     <loc>None/initialize_api_calls/</loc>
+     <loc>http://android.guide.oddworks.io/setup/</loc>
      <lastmod>2016-02-10</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
-     <loc>None/working_with_data/</loc>
+     <loc>http://android.guide.oddworks.io/getting_started/</loc>
      <lastmod>2016-02-10</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
-     <loc>None/search/</loc>
-     <lastmod>2016-02-10</lastmod>
-     <changefreq>daily</changefreq>
-    </url>
-        
-    
-
-    
-        
-    <url>
-     <loc>None/auth_process/</loc>
-     <lastmod>2016-02-10</lastmod>
-     <changefreq>daily</changefreq>
-    </url>
-        
-    <url>
-     <loc>None/entitlements/</loc>
+     <loc>http://android.guide.oddworks.io/data_models/</loc>
      <lastmod>2016-02-10</lastmod>
      <changefreq>daily</changefreq>
     </url>
@@ -86,13 +48,51 @@
     
         
     <url>
-     <loc>None/metrics_configuration/</loc>
+     <loc>http://android.guide.oddworks.io/initialize_api_calls/</loc>
      <lastmod>2016-02-10</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
-     <loc>None/sending_metrics/</loc>
+     <loc>http://android.guide.oddworks.io/working_with_data/</loc>
+     <lastmod>2016-02-10</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>http://android.guide.oddworks.io/search/</loc>
+     <lastmod>2016-02-10</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    
+
+    
+        
+    <url>
+     <loc>http://android.guide.oddworks.io/auth_process/</loc>
+     <lastmod>2016-02-10</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>http://android.guide.oddworks.io/entitlements/</loc>
+     <lastmod>2016-02-10</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    
+
+    
+        
+    <url>
+     <loc>http://android.guide.oddworks.io/metrics_configuration/</loc>
+     <lastmod>2016-02-10</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>http://android.guide.oddworks.io/sending_metrics/</loc>
      <lastmod>2016-02-10</lastmod>
      <changefreq>daily</changefreq>
     </url>
