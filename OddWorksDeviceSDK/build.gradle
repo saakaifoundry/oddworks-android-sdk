@@ -1,5 +1,8 @@
 apply plugin: 'com.android.library'
 apply plugin: 'com.github.dcendents.android-maven'
+apply plugin: 'com.jfrog.bintray'
+apply plugin: 'maven'
+apply plugin: 'maven-publish'
 
 android {
     compileSdkVersion 23
@@ -24,8 +27,7 @@ android {
     }
 }
 
-group = 'com.github.oddnetworks'
-
+group = 'io.oddworks'
 version = '1.0.0-beta-48'
 
 dependencies {
@@ -64,11 +66,35 @@ artifacts {
     archives javadocJar
 }
 
-// uncomment to build a jar file in addition to the default aar file
-//android.libraryVariants.all { variant ->
-//    def name = variant.buildType.name
-//    def task = project.tasks.create "jar${name.capitalize()}", Jar
-//    task.dependsOn variant.javaCompile
-//    task.from variant.javaCompile.destinationDir
-//    artifacts.add('archives', task);
-//}
+publishing {
+    publications {
+        mavenJar(MavenPublication) {
+            groupId = "$group"
+            artifactId = "device-sdk"
+            version = "$version"
+
+            artifact sourcesJar {
+                classifier "sources"
+            }
+
+            artifact javadocJar {
+                classifier 'javadoc'
+            }
+        }
+    }
+}
+
+bintray {
+    user = System.getenv('BINTRAY_USER')
+    key = System.getenv('BINTRAY_KEY')
+    publications = ['mavenJar']
+    pkg {
+        repo = 'oddworks'
+        name = 'device-sdk'
+        userOrg = 'oddnetworks'
+        licenses = ['Apache-2.0']
+        desc = 'Oddworks SDK for Android'
+        websiteUrl = 'http://android.guide.oddworks.io'
+        vcsUrl = 'https://github.com/oddnetworks/OddworksDeviceSDK.git'
+    }
+}
