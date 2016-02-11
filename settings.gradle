@@ -1,1 +1,1 @@
-include ':OddWorksDeviceSDK'
+include ':device-sdk'
