@@ -197,6 +197,41 @@ public class ApiCaller {
         };
     }
 
+    /**
+     * Set the Oddworks API accessToken for x-access-token header
+     *
+     * @param accessToken
+     */
+    public void setAccessToken(String accessToken) {
+        requestHandler.setAccessToken(accessToken);
+    }
+
+    /**
+     * Set the Oddworks API host
+     *
+     * @param host
+     */
+    public void setHost(String host) {
+        requestHandler.setHost(host);
+    }
+
+    /**
+     * Set the Oddworks API version
+     * @param apiVersion
+     */
+    public void setApiVersion(String apiVersion) {
+        requestHandler.setApiVersion(apiVersion);
+    }
+
+    /**
+     * Set the versionName for Oddworks x-odd-user-agent header parameter: build[version]
+     *
+     * @param versionName
+     */
+    public void setVersionName(String versionName) {
+        requestHandler.setVersionName(versionName);
+    }
+
     /** Set an AuthToken to be used in api calls */
     public void setAuthToken(AuthToken authToken) {
         requestHandler.setAuthToken(authToken);
