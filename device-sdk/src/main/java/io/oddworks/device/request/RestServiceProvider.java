@@ -1,10 +1,10 @@
 package io.oddworks.device.request;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 
 import net.danlew.android.joda.JodaTimeAndroid;
 
-import io.oddworks.device.R;
 
 /**
  * Class to initialize services in the io.oddworks.device.request package
@@ -15,34 +15,20 @@ public class RestServiceProvider {
     private ApiCaller apiCaller;
     private AuthenticationService authenticationService;
 
-    private RestServiceProvider(Context context, String apiVersion, String accessToken, String appVersion,
-                                boolean useStagingApi) {
-        String baseUrl = useStagingApi ? context.getString(R.string.odd_base_url_staging, apiVersion) :
-                                        context.getString(R.string.odd_base_url, apiVersion);
-        RequestHandler.instance = new RequestHandler(context, baseUrl, accessToken, appVersion);
+    private RestServiceProvider(@NonNull Context context) {
+        RequestHandler.instance = new RequestHandler(context);
         ApiCaller.instance = new ApiCaller(RequestHandler.instance, OddParser.getInstance());
         this.apiCaller = ApiCaller.instance;
         AuthenticationService.instance = new AuthenticationService(ApiCaller.instance, context);
-        this. authenticationService = AuthenticationService.instance;
-    }
+        this.authenticationService = AuthenticationService.instance;
 
-    /** initialize services and this provider
-     * @param apiVersion OddWorks API version. e.g. "v1"
-     * @param accessToken OddWorks API access token
-     * @param appVersion git revision or app version string
-     * @param useStagingApi if true, api calls will use the staging api */
-    public static void init(Context context, String apiVersion, String accessToken, String appVersion,
-                            boolean useStagingApi) {
-        instance = new RestServiceProvider(context, apiVersion, accessToken, appVersion, useStagingApi);
         JodaTimeAndroid.init(context);
     }
 
-    /** initialize services and this provider
-     * @param apiVersion OddWorks API version. e.g. "v1"
-     * @param accessToken OddWorks API access token
-     * @param appVersion git revision or app version string */
-    public static void init(Context context, String apiVersion, String accessToken, String appVersion) {
-        init(context, apiVersion, accessToken, appVersion, false);
+    /**
+     * @param context Application context for accessing resources */
+    public static void init(@NonNull Context context) {
+        instance = new RestServiceProvider(context);
     }
 
     /**

@@ -1,12 +1,16 @@
 package io.oddworks.device.request;
 
 import android.content.Context;
-import android.net.Uri;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.os.Build;
+import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.squareup.okhttp.Call;
 import com.squareup.okhttp.Callback;
+import com.squareup.okhttp.HttpUrl;
 import com.squareup.okhttp.MediaType;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
@@ -14,7 +18,8 @@ import com.squareup.okhttp.RequestBody;
 
 import java.util.Locale;
 
-import io.oddworks.device.R;
+import io.oddworks.device.Oddworks;
+import io.oddworks.device.exception.RestServicesNotInitialized;
 import io.oddworks.device.metric.OddMetric;
 import io.oddworks.device.model.AuthToken;
 
@@ -26,60 +31,102 @@ public class RequestHandler {
 
     /** supported request methods. if you add new ones, you'll probably have to make changes to existing
     RequestHandler methods */
-    private enum RequestMethod { GET, POST};
+    private enum RequestMethod { GET, POST }
     private static MediaType JSON = MediaType.parse("application/json; charset=utf-8");
+    private static String acceptHeader = "application/json";
 
     private AuthToken authToken;
-    private OkHttpClient mClient = new OkHttpClient();
-    private String mAppVersion;
-    private String mBaseUrl;
-    private Context mContext;
-    private String mAccessToken;
-    private String mAccept;
-    private String mLanguage = Locale.getDefault().getLanguage().toLowerCase();
-    private String mCountry = Locale.getDefault().getCountry().toLowerCase();
-    private String mLocale = mLanguage + "-" + mCountry;
+    private OkHttpClient okHttpClient = new OkHttpClient();
+    private String versionName;
+    private HttpUrl baseUrl;
+    private String accessToken;
+    private String language = Locale.getDefault().getLanguage().toLowerCase();
+    private String country = Locale.getDefault().getCountry().toLowerCase();
+    private String locale = language + "-" + country;
 
     /**
-     * @param baseUrl base url for all calls from the http to the version number and trailing slash.
-     *                eg https://device.oddworks.io/vi/
+     * @param context Application context for fetching resources
      */
-    protected RequestHandler(Context context, String baseUrl, String accessToken, String appVersion) {
-        mContext = context;
-        mAccessToken = accessToken;
-        mAppVersion = appVersion;
-        mBaseUrl = baseUrl;
-        mAccept = mContext.getString(R.string.odd_request_content_type);
-        authToken = null;
+    protected RequestHandler(@NonNull Context context) {
+        try {
+            ApplicationInfo info = context.getPackageManager().getApplicationInfo(context.getPackageName(), PackageManager.GET_META_DATA);
+            PackageInfo packageInfo = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
+            String accessToken = info.metaData.getString("io.oddworks.accessToken");
+            String versionName = packageInfo.versionName;
+
+            this.versionName = versionName;
+
+            if (accessToken != null) {
+                this.accessToken = accessToken;
+            } else {
+                throw new RestServicesNotInitialized("io.oddworks.accessToken is required");
+            }
+        } catch (PackageManager.NameNotFoundException e) {
+            throw new RestServicesNotInitialized("io.oddworks.accessToken is required");
+        }
+
+        this.baseUrl = new HttpUrl.Builder().scheme(Oddworks.API_PROTOCOL).host(Oddworks.API_HOST).addPathSegment(Oddworks.API_VERSION).build();
+    }
+
+    /**
+     * @param host sets Oddworks API host
+     */
+    public void setHost(@NonNull String host) {
+        this.baseUrl = new HttpUrl.Builder().scheme(baseUrl.scheme()).host(host).addPathSegment(baseUrl.encodedPath()).build();
+    }
+
+    /**
+     * @param versionName sets application version used in x-odd-user-agent header (build[version])
+     */
+    public void setVersionName(@NonNull String versionName) {
+        this.versionName = versionName;
+    }
+
+    /**
+     * @param accessToken sets Oddworks API accessToken for x-access-token-header
+     */
+    public void setAccessToken(@NonNull String accessToken) {
+        this.accessToken = accessToken;
+    }
+
+    /**
+     * @param apiVersion sets Oddworks API version number
+     */
+    public void setApiVersion(@NonNull String apiVersion) {
+        this.baseUrl = new HttpUrl.Builder().scheme(baseUrl.scheme()).host(baseUrl.host()).addPathSegment(apiVersion).build();
     }
 
     protected void getConfig(final Callback callback) {
+        HttpUrl endpoint = withIncluded(baseUrl.newBuilder().addPathSegment(Oddworks.ENDPOINT_CONFIG)).build();
+
         Request request = getOddRequest(
-                withIncluded(mContext.getString(R.string.endpoint_odd_config)),
+                endpoint,
                 RequestMethod.GET,
-                RequestBody.create(JSON, ""),
+                null,
                 true);
         enqueueOddCall(request, callback);
     }
 
     protected void getView(final String id, final Callback callback) {
-        Request request = getOddGetRequest(withIncluded(mContext.getString(R.string.endpoint_odd_views) + "/" + id));
+        String viewPath = String.format(Oddworks.ENDPOINT_VIEW, id);
+        HttpUrl endpoint = withIncluded(baseUrl.newBuilder().addPathSegment(viewPath)).build();
+        Request request = getOddGetRequest(endpoint);
         enqueueOddCall(request, callback);
     }
 
     /** get an authorized (if AuthToken is set) get request for the endpoint */
-    private Request getOddGetRequest(String endpoint) {
-
+    private Request getOddGetRequest(HttpUrl endpoint) {
         return getOddRequest(endpoint, RequestMethod.GET, null, false);
     }
 
-    private Request getOddRequest(String endpoint, RequestMethod method, RequestBody body, boolean forceNoAuth) {
+    private Request getOddRequest(HttpUrl endpoint, RequestMethod method, RequestBody body, boolean forceNoAuth) {
         Request.Builder builder = new Request.Builder();
-        builder.url(mBaseUrl + endpoint)
-                .addHeader("x-access-token", mAccessToken)
+
+        builder.url(endpoint)
+                .addHeader("x-access-token", accessToken)
                 .addHeader("x-odd-user-agent", getOddUserAgent())
-                .addHeader("accept", mAccept)
-                .addHeader("accept-language", mLocale);
+                .addHeader("accept", acceptHeader)
+                .addHeader("accept-language", locale);
         if(!forceNoAuth && authToken != null) {
             builder.addHeader("authorization", authToken.getTokenType() + " " + authToken.getToken());
         }
@@ -97,46 +144,58 @@ public class RequestHandler {
         oddUserAgent += "&model[version]=" + Build.MODEL;
         oddUserAgent += "&os[name]=Android";
         oddUserAgent += "&os[version]=" + Build.VERSION.RELEASE;
-        oddUserAgent += "&build[version]=" + mAppVersion;
+        oddUserAgent += "&build[version]=" + versionName;
 
         return oddUserAgent;
     }
 
     private void enqueueOddCall(Request request, Callback callback) {
-        Call call = mClient.newCall(request);
+        Call call = okHttpClient.newCall(request);
         call.enqueue(callback);
     }
 
     protected void getCollectionEntities(String collectionId, Callback callback) {
-        Request request = getOddGetRequest("collections/" + collectionId + "/relationships/entities");
+        String path = String.format(Oddworks.ENDPOINT_COLLECTION_ENTITIES, collectionId);
+        HttpUrl endpoint = baseUrl.newBuilder().addPathSegment(path).build();
+        Request request = getOddGetRequest(endpoint);
         enqueueOddCall(request, callback);
     }
 
     protected void getSearch(String term, int limit, int offset, Callback callback) {
-        Request request = getOddGetRequest(
-                "search?term=" + Uri.encode(term) + "&limit=" + limit + "&offset=" + offset);
+        HttpUrl endpoint = baseUrl.newBuilder()
+                .addPathSegment(Oddworks.ENDPOINT_SEARCH)
+                .addEncodedQueryParameter(Oddworks.QUERY_PARAM_TERM, term)
+                .addQueryParameter(Oddworks.QUERY_PARAM_LIMIT, String.valueOf(limit))
+                .addQueryParameter(Oddworks.QUERY_PARAM_OFFSET, String.valueOf(offset))
+                .build();
+        Request request = getOddGetRequest(endpoint);
         enqueueOddCall(request, callback);
     }
 
     protected void getCollection(String collectionId, Callback callback) {
-        Request request = getOddGetRequest(withIncluded("collections/" + collectionId));
+        String path = String.format(Oddworks.ENDPOINT_COLLECTION, collectionId);
+        HttpUrl endpoint = withIncluded(baseUrl.newBuilder().addPathSegment(path)).build();
+        Request request = getOddGetRequest(endpoint);
         enqueueOddCall(request, callback);
     }
 
     protected void postMetric(OddMetric event, Callback callback) {
-        String endpoint = mContext.getString(R.string.endpoint_events);
+        HttpUrl endpoint = baseUrl.newBuilder().addPathSegment(Oddworks.ENDPOINT_EVENTS).build();
+
         Request request = getOddRequest(endpoint, RequestMethod.POST, RequestBody.create(JSON, event.toJSONObject().toString()), true);
         enqueueOddCall(request, callback);
     }
 
     protected void getAuthDeviceCode(Callback callback) {
-        String endpoint = mContext.getString(R.string.endpoint_auth_device_code);
+        HttpUrl endpoint = baseUrl.newBuilder().addPathSegment(Oddworks.ENDPOINT_AUTH_DEVICE_CODE).build();
+
         Request request = getOddRequest(endpoint, RequestMethod.POST, RequestBody.create(JSON, ""), true);
         enqueueOddCall(request, callback);
     }
 
     protected void getAuthToken(Callback callback, String deviceCode) {
-        String endpoint = mContext.getString(R.string.endpoint_odd_auth_token);
+        HttpUrl endpoint = baseUrl.newBuilder().addPathSegment(Oddworks.ENDPOINT_AUTH_DEVICE_TOKEN).build();
+
         RequestBody body = RequestBody.create(JSON,
                 "{ \"type\":\"authorized_user\", \"attributes\": {\"device_code\":\"" + deviceCode + "\"}}");
         Request request = getOddRequest(endpoint, RequestMethod.POST, body, true);
@@ -165,11 +224,7 @@ public class RequestHandler {
      * adds query parameter includ=true to endpoint string.
      * @param endpoint endpoint string can optionally contain query params
      */
-    private String withIncluded(String endpoint) {
-        if(endpoint.contains("?")) {
-            return endpoint + "&include=true";
-        } else {
-            return endpoint + "?include=true";
-        }
+    private HttpUrl.Builder withIncluded(HttpUrl.Builder endpoint) {
+        return endpoint.addQueryParameter(Oddworks.QUERY_PARAM_INCLUDE, "true");
     }
 }
