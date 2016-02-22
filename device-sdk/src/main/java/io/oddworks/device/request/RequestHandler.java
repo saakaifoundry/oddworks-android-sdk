@@ -68,52 +68,6 @@ public class RequestHandler {
         this.baseUrl = new HttpUrl.Builder().scheme(Oddworks.API_PROTOCOL).host(Oddworks.API_HOST).addPathSegment(Oddworks.API_VERSION).build();
     }
 
-    /**
-     * @param host sets Oddworks API host
-     */
-    public void setHost(@NonNull String host) {
-        this.baseUrl = new HttpUrl.Builder().scheme(baseUrl.scheme()).host(host).addPathSegment(baseUrl.encodedPath()).build();
-    }
-
-    /**
-     * @param versionName sets application version used in x-odd-user-agent header (build[version])
-     */
-    public void setVersionName(@NonNull String versionName) {
-        this.versionName = versionName;
-    }
-
-    /**
-     * @param accessToken sets Oddworks API accessToken for x-access-token-header
-     */
-    public void setAccessToken(@NonNull String accessToken) {
-        this.accessToken = accessToken;
-    }
-
-    /**
-     * @param apiVersion sets Oddworks API version number
-     */
-    public void setApiVersion(@NonNull String apiVersion) {
-        this.baseUrl = new HttpUrl.Builder().scheme(baseUrl.scheme()).host(baseUrl.host()).addPathSegment(apiVersion).build();
-    }
-
-    protected void getConfig(final Callback callback) {
-        HttpUrl endpoint = withIncluded(baseUrl.newBuilder().addPathSegment(Oddworks.ENDPOINT_CONFIG)).build();
-
-        Request request = getOddRequest(
-                endpoint,
-                RequestMethod.GET,
-                null,
-                true);
-        enqueueOddCall(request, callback);
-    }
-
-    protected void getView(final String id, final Callback callback) {
-        String viewPath = String.format(Oddworks.ENDPOINT_VIEW, id);
-        HttpUrl endpoint = withIncluded(baseUrl.newBuilder().addPathSegment(viewPath)).build();
-        Request request = getOddGetRequest(endpoint);
-        enqueueOddCall(request, callback);
-    }
-
     /** get an authorized (if AuthToken is set) get request for the endpoint */
     private Request getOddGetRequest(HttpUrl endpoint) {
         return getOddRequest(endpoint, RequestMethod.GET, null, false);
@@ -122,7 +76,7 @@ public class RequestHandler {
     private Request getOddRequest(HttpUrl endpoint, RequestMethod method, RequestBody body, boolean forceNoAuth) {
         Request.Builder builder = new Request.Builder();
 
-        builder.url(endpoint)
+        builder.url(endpoint.toString())
                 .addHeader("x-access-token", accessToken)
                 .addHeader("x-odd-user-agent", getOddUserAgent())
                 .addHeader("accept", acceptHeader)
@@ -154,17 +108,39 @@ public class RequestHandler {
         call.enqueue(callback);
     }
 
+    protected void getConfig(final Callback callback) {
+        HttpUrl.Builder builder = withIncluded(baseUrl.newBuilder());
+        HttpUrl endpoint = withPath(builder, Oddworks.ENDPOINT_CONFIG).build();
+
+        Request request = getOddRequest(
+                endpoint,
+                RequestMethod.GET,
+                null,
+                true);
+        enqueueOddCall(request, callback);
+    }
+
+    protected void getView(final String id, final Callback callback) {
+        String viewPath = String.format(Oddworks.ENDPOINT_VIEW, id);
+
+        HttpUrl.Builder builder = withIncluded(baseUrl.newBuilder());
+        HttpUrl endpoint = withPath(builder, viewPath).build();
+
+        Request request = getOddGetRequest(endpoint);
+        enqueueOddCall(request, callback);
+    }
+
     protected void getCollectionEntities(String collectionId, Callback callback) {
         String path = String.format(Oddworks.ENDPOINT_COLLECTION_ENTITIES, collectionId);
-        HttpUrl endpoint = baseUrl.newBuilder().addPathSegment(path).build();
+
+        HttpUrl endpoint = withPath(baseUrl.newBuilder(), path).build();
         Request request = getOddGetRequest(endpoint);
         enqueueOddCall(request, callback);
     }
 
     protected void getSearch(String term, int limit, int offset, Callback callback) {
-        HttpUrl endpoint = baseUrl.newBuilder()
-                .addPathSegment(Oddworks.ENDPOINT_SEARCH)
-                .addEncodedQueryParameter(Oddworks.QUERY_PARAM_TERM, term)
+        HttpUrl endpoint = withPath(baseUrl.newBuilder(), Oddworks.ENDPOINT_SEARCH)
+                .addQueryParameter(Oddworks.QUERY_PARAM_TERM, term)
                 .addQueryParameter(Oddworks.QUERY_PARAM_LIMIT, String.valueOf(limit))
                 .addQueryParameter(Oddworks.QUERY_PARAM_OFFSET, String.valueOf(offset))
                 .build();
@@ -174,33 +150,62 @@ public class RequestHandler {
 
     protected void getCollection(String collectionId, Callback callback) {
         String path = String.format(Oddworks.ENDPOINT_COLLECTION, collectionId);
-        HttpUrl endpoint = withIncluded(baseUrl.newBuilder().addPathSegment(path)).build();
+        HttpUrl.Builder builder = withIncluded(baseUrl.newBuilder());
+        HttpUrl endpoint = withPath(builder, path).build();
         Request request = getOddGetRequest(endpoint);
         enqueueOddCall(request, callback);
     }
 
     protected void postMetric(OddMetric event, Callback callback) {
-        HttpUrl endpoint = baseUrl.newBuilder().addPathSegment(Oddworks.ENDPOINT_EVENTS).build();
+        HttpUrl endpoint = withPath(baseUrl.newBuilder(), Oddworks.ENDPOINT_EVENTS).build();
 
         Request request = getOddRequest(endpoint, RequestMethod.POST, RequestBody.create(JSON, event.toJSONObject().toString()), true);
         enqueueOddCall(request, callback);
     }
 
     protected void getAuthDeviceCode(Callback callback) {
-        HttpUrl endpoint = baseUrl.newBuilder().addPathSegment(Oddworks.ENDPOINT_AUTH_DEVICE_CODE).build();
+        HttpUrl endpoint = withPath(baseUrl.newBuilder(), Oddworks.ENDPOINT_AUTH_DEVICE_CODE).build();
 
         Request request = getOddRequest(endpoint, RequestMethod.POST, RequestBody.create(JSON, ""), true);
         enqueueOddCall(request, callback);
     }
 
     protected void getAuthToken(Callback callback, String deviceCode) {
-        HttpUrl endpoint = baseUrl.newBuilder().addPathSegment(Oddworks.ENDPOINT_AUTH_DEVICE_TOKEN).build();
+        HttpUrl endpoint = withPath(baseUrl.newBuilder(), Oddworks.ENDPOINT_AUTH_DEVICE_TOKEN).build();
 
         RequestBody body = RequestBody.create(JSON,
                 "{ \"type\":\"authorized_user\", \"attributes\": {\"device_code\":\"" + deviceCode + "\"}}");
         Request request = getOddRequest(endpoint, RequestMethod.POST, body, true);
         Log.d("getAuthToken", "request body: " + request.body().toString());
         enqueueOddCall(request, callback);
+    }
+
+    /**
+     * @param host sets Oddworks API host
+     */
+    public void setHost(@NonNull String host) {
+        this.baseUrl = baseUrl.newBuilder().host(host).build();
+    }
+
+    /**
+     * @param versionName sets application version used in x-odd-user-agent header (build[version])
+     */
+    public void setVersionName(@NonNull String versionName) {
+        this.versionName = versionName;
+    }
+
+    /**
+     * @param accessToken sets Oddworks API accessToken for x-access-token-header
+     */
+    public void setAccessToken(@NonNull String accessToken) {
+        this.accessToken = accessToken;
+    }
+
+    /**
+     * @param apiVersion sets Oddworks API version number
+     */
+    public void setApiVersion(@NonNull String apiVersion) {
+        this.baseUrl = new HttpUrl.Builder().scheme(baseUrl.scheme()).host(baseUrl.host()).addPathSegment(apiVersion).build();
     }
 
     /** Set an AuthToken to be used in api calls */
@@ -226,5 +231,13 @@ public class RequestHandler {
      */
     private HttpUrl.Builder withIncluded(HttpUrl.Builder endpoint) {
         return endpoint.addQueryParameter(Oddworks.QUERY_PARAM_INCLUDE, "true");
+    }
+
+    private HttpUrl.Builder withPath(HttpUrl.Builder endpoint, String path) {
+        String[] parts = path.split("/");
+        for (String part : parts) {
+            endpoint.addPathSegment(part);
+        }
+        return endpoint;
     }
 }
