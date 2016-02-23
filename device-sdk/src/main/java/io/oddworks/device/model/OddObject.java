@@ -1,5 +1,10 @@
 package io.oddworks.device.model;
 
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -19,6 +24,7 @@ abstract public class OddObject {
     protected String type;
     protected ArrayList<Relationship> relationships;
     protected ArrayList<OddObject> included;
+    protected JSONObject meta;
 
     public OddObject(final Identifier identifier) {
         id = identifier.getId();
@@ -30,15 +36,15 @@ abstract public class OddObject {
         this.type = type;
     }
 
-    public String getId() {
+    @Nullable public String getId() {
         return id;
     }
 
-    public String getType() {
+    @Nullable public String getType() {
         return type;
     }
 
-    public Identifier getIdentifier() {
+    @NonNull public Identifier getIdentifier() {
         if (identifier == null) {
             identifier = new Identifier(getId(), getType());
         }
@@ -57,14 +63,14 @@ abstract public class OddObject {
         getRelationships().add(relationship);
     }
 
-    public List<Relationship> getRelationships() {
+    @NonNull public List<Relationship> getRelationships() {
         if (relationships == null) {
             relationships = new ArrayList<>();
         }
         return relationships;
     }
 
-    public Relationship getRelationship(String name) {
+    @Nullable Relationship getRelationship(String name) {
         for(Relationship rel : getRelationships()) {
             if(rel.getName().equals(name)) {
                 return rel;
@@ -101,14 +107,22 @@ abstract public class OddObject {
         getIncluded().add(oddObject);
     }
 
-    public List<OddObject> getIncluded() {
+    @NonNull public List<OddObject> getIncluded() {
         if (included == null) {
             included = new ArrayList<>();
         }
         return included;
     }
 
-    public List<OddObject> getIncludedByType(String type) {
+    public void setMeta(@Nullable JSONObject jsonObject) {
+        this.meta = jsonObject;
+    }
+
+    @Nullable public JSONObject getMeta() {
+        return meta;
+    }
+
+    @NonNull public List<OddObject> getIncludedByType(String type) {
         ArrayList<OddObject> includedOfType = new ArrayList<>();
         for(OddObject oddObject : getIncluded()) {
             if (oddObject.getType().equals(type)) {
@@ -118,7 +132,7 @@ abstract public class OddObject {
         return includedOfType;
     }
 
-    public List<OddObject> getIncludedByType(List<String> types) {
+    @NonNull public List<OddObject> getIncludedByType(List<String> types) {
         ArrayList<OddObject> includedOfType = new ArrayList<>();
         for(OddObject oddObject : getIncluded()) {
             if (types.indexOf(oddObject.getType()) > -1) {
@@ -128,7 +142,7 @@ abstract public class OddObject {
         return includedOfType;
     }
 
-    public List<OddObject> getIncludedByRelationship(String name) {
+    @NonNull public List<OddObject> getIncludedByRelationship(String name) {
         ArrayList<OddObject> includedOfRelationship = new ArrayList<>();
         Relationship relationship = getRelationship(name);
         if (relationship == null) {
@@ -145,12 +159,12 @@ abstract public class OddObject {
     }
 
     /** @return  all identifiers for relationship, or null if that relationship doesn't exist */
-    public List<Identifier> getIdentifiersByRelationship(String name) {
+    @Nullable public List<Identifier> getIdentifiersByRelationship(String name) {
         Relationship rel = getRelationship(name);
         return rel == null ? null : rel.getIdentifiers();
     }
 
-    public OddObject findIncludedByIdentifier(Identifier identifier) {
+    @Nullable public OddObject findIncludedByIdentifier(Identifier identifier) {
         for(OddObject item : getIncluded()) {
             if (identifier.getId().equals(item.getId()) && identifier.getType().equals(item.getType())) {
                 return item;

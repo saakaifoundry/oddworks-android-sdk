@@ -5,12 +5,17 @@ import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
 import android.test.AndroidTestCase;
 
+import org.hamcrest.Matcher;
 import org.json.JSONObject;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 
 import io.oddworks.device.exception.UnhandledPlayerTypeException;
@@ -35,9 +40,10 @@ import io.oddworks.device.model.players.OoyalaPlayer;
 import io.oddworks.device.model.players.Player;
 import io.oddworks.device.testutils.AssetUtils;
 
+import static org.hamcrest.CoreMatchers.hasItem;
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.isA;
 import static org.hamcrest.CoreMatchers.notNullValue;
-import static org.hamcrest.CoreMatchers.nullValue;
 import static org.junit.Assert.assertThat;
 
 @RunWith(AndroidJUnit4.class)
@@ -249,6 +255,14 @@ public class OddParserTest extends AndroidTestCase {
 
         assertThat(vid1.getTitle(), is("Let's Get It Started.mp4"));
         assertNull(vid1.getSubtitle());
+
+        JSONObject meta = vid1.getMeta();
+        Iterator<String> metaKeys = meta.keys();
+
+        assertThat(vid1.getMeta(), isA(JSONObject.class));
+
+        assertThat(metaKeys.next(), is("sourceId"));
+        assertThat(metaKeys.next(), is("source"));
         assertFalse(vid1.getMediaAd().isEnabled());
 
         assertThat(vid2.getTitle(), is("Pump It.mp4"));
