@@ -5,20 +5,20 @@ import java.util.List;
 
 public class Relationship {
     public static final String TAG = Relationship.class.getSimpleName();
-    private String mName;
-    private ArrayList<Identifier> mIdentifiers;
+    private String name;
+    private ArrayList<Identifier> identifiers;
 
     public Relationship(final String name) {
-        mName = name;
+        this.name = name;
     }
 
     public Relationship(final String name, final ArrayList<Identifier> identifiers) {
-        mName = name;
-        mIdentifiers = identifiers;
+        this.name = name;
+        this.identifiers = identifiers;
     }
 
     public String getName() {
-        return mName;
+        return name;
     }
 
     public void addIdentifier(Identifier identifier) {
@@ -26,9 +26,9 @@ public class Relationship {
     }
 
     public List<Identifier> getIdentifiers() {
-        if (mIdentifiers == null) {
-            mIdentifiers = new ArrayList<>();
+        if (identifiers == null) {
+            identifiers = new ArrayList<>();
         }
-        return mIdentifiers;
+        return identifiers;
     }
 }

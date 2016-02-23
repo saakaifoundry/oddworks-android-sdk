@@ -14,35 +14,35 @@ abstract public class OddObject {
     public static final String TYPE_PROMOTION = "promotion";
     public static final String TYPE_VIDEO = "video";
 
-    protected Identifier mIdentifier;
-    protected String mId;
-    protected String mType;
-    protected ArrayList<Relationship> mRelationships;
-    protected ArrayList<OddObject> mIncluded;
+    protected Identifier identifier;
+    protected String id;
+    protected String type;
+    protected ArrayList<Relationship> relationships;
+    protected ArrayList<OddObject> included;
 
     public OddObject(final Identifier identifier) {
-        mId = identifier.getId();
-        mType = identifier.getType();
+        id = identifier.getId();
+        type = identifier.getType();
     }
 
     public OddObject(final String id, final String type) {
-        mId = id;
-        mType = type;
+        this.id = id;
+        this.type = type;
     }
 
     public String getId() {
-        return mId;
+        return id;
     }
 
     public String getType() {
-        return mType;
+        return type;
     }
 
     public Identifier getIdentifier() {
-        if (mIdentifier == null) {
-            mIdentifier = new Identifier(getId(), getType());
+        if (identifier == null) {
+            identifier = new Identifier(getId(), getType());
         }
-        return mIdentifier;
+        return identifier;
     }
 
     public abstract void setAttributes(Map<String, Object> attributes);
@@ -58,10 +58,10 @@ abstract public class OddObject {
     }
 
     public List<Relationship> getRelationships() {
-        if (mRelationships == null) {
-            mRelationships = new ArrayList<>();
+        if (relationships == null) {
+            relationships = new ArrayList<>();
         }
-        return mRelationships;
+        return relationships;
     }
 
     public Relationship getRelationship(String name) {
@@ -91,7 +91,7 @@ abstract public class OddObject {
     /** @return the count of OddObject directly related to this OddObject */
     public int getRelatedObjectCount() {
         int count = 0;
-        for (Relationship relationship : mRelationships) {
+        for (Relationship relationship : relationships) {
             count += relationship.getIdentifiers().size();
         }
         return count;
@@ -102,10 +102,10 @@ abstract public class OddObject {
     }
 
     public List<OddObject> getIncluded() {
-        if (mIncluded == null) {
-            mIncluded = new ArrayList<>();
+        if (included == null) {
+            included = new ArrayList<>();
         }
-        return mIncluded;
+        return included;
     }
 
     public List<OddObject> getIncludedByType(String type) {
@@ -196,11 +196,11 @@ abstract public class OddObject {
     @Override
     public String toString() {
         return "OddObject{" +
-                "mIdentifier=" + mIdentifier +
-                ", mId='" + mId + '\'' +
-                ", mType='" + mType + '\'' +
-                ", mRelationships=" + mRelationships +
-                ", mIncluded=" + mIncluded +
+                "identifier=" + identifier +
+                ", id='" + id + '\'' +
+                ", type='" + type + '\'' +
+                ", relationships=" + relationships +
+                ", included=" + included +
                 '}';
     }
 }

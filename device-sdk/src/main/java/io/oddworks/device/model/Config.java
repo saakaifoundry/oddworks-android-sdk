@@ -4,29 +4,29 @@ import java.util.LinkedHashMap;
 
 public class Config {
     public static final String TAG = Config.class.getSimpleName();
-    private final boolean mAuthEnabled;
-    private final MetricsConfig mMetricsConfig;
+    private final boolean authEnabled;
+    private final MetricsConfig metricsConfig;
 
-    private LinkedHashMap<String, String> mViews;
+    private LinkedHashMap<String, String> views;
 
     public Config(LinkedHashMap<String, String> views,
                   boolean authEnabled,
                   MetricsConfig metricsConfig) {
-        this.mViews = views;
-        this.mAuthEnabled = authEnabled;
-        this.mMetricsConfig = metricsConfig;
+        this.views = views;
+        this.authEnabled = authEnabled;
+        this.metricsConfig = metricsConfig;
     }
 
 
     public boolean isAuthEnabled() {
-        return mAuthEnabled;
+        return authEnabled;
     }
 
     public MetricsConfig getMetricsConfig() {
-        return mMetricsConfig;
+        return metricsConfig;
     }
 
     public LinkedHashMap<String, String> getViews() {
-        return mViews;
+        return views;
     }
 }

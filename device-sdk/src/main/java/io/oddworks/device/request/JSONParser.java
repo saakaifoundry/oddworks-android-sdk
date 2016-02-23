@@ -22,7 +22,14 @@ public class JSONParser {
      * @return      defaults to null
      **/
     public String getString(final JSONObject json, String key) {
-        return json.optString(key);
+        try {
+            if (json.isNull(key)) {
+                return null;
+            }
+            return json.getString(key);
+        } catch (JSONException e) {
+            return null;
+        }
     }
 
     /**

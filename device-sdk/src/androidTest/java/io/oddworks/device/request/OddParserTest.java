@@ -246,6 +246,7 @@ public class OddParserTest extends AndroidTestCase {
         Media vid4 = (Media) videos.get(3);
 
         assertThat(vid1.getTitle(), is("Let's Get It Started.mp4"));
+        assertNull(vid1.getSubtitle());
         assertFalse(vid1.getMediaAd().isEnabled());
 
         assertThat(vid2.getTitle(), is("Pump It.mp4"));

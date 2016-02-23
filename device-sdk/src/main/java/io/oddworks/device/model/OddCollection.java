@@ -5,14 +5,18 @@ import org.joda.time.DateTime;
 import java.util.HashMap;
 import java.util.Map;
 
+import io.oddworks.device.Util;
+
+import static io.oddworks.device.Util.getString;
+
 public class OddCollection extends OddObject {
     private static final String TAG = OddCollection.class.getSimpleName();
     public static final String ENTITIES = "entities";
 
-    private String mTitle;
-    private String mDescription;
-    private MediaImage mMediaImage;
-    private DateTime mReleaseDate;
+    private String title;
+    private String description;
+    private MediaImage mediaImage;
+    private DateTime releaseDate;
 
     public OddCollection(final Identifier identifier) {
         super(identifier);
@@ -23,27 +27,27 @@ public class OddCollection extends OddObject {
     }
 
     public String getTitle() {
-        return mTitle;
+        return title;
     }
 
     public String getDescription() {
-        return mDescription;
+        return description;
     }
 
     public MediaImage getMediaImage() {
-        return mMediaImage;
+        return mediaImage;
     }
 
     public DateTime getReleaseDate() {
-        return mReleaseDate;
+        return releaseDate;
     }
 
     @Override
     public void setAttributes(Map<String, Object> attributes) {
-        mTitle = (String) attributes.get("title");
-        mDescription = (String) attributes.get("description");
-        mMediaImage = (MediaImage) attributes.get("mediaImage");
-        mReleaseDate = (DateTime) attributes.get("releaseDate");
+        title = getString(attributes, "title", null);
+        description = getString(attributes, "description", null);
+        mediaImage = (MediaImage) attributes.get("mediaImage");
+        releaseDate = Util.getDateTime(attributes, "releaseDate", null);
     }
 
     @Override
@@ -63,16 +67,16 @@ public class OddCollection extends OddObject {
 
     @Override
     public Presentable toPresentable() {
-        return new Presentable(mTitle, mDescription, mMediaImage);
+        return new Presentable(title, description, mediaImage);
     }
 
     @Override
     public String toString() {
         return "OddCollection{" +
-                "mTitle='" + mTitle + '\'' +
-                ", mDescription='" + mDescription + '\'' +
-                ", mMediaImage=" + mMediaImage +
-                ", mReleaseDate=" + mReleaseDate +
+                "title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", mediaImage=" + mediaImage +
+                ", releaseDate=" + releaseDate +
                 '}';
     }
 }

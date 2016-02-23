@@ -3,12 +3,14 @@ package io.oddworks.device.model;
 import java.util.HashMap;
 import java.util.Map;
 
+import io.oddworks.device.Util;
+
 public class Promotion extends OddObject {
     public static final String TAG = Promotion.class.getSimpleName();
 
-    private String mTitle;
-    private String mDescription;
-    private MediaImage mMediaImage;
+    private String title;
+    private String description;
+    private MediaImage mediaImage;
 
     public Promotion(Identifier identifier) {
         super(identifier);
@@ -19,22 +21,22 @@ public class Promotion extends OddObject {
     }
 
     public String getTitle() {
-        return mTitle;
+        return title;
     }
 
     public String getDescription() {
-        return mDescription;
+        return description;
     }
 
     public MediaImage getMediaImage() {
-        return mMediaImage;
+        return mediaImage;
     }
 
     @Override
     public void setAttributes(Map<String, Object> attributes) {
-        mTitle = (String) attributes.get("title");
-        mDescription = (String) attributes.get("description");
-        mMediaImage = (MediaImage) attributes.get("mediaImage");
+        title = Util.getString(attributes, "title", null);
+        description = Util.getString(attributes, "description", null);
+        mediaImage = (MediaImage) attributes.get("mediaImage");
     }
 
     @Override
@@ -54,7 +56,7 @@ public class Promotion extends OddObject {
 
     @Override
     public Presentable toPresentable() {
-        return new Presentable(mTitle, mDescription, mMediaImage);
+        return new Presentable(title, description, mediaImage);
     }
 
     @Override

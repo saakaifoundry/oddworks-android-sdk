@@ -2,72 +2,75 @@ package io.oddworks.device.model;
 
 import java.util.Map;
 
+import static io.oddworks.device.Util.getInteger;
+import static io.oddworks.device.Util.getString;
+
 public class MediaAd {
     public static final String TAG = MediaAd.class.getSimpleName();
     private static final String FORMAT_VMAP = "vmap";
     private static final String FORMAT_FREEWHEEL = "freewheel";
     private static final String FORMAT_DFP = "dfp";
 
-    private boolean mEnabled;
-    private String mProvider;
-    private String mFormat;
-    private String mUrl;
-    private int mNetworkId;
-    private String mProfileName;
-    private String mSiteSectionId;
-    private String mVHost;
-    private String mAssetId;
+    private boolean enabled;
+    private String provider;
+    private String format;
+    private String url;
+    private int networkId;
+    private String profileName;
+    private String siteSectionId;
+    private String vHost;
+    private String assetId;
 
     public MediaAd(){};
 
     public MediaAd(final Map<String, Object> properties) {
-        mEnabled = properties.containsKey("enabled") && (boolean) properties.get("enabled");
-        mProvider = (String) properties.get("provider");
-        mFormat = (String) properties.get("format");
-        mUrl = (String) properties.get("url");
+        enabled = properties.containsKey("enabled") && (boolean) properties.get("enabled");
+        provider = getString(properties, "provider", null);
+        format = getString(properties, "format", null);
+        url = getString(properties, "url", null);
         if (properties.containsKey("networkId")) {
-            mNetworkId = (int) properties.get("networkId");
+            networkId = getInteger(properties, "networkId", null);
         }
-        mProfileName = (String) properties.get("profileName");
-        mSiteSectionId = (String) properties.get("siteSectionId");
-        mVHost = (String) properties.get("vHost");
-        mAssetId = (String) properties.get("assetId");
+        profileName = getString(properties, "profileName", null);
+        siteSectionId = getString(properties, "siteSectionId", null);
+        vHost = getString(properties, "vHost", null);
+        assetId = getString(properties, "assetId", null);
     }
 
     public String getProvider() {
-        return mProvider;
+        return provider;
     }
 
     public String getFormat() {
-        return mFormat;
+        return format;
     }
 
     public String getUrl() {
-        return mUrl;
+        return url;
     }
 
     public int getNetworkId() {
-        return mNetworkId;
+        return networkId;
     }
 
     public String getProfileName() {
-        return mProfileName;
+        return profileName;
     }
 
     public String getSiteSectionId() {
-        return mSiteSectionId;
+        return siteSectionId;
     }
 
     public String getVHost() {
-        return mVHost;
+        return vHost;
     }
 
     public String getAssetId() {
-        return mAssetId;
+        return assetId;
     }
 
     public boolean isEnabled() {
-        return mEnabled;
+        return enabled;
     }
 
     public boolean isVMAP() {
@@ -97,14 +100,14 @@ public class MediaAd {
     @Override
     public String toString() {
         return "MediaAd{" +
-                "mProvider='" + mProvider + '\'' +
-                ", mFormat='" + mFormat + '\'' +
-                ", mUrl='" + mUrl + '\'' +
-                ", mNetworkId=" + mNetworkId +
-                ", mProfileName='" + mProfileName + '\'' +
-                ", mSiteSectionId='" + mSiteSectionId + '\'' +
-                ", mVHost='" + mVHost + '\'' +
-                ", mAssetId='" + mAssetId + '\'' +
+                "provider='" + provider + '\'' +
+                ", format='" + format + '\'' +
+                ", url='" + url + '\'' +
+                ", networkId=" + networkId +
+                ", profileName='" + profileName + '\'' +
+                ", siteSectionId='" + siteSectionId + '\'' +
+                ", vHost='" + vHost + '\'' +
+                ", assetId='" + assetId + '\'' +
                 '}';
     }
 }
