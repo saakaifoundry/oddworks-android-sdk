@@ -22,6 +22,7 @@ public class MediaTest {
     private String id = "123";
     private String typeVideo = "video";
     private String title = "Odd the Great and Powerful";
+    private String subtitle = null;
     private String description = "Odd is good! Odd is great!";
     private DateTime releaseDate = new DateTime("2013-07-04T12:30:59Z");
     private String url = "http://oddnetworks.com";
@@ -34,6 +35,7 @@ public class MediaTest {
     @Before
     public void beforeEach() {
         attributes.put("title", title);
+        attributes.put("subtitle", subtitle);
         attributes.put("description", description);
         attributes.put("releaseDate", releaseDate);
         attributes.put("url", url);
