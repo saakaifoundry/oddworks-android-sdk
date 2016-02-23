@@ -1,30 +1,30 @@
 package io.oddworks.device.model;
 
 public class Sharing {
-    private boolean mEnabled;
-    private String mText;
+    private boolean enabled;
+    private String text;
 
     public Sharing(boolean enabled, String text) {
-        mEnabled = enabled;
-        mText = text;
+        this.enabled = enabled;
+        this.text = text;
     }
 
     public boolean isEnabled() {
-        return mEnabled;
+        return enabled;
     }
 
     public String getText() {
-        if (mText == null) {
+        if (text == null) {
             return "";
         }
-        return mText;
+        return text;
     }
 
     @Override
     public String toString() {
         return "Sharing{" +
-                "mEnabled=" + mEnabled +
-                ", mText=" + mText +
+                "enabled=" + enabled +
+                ", text=" + text +
                 '}';
     }
 }

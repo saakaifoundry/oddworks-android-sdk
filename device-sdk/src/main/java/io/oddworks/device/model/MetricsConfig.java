@@ -18,19 +18,19 @@ public class MetricsConfig {
     public static final String ACTION_VIDEO_ERROR = "videoError";
     public static final String[] ACTION_KEYS = { ACTION_APP_INIT, ACTION_VIEW_LOAD, ACTION_VIDEO_PLAY, ACTION_VIDEO_PLAYING, ACTION_VIDEO_STOP, ACTION_VIDEO_ERROR };
 
-    private final List<Metric> mMetrics;
+    private final List<Metric> metrics;
 
     public MetricsConfig(List<Metric> metrics) {
-        this.mMetrics = metrics;
+        this.metrics = metrics;
     }
 
     public List<Metric> getMetrics() {
-        return mMetrics;
+        return metrics;
     }
 
     public void setupOddMetrics() {
-        if (mMetrics != null && !mMetrics.isEmpty()) {
-            for(Metric metric : mMetrics) {
+        if (metrics != null && !metrics.isEmpty()) {
+            for(Metric metric : metrics) {
                 setupOddMetric(metric);
             }
         }

@@ -4,34 +4,34 @@ package io.oddworks.device.model;
  * Objects that can be directly represented in a gui (except images) should generate this object.
  */
 public class Presentable {
-    private final String mTitle;
-    private final String mDescription;
-    private final MediaImage mMediaImage;
+    private final String title;
+    private final String description;
+    private final MediaImage mediaImage;
 
     protected Presentable(String title, String description, MediaImage mediaImage) {
-        mTitle = title;
-        mDescription = description;
-        mMediaImage = mediaImage;
+        this.title = title;
+        this.description = description;
+        this.mediaImage = mediaImage;
     }
 
     public String getTitle() {
-        return mTitle;
+        return title;
     }
 
     public String getDescription() {
-        return mDescription;
+        return description;
     }
 
     public MediaImage getMediaImage() {
-        return mMediaImage;
+        return mediaImage;
     }
 
     @Override
     public String toString() {
         return "Presentable{" +
-                "mTitle='" + mTitle + '\'' +
-                ", mDescription='" + mDescription + '\'' +
-                ", mMediaImage=" + mMediaImage +
+                "title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", mediaImage=" + mediaImage +
                 '}';
     }
 
@@ -42,17 +42,17 @@ public class Presentable {
 
         Presentable that = (Presentable) o;
 
-        if (mTitle != null ? !mTitle.equals(that.mTitle) : that.mTitle != null) return false;
-        if (mDescription != null ? !mDescription.equals(that.mDescription) : that.mDescription != null) return false;
-        return !(mMediaImage != null ? !mMediaImage.equals(that.mMediaImage) : that.mMediaImage != null);
+        if (title != null ? !title.equals(that.title) : that.title != null) return false;
+        if (description != null ? !description.equals(that.description) : that.description != null) return false;
+        return !(mediaImage != null ? !mediaImage.equals(that.mediaImage) : that.mediaImage != null);
 
     }
 
     @Override
     public int hashCode() {
-        int result = mTitle != null ? mTitle.hashCode() : 0;
-        result = 31 * result + (mDescription != null ? mDescription.hashCode() : 0);
-        result = 31 * result + (mMediaImage != null ? mMediaImage.hashCode() : 0);
+        int result = title != null ? title.hashCode() : 0;
+        result = 31 * result + (description != null ? description.hashCode() : 0);
+        result = 31 * result + (mediaImage != null ? mediaImage.hashCode() : 0);
         return result;
     }
 }

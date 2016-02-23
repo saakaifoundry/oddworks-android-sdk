@@ -7,17 +7,22 @@ import java.util.Map;
 
 import io.oddworks.device.model.players.Player;
 
+import static io.oddworks.device.Util.getDateTime;
+import static io.oddworks.device.Util.getInteger;
+import static io.oddworks.device.Util.getString;
+
 public class Media extends OddObject {
     public static final String TAG = Media.class.getSimpleName();
-    private String mTitle;
-    private String mDescription;
-    private MediaImage mMediaImage;
-    private DateTime mReleaseDate;
-    private MediaAd mMediaAd;
-    private Integer mDuration;
-    private String mUrl;
-    private Player mPlayer;
-    private Sharing mSharing;
+    private String title;
+    private String subtitle;
+    private String description;
+    private MediaImage mediaImage;
+    private DateTime releaseDate;
+    private MediaAd mediaAd;
+    private Integer duration;
+    private String url;
+    private Player player;
+    private Sharing sharing;
 
     public Media(Identifier identifier) {
         super(identifier);
@@ -28,35 +33,39 @@ public class Media extends OddObject {
     }
 
     public String getTitle() {
-        return mTitle;
+        return title;
+    }
+
+    public String getSubtitle() {
+        return subtitle;
     }
 
     public String getDescription() {
-        return mDescription;
+        return description;
     }
 
     public MediaImage getMediaImage() {
-        return mMediaImage;
+        return mediaImage;
     }
 
     public DateTime getReleaseDate() {
-        return mReleaseDate;
+        return releaseDate;
     }
 
     public String getUrl() {
-        return mUrl;
+        return url;
     }
 
     public int getDuration() {
-        if (mDuration == null) {
-            mDuration = 0;
+        if (duration == null) {
+            duration = 0;
         }
 
-        return mDuration;
+        return duration;
     }
 
     public MediaAd getMediaAd() {
-        return mMediaAd;
+        return mediaAd;
     }
 
     public Boolean isLive() {
@@ -65,19 +74,21 @@ public class Media extends OddObject {
 
     @Override
     public void setAttributes(Map<String, Object> attributes) {
-        mTitle = (String) attributes.get("title");
-        mDescription = (String) attributes.get("description");
-        mMediaImage = (MediaImage) attributes.get("mediaImage");
-        mReleaseDate = (DateTime) attributes.get("releaseDate");
-        mMediaAd = (MediaAd) attributes.get("mediaAd");
-        mDuration = (int) attributes.get("duration");
-        mUrl = (String) attributes.get("url");
+        this.title = getString(attributes, "title", null);
+        this.subtitle = getString(attributes, "subtitle", null);
+        this.description = getString(attributes, "description", null);
+        this.mediaImage = (MediaImage) attributes.get("mediaImage");
+        this.mediaAd = (MediaAd) attributes.get("mediaAd");
+        this.releaseDate = getDateTime(attributes, "releaseDate", null);
+        this.duration = getInteger(attributes, "duration", null);
+        this.url = getString(attributes, "url", null);
     }
 
     @Override
     public Map<String, Object> getAttributes() {
         HashMap<String, Object> attributes = new HashMap<>();
         attributes.put("title", getTitle());
+        attributes.put("subtitle", getSubtitle());
         attributes.put("description", getDescription());
         attributes.put("mediaImage", getMediaImage());
         attributes.put("mediaAd", getMediaAd());
@@ -93,38 +104,39 @@ public class Media extends OddObject {
     }
 
     public Player getPlayer() {
-        return mPlayer;
+        return player;
     }
 
     public void setPlayer(Player player) {
-        mPlayer = player;
+        this.player = player;
     }
 
     public Sharing getSharing() {
-        return mSharing;
+        return sharing;
     }
 
     public void setSharing(Sharing sharing) {
-        mSharing = sharing;
+        this.sharing = sharing;
     }
 
     @Override
     public Presentable toPresentable() {
-        return new Presentable(mTitle, mDescription, mMediaImage);
+        return new Presentable(title, description, mediaImage);
     }
 
     @Override
     public String toString() {
         return "Media{" +
-                "mTitle='" + mTitle + '\'' +
-                ", mDescription='" + mDescription + '\'' +
-                ", mMediaImage=" + mMediaImage +
-                ", mReleaseDate=" + mReleaseDate +
-                ", mMediaAd=" + mMediaAd +
-                ", mDuration=" + mDuration +
-                ", mUrl='" + mUrl + '\'' +
-                ", mPlayer=" + mPlayer +
-                ", mSharing=" + mSharing +
+                "title='" + title + '\'' +
+                ", subtitle='" + subtitle + '\'' +
+                ", description='" + description + '\'' +
+                ", mediaImage=" + mediaImage +
+                ", releaseDate=" + releaseDate +
+                ", mediaAd=" + mediaAd +
+                ", duration=" + duration +
+                ", url='" + url + '\'' +
+                ", player=" + player +
+                ", sharing=" + sharing +
                 '}';
     }
 }

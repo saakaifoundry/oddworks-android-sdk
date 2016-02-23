@@ -15,9 +15,9 @@ public abstract class OddMetric {
     public static final String ACTION_VIDEO_STOP = "video:stop";
     public static final String ACTION_VIDEO_ERROR = "video:error";
 
-    protected String mOrganizationId;
-    protected String mContentType;
-    protected String mContentId;
+    protected String organizationId;
+    protected String contentType;
+    protected String contentId;
 
 
     public abstract String getAction();
@@ -28,29 +28,29 @@ public abstract class OddMetric {
     }
 
     public String getOrganizationId() {
-        return mOrganizationId;
+        return organizationId;
     }
 
     public String getContentType() {
-        return mContentType;
+        return contentType;
     }
 
     public String getContentId() {
-        return mContentId;
+        return contentId;
     }
 
     public OddMetric setOrganizationId(String organizationId) {
-        mOrganizationId = organizationId;
+        this.organizationId = organizationId;
         return this;
     }
 
     public OddMetric setContentType(String contentType) {
-        mContentType = contentType;
+        this.contentType = contentType;
         return this;
     }
 
     public OddMetric setContentId(String contentId) {
-        mContentId = contentId;
+        this.contentId = contentId;
         return this;
     }
 
@@ -77,11 +77,11 @@ public abstract class OddMetric {
     @Override
     public String toString() {
         return TAG + "(" +
-                "mType=" + getType() + ", " +
-                "mOrganizationId=" + getOrganizationId() + ", " +
-                "mAction=" + getAction() + ", " +
-                "mContentType=" + getContentType() + ", " +
-                "mContentId=" + getContentId() +
+                "type=" + getType() + ", " +
+                "organizationId=" + getOrganizationId() + ", " +
+                "action=" + getAction() + ", " +
+                "contentType=" + getContentType() + ", " +
+                "contentId=" + getContentId() +
                 ")";
 
     }

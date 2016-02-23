@@ -3,12 +3,14 @@ package io.oddworks.device.model;
 import java.util.HashMap;
 import java.util.Map;
 
+import io.oddworks.device.Util;
+
 public class External extends OddObject {
     public static final String TAG = External.class.getSimpleName();
-    private String mTitle;
-    private String mDescription;
-    private MediaImage mMediaImage;
-    private String mUrl;
+    private String title;
+    private String description;
+    private MediaImage mediaImage;
+    private String url;
 
     public External(Identifier identifier) {
         super(identifier);
@@ -19,27 +21,27 @@ public class External extends OddObject {
     }
 
     public String getTitle() {
-        return mTitle;
+        return title;
     }
 
     public String getDescription() {
-        return mDescription;
+        return description;
     }
 
     public MediaImage getMediaImage() {
-        return mMediaImage;
+        return mediaImage;
     }
 
     public String getUrl() {
-        return mUrl;
+        return url;
     }
 
     @Override
     public void setAttributes(Map<String, Object> attributes) {
-        mTitle = (String) attributes.get("title");
-        mDescription = (String) attributes.get("description");
-        mMediaImage = (MediaImage) attributes.get("mediaImage");
-        mUrl = (String) attributes.get("url");
+        title = Util.getString(attributes, "title", null);
+        description = Util.getString(attributes, "description", null);
+        mediaImage = (MediaImage) attributes.get("mediaImage");
+        url = Util.getString(attributes, "url", null);
     }
 
     @Override
@@ -59,16 +61,16 @@ public class External extends OddObject {
 
     @Override
     public Presentable toPresentable() {
-        return new Presentable(mTitle, mDescription, mMediaImage);
+        return new Presentable(title, description, mediaImage);
     }
 
     @Override
     public String toString() {
         return "External{" +
-                "mTitle='" + mTitle + '\'' +
-                ", mDescription='" + mDescription + '\'' +
-                ", mMediaImage=" + mMediaImage +
-                ", mUrl='" + mUrl + '\'' +
+                "title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", mediaImage=" + mediaImage +
+                ", url='" + url + '\'' +
                 '}';
     }
 }

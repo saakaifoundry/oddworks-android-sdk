@@ -3,10 +3,12 @@ package io.oddworks.device.model;
 import java.util.HashMap;
 import java.util.Map;
 
+import io.oddworks.device.Util;
+
 public class OddView extends OddObject {
     public static final String TAG = OddView.class.getSimpleName();
 
-    private String mTitle;
+    private String title;
 
     public OddView(Identifier identifier) {
         super(identifier);
@@ -17,12 +19,12 @@ public class OddView extends OddObject {
     }
 
     public String getTitle() {
-        return mTitle;
+        return title;
     }
 
     @Override
     public void setAttributes(Map<String, Object> attributes) {
-        mTitle = (String) attributes.get("title");
+        title = Util.getString(attributes, "title", null);
     }
 
     @Override

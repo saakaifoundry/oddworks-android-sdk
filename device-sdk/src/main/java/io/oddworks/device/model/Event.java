@@ -5,18 +5,20 @@ import org.joda.time.DateTime;
 import java.util.HashMap;
 import java.util.Map;
 
+import io.oddworks.device.Util;
+
 public class Event extends OddObject {
     public static final String TAG = Event.class.getSimpleName();
-    private String mTitle;
-    private String mDescription;
-    private MediaImage mMediaImage;
-    private String mUrl;
-    private String mCategory;
-    private String mSource;
-    private DateTime mCreatedAt;
-    private DateTime mDateTimeStart;
-    private DateTime mDateTimeEnd;
-    private String mLocation;
+    private String title;
+    private String description;
+    private MediaImage mediaImage;
+    private String url;
+    private String category;
+    private String source;
+    private DateTime createdAt;
+    private DateTime dateTimeStart;
+    private DateTime dateTimeEnd;
+    private String location;
 
     public Event(Identifier identifier) {
         super(identifier);
@@ -27,47 +29,47 @@ public class Event extends OddObject {
     }
 
     public String getTitle() {
-        return mTitle;
+        return title;
     }
 
     public String getDescription() {
-        return mDescription;
+        return description;
     }
 
     public MediaImage getMediaImage() {
-        return mMediaImage;
+        return mediaImage;
     }
 
     public String getUrl() {
-        return mUrl;
+        return url;
     }
 
     public String getCategory() {
-        return mCategory;
+        return category;
     }
 
     public String getSource() {
-        return mSource;
+        return source;
     }
 
     public DateTime getCreatedAt() {
-        return mCreatedAt;
+        return createdAt;
     }
 
     public DateTime getDateTimeStart() {
-        return mDateTimeStart;
+        return dateTimeStart;
     }
 
     public DateTime getDateTimeEnd() {
-        return mDateTimeEnd;
+        return dateTimeEnd;
     }
 
     public String getLocation() {
-        return mLocation;
+        return location;
     }
 
     public void setCreatedAt(String date) {
-        mCreatedAt = new DateTime(date);
+        createdAt = new DateTime(date);
     }
 
     public boolean isMultiDayEvent() {
@@ -81,16 +83,16 @@ public class Event extends OddObject {
 
     @Override
     public void setAttributes(Map<String, Object> attributes) {
-        mTitle = (String) attributes.get("title");
-        mDescription = (String) attributes.get("description");
-        mMediaImage = (MediaImage) attributes.get("mediaImage");
-        mUrl = (String) attributes.get("url");
-        mCategory = (String) attributes.get("category");
-        mSource = (String) attributes.get("source");
-        mCreatedAt = (DateTime) attributes.get("createdAt");
-        mDateTimeStart = (DateTime) attributes.get("dateTimeStart");
-        mDateTimeEnd = (DateTime) attributes.get("dateTimeEnd");
-        mLocation = (String) attributes.get("location");
+        title = Util.getString(attributes, "title", null);
+        description = Util.getString(attributes, "description", null);
+        mediaImage = (MediaImage) attributes.get("mediaImage");
+        url = Util.getString(attributes, "url", null);
+        category = Util.getString(attributes, "category", null);
+        source = Util.getString(attributes, "source", null);
+        createdAt = Util.getDateTime(attributes, "createdAt", null);
+        dateTimeStart = Util.getDateTime(attributes, "dateTimeStart", null);
+        dateTimeEnd = Util.getDateTime(attributes, "dateTimeEnd", null);
+        location = Util.getString(attributes, "location", null);
     }
 
     @Override
@@ -116,22 +118,22 @@ public class Event extends OddObject {
 
     @Override
     public Presentable toPresentable() {
-        return new Presentable(mTitle, mDescription, mMediaImage);
+        return new Presentable(title, description, mediaImage);
     }
 
     @Override
     public String toString() {
         return "Event{" +
-                "mTitle='" + mTitle + '\'' +
-                ", mDescription='" + mDescription + '\'' +
-                ", mMediaImage=" + mMediaImage +
-                ", mUrl='" + mUrl + '\'' +
-                ", mCategory='" + mCategory + '\'' +
-                ", mSource='" + mSource + '\'' +
-                ", mCreatedAt=" + mCreatedAt +
-                ", mDateTimeStart=" + mDateTimeStart +
-                ", mDateTimeEnd=" + mDateTimeEnd +
-                ", mLocation='" + mLocation + '\'' +
+                "title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", mediaImage=" + mediaImage +
+                ", url='" + url + '\'' +
+                ", category='" + category + '\'' +
+                ", source='" + source + '\'' +
+                ", createdAt=" + createdAt +
+                ", dateTimeStart=" + dateTimeStart +
+                ", dateTimeEnd=" + dateTimeEnd +
+                ", location='" + location + '\'' +
                 '}';
     }
 }

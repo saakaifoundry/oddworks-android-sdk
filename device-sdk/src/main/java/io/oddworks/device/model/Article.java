@@ -5,16 +5,18 @@ import org.joda.time.DateTime;
 import java.util.HashMap;
 import java.util.Map;
 
+import io.oddworks.device.Util;
+
 
 public class Article extends OddObject {
     public static final String TAG = Article.class.getSimpleName();
-    private String mTitle;
-    private String mDescription;
-    private MediaImage mMediaImage;
-    private String mUrl;
-    private String mCategory;
-    private String mSource;
-    private DateTime mCreatedAt;
+    private String title;
+    private String description;
+    private MediaImage mediaImage;
+    private String url;
+    private String category;
+    private String source;
+    private DateTime createdAt;
 
     public Article(Identifier identifier) {
         super(identifier);
@@ -25,46 +27,46 @@ public class Article extends OddObject {
     }
 
     public String getTitle() {
-        return mTitle;
+        return title;
     }
 
     public String getDescription() {
-        return mDescription;
+        return description;
     }
 
     public MediaImage getMediaImage() {
-        return mMediaImage;
+        return mediaImage;
     }
 
     public String getUrl() {
-        return mUrl;
+        return url;
     }
 
     public String getCategory() {
-        return mCategory;
+        return category;
     }
 
     public String getSource() {
-        return mSource;
+        return source;
     }
 
     public DateTime getCreatedAt() {
-        return mCreatedAt;
+        return createdAt;
     }
 
     public void setCreatedAt(String date) {
-        mCreatedAt = new DateTime(date);
+        createdAt = new DateTime(date);
     }
 
     @Override
     public void setAttributes(Map<String, Object> attributes) {
-        mTitle = (String) attributes.get("title");
-        mDescription = (String) attributes.get("description");
-        mMediaImage = (MediaImage) attributes.get("mediaImage");
-        mUrl = (String) attributes.get("url");
-        mCategory = (String) attributes.get("category");
-        mSource = (String) attributes.get("source");
-        mCreatedAt = (DateTime) attributes.get("createdAt");
+        title = Util.getString(attributes, "title", null);
+        description = Util.getString(attributes, "description", null);
+        mediaImage = (MediaImage) attributes.get("mediaImage");
+        url = Util.getString(attributes, "url", null);
+        category = Util.getString(attributes, "category", null);
+        source = Util.getString(attributes, "source", null);
+        createdAt = Util.getDateTime(attributes, "createdAt", null);
     }
 
     @Override
@@ -87,7 +89,7 @@ public class Article extends OddObject {
 
     @Override
     public Presentable toPresentable() {
-        return new Presentable(mTitle, mDescription, mMediaImage);
+        return new Presentable(title, description, mediaImage);
     }
 
     @Override
