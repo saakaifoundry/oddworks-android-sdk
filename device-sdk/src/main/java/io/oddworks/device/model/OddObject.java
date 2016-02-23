@@ -26,21 +26,21 @@ abstract public class OddObject {
     protected ArrayList<OddObject> included;
     protected JSONObject meta;
 
-    public OddObject(final Identifier identifier) {
+    public OddObject(@NonNull final Identifier identifier) {
         id = identifier.getId();
         type = identifier.getType();
     }
 
-    public OddObject(final String id, final String type) {
+    public OddObject(@NonNull final String id, @NonNull final String type) {
         this.id = id;
         this.type = type;
     }
 
-    @Nullable public String getId() {
+    @NonNull public String getId() {
         return id;
     }
 
-    @Nullable public String getType() {
+    @NonNull public String getType() {
         return type;
     }
 
