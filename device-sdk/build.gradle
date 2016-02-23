@@ -128,7 +128,6 @@ task copyDocs(type: Copy, dependsOn: javadoc) {
 
 artifacts {
     archives javadocJar
-    archives sourcesJar
 }
 
 bintray {
