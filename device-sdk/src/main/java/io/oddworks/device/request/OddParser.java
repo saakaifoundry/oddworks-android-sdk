@@ -44,6 +44,10 @@ public class OddParser {
     private static final OddParser INSTANCE = new OddParser();
     private static final JSONParser JSON = JSONParser.getInstance();
 
+    private static final String DATA = "data";
+    private static final String ATTRIBUTES = "attributes";
+    private static final String META = "meta";
+
     private OddParser(){
         // singleton
     }
@@ -88,7 +92,8 @@ public class OddParser {
     }
 
     public OddCollection parseCollection(final JSONObject data) throws JSONException {
-        JSONObject rawAttributes = JSON.getJSONObject(data, "attributes", true);
+        JSONObject rawAttributes = JSON.getJSONObject(data, ATTRIBUTES, true);
+        JSONObject meta = JSON.getJSONObject(data, META, false);
         JSONObject images = JSON.getJSONObject(rawAttributes, "images", false);
 
         String id = JSON.getString(data, "id");
@@ -102,6 +107,7 @@ public class OddParser {
 
         OddCollection collection = new OddCollection(id, type);
         collection.setAttributes(attributes);
+        collection.setMeta(meta);
 
 
         JSONObject relationships = JSON.getJSONObject(data, "relationships", true);
@@ -148,13 +154,15 @@ public class OddParser {
     }
 
     protected Event parseEvent(final JSONObject dataObject) throws JSONException {
-        JSONObject rawAttributes = JSON.getJSONObject(dataObject, "attributes", true);
+        JSONObject rawAttributes = JSON.getJSONObject(dataObject, ATTRIBUTES, true);
+        JSONObject meta = JSON.getJSONObject(dataObject, META, true);
         JSONObject images = JSON.getJSONObject(rawAttributes, "images", false);
         JSONObject ical = JSON.getJSONObject(rawAttributes, "ical", true);
 
         Event event = new Event(
                 JSON.getString(dataObject, "id"),
                 JSON.getString(dataObject, "type"));
+        event.setMeta(meta);
 
         HashMap<String, Object> attributes = new HashMap<>();
         attributes.put("title", JSON.getString(rawAttributes, "title"));
@@ -175,12 +183,14 @@ public class OddParser {
     }
 
     protected External parseExternal(final JSONObject dataObject) throws JSONException {
-        JSONObject rawAttributes = JSON.getJSONObject(dataObject, "attributes", true);
+        JSONObject rawAttributes = JSON.getJSONObject(dataObject, ATTRIBUTES, true);
+        JSONObject meta = JSON.getJSONObject(dataObject, META, true);
         JSONObject images = JSON.getJSONObject(rawAttributes, "images", false);
 
         External external = new External(
                 JSON.getString(dataObject, "id"),
                 JSON.getString(dataObject, "type"));
+        external.setMeta(meta);
 
         HashMap<String, Object> attributes = new HashMap<>();
         attributes.put("title", JSON.getString(rawAttributes, "title"));
@@ -194,12 +204,14 @@ public class OddParser {
     }
 
     protected Article parseArticle(final JSONObject dataObject) throws JSONException {
-        JSONObject rawAttributes = JSON.getJSONObject(dataObject, "attributes", true);
+        JSONObject rawAttributes = JSON.getJSONObject(dataObject, ATTRIBUTES, true);
+        JSONObject meta = JSON.getJSONObject(dataObject, META, false);
         JSONObject images = JSON.getJSONObject(rawAttributes, "images", false);
 
         Article article = new Article(
                 JSON.getString(dataObject, "id"),
                 JSON.getString(dataObject, "type"));
+        article.setMeta(meta);
 
         HashMap<String, Object> attributes = new HashMap<>();
         attributes.put("title", JSON.getString(rawAttributes, "title"));
@@ -216,12 +228,14 @@ public class OddParser {
     }
 
     protected Media parseMedia(final JSONObject dataObject) throws JSONException {
-        JSONObject rawAttributes = JSON.getJSONObject(dataObject, "attributes", true);
+        JSONObject rawAttributes = JSON.getJSONObject(dataObject, ATTRIBUTES, true);
+        JSONObject meta = JSON.getJSONObject(dataObject, META, false);
         JSONObject images = JSON.getJSONObject(rawAttributes, "images", false);
 
         Media media = new Media(
                 JSON.getString(dataObject, "id"),
                 JSON.getString(dataObject, "type"));
+        media.setMeta(meta);
 
         HashMap<String, Object> attributes = new HashMap<>();
         attributes.put("title", JSON.getString(rawAttributes, "title"));
@@ -293,12 +307,14 @@ public class OddParser {
     }
 
     protected Promotion parsePromotion(final JSONObject rawPromotion) throws JSONException {
-        JSONObject rawAttributes = JSON.getJSONObject(rawPromotion, "attributes", true);
+        JSONObject rawAttributes = JSON.getJSONObject(rawPromotion, ATTRIBUTES, true);
+        JSONObject meta = JSON.getJSONObject(rawPromotion, META, false);
         JSONObject images = JSON.getJSONObject(rawAttributes, "images", false);
 
         Promotion promotion = new Promotion(
                 JSON.getString(rawPromotion, "id"),
                 JSON.getString(rawPromotion, "type"));
+        promotion.setMeta(meta);
 
         HashMap<String, Object> attributes = new HashMap<>();
         attributes.put("title", JSON.getString(rawAttributes, "title"));
@@ -315,7 +331,7 @@ public class OddParser {
         ArrayList<OddObject> entities = new ArrayList<>();
         try {
             JSONObject entitiesResponse = new JSONObject(result);
-            JSONArray rawEntities = entitiesResponse.getJSONArray("data");
+            JSONArray rawEntities = entitiesResponse.getJSONArray(DATA);
             for (int i = 0; i < rawEntities.length(); i++) {
                 JSONObject rawEntity = rawEntities.getJSONObject(i);
                 String type = JSON.getString(rawEntity, "type");
@@ -389,8 +405,8 @@ public class OddParser {
     protected Config parseConfig(final String result) {
         try {
             JSONObject resultJSONObject = new JSONObject(result);
-            JSONObject dataJSONObject = JSON.getJSONObject(resultJSONObject, "data", true);
-            JSONObject rawAttributes = JSON.getJSONObject(dataJSONObject, "attributes", true);
+            JSONObject dataJSONObject = JSON.getJSONObject(resultJSONObject, DATA, true);
+            JSONObject rawAttributes = JSON.getJSONObject(dataJSONObject, ATTRIBUTES, true);
 
             LinkedHashMap<String, String> views = new LinkedHashMap<>();
             JSONObject rawViews = JSON.getJSONObject(rawAttributes, "views", true);
@@ -428,8 +444,8 @@ public class OddParser {
     protected OddView parseView(final String result) {
         try {
             JSONObject resultObject = new JSONObject(result);
-            JSONObject data = JSON.getJSONObject(resultObject, "data", true);
-            JSONObject rawAttributes = JSON.getJSONObject(data, "attributes", true);
+            JSONObject data = JSON.getJSONObject(resultObject, DATA, true);
+            JSONObject rawAttributes = JSON.getJSONObject(data, ATTRIBUTES, true);
             OddView view = new OddView(
                     JSON.getString(rawAttributes, "id"),
                     JSON.getString(rawAttributes, "type"));
@@ -457,8 +473,8 @@ public class OddParser {
 
     protected AuthToken parseAuthToken(String responseBody) throws JSONException {
         JSONObject raw = new JSONObject(responseBody);
-        JSONObject data = JSON.getJSONObject(raw, "data", true);
-        JSONObject attributes = JSON.getJSONObject(data, "attributes", true);
+        JSONObject data = JSON.getJSONObject(raw, DATA, true);
+        JSONObject attributes = JSON.getJSONObject(data, ATTRIBUTES, true);
         String accessToken = attributes.getString("access_token");
         String tokenType = attributes.getString("token_type");
         return new AuthToken(accessToken, tokenType);
@@ -466,8 +482,8 @@ public class OddParser {
 
     protected DeviceCodeResponse parseDeviceCodeResponse(String responseBody) throws JSONException {
         JSONObject raw = new JSONObject(responseBody);
-        JSONObject data = JSON.getJSONObject(raw, "data", true);
-        JSONObject attributes = JSON.getJSONObject(data, "attributes", true);
+        JSONObject data = JSON.getJSONObject(raw, DATA, true);
+        JSONObject attributes = JSON.getJSONObject(data, ATTRIBUTES, true);
         String deviceCode = attributes.getString("device_code");
         String userCode = attributes.getString("user_code");
         String verificationUrl = attributes.getString("verification_url");
@@ -480,7 +496,7 @@ public class OddParser {
         OddCollection collection = null;
         try {
             JSONObject raw = new JSONObject(responseBody);
-            JSONObject data = JSON.getJSONObject(raw, "data", true);
+            JSONObject data = JSON.getJSONObject(raw, DATA, true);
             collection = parseCollection(data);
             JSONArray included = JSON.getJSONArray(raw, "included", true);
             addIncluded(collection, included);
@@ -494,7 +510,7 @@ public class OddParser {
         ArrayList<OddObject> searchResult = new ArrayList<>();
         try {
             JSONObject resultObject = new JSONObject(result);
-            JSONArray dataArray = resultObject.getJSONArray("data");
+            JSONArray dataArray = resultObject.getJSONArray(DATA);
             for (int i = 0; i < dataArray.length(); i++) {
                 JSONObject pokerObj = dataArray.getJSONObject(i);
                 String type = JSON.getString(pokerObj, "type");
@@ -549,16 +565,16 @@ public class OddParser {
                 if (relationship != null) {
                     ArrayList<Identifier> identifiers = new ArrayList<>();
 
-                    if (relationship.get("data") instanceof JSONObject) {
+                    if (relationship.get(DATA) instanceof JSONObject) {
                         //handle single relationship.data
-                        JSONObject identifier = JSON.getJSONObject(relationship, "data", true);
+                        JSONObject identifier = JSON.getJSONObject(relationship, DATA, true);
                         String relId = identifier.getString("id");
                         String relType = identifier.getString("type");
                         identifiers.add(new Identifier(relId, relType));
 
-                    } else if (relationship.get("data") instanceof JSONArray) {
+                    } else if (relationship.get(DATA) instanceof JSONArray) {
                         // handle multiple relationship.data
-                        JSONArray rawIdentifiers = JSON.getJSONArray(relationship, "data", true);
+                        JSONArray rawIdentifiers = JSON.getJSONArray(relationship, DATA, true);
 
                         for (int i = 0; i < rawIdentifiers.length(); i++) {
                             JSONObject identifier = rawIdentifiers.getJSONObject(i);
