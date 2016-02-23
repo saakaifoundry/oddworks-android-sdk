@@ -62,7 +62,9 @@ public class OddParserTest extends AndroidTestCase {
         List<OddObject> featuredCollections = view.getIncludedByRelationship("featuredCollections");
 
         assertFalse(promotions.isEmpty());
-        assertThat(((Promotion) promotions.get(0)).getTitle(), is("Share your best poker face using #POKERCENTRALCONTEST"));
+        Promotion promotion = (Promotion) promotions.get(0);
+        assertThat(promotion.getTitle(), is("Share your best poker face using #POKERCENTRALCONTEST"));
+        assertThat(promotion.getUrl(), is("http://www.pokercentral.com"));
 
         assertFalse(featuredMedia.isEmpty());
         Media mediaSharingEnabled = (Media) featuredMedia.get(0);

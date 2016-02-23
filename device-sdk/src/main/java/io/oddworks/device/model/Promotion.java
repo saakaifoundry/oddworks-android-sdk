@@ -11,6 +11,7 @@ public class Promotion extends OddObject {
     private String title;
     private String description;
     private MediaImage mediaImage;
+    private String url;
 
     public Promotion(Identifier identifier) {
         super(identifier);
@@ -32,11 +33,16 @@ public class Promotion extends OddObject {
         return mediaImage;
     }
 
+    public String getUrl() {
+        return url;
+    }
+
     @Override
     public void setAttributes(Map<String, Object> attributes) {
-        title = Util.getString(attributes, "title", null);
-        description = Util.getString(attributes, "description", null);
-        mediaImage = (MediaImage) attributes.get("mediaImage");
+        this.title = Util.getString(attributes, "title", null);
+        this.description = Util.getString(attributes, "description", null);
+        this.mediaImage = (MediaImage) attributes.get("mediaImage");
+        this.url = Util.getString(attributes, "url", null);
     }
 
     @Override
@@ -45,6 +51,7 @@ public class Promotion extends OddObject {
         attributes.put("title", getTitle());
         attributes.put("description", getDescription());
         attributes.put("mediaImage", getMediaImage());
+        attributes.put("url", getUrl());
 
         return attributes;
     }
@@ -64,6 +71,9 @@ public class Promotion extends OddObject {
         return TAG + "(" +
                 "id='" + getId() + "', " +
                 "type='" + getType() + "', " +
-                "title='" + getTitle() + "')";
+                "title='" + getTitle() + "', " +
+                "description='" + getDescription() + "', " +
+                "mediaImage='" + getMediaImage() + "', " +
+                "url='" + getUrl() + "')";
     }
 }
