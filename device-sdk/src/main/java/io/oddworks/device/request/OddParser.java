@@ -303,6 +303,7 @@ public class OddParser {
         HashMap<String, Object> attributes = new HashMap<>();
         attributes.put("title", JSON.getString(rawAttributes, "title"));
         attributes.put("description", JSON.getString(rawAttributes, "description"));
+        attributes.put("url", JSON.getString(rawAttributes, "url"));
         attributes.put("mediaImage", parseMediaImage(images));
 
         promotion.setAttributes(attributes);
