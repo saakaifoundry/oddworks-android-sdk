@@ -1,0 +1,33 @@
+site_name: Oddworks SDK for Android
+site_url: http://android.guide.oddnetworks.com
+site_description: Odd Networks Android Developer Guide
+repo_url: https://github.com/oddnetworks/odd-sample-apps
+site_favicon: assets/favicon.ico
+site_author: Erik Straub
+copyright: Odd Networks
+google_analytics: ["UA-68853545-3", "android.guide.oddnetworks.com"]
+extra_css: []
+pages:
+- Welcome:
+    - Introduction: index.md
+    - "Oddworks Overview": overview.md
+    - "Sample Application": sample_application.md
+- "Getting Started":
+    - "Library and Project Setup": setup.md
+    - "Configuring your App": getting_started.md
+    - "Understanding the SDK Data Models": data_models.md
+- "The Basics of Oddworks":
+    - "Initialize API Calls": initialize_api_calls.md
+    - "Working with Data": working_with_data.md
+    - "Search": search.md
+- "Authenticating Users":
+    - "Authentication Process": auth_process.md
+    - "Entitlements": entitlements.md
+- "Capturing Metrics":
+    - "Configuration": metrics_configuration.md
+    - "Sending Metrics": sending_metrics.md
+# - "Playing Media":
+#     - "Brightcove Player": brightcove_player.md
+#     - "Ooyala Player": ooyala_player.md
+#     - "Exo Player": exo_player.md
+theme: readthedocs
