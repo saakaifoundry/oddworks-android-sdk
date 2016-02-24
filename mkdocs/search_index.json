@@ -2,12 +2,12 @@
     "docs": [
         {
             "location": "/", 
-            "text": "Oddworks SDK for Android\n\n\nDocument version: February 3, 2016\n\nSDK Version: beta-1.0.0\n\n\nThe Oddworks SDK for Android is a wrapper for the Odd Networks.\n\n\nSDK API Documentation\n\n\nFeatures\n\n\nThe Oddworks SDK for Android supports the following features:\n\n\n\n\nA wrapper for the Odd API that parses returned JSON into Java Objects\n\n\nA data store for objects received from the API\n\n\nA way to post metrics back to the API\n\n\n\n\nIntended Audience\n\n\nThis guide assumes that you have the necessary Java and Android development skills to work successfully with Oddworks for Android. You should know how to build and compile Android applications using Android Studio and the latest tools from the Android Developers Kit.", 
+            "text": "Oddworks SDK for Android\n\n\nDocument version: February 24, 2016\n\nSDK Version: 1.0.1\n\n\nThe \ndevice-sdk\n is the Oddworks SDK for Android. It is a wrapper for the Oddworks API that helps Android devices communicate with Oddworks.\n\n\nSDK API Documentation\n\n\nFeatures\n\n\nThe Oddworks SDK for Android supports the following features:\n\n\n\n\nA wrapper for the Odd API that parses returned JSON into Java Objects\n\n\nA data store for objects received from the API\n\n\nA way to post metrics back to the API\n\n\n\n\nIntended Audience\n\n\nThis guide assumes that you have the necessary Java and Android development skills to work successfully with Oddworks for Android. You should know how to build and compile Android applications using Android Studio and the latest tools from the Android Developers Kit.", 
             "title": "Introduction"
         }, 
         {
             "location": "/#oddworks-sdk-for-android", 
-            "text": "Document version: February 3, 2016 \nSDK Version: beta-1.0.0  The Oddworks SDK for Android is a wrapper for the Odd Networks.", 
+            "text": "Document version: February 24, 2016 \nSDK Version: 1.0.1  The  device-sdk  is the Oddworks SDK for Android. It is a wrapper for the Oddworks API that helps Android devices communicate with Oddworks.", 
             "title": "Oddworks SDK for Android"
         }, 
         {
