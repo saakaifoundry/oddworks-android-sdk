@@ -19,6 +19,7 @@ public class CollectionTest {
     private String id = "123";
     private String type = "videoCollection";
     private String title = "Odd the Great and Powerful";
+    private String subtitle = null;
     private String description = "Odd is good! Odd is great!";
     private DateTime releaseDate = new DateTime("2015-04-20T16:20:00-0400");
     private MediaImage mediaImage = new MediaImage("a", "b", "c", "d", "e");
@@ -28,6 +29,7 @@ public class CollectionTest {
     @Before
     public void beforeEach() {
         attributes.put("title", title);
+        attributes.put("subtitle", subtitle);
         attributes.put("description", description);
         attributes.put("releaseDate", releaseDate);
         attributes.put("mediaImage", mediaImage);
@@ -99,6 +101,7 @@ public class CollectionTest {
     public void testFillData() throws Exception {
         Map<String, Object> otherAttributes = new HashMap<>();
         otherAttributes.put("title", "AAA");
+        otherAttributes.put("subtitle", null);
         otherAttributes.put("description", "ZZZ");
         otherAttributes.put("releaseDate", new DateTime("2012-11-13T09:30:00+0100"));
         otherAttributes.put("mediaImage", new MediaImage("e", "d", "c", "b", "a"));

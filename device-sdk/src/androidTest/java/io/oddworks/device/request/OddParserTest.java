@@ -248,6 +248,8 @@ public class OddParserTest extends AndroidTestCase {
         OddCollection collection = oddParser.parseCollectionResponse(json);
 
         List<OddObject> videos = collection.getIncludedByRelationship("entities");
+
+        assertThat(collection.getSubtitle(), is("Curation implies manual"));
         Media vid1 = (Media) videos.get(0);
         Media vid2 = (Media) videos.get(1);
         Media vid3 = (Media) videos.get(2);
@@ -264,14 +266,17 @@ public class OddParserTest extends AndroidTestCase {
         assertThat(metaKeys.next(), is("sourceId"));
         assertThat(metaKeys.next(), is("source"));
         assertFalse(vid1.getMediaAd().isEnabled());
+        assertNull(vid1.getSubtitle());
 
         assertThat(vid2.getTitle(), is("Pump It.mp4"));
+        assertThat(vid2.getSubtitle(), is("Pumping it"));
         assertTrue(vid2.getMediaAd().isEnabled());
         assertTrue(vid2.getMediaAd().isFreeWheel());
 
         assertThat(vid3.getTitle(), is("Free Bird (Live August 21st, 1976).mp4"));
         assertTrue(vid3.getMediaAd().isEnabled());
         assertTrue(vid3.getMediaAd().isDFP());
+        assertNull(vid3.getSubtitle());
 
         assertThat(vid4.getTitle(), is("Simple Man.mp4"));
         assertTrue(vid4.getMediaAd().isEnabled());

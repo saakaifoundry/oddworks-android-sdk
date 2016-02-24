@@ -101,6 +101,7 @@ public class OddParser {
 
         HashMap<String, Object> attributes = new HashMap<>();
         attributes.put("title", JSON.getString(rawAttributes, "title"));
+        attributes.put("subtitle", JSON.getString(rawAttributes, "subtitle"));
         attributes.put("description", JSON.getString(rawAttributes, "description"));
         attributes.put("releaseDate", JSON.getDateTime(rawAttributes, "releaseDate"));
         attributes.put("mediaImage", parseMediaImage(images));
@@ -155,7 +156,7 @@ public class OddParser {
 
     protected Event parseEvent(final JSONObject dataObject) throws JSONException {
         JSONObject rawAttributes = JSON.getJSONObject(dataObject, ATTRIBUTES, true);
-        JSONObject meta = JSON.getJSONObject(dataObject, META, true);
+        JSONObject meta = JSON.getJSONObject(dataObject, META, false);
         JSONObject images = JSON.getJSONObject(rawAttributes, "images", false);
         JSONObject ical = JSON.getJSONObject(rawAttributes, "ical", true);
 
@@ -184,7 +185,7 @@ public class OddParser {
 
     protected External parseExternal(final JSONObject dataObject) throws JSONException {
         JSONObject rawAttributes = JSON.getJSONObject(dataObject, ATTRIBUTES, true);
-        JSONObject meta = JSON.getJSONObject(dataObject, META, true);
+        JSONObject meta = JSON.getJSONObject(dataObject, META, false);
         JSONObject images = JSON.getJSONObject(rawAttributes, "images", false);
 
         External external = new External(
@@ -445,10 +446,12 @@ public class OddParser {
         try {
             JSONObject resultObject = new JSONObject(result);
             JSONObject data = JSON.getJSONObject(resultObject, DATA, true);
+            JSONObject meta = JSON.getJSONObject(resultObject, META, false);
             JSONObject rawAttributes = JSON.getJSONObject(data, ATTRIBUTES, true);
             OddView view = new OddView(
-                    JSON.getString(rawAttributes, "id"),
-                    JSON.getString(rawAttributes, "type"));
+                    JSON.getString(data, "id"),
+                    JSON.getString(data, "type"));
+            view.setMeta(meta);
 
             HashMap<String, Object> attributes = new HashMap<>();
             attributes.put("title", JSON.getString(rawAttributes, "title"));
@@ -458,10 +461,12 @@ public class OddParser {
             addRelationshipsToOddObject(JSON.getJSONObject(data, "relationships", true), view);
 
             // fill the view's included{Type} arrays with parsable objects
-            JSONArray includedArray = JSON.getJSONArray(resultObject, "included", true);
-            addIncluded(view, includedArray);
-            // backfill newly created collections with newly created entities
-            view.fillIncludedCollections();
+            if (!resultObject.isNull("included")) {
+                JSONArray includedArray = JSON.getJSONArray(resultObject, "included", true);
+                addIncluded(view, includedArray);
+                // backfill newly created collections with newly created entities
+                view.fillIncludedCollections();
+            }
 
             return view;
         } catch (JSONException e) {

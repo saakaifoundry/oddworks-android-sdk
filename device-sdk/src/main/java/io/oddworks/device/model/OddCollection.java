@@ -14,6 +14,7 @@ public class OddCollection extends OddObject {
     public static final String ENTITIES = "entities";
 
     private String title;
+    private String subtitle;
     private String description;
     private MediaImage mediaImage;
     private DateTime releaseDate;
@@ -30,6 +31,10 @@ public class OddCollection extends OddObject {
         return title;
     }
 
+    public String getSubtitle() {
+        return subtitle;
+    }
+
     public String getDescription() {
         return description;
     }
@@ -44,16 +49,18 @@ public class OddCollection extends OddObject {
 
     @Override
     public void setAttributes(Map<String, Object> attributes) {
-        title = getString(attributes, "title", null);
-        description = getString(attributes, "description", null);
-        mediaImage = (MediaImage) attributes.get("mediaImage");
-        releaseDate = Util.getDateTime(attributes, "releaseDate", null);
+        this.title = getString(attributes, "title", null);
+        this.subtitle = getString(attributes, "subtitle", null);
+        this.description = getString(attributes, "description", null);
+        this.mediaImage = (MediaImage) attributes.get("mediaImage");
+        this.releaseDate = Util.getDateTime(attributes, "releaseDate", null);
     }
 
     @Override
     public Map<String, Object> getAttributes() {
         HashMap<String, Object> attributes = new HashMap<>();
         attributes.put("title", getTitle());
+        attributes.put("subtitle", getSubtitle());
         attributes.put("description", getDescription());
         attributes.put("mediaImage", getMediaImage());
         attributes.put("releaseDate", getReleaseDate());
@@ -73,10 +80,11 @@ public class OddCollection extends OddObject {
     @Override
     public String toString() {
         return "OddCollection{" +
-                "title='" + title + '\'' +
-                ", description='" + description + '\'' +
-                ", mediaImage=" + mediaImage +
-                ", releaseDate=" + releaseDate +
+                "title='" + getTitle() + '\'' +
+                ", subtitle='" + getSubtitle() + '\'' +
+                ", description='" + getDescription() + '\'' +
+                ", mediaImage=" + getMediaImage() +
+                ", releaseDate=" + getReleaseDate() +
                 '}';
     }
 }

@@ -32,6 +32,7 @@
     },
     "attributes": {
       "title": "A Manually Curated Collection :)",
+      "subtitle": "Curation implies manual",
       "description": "",
       "images": {
         "aspect16x9": "http://image.oddworks.io/eooyala/w4MGV5eDpoE0rmbrcHEeDEEuhQMypB0u/promo272218855.jpg"
@@ -101,6 +102,7 @@
       },
       "attributes": {
         "title": "Pump It.mp4",
+        "subtitle": "Pumping it",
         "description": "louder, come on",
         "images": {
           "aspect16x9": "http://image.oddworks.io/eooyala/I4am8yeTp8jka7BRtcECqpuJHFNg2Nl-/3Gduepif0T1UGY8H4xMDoxOjA4MTsiGN.jpg",
