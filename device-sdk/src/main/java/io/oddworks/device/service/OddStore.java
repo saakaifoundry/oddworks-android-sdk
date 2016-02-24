@@ -4,8 +4,10 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
@@ -99,7 +101,7 @@ public class OddStore {
      * @return a list of all related nonnull OddObjects.
      *  Related objects that aren't in the OddStore will not be included in list. */
     @NonNull public List<OddObject> getRelatedObjects(@NonNull OddObject oddObject) {
-        List<OddObject> items = new ArrayList<>();
+        LinkedHashSet<OddObject> items = new LinkedHashSet<>();
         for (Relationship relationship : oddObject.getRelationships()) {
             List<OddObject> objects = getObjects(relationship.getIdentifiers());
             for(OddObject object : objects) {
@@ -107,7 +109,7 @@ public class OddStore {
                     items.addAll(objects);
             }
         }
-        return items;
+        return Arrays.asList((OddObject[])items.toArray());
     }
 
     public void remove(@NonNull OddObject object) {

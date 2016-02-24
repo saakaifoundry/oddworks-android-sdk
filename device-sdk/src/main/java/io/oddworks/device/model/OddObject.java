@@ -6,6 +6,8 @@ import android.support.annotation.Nullable;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 
@@ -23,7 +25,7 @@ abstract public class OddObject {
     protected String id;
     protected String type;
     protected ArrayList<Relationship> relationships;
-    protected ArrayList<OddObject> included;
+    protected LinkedHashSet<OddObject> included;
     protected JSONObject meta;
 
     public OddObject(@NonNull final Identifier identifier) {
@@ -109,9 +111,9 @@ abstract public class OddObject {
 
     @NonNull public List<OddObject> getIncluded() {
         if (included == null) {
-            included = new ArrayList<>();
+            included = new LinkedHashSet<>();
         }
-        return included;
+        return Arrays.asList((OddObject[]) included.toArray());
     }
 
     public void setMeta(@Nullable JSONObject jsonObject) {
