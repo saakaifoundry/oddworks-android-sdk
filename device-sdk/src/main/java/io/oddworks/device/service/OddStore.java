@@ -109,7 +109,9 @@ public class OddStore {
                     items.addAll(objects);
             }
         }
-        return Arrays.asList((OddObject[])items.toArray());
+        ArrayList<OddObject> list = new ArrayList<OddObject>();
+        list.addAll(items);
+        return list;
     }
 
     public void remove(@NonNull OddObject object) {

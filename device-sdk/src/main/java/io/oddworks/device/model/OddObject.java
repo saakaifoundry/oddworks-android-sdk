@@ -24,8 +24,8 @@ abstract public class OddObject {
     protected Identifier identifier;
     protected String id;
     protected String type;
-    protected ArrayList<Relationship> relationships;
-    protected LinkedHashSet<OddObject> included;
+    protected ArrayList<Relationship> relationships = new ArrayList<>();
+    protected LinkedHashSet<OddObject> included = new LinkedHashSet<>();
     protected JSONObject meta;
 
     public OddObject(@NonNull final Identifier identifier) {
@@ -48,7 +48,7 @@ abstract public class OddObject {
 
     @NonNull public Identifier getIdentifier() {
         if (identifier == null) {
-            identifier = new Identifier(getId(), getType());
+            this.identifier = new Identifier(getId(), getType());
         }
         return identifier;
     }
@@ -66,9 +66,6 @@ abstract public class OddObject {
     }
 
     @NonNull public List<Relationship> getRelationships() {
-        if (relationships == null) {
-            relationships = new ArrayList<>();
-        }
         return relationships;
     }
 
@@ -106,14 +103,13 @@ abstract public class OddObject {
     }
 
     public void addIncluded(OddObject oddObject) {
-        getIncluded().add(oddObject);
+        this.included.add(oddObject);
     }
 
     @NonNull public List<OddObject> getIncluded() {
-        if (included == null) {
-            included = new LinkedHashSet<>();
-        }
-        return Arrays.asList((OddObject[]) included.toArray());
+        ArrayList<OddObject> list = new ArrayList<>();
+        list.addAll(included);
+        return list;
     }
 
     public void setMeta(@Nullable JSONObject jsonObject) {
