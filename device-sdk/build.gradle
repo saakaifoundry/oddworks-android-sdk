@@ -15,11 +15,11 @@ ext {
     siteUrl = 'http://android.guide.oddnetworks.com'
     gitUrl = 'https://github.com/oddnetworks/OddworksDeviceSDK'
 
-    libraryVersion = '1.0.2'
+    libraryVersion = '1.1.2'
 
     developerId = 'brkattk'
-    developerName = 'Erik Straub'
-    developerEmail = 'erik.straub@oddnetworks.com'
+    developerName = 'Erik Straub, Dan Pallas'
+    developerEmail = 'erik.straub@oddnetworks.com, dan.pallas@oddnetworks.com'
 
     licenseName = 'The Apache Software License, Version 2.0'
     licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
