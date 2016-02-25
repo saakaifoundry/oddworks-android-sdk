@@ -4,7 +4,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
 import java.util.LinkedHashSet;
@@ -81,7 +80,7 @@ public class OddStore {
 
     /**
      * Deprecated because of potential issue when using maxAge. The store could contain all objects and then the objects
-     * could be removed before retreiving them.
+     * could be removed before retreiving them. Use getRelatedObjectsOrNull instead.
      *
      * Checks if the store contains all objects that are related to the oddObject non recursively
      * @return true if all related objects are stored, otherwise false.
@@ -107,6 +106,26 @@ public class OddStore {
             for(OddObject object : objects) {
                 if(object != null)
                     items.addAll(objects);
+            }
+        }
+        ArrayList<OddObject> list = new ArrayList<OddObject>();
+        list.addAll(items);
+        return list;
+    }
+
+    /** Get all OddObjects contained in all of the relationships of an OddObject. Recursive relationships are not
+     * resolved.
+     * @return if all related objects are contained in the store then they are returned as a list, otherwise null
+     *  Related objects that aren't in the OddStore will not be included in list. */
+    @Nullable public List<OddObject> getRelatedObjectsOrNull(@NonNull OddObject oddObject) {
+        LinkedHashSet<OddObject> items = new LinkedHashSet<>();
+        for (Relationship relationship : oddObject.getRelationships()) {
+            List<OddObject> objects = getObjects(relationship.getIdentifiers());
+            for(OddObject object : objects) {
+                if(object != null)
+                    items.addAll(objects);
+                else
+                    return null;
             }
         }
         ArrayList<OddObject> list = new ArrayList<OddObject>();
