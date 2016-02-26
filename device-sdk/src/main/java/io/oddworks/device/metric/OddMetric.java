@@ -5,7 +5,9 @@ import android.util.Log;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public abstract class OddMetric {
+import io.oddworks.device.service.OddRxBus;
+
+public abstract class OddMetric implements OddRxBus.OddRxBusEvent {
     private static final String TAG = OddMetric.class.getSimpleName();
     private static final String TYPE = "event";
     public static final String ACTION_APP_INIT = "app:init";
