@@ -1,5 +1,6 @@
 package io.oddworks.device.service;
 
+import android.support.annotation.NonNull;
 import android.util.Log;
 
 import rx.Observable;
@@ -21,17 +22,17 @@ public class OddRxBus {
             new SerializedSubject<>(PublishSubject.<OddRxBusEvent>create());
     private OddRxBus() { /* singleton */ }
 
-    public static OddRxBus getInstance() {
+    @NonNull public static OddRxBus getInstance() {
         return INSTANCE;
     }
 
-    public void publish(OddRxBusEvent event) {
+    public void publish(@NonNull OddRxBusEvent event) {
         bus.onNext(event);
         Log.d(TAG, "event published:" + event);
     }
 
     /** events will be emitted through this observable */
-    public Observable<OddRxBusEvent> getObservable() {
+    @NonNull public Observable<OddRxBusEvent> getObservable() {
         return bus.asObservable();
     }
 

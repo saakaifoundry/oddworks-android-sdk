@@ -1,5 +1,7 @@
 package io.oddworks.device.request;
 
+import android.support.annotation.NonNull;
+
 import rx.Observable;
 import rx.Subscriber;
 import rx.functions.Action1;
@@ -25,23 +27,31 @@ public class RxOddCall<T> implements Observable.OnSubscribe<T>{
      * should be used instead of instantiating RxOddCall directly.
      *
      * ex:
+     * <pre>
+     * {@code
      *      RxOddCall.observableFrom(new Action1<OddCallback<OddView>>() {
-     *          @Override
+     *          {@literal @}Override
      *          public void call(OddCallback<OddView> oddViewOddCallback) {
      *              RestServiceProvider.getInstance().getApiCaller().getView(id, oddViewOddCallback);
      *          }
      *      })
      *      .observeOn(AndroidSchedulers.mainThread())
+     * }
+     * </pre>
      *
      *  If you're using Kotlin, ex:
+     *  <pre>
+     *  {@code
      *      observableFrom<OddView> { RestServicesProvider.instance.apiCaller.getView(id, it) }
      *            .observeOn(AndroidSchedulers.mainThread())
+     *  }
+     *  </pre>
      *
      * @param f an action taking an OddCallback
      * @param <T> the type of the object that the OddCallback would be called with.
      * @return an observable that will emit 1 error, or 1 item and then be completed.
      */
-    public static <T> Observable<T> observableFrom(Action1<OddCallback<T>> f) {
+    @NonNull public static <T> Observable<T> observableFrom(@NonNull Action1<OddCallback<T>> f) {
         return Observable.create(new RxOddCall<T>(f));
     }
 
