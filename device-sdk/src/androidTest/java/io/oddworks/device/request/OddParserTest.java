@@ -5,16 +5,12 @@ import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
 import android.test.AndroidTestCase;
 
-import org.hamcrest.Matcher;
 import org.json.JSONObject;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -40,7 +36,6 @@ import io.oddworks.device.model.players.OoyalaPlayer;
 import io.oddworks.device.model.players.Player;
 import io.oddworks.device.testutils.AssetUtils;
 
-import static org.hamcrest.CoreMatchers.hasItem;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.isA;
 import static org.hamcrest.CoreMatchers.notNullValue;
@@ -317,4 +312,12 @@ public class OddParserTest extends AndroidTestCase {
         JSONObject rawPlayer = new JSONObject(json);
         oddParser.parsePlayer(rawPlayer);
     }
+
+    @Test
+    public void testParseMediaResponseTest() throws Exception {
+        String json = AssetUtils.readFileToString(mContext, "LiveStreamWithIncluded.json");
+        Media media = oddParser.parseMediaResponse(json);
+        assertThat(media.getId(), is("test-1"));
+    }
+
 }

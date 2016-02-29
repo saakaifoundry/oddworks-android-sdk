@@ -18,6 +18,7 @@ import io.oddworks.device.metric.OddMetric;
 import io.oddworks.device.model.AuthToken;
 import io.oddworks.device.model.Config;
 import io.oddworks.device.model.DeviceCodeResponse;
+import io.oddworks.device.model.Media;
 import io.oddworks.device.model.OddCollection;
 import io.oddworks.device.model.OddObject;
 import io.oddworks.device.model.OddView;
@@ -83,6 +84,20 @@ public class ApiCaller {
             }
         });
         requestHandler.getCollection(collectionId, requestCallback);
+    }
+
+    /** gets video with all related entities **/
+    public void getMedia(String collectionId, boolean isLiveStream, final OddCallback<Media> cb) {
+        Callback requestCallback = getRequestCallback(cb, new ParseCall<Media>() {
+            @Override
+            public Media parse(String responseBody) {
+                return parser.parseMediaResponse(responseBody);
+            }
+        });
+        if(isLiveStream)
+            requestHandler.getLiveStream(collectionId, requestCallback);
+        else
+            requestHandler.getVideo(collectionId, requestCallback);
     }
 
     public void getSearch(final String term, final int limit, final int offset, final OddCallback<List<OddObject>> cb) {

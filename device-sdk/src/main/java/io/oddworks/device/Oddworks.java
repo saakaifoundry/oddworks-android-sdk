@@ -5,6 +5,8 @@ public class Oddworks {
     public static final String ENDPOINT_AUTH_DEVICE_CODE = "auth/device/code";
     public static final String ENDPOINT_AUTH_DEVICE_TOKEN = "auth/device/token";
     public static final String ENDPOINT_COLLECTION = "collections/%s";
+    public static final String ENDPOINT_VIDEO = "videos/%s";
+    public static final String ENDPOINT_LIVE_STREAM = "liveStreams/%s";
     public static final String ENDPOINT_COLLECTION_ENTITIES = "collections/%s/relationships/entities";
     public static final String ENDPOINT_CONFIG = "config";
     public static final String ENDPOINT_EVENTS = "events";

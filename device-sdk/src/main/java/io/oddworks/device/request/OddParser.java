@@ -601,4 +601,18 @@ public class OddParser {
     protected String parseErrorMessage(String responseBody) throws JSONException {
         return new JSONObject(responseBody).getString("message");
     }
+
+    protected Media parseMediaResponse(String responseBody) {
+        Media media = null;
+        try {
+            JSONObject response = new JSONObject(responseBody);
+            JSONObject data = JSON.getJSONObject(response, DATA, true);
+            media = parseMedia(data);
+            JSONArray included = JSON.getJSONArray(response, "included", true);
+            addIncluded(media, included);
+        } catch (Throwable e) {
+            throw new OddParseException(e);
+        }
+        return media;
+    }
 }
