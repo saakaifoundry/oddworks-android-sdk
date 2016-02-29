@@ -68,6 +68,7 @@ public class Media extends OddObject {
         return mediaAd;
     }
 
+    /** returns true if this Media is a liveStream object in the api's catalog */
     public Boolean isLive() {
         return getType().equals(OddObject.TYPE_LIVE_STREAM);
     }

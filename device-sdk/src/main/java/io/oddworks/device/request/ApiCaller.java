@@ -86,7 +86,9 @@ public class ApiCaller {
         requestHandler.getCollection(collectionId, requestCallback);
     }
 
-    /** gets video with all related entities **/
+    /** gets video with all related entities
+     * @param  isLiveStream true if this Media is a liveStream object in the api's catalog otherwise false.
+     *                          If Media#isLive() returns true then then this should be true. **/
     public void getMedia(String collectionId, boolean isLiveStream, final OddCallback<Media> cb) {
         Callback requestCallback = getRequestCallback(cb, new ParseCall<Media>() {
             @Override
