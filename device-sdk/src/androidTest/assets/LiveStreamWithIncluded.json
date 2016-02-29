@@ -1,0 +1,51 @@
+{
+  "data": {
+    "type": "liveStream",
+    "meta": {
+      "source": "itprotv",
+      "sourceId": "1",
+      "sourceType": "studio",
+      "entitlements": [
+        "free",
+        "monthly",
+        "annual"
+      ],
+      "entitled": false
+    },
+    "id": "test-1",
+    "links": {
+      "self": "https://bad-url.com"
+    },
+    "attributes": {
+      "title": "livestream 1:",
+      "images": {
+        "aspect16x9": "http://bad-image-url.com/5522d95ac6e4a3cb5de9e964.png"
+      },
+      "url": "http://bad-video-url.com/playlist.m3u8",
+      "isLive": false,
+      "organization": "test-org",
+      "ads": {
+        "enabled": false,
+        "assetId": "5522d95ac6e4a3cb5de9e964"
+      },
+      "overlays": {},
+      "player": {
+        "type": "native"
+      },
+      "sharing": {}
+    }
+  },
+  "included": [],
+  "meta": {
+    "device": "AMAZON_ANDROID_TV",
+    "queryParams": {
+      "include": [
+        "true"
+      ]
+    },
+    "userEntitlements": []
+  },
+  "links": {
+    "self": "https://bad-self-url.com/v2/liveStreams/test-org-5522d95ac6e4a3cb5de9e964%3Finclude=true"
+  }
+}

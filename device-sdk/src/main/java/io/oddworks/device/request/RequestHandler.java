@@ -180,6 +180,22 @@ public class RequestHandler {
         enqueueOddCall(request, callback);
     }
 
+    protected void getVideo(String videoId, Callback callback) {
+        String path = String.format(Oddworks.ENDPOINT_VIDEO, videoId);
+        HttpUrl.Builder builder = withIncluded(baseUrl.newBuilder());
+        HttpUrl endpoint = withPath(builder, path).build();
+        Request request = getOddGetRequest(endpoint);
+        enqueueOddCall(request, callback);
+    }
+
+    protected void getLiveStream(String liveStreamId, Callback callback) {
+        String path = String.format(Oddworks.ENDPOINT_LIVE_STREAM, liveStreamId);
+        HttpUrl.Builder builder = withIncluded(baseUrl.newBuilder());
+        HttpUrl endpoint = withPath(builder, path).build();
+        Request request = getOddGetRequest(endpoint);
+        enqueueOddCall(request, callback);
+    }
+
     /**
      * @param host sets Oddworks API host
      */
