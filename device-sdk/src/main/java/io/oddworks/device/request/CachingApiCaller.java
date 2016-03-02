@@ -539,10 +539,10 @@ public class CachingApiCaller {
 
     public class ObjectWithRelated<T extends OddObject> {
         private final List<OddObject> related;
-        private final T object;
+        private final T oddObject;
 
-        public ObjectWithRelated(@NonNull T object, @NonNull List<OddObject> related) {
-            this.object = object;
+        public ObjectWithRelated(@NonNull T oddObject, @NonNull List<OddObject> related) {
+            this.oddObject = oddObject;
             this.related = related;
         }
 
@@ -550,8 +550,8 @@ public class CachingApiCaller {
             return related;
         }
 
-        @NonNull public T getObject() {
-            return object;
+        @NonNull public T getOddObject() {
+            return oddObject;
         }
     }
 
