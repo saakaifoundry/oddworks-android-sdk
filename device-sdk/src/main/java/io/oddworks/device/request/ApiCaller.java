@@ -59,7 +59,7 @@ public class ApiCaller {
         Callback requestCallback = getRequestCallback(cb, new ParseCall<OddView>() {
             @Override
             public OddView parse(String responseBody) {
-                return parser.parseView(responseBody);
+                return parser.parseViewResponse(responseBody);
             }
         });
         requestHandler.getView(id, requestCallback);
@@ -249,19 +249,25 @@ public class ApiCaller {
         requestHandler.setVersionName(versionName);
     }
 
-    /** Set an AuthToken to be used in api calls */
+    /** Deprecated. Use RestServiceProvider#setAuthToken instead
+     *  Set an AuthToken to be used in api calls */
+    @Deprecated
     public void setAuthToken(AuthToken authToken) {
         requestHandler.setAuthToken(authToken);
     }
 
-    /** remove auth token. Requests will no longer use auth */
+    /** Deprecated. Use RestServiceProvider#setRemoveAuthToken instead
+     * remove auth token. Requests will no longer use auth */
+    @Deprecated
     public void removeAuthToken() {
         requestHandler.removeAuthToken();
     }
 
     /**
+     * Deprecated. Use RestServiceProvider#isAuthTokenSet instead
      * @return true if a token has been set, otherwise false
      */
+    @Deprecated
     public boolean isAuthTokenSet() {
         return requestHandler.isAuthTokenSet();
     }

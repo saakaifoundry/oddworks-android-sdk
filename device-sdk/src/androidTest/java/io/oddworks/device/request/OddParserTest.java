@@ -57,7 +57,7 @@ public class OddParserTest extends AndroidTestCase {
     public void testParseViewV2() throws Exception {
         String viewResponseV2 = AssetUtils.readFileToString(mContext, "ViewResponseV2.json");
 
-        OddView view = oddParser.parseView(viewResponseV2);
+        OddView view = oddParser.parseViewResponse(viewResponseV2);
         List<OddObject> promotions = view.getIncludedByRelationship("promotion");
         List<OddObject> featuredMedia = view.getIncludedByRelationship("featuredMedia");
         List<OddObject> featuredCollections = view.getIncludedByRelationship("featuredCollections");
@@ -92,7 +92,7 @@ public class OddParserTest extends AndroidTestCase {
     public void testParseMenuViewResponseV2() throws Exception {
         String json = AssetUtils.readFileToString(mContext, "MenuViewResponseV2.json");
 
-        OddView menu = oddParser.parseView(json);
+        OddView menu = oddParser.parseViewResponse(json);
         List<OddObject> items = menu.getIncludedByRelationship("items");
 
         assertFalse(items.isEmpty());
@@ -117,7 +117,7 @@ public class OddParserTest extends AndroidTestCase {
     public void testParsePBRMenuViewResponseV2() throws Exception {
         String json = AssetUtils.readFileToString(mContext, "PBRMenuViewResponseV2.json");
 
-        OddView menu = oddParser.parseView(json);
+        OddView menu = oddParser.parseViewResponse(json);
         List<OddObject> items = menu.getIncludedByRelationship("items");
     }
 
@@ -125,7 +125,7 @@ public class OddParserTest extends AndroidTestCase {
     public void testParsePBRHomepageViewResponseV2() throws Exception {
         String json = AssetUtils.readFileToString(mContext, "PBRHomepageViewResponseV2.json");
 
-        OddView homepage = oddParser.parseView(json);
+        OddView homepage = oddParser.parseViewResponse(json);
         List<OddObject> promotions = homepage.getIncludedByRelationship("promotion");
         List<OddObject> featuredMedia = homepage.getIncludedByRelationship("featuredMedia");
         List<OddObject> featuredCollections = homepage.getIncludedByRelationship("featuredCollections");

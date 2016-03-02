@@ -442,7 +442,7 @@ public class OddParser {
         }
     }
 
-    protected OddView parseView(final String result) {
+    protected OddView parseViewResponse(final String result) {
         try {
             JSONObject resultObject = new JSONObject(result);
             JSONObject data = JSON.getJSONObject(resultObject, DATA, true);
@@ -614,5 +614,61 @@ public class OddParser {
             throw new OddParseException(e);
         }
         return media;
+    }
+
+    protected Promotion parsePromotionResponse(String responseBody) {
+        Promotion promotion = null;
+        try {
+            JSONObject response = new JSONObject(responseBody);
+            JSONObject data = JSON.getJSONObject(response, DATA, true);
+            promotion = parsePromotion(data);
+            JSONArray included = JSON.getJSONArray(response, "included", true);
+            addIncluded(promotion, included);
+        } catch (Throwable e) {
+            throw new OddParseException(e);
+        }
+        return promotion;
+    }
+
+    protected External parseExternalResponse(String responseBody) {
+        External external = null;
+        try {
+            JSONObject response = new JSONObject(responseBody);
+            JSONObject data = JSON.getJSONObject(response, DATA, true);
+            external = parseExternal(data);
+            JSONArray included = JSON.getJSONArray(response, "included", true);
+            addIncluded(external, included);
+        } catch (Throwable e) {
+            throw new OddParseException(e);
+        }
+        return external;
+    }
+
+    protected Event parseEventResponse(String responseBody) {
+        Event event = null;
+        try {
+            JSONObject response = new JSONObject(responseBody);
+            JSONObject data = JSON.getJSONObject(response, DATA, true);
+            event = parseEvent(data);
+            JSONArray included = JSON.getJSONArray(response, "included", true);
+            addIncluded(event, included);
+        } catch (Throwable e) {
+            throw new OddParseException(e);
+        }
+        return event;
+    }
+
+    protected Article parseArticalResponse(String responseBody) {
+        Article article = null;
+        try {
+            JSONObject response = new JSONObject(responseBody);
+            JSONObject data = JSON.getJSONObject(response, DATA, true);
+            article = parseArticle(data);
+            JSONArray included = JSON.getJSONArray(response, "included", true);
+            addIncluded(article, included);
+        } catch (Throwable e) {
+            throw new OddParseException(e);
+        }
+        return article;
     }
 }
