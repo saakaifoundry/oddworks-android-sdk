@@ -196,6 +196,54 @@ public class RequestHandler {
         enqueueOddCall(request, callback);
     }
 
+    protected void getPromotion(String promotionId, Callback callback, boolean fetchIncluded) {
+        String path = String.format(Oddworks.ENDPOINT_PROMOTION, promotionId);
+        HttpUrl.Builder builder = null;
+        if(fetchIncluded)
+            builder = withIncluded(baseUrl.newBuilder());
+        else
+            builder = baseUrl.newBuilder();
+        HttpUrl endpoint = withPath(builder, path).build();
+        Request request = getOddGetRequest(endpoint);
+        enqueueOddCall(request, callback);
+    }
+
+    protected void getExternal(String externalId, Callback callback, boolean fetchIncluded) {
+        String path = String.format(Oddworks.ENDPOINT_EXTERNAL, externalId);
+        HttpUrl.Builder builder = null;
+        if(fetchIncluded)
+            builder = withIncluded(baseUrl.newBuilder());
+        else
+            builder = baseUrl.newBuilder();
+        HttpUrl endpoint = withPath(builder, path).build();
+        Request request = getOddGetRequest(endpoint);
+        enqueueOddCall(request, callback);
+    }
+
+    protected void getEvent(String eventId, Callback callback, boolean fetchIncluded) {
+        String path = String.format(Oddworks.ENDPOINT_EVENT, eventId);
+        HttpUrl.Builder builder = null;
+        if(fetchIncluded)
+            builder = withIncluded(baseUrl.newBuilder());
+        else
+            builder = baseUrl.newBuilder();
+        HttpUrl endpoint = withPath(builder, path).build();
+        Request request = getOddGetRequest(endpoint);
+        enqueueOddCall(request, callback);
+    }
+
+    protected void getArticle(String articleId, Callback callback, boolean fetchIncluded) {
+        String path = String.format(Oddworks.ENDPOINT_ARTICLES, articleId);
+        HttpUrl.Builder builder = null;
+        if(fetchIncluded)
+            builder = withIncluded(baseUrl.newBuilder());
+        else
+            builder = baseUrl.newBuilder();
+        HttpUrl endpoint = withPath(builder, path).build();
+        Request request = getOddGetRequest(endpoint);
+        enqueueOddCall(request, callback);
+    }
+
     /**
      * @param host sets Oddworks API host
      */

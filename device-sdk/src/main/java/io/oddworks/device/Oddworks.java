@@ -7,6 +7,10 @@ public class Oddworks {
     public static final String ENDPOINT_COLLECTION = "collections/%s";
     public static final String ENDPOINT_VIDEO = "videos/%s";
     public static final String ENDPOINT_LIVE_STREAM = "liveStreams/%s";
+    public static final String ENDPOINT_PROMOTION = "promotions/%s";
+    public static final String ENDPOINT_EXTERNAL  = "externals/%s";
+    public static final String ENDPOINT_EVENT  = "events/%s";
+    public static final String ENDPOINT_ARTICLES  = "events/%s";
     public static final String ENDPOINT_COLLECTION_ENTITIES = "collections/%s/relationships/entities";
     public static final String ENDPOINT_CONFIG = "config";
     public static final String ENDPOINT_EVENTS = "events";
