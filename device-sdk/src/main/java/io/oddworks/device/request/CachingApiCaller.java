@@ -454,6 +454,7 @@ public class CachingApiCaller {
 
     protected class RequestCallback<T> implements Callback {
 
+        private static final int MS_IN_SECONDS = 1000;
         private final ParseCall<T> parseCall;
         private final OddCallback<T> cb;
 
@@ -516,7 +517,7 @@ public class CachingApiCaller {
         private void attemptCache(Response response, T obj) {
             if(obj instanceof OddObject &&
                     (!response.cacheControl().noCache() || !response.cacheControl().noStore())) {
-                cache.storeObject((OddObject) obj, response.cacheControl().maxAgeSeconds());
+                cache.storeObject((OddObject) obj, response.cacheControl().maxAgeSeconds() * MS_IN_SECONDS);
             }
         }
 
