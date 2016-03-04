@@ -1,6 +1,7 @@
 Android SDK for Oddworks
 ========================
 ![Oddworks Android Devices](https://s3-us-west-2.amazonaws.com/odd-networks-assets/androids.png)
+
 An [Oddworks](https://github.com/oddnetworks/oddworks) device client SDK for Android Mobile, Tablet, Amazon Fire TV, and more. Check out [Odd Networks](https://www.oddnetworks.com/) for more information.
 
 * Create a new [Android TV](https://www.android.com/tv/) streaming app for [Nexus Player](https://www.google.com/nexus/player/) or [Nvidia Shield](https://shield.nvidia.com/).
