@@ -15,6 +15,8 @@ import io.oddworks.device.model.Identifier;
 import io.oddworks.device.model.OddObject;
 import io.oddworks.device.model.Relationship;
 
+@Deprecated
+/** deprecated. Use CachingApiCaller instead. */
 public class OddStore {
     private static final OddStore INSTANCE = new OddStore();
     private final ConcurrentMap<String, StoredObject> objectStore = new ConcurrentHashMap<>();

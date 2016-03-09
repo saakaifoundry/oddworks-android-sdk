@@ -59,15 +59,13 @@ public class EntityCache {
         }
     }
 
-    /** objects that do not exist will not be included in the returned list.
-     * @param identifiers all elements should be non null
-     * @return all elements will be non null */
+    /** objects that do not exist will be represented by null entries in the list.
+     * @param identifiers elements may be null */
     @NonNull protected List<OddObject> getObjects(@NonNull Collection<Identifier> identifiers) {
         List<OddObject> objects = new ArrayList<>();
         for (Identifier identifier : identifiers) {
             OddObject object = getObject(identifier);
-            if(object != null)
-                objects.add(object);
+            objects.add(object);
         }
         return objects;
     }
