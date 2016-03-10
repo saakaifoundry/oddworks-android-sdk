@@ -1,6 +1,6 @@
 Android SDK for Oddworks
 ========================
-![Oddworks Android Devices](https://cloud.githubusercontent.com/assets/5664247/13677038/6cb72848-e6b6-11e5-8468-6fe2308c3268.png)
+![Oddworks Android Devices](https://cloud.githubusercontent.com/assets/5664247/13680205/8e3d5d2a-e6c5-11e5-9c7f-29e0d259767f.png)
 
 An [Oddworks](https://github.com/oddnetworks/oddworks) device client SDK for Android Mobile, Tablet, Amazon Fire TV, and more. Check out [Odd Networks](https://www.oddnetworks.com/) for more information.
 
