@@ -2,6 +2,12 @@ package io.oddworks.device.request;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.JsonReader;
+import android.util.Log;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.json.JSONStringer;
 
 import io.oddworks.device.model.AuthToken;
 
@@ -14,6 +20,7 @@ public class AuthenticationService {
     private static final String AUTH_PREFS = "AuthenticationService Prefs";
     public static final String TOKEN_KEY = "token";
     public static final String TOKEN_TYPE_KEY = "token type";
+    public static final String ENTITLEMENT_CREDENTIALS_KEY = "entitlement credentials key";
     private final ApiCaller apiCaller;
     private final Context context;
 
@@ -34,6 +41,12 @@ public class AuthenticationService {
         SharedPreferences.Editor prefsEditor = getSharedPreferences().edit();
         prefsEditor.putString(TOKEN_KEY, authToken.getToken());
         prefsEditor.putString(TOKEN_TYPE_KEY, authToken.getTokenType());
+
+        JSONObject entitlementCredentials = authToken.getEntitlementCredentials();
+        if (entitlementCredentials != null) {
+            prefsEditor.putString(ENTITLEMENT_CREDENTIALS_KEY, entitlementCredentials.toString());
+        }
+
         prefsEditor.apply();
     }
 
@@ -44,10 +57,18 @@ public class AuthenticationService {
         SharedPreferences prefs = getSharedPreferences();
         String type = prefs.getString(TOKEN_TYPE_KEY, null);
         String token = prefs.getString(TOKEN_KEY, null);
+        String entitlementCredentialsString = prefs.getString(ENTITLEMENT_CREDENTIALS_KEY, null);
         if(type == null || token == null) {
             return null;
         } else {
-            return new AuthToken(token, type);
+            JSONObject entitlementCredentials = null;
+            try {
+                entitlementCredentials = new JSONObject(entitlementCredentialsString);
+            } catch (JSONException e) {
+                Log.e(AuthenticationService.class.getSimpleName(), "Unable to parse entitlementCredentials: " + e);
+            }
+
+            return new AuthToken(token, type, entitlementCredentials);
         }
     }
 
@@ -56,6 +77,7 @@ public class AuthenticationService {
         SharedPreferences.Editor prefsEditor = getSharedPreferences().edit();
         prefsEditor.remove(TOKEN_KEY);
         prefsEditor.remove(TOKEN_TYPE_KEY);
+        prefsEditor.remove(ENTITLEMENT_CREDENTIALS_KEY);
         prefsEditor.apply();
     }
 
