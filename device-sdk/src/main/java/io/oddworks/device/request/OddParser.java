@@ -480,9 +480,10 @@ public class OddParser {
         JSONObject raw = new JSONObject(responseBody);
         JSONObject data = JSON.getJSONObject(raw, DATA, true);
         JSONObject attributes = JSON.getJSONObject(data, ATTRIBUTES, true);
+        JSONObject entitlementCredentials = JSON.getJSONObject(attributes, "entitlementCredentials", false);
         String accessToken = attributes.getString("access_token");
         String tokenType = attributes.getString("token_type");
-        return new AuthToken(accessToken, tokenType);
+        return new AuthToken(accessToken, tokenType, entitlementCredentials);
     }
 
     protected DeviceCodeResponse parseDeviceCodeResponse(String responseBody) throws JSONException {
