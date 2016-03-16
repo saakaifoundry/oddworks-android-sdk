@@ -15,28 +15,8 @@ import java.util.Map;
 
 import io.oddworks.device.exception.OddParseException;
 import io.oddworks.device.exception.UnhandledPlayerTypeException;
-import io.oddworks.device.model.Article;
-import io.oddworks.device.model.AuthToken;
-import io.oddworks.device.model.Config;
-import io.oddworks.device.model.DeviceCodeResponse;
-import io.oddworks.device.model.Event;
-import io.oddworks.device.model.External;
-import io.oddworks.device.model.Identifier;
-import io.oddworks.device.model.Media;
-import io.oddworks.device.model.MediaAd;
-import io.oddworks.device.model.MediaImage;
-import io.oddworks.device.model.Metric;
-import io.oddworks.device.model.MetricsConfig;
-import io.oddworks.device.model.OddCollection;
-import io.oddworks.device.model.OddObject;
-import io.oddworks.device.model.OddView;
-import io.oddworks.device.model.Promotion;
-import io.oddworks.device.model.Relationship;
-import io.oddworks.device.model.Sharing;
-import io.oddworks.device.model.players.ExternalPlayer;
-import io.oddworks.device.model.players.OoyalaPlayer;
-import io.oddworks.device.model.players.Player;
-import io.oddworks.device.model.players.Player.PlayerType;
+import io.oddworks.device.model.*;
+import io.oddworks.device.model.players.*;
 //todo stop swallowing exceptions
 
 public class OddParser {
@@ -261,9 +241,9 @@ public class OddParser {
     }
 
     protected Player parsePlayer(final JSONObject rawPlayer) throws JSONException {
-        PlayerType type = null;
+        Player.PlayerType type = null;
         try {
-            type = PlayerType.valueOf(rawPlayer.getString("type").toUpperCase());
+            type = Player.PlayerType.valueOf(rawPlayer.getString("type").toUpperCase());
         } catch(IllegalArgumentException e) {
             throw new UnhandledPlayerTypeException("unsupported player type: " + rawPlayer);
         }
@@ -297,14 +277,14 @@ public class OddParser {
     }
 
     private OoyalaPlayer parseOoyalaPlayer(JSONObject rawPlayer) throws JSONException {
-        return new OoyalaPlayer(PlayerType.OOYALA,
+        return new OoyalaPlayer(Player.PlayerType.OOYALA,
                 rawPlayer.getString("pCode"),
                 rawPlayer.getString("embedCode"),
                 rawPlayer.getString("domain"));
     }
 
     private ExternalPlayer parseExternalPlayer(JSONObject rawPlayer) throws JSONException {
-        return new ExternalPlayer(PlayerType.EXTERNAL, rawPlayer.getString("url"));
+        return new ExternalPlayer(Player.PlayerType.EXTERNAL, rawPlayer.getString("url"));
     }
 
     protected Promotion parsePromotion(final JSONObject rawPromotion) throws JSONException {
@@ -480,7 +460,8 @@ public class OddParser {
         JSONObject raw = new JSONObject(responseBody);
         JSONObject data = JSON.getJSONObject(raw, DATA, true);
         JSONObject attributes = JSON.getJSONObject(data, ATTRIBUTES, true);
-        JSONObject entitlementCredentials = JSON.getJSONObject(attributes, "entitlementCredentials", false);
+        JSONObject deviceUserProfile = JSON.getJSONObject(attributes, "deviceUserProfile", true);
+        JSONObject entitlementCredentials = JSON.getJSONObject(deviceUserProfile, "entitlementCredentials", false);
         String accessToken = attributes.getString("access_token");
         String tokenType = attributes.getString("token_type");
         return new AuthToken(accessToken, tokenType, entitlementCredentials);
