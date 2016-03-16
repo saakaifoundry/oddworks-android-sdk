@@ -1,7 +1,7 @@
 site_name: Oddworks SDK for Android
 site_url: http://android.guide.oddnetworks.com
 site_description: Odd Networks Android Developer Guide
-repo_url: https://github.com/oddnetworks/odd-sample-apps
+repo_url: https://github.com/oddnetworks/OddworksDeviceSDK
 site_favicon: assets/favicon.ico
 site_author: Erik Straub
 copyright: Odd Networks
@@ -26,8 +26,4 @@ pages:
 - "Capturing Metrics":
     - "Configuration": metrics_configuration.md
     - "Sending Metrics": sending_metrics.md
-# - "Playing Media":
-#     - "Brightcove Player": brightcove_player.md
-#     - "Ooyala Player": ooyala_player.md
-#     - "Exo Player": exo_player.md
 theme: readthedocs
