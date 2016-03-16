@@ -9,6 +9,7 @@ import org.json.JSONObject;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.skyscreamer.jsonassert.JSONAssert;
 
 import java.io.IOException;
 import java.util.Iterator;
@@ -22,6 +23,7 @@ import io.oddworks.device.metric.OddVideoPlayingMetric;
 import io.oddworks.device.metric.OddVideoStopMetric;
 import io.oddworks.device.metric.OddViewLoadMetric;
 import io.oddworks.device.model.Article;
+import io.oddworks.device.model.AuthToken;
 import io.oddworks.device.model.Config;
 import io.oddworks.device.model.Event;
 import io.oddworks.device.model.Identifier;
@@ -51,6 +53,22 @@ public class OddParserTest extends AndroidTestCase {
     public void beforeEach() throws IOException {
         oddParser = OddParser.getInstance();
         mContext = InstrumentationRegistry.getTargetContext();
+    }
+
+    @Test
+    public void testParseAuthToken() throws Exception {
+        String authTokenResponseV2 = AssetUtils.readFileToString(mContext, "AuthTokenResponseV2.json");
+        AuthToken authToken = oddParser.parseAuthToken(authTokenResponseV2);
+
+        JSONObject json = new JSONObject(authTokenResponseV2);
+        JSONObject data = json.getJSONObject("data");
+        JSONObject attributes = data.getJSONObject("attributes");
+        JSONObject deviceUserProfile = attributes.getJSONObject("deviceUserProfile");
+        JSONObject entitlementCredentials = deviceUserProfile.getJSONObject("entitlementCredentials");
+
+        assertThat(authToken.getToken(), is("hey-im-an-access-token-look-at-me"));
+        assertThat(authToken.getTokenType(), is("Bearer"));
+        JSONAssert.assertEquals(authToken.getEntitlementCredentials(), entitlementCredentials, true);
     }
 
     @Test
@@ -129,11 +147,6 @@ public class OddParserTest extends AndroidTestCase {
         List<OddObject> promotions = homepage.getIncludedByRelationship("promotion");
         List<OddObject> featuredMedia = homepage.getIncludedByRelationship("featuredMedia");
         List<OddObject> featuredCollections = homepage.getIncludedByRelationship("featuredCollections");
-    }
-
-    @Test
-    public void testParseAuthToken() throws Exception {
-
     }
 
     @Test
