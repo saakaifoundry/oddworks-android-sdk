@@ -48,7 +48,7 @@ def gitRevision() {
 }
 ```
 
-Sync your project with Gradle files and you will have the OddworksDeviceSDK added to your External Libraries.
+Sync your project with Gradle files and you will have the device-sdk added to your External Libraries.
 
 
 # Configure Your Access Token

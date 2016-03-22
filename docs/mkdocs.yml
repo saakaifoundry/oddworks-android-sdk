@@ -1,7 +1,7 @@
 site_name: Oddworks SDK for Android
 site_url: http://android.guide.oddnetworks.com
 site_description: Odd Networks Android Developer Guide
-repo_url: https://github.com/oddnetworks/OddworksDeviceSDK
+repo_url: https://github.com/oddnetworks/oddworks-android-sdk
 site_favicon: assets/favicon.ico
 site_author: Erik Straub
 copyright: Odd Networks
