@@ -4,7 +4,7 @@
     "relationships": {
       "promotion": {
         "data": {
-          "id": "fbec8574-6eb0-4339-91db-7833d96ed8c8",
+          "id": "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF",
           "type": "promotion"
         },
         "meta": {
@@ -29,37 +29,37 @@
       },
       "featuredCollections": {
         "data": {
-          "id": "ooyala-pbr-featured-collections",
+          "id": "custom-collection-1",
           "type": "collection"
         }
       }
     },
-    "id": "pbr-homepage",
+    "id": "vbr-homepage",
     "links": {
-      "self": "https://device-staging.oddworks.io/v1/views/pbr-homepage"
+      "self": "https://host.oddworks.io/v1/views/vbr-homepage"
     },
     "attributes": {
-      "organization": "pbr"
+      "organization": "vbr"
     }
   },
   "included": [
     {
       "type": "promotion",
-      "id": "fbec8574-6eb0-4339-91db-7833d96ed8c8",
+      "id": "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF",
       "links": {
-        "self": "https://device-staging.oddworks.io/v1/promotions/fbec8574-6eb0-4339-91db-7833d96ed8c8"
+        "self": "https://host.oddworks.io/v1/promotions/FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF"
       },
       "attributes": {
-        "organization": "poker-central",
-        "title": "Share your best poker face using #POKERCENTRALCONTEST",
-        "description": "Share your best poker face using #POKERCENTRALCONTEST for a chance to win. Visit www.pokerfacecontest.com today!",
-        "url": "http://www.pokercentral.com",
+        "organization": "technology-company",
+        "title": "This is a promotion title!",
+        "description": "This is a promotion title! for a chance to win. Visit contest.com today!",
+        "url": "http://website.com",
         "images": {
-          "aspect16x9": "http://image.oddworks.io/poker-central/promotions/2/16x9.png",
+          "aspect16x9": "http://image.domain.io/technology-company/promotions/2/16x9.png",
           "aspect4x3": "http://dummyimage.com/4:3x1440&text=Promo",
           "aspect3x4": "http://dummyimage.com/3:4x1920&text=Promo",
           "aspect1x1": "http://dummyimage.com/1:1x1920&text=Promo",
-          "aspect2x3": "http://image.oddworks.io/poker-central/promotions/2/2x3.jpg"
+          "aspect2x3": "http://image.domain.io/technology-company/promotions/2/2x3.jpg"
         }
       }
     },
@@ -67,26 +67,26 @@
       "type": "video",
       "id": "sharing-enabled",
       "links": {
-        "self": "https://device-staging.oddworks.io/v1/videos/sharing-enabled"
+        "self": "https://host.oddworks.io/v1/videos/sharing-enabled"
       },
       "attributes": {
         "title": "Live",
         "description": "Louder, come on",
         "images": {
-          "aspect16x9": "http://image.oddworks.io/eooyala/dkMWV5eDrsp7GH4AnSW9ywCVuDI_-9yx/3Gduepif0T1UGY8H4xMDoxOjBrO-I4W8.jpg",
-          "aspect4x3": "http://image.oddworks.io/edummyimage/4:3x1440&text=placeholder.png",
-          "aspect3x4": "http://image.oddworks.io/edummyimage/3:4x1920&text=placeholder.png",
-          "aspect1x1": "http://image.oddworks.io/edummyimage/1:1x1920&text=placeholder.png",
-          "aspect2x3": "http://image.oddworks.io/edummyimage/2:3x1920&text=placeholder.png"
+          "aspect16x9": "http://image.domain.io/eexternal/GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG.jpg",
+          "aspect4x3": "http://image.domain.io/edummyimage/4:3x1440&text=placeholder.png",
+          "aspect3x4": "http://image.domain.io/edummyimage/3:4x1920&text=placeholder.png",
+          "aspect1x1": "http://image.domain.io/edummyimage/1:1x1920&text=placeholder.png",
+          "aspect2x3": "http://image.domain.io/edummyimage/2:3x1920&text=placeholder.png"
         },
         "player": {
           "type": "external",
-          "pCode": "5meWUyOipwedhLMDFYYFdAYmnGKl",
+          "pCode": "5aaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "domain": "ooyala.com",
           "url": "https://player.vimeo.com/video/103640686"
         },
         "tags": [],
-        "organization": "pbr",
+        "organization": "vbr",
         "ads": {
           "enabled": false,
           "provider": "freewheel",
@@ -107,26 +107,26 @@
       "type": "video",
       "id": "no-sharing",
       "links": {
-        "self": "https://device-staging.oddworks.io/v1/videos/no-sharing"
+        "self": "https://host.oddworks.io/v1/videos/no-sharing"
       },
       "attributes": {
         "title": "Live",
         "description": "Louder, come on",
         "images": {
-          "aspect16x9": "http://image.oddworks.io/eooyala/dkMWV5eDrsp7GH4AnSW9ywCVuDI_-9yx/3Gduepif0T1UGY8H4xMDoxOjBrO-I4W8.jpg",
-          "aspect4x3": "http://image.oddworks.io/edummyimage/4:3x1440&text=placeholder.png",
-          "aspect3x4": "http://image.oddworks.io/edummyimage/3:4x1920&text=placeholder.png",
-          "aspect1x1": "http://image.oddworks.io/edummyimage/1:1x1920&text=placeholder.png",
-          "aspect2x3": "http://image.oddworks.io/edummyimage/2:3x1920&text=placeholder.png"
+          "aspect16x9": "http://image.domain.io/eexternal/GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG.jpg",
+          "aspect4x3": "http://image.domain.io/edummyimage/4:3x1440&text=placeholder.png",
+          "aspect3x4": "http://image.domain.io/edummyimage/3:4x1920&text=placeholder.png",
+          "aspect1x1": "http://image.domain.io/edummyimage/1:1x1920&text=placeholder.png",
+          "aspect2x3": "http://image.domain.io/edummyimage/2:3x1920&text=placeholder.png"
         },
         "player": {
           "type": "external",
-          "pCode": "5meWUyOipwedhLMDFYYFdAYmnGKl",
+          "pCode": "5aaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "domain": "ooyala.com",
           "url": "https://player.vimeo.com/video/103640686"
         },
         "tags": [],
-        "organization": "pbr",
+        "organization": "vbr",
         "ads": {
           "enabled": false,
           "provider": "freewheel",
@@ -143,26 +143,26 @@
       "type": "video",
       "id": "sharing-disabled",
       "links": {
-        "self": "https://device-staging.oddworks.io/v1/videos/sharing-disabled"
+        "self": "https://host.oddworks.io/v1/videos/sharing-disabled"
       },
       "attributes": {
         "title": "Live",
         "description": "Louder, come on",
         "images": {
-          "aspect16x9": "http://image.oddworks.io/eooyala/dkMWV5eDrsp7GH4AnSW9ywCVuDI_-9yx/3Gduepif0T1UGY8H4xMDoxOjBrO-I4W8.jpg",
-          "aspect4x3": "http://image.oddworks.io/edummyimage/4:3x1440&text=placeholder.png",
-          "aspect3x4": "http://image.oddworks.io/edummyimage/3:4x1920&text=placeholder.png",
-          "aspect1x1": "http://image.oddworks.io/edummyimage/1:1x1920&text=placeholder.png",
-          "aspect2x3": "http://image.oddworks.io/edummyimage/2:3x1920&text=placeholder.png"
+          "aspect16x9": "http://image.domain.io/eexternal/GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG.jpg",
+          "aspect4x3": "http://image.domain.io/edummyimage/4:3x1440&text=placeholder.png",
+          "aspect3x4": "http://image.domain.io/edummyimage/3:4x1920&text=placeholder.png",
+          "aspect1x1": "http://image.domain.io/edummyimage/1:1x1920&text=placeholder.png",
+          "aspect2x3": "http://image.domain.io/edummyimage/2:3x1920&text=placeholder.png"
         },
         "player": {
           "type": "external",
-          "pCode": "5meWUyOipwedhLMDFYYFdAYmnGKl",
+          "pCode": "5aaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "domain": "ooyala.com",
           "url": "https://player.vimeo.com/video/103640686"
         },
         "tags": [],
-        "organization": "pbr",
+        "organization": "vbr",
         "ads": {
           "enabled": false,
           "provider": "freewheel",
@@ -183,73 +183,73 @@
       "relationships": {
         "entities": {
           "links": {
-            "self": "/v1/collections/ooyala-featured-collections/collections"
+            "self": "/v1/collections/custom-collection/collections"
           },
           "data": [
             {
-              "id": "ooyala-w4MGV5eDpoE0rmbrcHEeDEEuhQMypB0u",
+              "id": "DEEDDEEDDEEDDEEDDEEDDEEDDEEDDEED",
               "type": "collection"
             },
             {
-              "id": "ooyala-02ZWV5eDqBpEbc9ooAspnWFIIycMZWfK",
+              "id": "KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK",
               "type": "collection"
             },
             {
-              "id": "ooyala-1sb3lyeDqceL2bg9n92QLrx70spWE_-E",
+              "id": "1sb3lyeDqceL2bg9n92QLrx70spWE_-E",
               "type": "collection"
             }
           ]
         }
       },
       "type": "collection",
-      "id": "ooyala-pbr-featured-collections",
+      "id": "custom-collection-1",
       "links": {
-        "self": "https://device-staging.oddworks.io/v1/collections/ooyala-pbr-featured-collections"
+        "self": "https://host.oddworks.io/v1/collections/custom-collection-1"
       },
       "attributes": {
-        "title": "PBR Featured Collections",
+        "title": "Automotive Pros Featured Collections",
         "description": "",
         "images": {
-          "aspect16x9": "http://image.oddworks.io/eooyala/w4MGV5eDpoE0rmbrcHEeDEEuhQMypB0u/promo272218855.jpg"
+          "aspect16x9": "http://image.domain.io/eexternal/DEEDDEEDDEEDDEEDDEEDDEEDDEEDDEED/promo272218855.jpg"
         },
         "releaseDate": "2015-12-02T13:32:24Z",
         "updatedAt": "2015-12-02T15:59:43Z",
         "createdAt": "2015-12-02T13:32:24Z",
-        "organization": "pbr"
+        "organization": "vbr"
       }
     },
     {
       "relationships": {
         "entities": {
           "links": {
-            "self": "/v1/collections/ooyala-w4MGV5eDpoE0rmbrcHEeDEEuhQMypB0u/relationships/entities"
+            "self": "/v1/collections/DEEDDEEDDEEDDEEDDEEDDEEDDEEDDEED/relationships/entities"
           },
           "data": [
             {
-              "id": "ooyala-xpam8yeTp9y3UlSD1LYj-e8DGTe-NoB7",
+              "id": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
               "type": "video"
             },
             {
-              "id": "ooyala-I4am8yeTp8jka7BRtcECqpuJHFNg2Nl-",
+              "id": "44444444444444444444444444444444",
               "type": "video"
             },
             {
-              "id": "ooyala-BqaW8yeToh8HjQzrMZVAxuUMFnpxNdbR",
+              "id": "77777777777777777777777777777777",
               "type": "video"
             }
           ]
         }
       },
       "type": "collection",
-      "id": "ooyala-w4MGV5eDpoE0rmbrcHEeDEEuhQMypB0u",
+      "id": "DEEDDEEDDEEDDEEDDEEDDEEDDEEDDEED",
       "links": {
-        "self": "https://device-staging.oddworks.io/v1/collections/ooyala-w4MGV5eDpoE0rmbrcHEeDEEuhQMypB0u"
+        "self": "https://host.oddworks.io/v1/collections/DEEDDEEDDEEDDEEDDEEDDEEDDEEDDEED"
       },
       "attributes": {
         "title": "The Black Eyed Peas",
         "description": "Lorem Ipsum bacon helvetica grilled pickle tomato milk soup cookie",
         "images": {
-          "aspect16x9": "http://image.oddworks.io/eooyala/w4MGV5eDpoE0rmbrcHEeDEEuhQMypB0u/promo272218855.jpg"
+          "aspect16x9": "http://image.domain.io/eexternal/DEEDDEEDDEEDDEEDDEEDDEEDDEEDDEED/promo272218855.jpg"
         },
         "releaseDate": "2015-11-19T16:19:53Z",
         "updatedAt": "2015-11-23T18:54:50Z",
@@ -261,30 +261,30 @@
       "relationships": {
         "entities": {
           "links": {
-            "self": "/v1/collections/ooyala-02ZWV5eDqBpEbc9ooAspnWFIIycMZWfK/relationships/entities"
+            "self": "/v1/collections/KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK/relationships/entities"
           },
           "data": [
             {
-              "id": "ooyala-xvam8yeTqpPr9C_Mpa7MX6oYbKoWDiEF",
+              "id": "55555555555555555555555555555555",
               "type": "video"
             },
             {
-              "id": "ooyala-82am8yeTpdP4bsVwpeIDmMZN1R0f823w",
+              "id": "66666666666666666666666666666666",
               "type": "video"
             }
           ]
         }
       },
       "type": "collection",
-      "id": "ooyala-02ZWV5eDqBpEbc9ooAspnWFIIycMZWfK",
+      "id": "KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK",
       "links": {
-        "self": "https://device-staging.oddworks.io/v1/collections/ooyala-02ZWV5eDqBpEbc9ooAspnWFIIycMZWfK"
+        "self": "https://host.oddworks.io/v1/collections/KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK"
       },
       "attributes": {
         "title": "Lynyrd Skynyrd",
         "description": "Some birds you just cannot change",
         "images": {
-          "aspect16x9": "http://image.oddworks.io/eooyala/02ZWV5eDqBpEbc9ooAspnWFIIycMZWfK/promo272219498.jpg"
+          "aspect16x9": "http://image.domain.io/eexternal/KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK/promo272219498.jpg"
         },
         "releaseDate": "2015-11-19T16:29:55Z",
         "updatedAt": "2015-11-23T18:54:51Z",
@@ -296,26 +296,26 @@
       "relationships": {
         "entities": {
           "links": {
-            "self": "/v1/collections/ooyala-1sb3lyeDqceL2bg9n92QLrx70spWE_-E/relationships/entities"
+            "self": "/v1/collections/1sb3lyeDqceL2bg9n92QLrx70spWE_-E/relationships/entities"
           },
           "data": [
             {
-              "id": "ooyala-RwaW8yeTqohoLkNMj-46VPyvJQKDMY6q",
+              "id": "RwaW8yeTqohoLkNMj-46VPyvJQKDMY6q",
               "type": "video"
             }
           ]
         }
       },
       "type": "collection",
-      "id": "ooyala-1sb3lyeDqceL2bg9n92QLrx70spWE_-E",
+      "id": "1sb3lyeDqceL2bg9n92QLrx70spWE_-E",
       "links": {
-        "self": "https://device-staging.oddworks.io/v1/collections/ooyala-1sb3lyeDqceL2bg9n92QLrx70spWE_-E"
+        "self": "https://host.oddworks.io/v1/collections/1sb3lyeDqceL2bg9n92QLrx70spWE_-E"
       },
       "attributes": {
         "title": "Action Action",
         "description": "Zombie ipsum reversus ab viral inferno, nam rick grimes malum cerebro. De carne lumbering animata corpora quaeritis. Summus brains sit , morbo vel maleficia? De apocalypsi gorger omero undead survivor dictum mauris. Hi mindless mortuis soulless creaturas, imo evil stalking monstra adventus resi dentevil vultus comedat cerebella viventium",
         "images": {
-          "aspect16x9": "http://image.oddworks.io/eooyala/1sb3lyeDqceL2bg9n92QLrx70spWE_-E/promo271524327.jpg"
+          "aspect16x9": "http://image.domain.io/eexternal/1sb3lyeDqceL2bg9n92QLrx70spWE_-E/promo271524327.jpg"
         },
         "releaseDate": "2015-11-11T15:23:00Z",
         "updatedAt": "2015-11-23T18:54:41Z",
@@ -334,6 +334,6 @@
     "userEntitlements": []
   },
   "links": {
-    "self": "https://device-staging.oddworks.io/v1/views/pbr-homepage%3Finclude=true"
+    "self": "https://host.oddworks.io/v1/views/vbr-homepage%3Finclude=true"
   }
 }

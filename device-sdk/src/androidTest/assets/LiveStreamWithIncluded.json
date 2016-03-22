@@ -2,7 +2,7 @@
   "data": {
     "type": "liveStream",
     "meta": {
-      "source": "itprotv",
+      "source": "company-of-all-things",
       "sourceId": "1",
       "sourceType": "studio",
       "entitlements": [
@@ -19,14 +19,14 @@
     "attributes": {
       "title": "livestream 1:",
       "images": {
-        "aspect16x9": "http://bad-image-url.com/5522d95ac6e4a3cb5de9e964.png"
+        "aspect16x9": "http://bad-image-url.com/445544554455445544554455.png"
       },
       "url": "http://bad-video-url.com/playlist.m3u8",
       "isLive": false,
       "organization": "test-org",
       "ads": {
         "enabled": false,
-        "assetId": "5522d95ac6e4a3cb5de9e964"
+        "assetId": "445544554455445544554455"
       },
       "overlays": {},
       "player": {
@@ -46,6 +46,6 @@
     "userEntitlements": []
   },
   "links": {
-    "self": "https://bad-self-url.com/v2/liveStreams/test-org-5522d95ac6e4a3cb5de9e964%3Finclude=true"
+    "self": "https://bad-self-url.com/v2/liveStreams/test-org-445544554455445544554455%3Finclude=true"
   }
 }

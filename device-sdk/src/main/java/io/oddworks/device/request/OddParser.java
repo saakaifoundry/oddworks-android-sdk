@@ -503,37 +503,37 @@ public class OddParser {
             JSONObject resultObject = new JSONObject(result);
             JSONArray dataArray = resultObject.getJSONArray(DATA);
             for (int i = 0; i < dataArray.length(); i++) {
-                JSONObject pokerObj = dataArray.getJSONObject(i);
-                String type = JSON.getString(pokerObj, "type");
+                JSONObject item = dataArray.getJSONObject(i);
+                String type = JSON.getString(item, "type");
 
                 switch(type) {
                     case OddObject.TYPE_VIDEO:
                     case OddObject.TYPE_LIVE_STREAM:
-                        Media video = parseMedia(pokerObj);
+                        Media video = parseMedia(item);
                         if (video != null) {
                             searchResult.add(video);
                         }
                         break;
                     case OddObject.TYPE_ARTICLE:
-                        Article article = parseArticle(pokerObj);
+                        Article article = parseArticle(item);
                         if (article != null) {
                             searchResult.add(article);
                         }
                         break;
                     case OddObject.TYPE_EVENT:
-                        Event event = parseEvent(pokerObj);
+                        Event event = parseEvent(item);
                         if (event != null) {
                             searchResult.add(event);
                         }
                         break;
                     case OddObject.TYPE_EXTERNAL:
-                        External external = parseExternal(pokerObj);
+                        External external = parseExternal(item);
                         if (external != null) {
                             searchResult.add(external);
                         }
                         break;
                     case OddObject.TYPE_COLLECTION:
-                        OddCollection collection = parseCollection(pokerObj);
+                        OddCollection collection = parseCollection(item);
                         if (collection != null) {
                                 searchResult.add(collection);
                         }

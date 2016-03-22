@@ -2,7 +2,7 @@
   "data": {
     "type": "config",
     "links": {
-      "self": "https://device-staging.oddworks.io/v1/configs/"
+      "self": "https://host.oddworks.io/v1/configs/"
     },
     "attributes": {
       "features": {
@@ -17,7 +17,7 @@
         }
       },
       "views": {
-        "homepage": "ac4ece84-d872-4b98-b8b9-2840e060a6ea",
+        "homepage": "EDDEEDDEEDDEEDDEEDDEEDDEEDDEEDDEEDDE",
         "splash": "2a019789-2475-4674-84f0-764bca8b8f66"
       }
     }
@@ -28,6 +28,6 @@
     "userEntitlements": []
   },
   "links": {
-    "self": "https://device-staging.oddworks.io/v1/config"
+    "self": "https://host.oddworks.io/v1/config"
   }
 }

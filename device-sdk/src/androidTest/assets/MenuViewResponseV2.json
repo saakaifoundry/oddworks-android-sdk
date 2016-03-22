@@ -5,34 +5,34 @@
       "items": {
         "data": [
           {
-            "id": "pbr-homepage",
+            "id": "vbr-homepage",
             "type": "view"
           },
           {
-            "id": "ooyala-pbr-featured-collections",
+            "id": "custom-collection-1",
             "type": "collection"
           },
           {
-            "id": "9962fbef3e74fe8e54fcee17fe1ee00a",
+            "id": "HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH",
             "type": "collection"
           },
           {
-            "id": "e1ce8566655fcac15ad4ed579b1d1333",
+            "id": "IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII",
             "type": "collection"
           },
           {
-            "id": "pbr-stats",
+            "id": "vbr-stats",
             "type": "external"
           }
         ]
       }
     },
-    "id": "pbr-menu",
+    "id": "vbr-menu",
     "links": {
-      "self": "https://device-staging.oddworks.io/v1/views/pbr-menu"
+      "self": "https://host.oddworks.io/v1/views/vbr-menu"
     },
     "attributes": {
-      "organization": "pbr"
+      "organization": "vbr"
     }
   },
   "included": [
@@ -41,7 +41,7 @@
       "relationships": {
         "promotion": {
           "data": {
-            "id": "fbec8574-6eb0-4339-91db-7833d96ed8c8",
+            "id": "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF",
             "type": "promotion"
           },
           "meta": {
@@ -50,62 +50,62 @@
         },
         "featuredMedia": {
           "data": {
-            "id": "pbr-live-web-video",
+            "id": "vbr-live-web-video",
             "type": "video"
           }
         },
         "featuredCollections": {
           "data": {
-            "id": "ooyala-pbr-featured-collections",
+            "id": "custom-collection-1",
             "type": "collection"
           }
         }
       },
-      "id": "pbr-homepage",
+      "id": "vbr-homepage",
       "links": {
-        "self": "https://device-staging.oddworks.io/v1/views/pbr-homepage"
+        "self": "https://host.oddworks.io/v1/views/vbr-homepage"
       },
       "attributes": {
-        "organization": "pbr"
+        "organization": "vbr"
       }
     },
     {
       "relationships": {
         "entities": {
           "links": {
-            "self": "/v1/collections/ooyala-featured-collections/collections"
+            "self": "/v1/collections/custom-collection/collections"
           },
           "data": [
             {
-              "id": "ooyala-12c21leTrN6l45_fxhryPgsGbeDg_Hzj",
+              "id": "JJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJ",
               "type": "collection"
             },
             {
-              "id": "ooyala-BxNWtleTrbTQB-vrcaWoX16ivQEo9Hjd",
+              "id": "LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL",
               "type": "collection"
             },
             {
-              "id": "ooyala-xxMGxleToTuU0WDEyOwAV6SMPCmPSGj1",
+              "id": "MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM",
               "type": "collection"
             }
           ]
         }
       },
       "type": "collection",
-      "id": "ooyala-pbr-featured-collections",
+      "id": "custom-collection-1",
       "links": {
-        "self": "https://device-staging.oddworks.io/v1/collections/ooyala-pbr-featured-collections"
+        "self": "https://host.oddworks.io/v1/collections/custom-collection-1"
       },
       "attributes": {
-        "title": "PBR Featured Collections",
+        "title": "Automotive Pros Featured Collections",
         "description": "",
         "images": {
-          "aspect16x9": "http://image.oddworks.io/eooyala/w4MGV5eDpoE0rmbrcHEeDEEuhQMypB0u/promo272218855.jpg"
+          "aspect16x9": "http://image.domain.io/eexternal/DEEDDEEDDEEDDEEDDEEDDEEDDEEDDEED/promo272218855.jpg"
         },
         "releaseDate": "2015-12-02T13:32:24Z",
         "updatedAt": "2015-12-02T15:59:43Z",
         "createdAt": "2015-12-02T13:32:24Z",
-        "organization": "pbr"
+        "organization": "vbr"
       }
     },
     {
@@ -114,25 +114,25 @@
         "entities": {
           "data": [
             {
-              "id": "99cb11b7d32b5cf49fef63d913b3c9d4",
+              "id": "C9D4C9D4C9D4C9D4C9D4C9D4C9D4C9D4",
               "type": "article"
             },
             {
-              "id": "adf3c0728aec1f58a39cabdc5e525efc",
+              "id": "5EFC5EFC5EFC5EFC5EFC5EFC5EFC5EFC",
               "type": "article"
             }
           ]
         }
       },
-      "id": "9962fbef3e74fe8e54fcee17fe1ee00a",
+      "id": "HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH",
       "links": {
-        "self": "https://device-staging.oddworks.io/v1/collections/9962fbef3e74fe8e54fcee17fe1ee00a"
+        "self": "https://host.oddworks.io/v1/collections/HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH"
       },
       "attributes": {
-        "organization": "pbr",
+        "organization": "vbr",
         "title": "News",
-        "link": "http://pbr.com",
-        "description": "Latest PBR News",
+        "link": "http://vbr.com",
+        "description": "Latest Automotive Pros News",
         "language": "en",
         "generator": "umbraco"
       }
@@ -143,93 +143,93 @@
         "entities": {
           "data": [
             {
-              "id": "f7a9aaeb7ac2a8fadfdd8767b8ea43f7",
+              "id": "43F743F743F743F743F743F743F743F7",
               "type": "event"
             },
             {
-              "id": "9933fbe99b074a1775be6f85fd67eb32",
+              "id": "EB32EB32EB32EB32EB32EB32EB32EB32",
               "type": "event"
             },
             {
-              "id": "b672ab4e9744cd0b690a29bcc759c2c3",
+              "id": "C2C3C2C3C2C3C2C3C2C3C2C3C2C3C2C3",
               "type": "event"
             }
           ]
         }
       },
-      "id": "e1ce8566655fcac15ad4ed579b1d1333",
+      "id": "IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII",
       "links": {
-        "self": "https://device-staging.oddworks.io/v1/collections/e1ce8566655fcac15ad4ed579b1d1333"
+        "self": "https://host.oddworks.io/v1/collections/IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII"
       },
       "attributes": {
-        "organization": "pbr",
-        "title": "Built Ford Tough Series - Schedule",
-        "link": "http://pbr.com/en/bfts/events.rss",
-        "description": "Professional Bull Riders - BFTS",
+        "organization": "vbr",
+        "title": "Expert Series - Schedule",
+        "link": "http://vbr.com/en/tttt/events.rss",
+        "description": "Professional Automotive Experts - BFTS",
         "language": null,
         "generator": null
       }
     },
     {
       "type": "external",
-      "id": "pbr-stats",
+      "id": "vbr-stats",
       "links": {
-        "self": "https://device-staging.oddworks.io/v1/externals/pbr-stats"
+        "self": "https://host.oddworks.io/v1/externals/vbr-stats"
       },
       "attributes": {
         "title": "Stats",
-        "description": "Stats for PBR",
-        "url": "http://odd-pbr.s3-website-us-east-1.amazonaws.com"
+        "description": "Stats for Automotive Pros",
+        "url": "http://odd-vbr.domain.amazonaws.com"
       }
     },
     {
       "type": "promotion",
-      "id": "fbec8574-6eb0-4339-91db-7833d96ed8c8",
+      "id": "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF",
       "links": {
-        "self": "https://device-staging.oddworks.io/v1/promotions/fbec8574-6eb0-4339-91db-7833d96ed8c8"
+        "self": "https://host.oddworks.io/v1/promotions/FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF"
       },
       "attributes": {
-        "organization": "poker-central",
-        "title": "Share your best poker face using #POKERCENTRALCONTEST",
-        "description": "Share your best poker face using #POKERCENTRALCONTEST for a chance to win. Visit www.pokerfacecontest.com today!",
+        "organization": "technology-company",
+        "title": "This is a promotion title!",
+        "description": "This is a promotion title! for a chance to win. Visit contest.com today!",
         "images": {
-          "aspect16x9": "http://image.oddworks.io/poker-central/promotions/2/16x9.png",
+          "aspect16x9": "http://image.domain.io/technology-company/promotions/2/16x9.png",
           "aspect4x3": "http://dummyimage.com/4:3x1440&text=Promo",
           "aspect3x4": "http://dummyimage.com/3:4x1920&text=Promo",
           "aspect1x1": "http://dummyimage.com/1:1x1920&text=Promo",
-          "aspect2x3": "http://image.oddworks.io/poker-central/promotions/2/2x3.jpg"
+          "aspect2x3": "http://image.domain.io/technology-company/promotions/2/2x3.jpg"
         }
       }
     },
     {
       "type": "video",
-      "id": "pbr-live-web-video",
+      "id": "vbr-live-web-video",
       "links": {
-        "self": "https://device-staging.oddworks.io/v1/videos/pbr-live-web-video"
+        "self": "https://host.oddworks.io/v1/videos/vbr-live-web-video"
       },
       "attributes": {
         "title": "Live",
         "description": "Louder, come on",
         "images": {
-          "aspect16x9": "http://image.oddworks.io/eooyala/dkMWV5eDrsp7GH4AnSW9ywCVuDI_-9yx/3Gduepif0T1UGY8H4xMDoxOjBrO-I4W8.jpg",
-          "aspect4x3": "http://image.oddworks.io/edummyimage/4:3x1440&text=placeholder.png",
-          "aspect3x4": "http://image.oddworks.io/edummyimage/3:4x1920&text=placeholder.png",
-          "aspect1x1": "http://image.oddworks.io/edummyimage/1:1x1920&text=placeholder.png",
-          "aspect2x3": "http://image.oddworks.io/edummyimage/2:3x1920&text=placeholder.png"
+          "aspect16x9": "http://image.domain.io/eexternal/GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG.jpg",
+          "aspect4x3": "http://image.domain.io/edummyimage/4:3x1440&text=placeholder.png",
+          "aspect3x4": "http://image.domain.io/edummyimage/3:4x1920&text=placeholder.png",
+          "aspect1x1": "http://image.domain.io/edummyimage/1:1x1920&text=placeholder.png",
+          "aspect2x3": "http://image.domain.io/edummyimage/2:3x1920&text=placeholder.png"
         },
         "player": {
           "type": "external",
-          "pCode": "5meWUyOipwedhLMDFYYFdAYmnGKl",
+          "pCode": "5aaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "domain": "ooyala.com",
-          "url": "http://s3.amazonaws.com/odd-pbr/live_stream.html"
+          "url": "http://s3.amazonaws.com/odd-vbr/live_stream.html"
         },
         "tags": [],
-        "organization": "pbr",
+        "organization": "vbr",
         "ads": {
           "enabled": false,
           "provider": "freewheel",
           "format": "vast",
-          "assetId": "pbr-live-web-video"
+          "assetId": "vbr-live-web-video"
         },
         "overlays": {
           "enabled": false
@@ -241,130 +241,130 @@
       "relationships": {
         "entities": {
           "links": {
-            "self": "/v1/collections/ooyala-12c21leTrN6l45_fxhryPgsGbeDg_Hzj/entities"
+            "self": "/v1/collections/JJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJ/entities"
           },
           "data": [
             {
-              "id": "ooyala-s2eGFleTrb-LthCmvutaxPmPGV0Eslgr",
+              "id": "s2eGFleTrb-LthCmvutaxPmPGV0Eslgr",
               "type": "video"
             },
             {
-              "id": "ooyala-94dWFleTr-rBRuvW8Z3u3vA3duVJ4Iw6",
+              "id": "94dWFleTr-rBRuvW8Z3u3vA3duVJ4Iw6",
               "type": "video"
             },
             {
-              "id": "ooyala-todWFleTp8yD5OATrWITNoxnRvIazmTj",
+              "id": "todWFleTp8yD5OATrWITNoxnRvIazmTj",
               "type": "video"
             }
           ]
         }
       },
       "type": "collection",
-      "id": "ooyala-12c21leTrN6l45_fxhryPgsGbeDg_Hzj",
+      "id": "JJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJ",
       "links": {
-        "self": "https://device-staging.oddworks.io/v1/collections/ooyala-12c21leTrN6l45_fxhryPgsGbeDg_Hzj"
+        "self": "https://host.oddworks.io/v1/collections/JJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJ"
       },
       "attributes": {
         "title": "2015 Top Bulls",
         "description": "",
         "images": {
-          "aspect16x9": "http://image.oddworks.io/eooyala/s2eGFleTrb-LthCmvutaxPmPGV0Eslgr/QCdjB5HwFOTaWQ8X4xMDoxOjBzMTt2bJ.jpg"
+          "aspect16x9": "http://image.domain.io/eexternal/s2eGFleTrb-LthCmvutaxPmPGV0Eslgr/QCdjB5HwFOTaWQ8X4xMDoxOjBzMTt2bJ.jpg"
         },
         "releaseDate": "2015-12-09T00:31:49Z",
         "updatedAt": "2015-12-09T01:03:02Z",
         "createdAt": "2015-12-09T00:31:49Z",
-        "organization": "pbr"
+        "organization": "vbr"
       }
     },
     {
       "relationships": {
         "entities": {
           "links": {
-            "self": "/v1/collections/ooyala-BxNWtleTrbTQB-vrcaWoX16ivQEo9Hjd/entities"
+            "self": "/v1/collections/LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL/entities"
           },
           "data": [
             {
-              "id": "ooyala-QzNG9leTp8hS6engO1_jJHWQsm_iYXWT",
+              "id": "QzNG9leTp8hS6engO1_jJHWQsm_iYXWT",
               "type": "collection"
             },
             {
-              "id": "ooyala-Y2eW5leTpz9CMyt-fq5qLFWjqDIP-kN3",
+              "id": "K-N3K-N3K-N3K-N3K-N3K-N3K-N3K-N3",
               "type": "collection"
             }
           ]
         }
       },
       "type": "collection",
-      "id": "ooyala-BxNWtleTrbTQB-vrcaWoX16ivQEo9Hjd",
+      "id": "LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL",
       "links": {
-        "self": "https://device-staging.oddworks.io/v1/collections/ooyala-BxNWtleTrbTQB-vrcaWoX16ivQEo9Hjd"
+        "self": "https://host.oddworks.io/v1/collections/LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL"
       },
       "attributes": {
         "title": "Highlights",
         "description": "",
         "images": {
-          "aspect16x9": "http://image.oddworks.io/eooyala/QzNG9leTp8hS6engO1_jJHWQsm_iYXWT/promo274377455.jpg"
+          "aspect16x9": "http://image.domain.io/eexternal/QzNG9leTp8hS6engO1_jJHWQsm_iYXWT/promo274377455.jpg"
         },
         "releaseDate": "2015-12-08T23:19:18Z",
         "updatedAt": "2015-12-09T01:04:18Z",
         "createdAt": "2015-12-08T23:19:18Z",
-        "organization": "pbr"
+        "organization": "vbr"
       }
     },
     {
       "relationships": {
         "entities": {
           "links": {
-            "self": "/v1/collections/ooyala-xxMGxleToTuU0WDEyOwAV6SMPCmPSGj1/entities"
+            "self": "/v1/collections/MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM/entities"
           },
           "data": [
             {
-              "id": "ooyala-Y3N2xleTqeWnR5yu6YLFmzUV34PJldna",
+              "id": "DNADDNADDNADDNADDNADDNADDNADDNAD",
               "type": "video"
             },
             {
-              "id": "ooyala-Y1N2xleTrD4Xyp11l8bTHH_3TxCzsfLI",
+              "id": "FLIFFLIFFLIFFLIFFLIFFLIFFLIFFLIF",
               "type": "video"
             },
             {
-              "id": "ooyala-YzN2xleTpxnER1TlDR41x3mU6Q0MbP5u",
+              "id": "BP5UBP5UBP5UBP5UBP5UBP5UBP5UBP5U",
               "type": "video"
             },
             {
-              "id": "ooyala-YxN2xleTr4qaMD4JbHcdiaDoHSe2aHQy",
+              "id": "AHQYAHQYAHQYAHQYAHQYAHQYAHQYAHQY",
               "type": "video"
             }
           ]
         }
       },
       "type": "collection",
-      "id": "ooyala-xxMGxleToTuU0WDEyOwAV6SMPCmPSGj1",
+      "id": "MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM",
       "links": {
-        "self": "https://device-staging.oddworks.io/v1/collections/ooyala-xxMGxleToTuU0WDEyOwAV6SMPCmPSGj1"
+        "self": "https://host.oddworks.io/v1/collections/MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM"
       },
       "attributes": {
-        "title": "2016 BlueDEF Tour Highlights",
+        "title": "2016 Hefty Tour Highlights",
         "description": "",
         "images": {
-          "aspect16x9": "http://image.oddworks.io/eooyala/Y3N2xleTqeWnR5yu6YLFmzUV34PJldna/3Gduepif0T1UGY8H4xMDoxOjBzMTt2bJ.jpg"
+          "aspect16x9": "http://image.domain.io/eexternal/DNADDNADDNADDNADDNADDNADDNADDNAD/3Gduepif0T1UGY8H4xMDoxOjBzMTt2bJ.jpg"
         },
         "releaseDate": "2015-12-08T23:51:30Z",
         "updatedAt": "2015-12-09T00:54:51Z",
         "createdAt": "2015-12-08T23:51:30Z",
-        "organization": "pbr"
+        "organization": "vbr"
       }
     },
     {
       "type": "article",
-      "id": "99cb11b7d32b5cf49fef63d913b3c9d4",
+      "id": "C9D4C9D4C9D4C9D4C9D4C9D4C9D4C9D4",
       "links": {
-        "self": "https://device-staging.oddworks.io/v1/articles/99cb11b7d32b5cf49fef63d913b3c9d4"
+        "self": "https://host.oddworks.io/v1/articles/C9D4C9D4C9D4C9D4C9D4C9D4C9D4C9D4"
       },
       "attributes": {
-        "organization": "pbr",
+        "organization": "vbr",
         "title": "Stock Contractor of the Year Berger has bulls at NFR",
-        "description": "When you are the reigning PBR Stock Contractor of the Year, it is safe to say you have top-notch quality bucking bulls.",
-        "url": "http://pbr.com/en/news/features/other-features/2015/11/stock-contractor-of-the-year-berger-has-bulls-at-nfr.aspx",
+        "description": "When you are the reigning Automotive Pros Stock Contractor of the Year, it is safe to say you have top-notch quality bucking bulls.",
+        "url": "http://vbr.com/en/news/features/other-features/2015/11/stock-contractor-of-the-year-berger-has-bulls-at-nfr.aspx",
         "createdAt": "2015-12-02T17:08:35+00:00",
         "source": {},
         "category": null
@@ -372,40 +372,40 @@
     },
     {
       "type": "article",
-      "id": "adf3c0728aec1f58a39cabdc5e525efc",
+      "id": "5EFC5EFC5EFC5EFC5EFC5EFC5EFC5EFC",
       "links": {
-        "self": "https://device-staging.oddworks.io/v1/articles/adf3c0728aec1f58a39cabdc5e525efc"
+        "self": "https://host.oddworks.io/v1/articles/5EFC5EFC5EFC5EFC5EFC5EFC5EFC5EFC"
       },
       "attributes": {
-        "organization": "pbr",
-        "title": "Billings hosts Built Ford Tough Series for 21st year in a row",
-        "description": "The PBR (Professional Bull Riders) Built Ford Tough Series (BFTS) will enjoy its 21st consecutive year in Magic City in 2016, as the Rimrock Auto Arena hosts the Billings Invitational on April 15-17, 2016.",
+        "organization": "vbr",
+        "title": "Billings hosts Expert Series for 21st year in a row",
+        "description": "The Automotive Pros (Professional Automotive Experts) Expert Series (BFTS) will enjoy its 21st consecutive year in Magic City in 2016, as the Rimrock Auto Arena hosts the Billings Invitational on April 15-17, 2016.",
         "createdAt": "2015-12-01T18:08:29+00:00",
-        "url": "http://pbr.com/en/news/press-releases/2015/12/billings-hosts-built-ford-tough-series-for-21st-year-in-a-row.aspx",
+        "url": "http://vbr.com/en/news/press-releases/2015/12/billings-hosts-built-ford-tough-series-for-21st-year-in-a-row.aspx",
         "source": {},
         "category": null
       }
     },
     {
       "type": "event",
-      "id": "f7a9aaeb7ac2a8fadfdd8767b8ea43f7",
+      "id": "43F743F743F743F743F743F743F743F7",
       "links": {
-        "self": "https://device-staging.oddworks.io/v1/events/f7a9aaeb7ac2a8fadfdd8767b8ea43f7"
+        "self": "https://host.oddworks.io/v1/events/43F743F743F743F743F743F743F743F7"
       },
       "attributes": {
-        "organization": "pbr",
-        "title": "2015 Built Ford Tough World Finals",
+        "organization": "vbr",
+        "title": "2015 Expert thing",
         "description": "Thomas & Mack Center",
         "images": {
-          "aspect16x9": "http://pbr.com/media/resized/96117_0_640x360.jpg"
+          "aspect16x9": "http://vbr.com/media/resized/96117_0_640x360.jpg"
         },
         "category": "BFTS",
         "source": {
-          "title": "pbr.com",
-          "url": "http://pbr.com/en/bfts/events.rss"
+          "title": "vbr.com",
+          "url": "http://vbr.com/en/tttt/events.rss"
         },
         "createdAt": "2015-11-24T19:37:36+00:00",
-        "url": "http://pbr.com/en/bfts/schedule/2015/2015-world-finals.aspx",
+        "url": "http://vbr.com/en/tttt/schedule/2015/2015-world-finals.aspx",
         "ical": {
           "location": "Las Vegas, NV",
           "dtstart": "2014-10-22T00:50:00+00:00",
@@ -415,24 +415,24 @@
     },
     {
       "type": "event",
-      "id": "9933fbe99b074a1775be6f85fd67eb32",
+      "id": "EB32EB32EB32EB32EB32EB32EB32EB32",
       "links": {
-        "self": "https://device-staging.oddworks.io/v1/events/9933fbe99b074a1775be6f85fd67eb32"
+        "self": "https://host.oddworks.io/v1/events/EB32EB32EB32EB32EB32EB32EB32EB32"
       },
       "attributes": {
-        "organization": "pbr",
-        "title": "Cooper Tires Take the Money and Ride",
+        "organization": "vbr",
+        "title": "thing thing and Happening",
         "description": "Tucson Arena",
         "images": {
-          "aspect16x9": "http://pbr.com/media/resized/96108_0_640x360.jpg"
+          "aspect16x9": "http://vbr.com/media/resized/96108_0_640x360.jpg"
         },
         "category": "BFTS",
         "source": {
-          "title": "pbr.com",
-          "url": "http://pbr.com/path/to/this/rss/file/events.rss"
+          "title": "vbr.com",
+          "url": "http://vbr.com/path/to/this/rss/file/events.rss"
         },
         "createdAt": "2015-11-24T19:37:36+00:00",
-        "url": "http://pbr.com/en/bfts/schedule/2015/2015-tucson.aspx",
+        "url": "http://vbr.com/en/tttt/schedule/2015/2015-tucson.aspx",
         "ical": {
           "location": "Tucson, AZ",
           "dtstart": "2014-10-03T00:50:00+00:00",
@@ -442,24 +442,24 @@
     },
     {
       "type": "event",
-      "id": "b672ab4e9744cd0b690a29bcc759c2c3",
+      "id": "C2C3C2C3C2C3C2C3C2C3C2C3C2C3C2C3",
       "links": {
-        "self": "https://device-staging.oddworks.io/v1/events/b672ab4e9744cd0b690a29bcc759c2c3"
+        "self": "https://host.oddworks.io/v1/events/C2C3C2C3C2C3C2C3C2C3C2C3C2C3C2C3"
       },
       "attributes": {
-        "organization": "pbr",
+        "organization": "vbr",
         "title": "Allentown Invitational",
         "description": "PPL Center",
         "images": {
-          "aspect16x9": "http://pbr.com/media/resized/96089_0_640x360.jpg"
+          "aspect16x9": "http://vbr.com/media/resized/96089_0_640x360.jpg"
         },
         "category": "BFTS",
         "source": {
-          "title": "pbr.com",
-          "url": "http://pbr.com/path/to/this/xml/file/events.rss"
+          "title": "vbr.com",
+          "url": "http://vbr.com/path/to/this/xml/file/events.rss"
         },
         "createdAt": "2015-11-24T19:37:36+00:00",
-        "url": "http://pbr.com/en/bfts/schedule/2015/2015-allentown.aspx",
+        "url": "http://vbr.com/en/tttt/schedule/2015/2015-allentown.aspx",
         "ical": {
           "location": "Allentown, PA",
           "dtstart": "2014-09-26T00:50:00+00:00",
@@ -478,6 +478,6 @@
     "userEntitlements": []
   },
   "links": {
-    "self": "https://device-staging.oddworks.io/v1/views/pbr-menu%3Finclude=true"
+    "self": "https://host.oddworks.io/v1/views/vbr-menu%3Finclude=true"
   }
 }

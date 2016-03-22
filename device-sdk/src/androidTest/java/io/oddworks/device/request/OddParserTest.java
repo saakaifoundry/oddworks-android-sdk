@@ -82,8 +82,8 @@ public class OddParserTest extends AndroidTestCase {
 
         assertFalse(promotions.isEmpty());
         Promotion promotion = (Promotion) promotions.get(0);
-        assertThat(promotion.getTitle(), is("Share your best poker face using #POKERCENTRALCONTEST"));
-        assertThat(promotion.getUrl(), is("http://www.pokercentral.com"));
+        assertThat(promotion.getTitle(), is("This is a promotion title!"));
+        assertThat(promotion.getUrl(), is("http://website.com"));
 
         assertFalse(featuredMedia.isEmpty());
         Media mediaSharingEnabled = (Media) featuredMedia.get(0);
@@ -99,7 +99,7 @@ public class OddParserTest extends AndroidTestCase {
 
         assertFalse(featuredCollections.isEmpty());
         OddCollection collection = (OddCollection) featuredCollections.get(0);
-        assertThat(collection.getTitle(), is("PBR Featured Collections"));
+        assertThat(collection.getTitle(), is("Automotive Pros Featured Collections"));
 
         List<OddObject> subCollections = collection.getIncludedByRelationship("entities");
         OddCollection subCollection = (OddCollection) subCollections.get(0);
@@ -123,25 +123,17 @@ public class OddParserTest extends AndroidTestCase {
         assertNull(article.getMediaImage());
 
         OddCollection events = (OddCollection) items.get(2);
-        assertThat(events.getTitle(), is("Built Ford Tough Series - Schedule"));
+        assertThat(events.getTitle(), is("Expert Series - Schedule"));
         assertNull(events.getMediaImage());
         Event event = (Event) events.getIncludedByRelationship("entities").get(0);
-        assertThat(event.getTitle(), is("2015 Built Ford Tough World Finals"));
+        assertThat(event.getTitle(), is("2015 Expert thing"));
         MediaImage eventImage = event.getMediaImage();
-        assertThat(eventImage.getAspect16x9(), is("http://pbr.com/media/resized/96117_0_640x360.jpg"));
+        assertThat(eventImage.getAspect16x9(), is("http://vbr.com/media/resized/96117_0_640x360.jpg"));
     }
 
     @Test
-    public void testParsePBRMenuViewResponseV2() throws Exception {
-        String json = AssetUtils.readFileToString(mContext, "PBRMenuViewResponseV2.json");
-
-        OddView menu = oddParser.parseViewResponse(json);
-        List<OddObject> items = menu.getIncludedByRelationship("items");
-    }
-
-    @Test
-    public void testParsePBRHomepageViewResponseV2() throws Exception {
-        String json = AssetUtils.readFileToString(mContext, "PBRHomepageViewResponseV2.json");
+    public void testParseHomepageViewResponseV2() throws Exception {
+        String json = AssetUtils.readFileToString(mContext, "HomepageViewResponseV2.json");
 
         OddView homepage = oddParser.parseViewResponse(json);
         List<OddObject> promotions = homepage.getIncludedByRelationship("promotion");
@@ -156,7 +148,7 @@ public class OddParserTest extends AndroidTestCase {
 
     @Test
     public void testParseSearchV2() throws Exception {
-        String json = AssetUtils.readFileToString(mContext, "PBRSearchResponseV2.json");
+        String json = AssetUtils.readFileToString(mContext, "SearchResponseV2.json");
 
         List<OddObject> results = oddParser.parseSearch(json);
     }
@@ -171,7 +163,7 @@ public class OddParserTest extends AndroidTestCase {
         String json = AssetUtils.readFileToString(mContext, "ConfigWithAuthAndAds.json");
         Config config = oddParser.parseConfig(json);
         assertThat(config.getViews().size(), is(2));
-        String spashpageId = "ac4ece84-d872-4b98-b8b9-2840e060a6ea";
+        String spashpageId = "EDDEEDDEEDDEEDDEEDDEEDDEEDDEEDDEEDDE";
         assertThat(config.getViews().get("homepage"), is(spashpageId));
         assertThat(config.getViews().values().iterator().next(), is(spashpageId));
         assertThat(config.getViews().get("splash"), is("2a019789-2475-4674-84f0-764bca8b8f66"));
@@ -183,10 +175,10 @@ public class OddParserTest extends AndroidTestCase {
         String json = AssetUtils.readFileToString(mContext, "ConfigWithAuthNoAdsAndSharing.json");
         Config config = oddParser.parseConfig(json);
         assertThat(config.getViews().size(), is(3));
-        String spashpageId = "levintv-homepage";
+        String spashpageId = "custom-homepage";
         assertThat(config.getViews().get("homepage"), is(spashpageId));
         assertThat(config.getViews().values().iterator().next(), is(spashpageId));
-        assertThat(config.getViews().get("splash"), is("levintv-splash"));
+        assertThat(config.getViews().get("splash"), is("custom-splash"));
         assertThat(config.isAuthEnabled(), is(true));
     }
 
@@ -195,7 +187,7 @@ public class OddParserTest extends AndroidTestCase {
         String json = AssetUtils.readFileToString(mContext, "ConfigWithMetrics.json");
         Config config = oddParser.parseConfig(json);
         assertThat(config.getViews().size(), is(1));
-        String homepage = "a23e156c-5df3-45bb-812e-1bfa79fbd008";
+        String homepage = "JEEJJEEJJEEJJEEJJEEJJEEJJEEJJEEJJEEJ";
         assertThat(config.getViews().get("homepage"), is(homepage));
         assertThat(config.getViews().values().iterator().next(), is(homepage));
 
@@ -238,15 +230,15 @@ public class OddParserTest extends AndroidTestCase {
     public void testParseCollectionWithIncludedV2() throws Exception {
         String json = AssetUtils.readFileToString(mContext, "NestedCollectionWithIncludedV2.json");
         OddCollection mc = oddParser.parseCollectionResponse(json);
-        assertThat(mc.getId(), is("ooyala-pbr-featured-collections"));
+        assertThat(mc.getId(), is("custom-collection-1"));
         assertThat(mc.getAttributes(), is(notNullValue()));
         assertThat(mc.getRelationships().size(), is(1));
         List<Identifier> relationshipIds = mc.getRelationships().get(0).getIdentifiers();
         Identifier firstRelationship = relationshipIds.get(0);
-        assertThat(firstRelationship.getId(), is("ooyala-w4MGV5eDpoE0rmbrcHEeDEEuhQMypB0u"));
+        assertThat(firstRelationship.getId(), is("DEEDDEEDDEEDDEEDDEEDDEEDDEEDDEED"));
         assertThat(mc.findIncludedByIdentifier(firstRelationship), is(notNullValue()));
         Identifier secondRelationship = relationshipIds.get(1);
-        assertThat(secondRelationship.getId(), is("ooyala-02ZWV5eDqBpEbc9ooAspnWFIIycMZWfK"));
+        assertThat(secondRelationship.getId(), is("KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK"));
         assertThat(mc.findIncludedByIdentifier(secondRelationship), is(notNullValue()));
     }
 

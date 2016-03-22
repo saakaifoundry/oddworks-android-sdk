@@ -2,7 +2,7 @@
   "data": {
     "type": "config",
     "links": {
-      "self": "https://device-staging.oddworks.io/v2/configs/"
+      "self": "https://host.oddworks.io/v2/configs/"
     },
     "attributes": {
       "features": {
@@ -41,13 +41,13 @@
         },
         "sharing": {
           "enabled": true,
-          "text": "Watch the @marklevinshow Live on mobile and TV connected devices!"
+          "text": "Watch the show live on mobile and TV connected devices!"
         }
       },
       "views": {
-        "homepage": "levintv-homepage",
-        "menu": "levintv-menu",
-        "splash": "levintv-splash"
+        "homepage": "custom-homepage",
+        "menu": "custom-menu",
+        "splash": "custom-splash"
       }
     }
   },
@@ -57,6 +57,6 @@
     "userEntitlements": []
   },
   "links": {
-    "self": "https://device-staging.oddworks.io/v2/config"
+    "self": "https://host.oddworks.io/v2/config"
   }
 }

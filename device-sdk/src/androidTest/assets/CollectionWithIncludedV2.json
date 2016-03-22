@@ -3,23 +3,23 @@
     "relationships": {
       "entities": {
         "links": {
-          "self": "https://device-staging.oddworks.io/v1/collections/ooyala-featured-collections/collections"
+          "self": "https://host.oddworks.io/v1/collections/custom-collection/collections"
         },
         "data": [
           {
-            "id": "ooyala-xpam8yeTp9y3UlSD1LYj-e8DGTe-NoB7",
+            "id": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
             "type": "video"
           },
           {
-            "id": "ooyala-I4am8yeTp8jka7BRtcECqpuJHFNg2Nl-",
+            "id": "44444444444444444444444444444444",
             "type": "video"
           },
           {
-            "id": "ooyala-xvam8yeTqpPr9C_Mpa7MX6oYbKoWDiEF",
+            "id": "55555555555555555555555555555555",
             "type": "video"
           },
           {
-            "id": "ooyala-82am8yeTpdP4bsVwpeIDmMZN1R0f823w",
+            "id": "66666666666666666666666666666666",
             "type": "video"
           }
         ]
@@ -28,14 +28,14 @@
     "type": "collection",
     "id": "manually-curated-collection-1",
     "links": {
-      "self": "https://device-staging.oddworks.io/v1/collections/manually-curated-collection-1"
+      "self": "https://host.oddworks.io/v1/collections/manually-curated-collection-1"
     },
     "attributes": {
       "title": "A Manually Curated Collection :)",
       "subtitle": "Curation implies manual",
       "description": "",
       "images": {
-        "aspect16x9": "http://image.oddworks.io/eooyala/w4MGV5eDpoE0rmbrcHEeDEEuhQMypB0u/promo272218855.jpg"
+        "aspect16x9": "http://image.domain.io/eexternal/DEEDDEEDDEEDDEEDDEEDDEEDDEEDDEED/promo272218855.jpg"
       },
       "releaseDate": "2015-12-02T13:32:24Z",
       "updatedAt": "2015-12-02T15:59:43Z",
@@ -47,23 +47,23 @@
     {
       "type": "video",
       "meta": {
-        "sourceId": "xpam8yeTp9y3UlSD1LYj-e8DGTe-NoB7",
+        "sourceId": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
         "source": "ooyala"
       },
-      "id": "ooyala-xpam8yeTp9y3UlSD1LYj-e8DGTe-NoB7",
+      "id": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
       "links": {
-        "self": "https://device-staging.oddworks.io/v1/videos/ooyala-xpam8yeTp9y3UlSD1LYj-e8DGTe-NoB7"
+        "self": "https://host.oddworks.io/v1/videos/xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
       },
       "attributes": {
         "title": "Let's Get It Started.mp4",
         "subtitle": null,
         "description": "Let us gathered here today begin the process to which we are about to receive from the bounty of the harvest.",
         "images": {
-          "aspect16x9": "http://image.oddworks.io/eooyala/xpam8yeTp9y3UlSD1LYj-e8DGTe-NoB7/3Gduepif0T1UGY8H4xMDoxOjA4MTsiGN.jpg",
-          "aspect4x3": "http://image.oddworks.io/edummyimage/4:3x1440&text=placeholder.png",
-          "aspect3x4": "http://image.oddworks.io/edummyimage/3:4x1920&text=placeholder.png",
-          "aspect1x1": "http://image.oddworks.io/edummyimage/1:1x1920&text=placeholder.png",
-          "aspect2x3": "http://image.oddworks.io/edummyimage/2:3x1920&text=placeholder.png"
+          "aspect16x9": "http://image.domain.io/eexternal/xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx/3Gduepif0T1UGY8H4xMDoxOjA4MTsiGN.jpg",
+          "aspect4x3": "http://image.domain.io/edummyimage/4:3x1440&text=placeholder.png",
+          "aspect3x4": "http://image.domain.io/edummyimage/3:4x1920&text=placeholder.png",
+          "aspect1x1": "http://image.domain.io/edummyimage/1:1x1920&text=placeholder.png",
+          "aspect2x3": "http://image.domain.io/edummyimage/2:3x1920&text=placeholder.png"
         },
         "actors": [],
         "tags": [],
@@ -76,40 +76,40 @@
           "enabled": false,
           "provider": "freewheel",
           "format": "vast",
-          "assetId": "xpam8yeTp9y3UlSD1LYj-e8DGTe-NoB7"
+          "assetId": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
         },
         "overlays": {
           "enabled": false
         },
         "player": {
           "type": "ooyala",
-          "pCode": "5meWUyOipwedhLMDFYYFdAYmnGKl",
+          "pCode": "5aaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "domain": "ooyala.com",
-          "embedCode": "xpam8yeTp9y3UlSD1LYj-e8DGTe-NoB7"
+          "embedCode": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
         },
-        "url": "http://player.ooyala.com/player/appletv/xpam8yeTp9y3UlSD1LYj-e8DGTe-NoB7.m3u8"
+        "url": "http://player.ooyala.com/player/video-type/xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.m3u8"
       }
     },
     {
       "type": "video",
       "meta": {
-        "sourceId": "I4am8yeTp8jka7BRtcECqpuJHFNg2Nl-",
+        "sourceId": "44444444444444444444444444444444",
         "source": "ooyala"
       },
-      "id": "ooyala-I4am8yeTp8jka7BRtcECqpuJHFNg2Nl-",
+      "id": "44444444444444444444444444444444",
       "links": {
-        "self": "https://device-staging.oddworks.io/v1/videos/ooyala-I4am8yeTp8jka7BRtcECqpuJHFNg2Nl-"
+        "self": "https://host.oddworks.io/v1/videos/44444444444444444444444444444444"
       },
       "attributes": {
         "title": "Pump It.mp4",
         "subtitle": "Pumping it",
         "description": "louder, come on",
         "images": {
-          "aspect16x9": "http://image.oddworks.io/eooyala/I4am8yeTp8jka7BRtcECqpuJHFNg2Nl-/3Gduepif0T1UGY8H4xMDoxOjA4MTsiGN.jpg",
-          "aspect4x3": "http://image.oddworks.io/edummyimage/4:3x1440&text=placeholder.png",
-          "aspect3x4": "http://image.oddworks.io/edummyimage/3:4x1920&text=placeholder.png",
-          "aspect1x1": "http://image.oddworks.io/edummyimage/1:1x1920&text=placeholder.png",
-          "aspect2x3": "http://image.oddworks.io/edummyimage/2:3x1920&text=placeholder.png"
+          "aspect16x9": "http://image.domain.io/eexternal/44444444444444444444444444444444/3Gduepif0T1UGY8H4xMDoxOjA4MTsiGN.jpg",
+          "aspect4x3": "http://image.domain.io/edummyimage/4:3x1440&text=placeholder.png",
+          "aspect3x4": "http://image.domain.io/edummyimage/3:4x1920&text=placeholder.png",
+          "aspect1x1": "http://image.domain.io/edummyimage/1:1x1920&text=placeholder.png",
+          "aspect2x3": "http://image.domain.io/edummyimage/2:3x1920&text=placeholder.png"
         },
         "actors": [],
         "tags": [],
@@ -123,7 +123,7 @@
           "provider" : "freewheel",
           "format" : "freewheel",
           "networkId" : 393946,
-          "profileName" : "393946:crtv_android_test",
+          "profileName" : "99999:profile",
           "siteSectionId" : "pc_android_all",
           "vHost" : "602da.v.fwmrm.net"
         },
@@ -132,32 +132,32 @@
         },
         "player": {
           "type": "ooyala",
-          "pCode": "5meWUyOipwedhLMDFYYFdAYmnGKl",
+          "pCode": "5aaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "domain": "ooyala.com",
-          "embedCode": "I4am8yeTp8jka7BRtcECqpuJHFNg2Nl-"
+          "embedCode": "44444444444444444444444444444444"
         },
-        "url": "http://player.ooyala.com/player/appletv/I4am8yeTp8jka7BRtcECqpuJHFNg2Nl-.m3u8"
+        "url": "http://player.ooyala.com/player/video-type/44444444444444444444444444444444.m3u8"
       }
     },
     {
       "type": "video",
       "meta": {
-        "sourceId": "xvam8yeTqpPr9C_Mpa7MX6oYbKoWDiEF",
+        "sourceId": "55555555555555555555555555555555",
         "source": "ooyala"
       },
-      "id": "ooyala-xvam8yeTqpPr9C_Mpa7MX6oYbKoWDiEF",
+      "id": "55555555555555555555555555555555",
       "links": {
-        "self": "https://device-staging.oddworks.io/v1/videos/ooyala-xvam8yeTqpPr9C_Mpa7MX6oYbKoWDiEF"
+        "self": "https://host.oddworks.io/v1/videos/55555555555555555555555555555555"
       },
       "attributes": {
         "title": "Free Bird (Live August 21st, 1976).mp4",
         "description": "Guitar Hero.",
         "images": {
-          "aspect16x9": "http://image.oddworks.io/eooyala/xvam8yeTqpPr9C_Mpa7MX6oYbKoWDiEF/3Gduepif0T1UGY8H4xMDoxOjA4MTsiGN.jpg",
-          "aspect4x3": "http://image.oddworks.io/edummyimage/4:3x1440&text=placeholder.png",
-          "aspect3x4": "http://image.oddworks.io/edummyimage/3:4x1920&text=placeholder.png",
-          "aspect1x1": "http://image.oddworks.io/edummyimage/1:1x1920&text=placeholder.png",
-          "aspect2x3": "http://image.oddworks.io/edummyimage/2:3x1920&text=placeholder.png"
+          "aspect16x9": "http://image.domain.io/eexternal/55555555555555555555555555555555/3Gduepif0T1UGY8H4xMDoxOjA4MTsiGN.jpg",
+          "aspect4x3": "http://image.domain.io/edummyimage/4:3x1440&text=placeholder.png",
+          "aspect3x4": "http://image.domain.io/edummyimage/3:4x1920&text=placeholder.png",
+          "aspect1x1": "http://image.domain.io/edummyimage/1:1x1920&text=placeholder.png",
+          "aspect2x3": "http://image.domain.io/edummyimage/2:3x1920&text=placeholder.png"
         },
         "actors": [],
         "tags": [],
@@ -176,32 +176,32 @@
         },
         "player": {
           "type": "ooyala",
-          "pCode": "5meWUyOipwedhLMDFYYFdAYmnGKl",
+          "pCode": "5aaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "domain": "ooyala.com",
-          "embedCode": "xvam8yeTqpPr9C_Mpa7MX6oYbKoWDiEF"
+          "embedCode": "55555555555555555555555555555555"
         },
-        "url": "http://player.ooyala.com/player/appletv/xvam8yeTqpPr9C_Mpa7MX6oYbKoWDiEF.m3u8"
+        "url": "http://player.ooyala.com/player/video-type/55555555555555555555555555555555.m3u8"
       }
     },
     {
       "type": "video",
       "meta": {
-        "sourceId": "82am8yeTpdP4bsVwpeIDmMZN1R0f823w",
+        "sourceId": "66666666666666666666666666666666",
         "source": "ooyala"
       },
-      "id": "ooyala-82am8yeTpdP4bsVwpeIDmMZN1R0f823w",
+      "id": "66666666666666666666666666666666",
       "links": {
-        "self": "https://device-staging.oddworks.io/v1/videos/ooyala-82am8yeTpdP4bsVwpeIDmMZN1R0f823w"
+        "self": "https://host.oddworks.io/v1/videos/66666666666666666666666666666666"
       },
       "attributes": {
         "title": "Simple Man.mp4",
         "description": "Do this if you can",
         "images": {
-          "aspect16x9": "http://image.oddworks.io/eooyala/82am8yeTpdP4bsVwpeIDmMZN1R0f823w/3Gduepif0T1UGY8H4xMDoxOjA4MTsiGN.jpg",
-          "aspect4x3": "http://image.oddworks.io/edummyimage/4:3x1440&text=placeholder.png",
-          "aspect3x4": "http://image.oddworks.io/edummyimage/3:4x1920&text=placeholder.png",
-          "aspect1x1": "http://image.oddworks.io/edummyimage/1:1x1920&text=placeholder.png",
-          "aspect2x3": "http://image.oddworks.io/edummyimage/2:3x1920&text=placeholder.png"
+          "aspect16x9": "http://image.domain.io/eexternal/66666666666666666666666666666666/3Gduepif0T1UGY8H4xMDoxOjA4MTsiGN.jpg",
+          "aspect4x3": "http://image.domain.io/edummyimage/4:3x1440&text=placeholder.png",
+          "aspect3x4": "http://image.domain.io/edummyimage/3:4x1920&text=placeholder.png",
+          "aspect1x1": "http://image.domain.io/edummyimage/1:1x1920&text=placeholder.png",
+          "aspect2x3": "http://image.domain.io/edummyimage/2:3x1920&text=placeholder.png"
         },
         "actors": [],
         "tags": [],
@@ -221,11 +221,11 @@
         },
         "player": {
           "type": "ooyala",
-          "pCode": "5meWUyOipwedhLMDFYYFdAYmnGKl",
+          "pCode": "5xxxxxxxxxxxx",
           "domain": "ooyala.com",
-          "embedCode": "82am8yeTpdP4bsVwpeIDmMZN1R0f823w"
+          "embedCode": "82xxxxxxxxxxxxxxx"
         },
-        "url": "http://player.ooyala.com/player/appletv/82am8yeTpdP4bsVwpeIDmMZN1R0f823w.m3u8"
+        "url": "http://player.ooyala.com/player/video-type/66666666666666666666666666666666.m3u8"
       }
     }
   ],
@@ -239,6 +239,6 @@
     "userEntitlements": []
   },
   "links": {
-    "self": "https://device-staging.oddworks.io/v1/collections/manually-curated-collection-1%3Finclude=true"
+    "self": "https://host.oddworks.io/v1/collections/manually-curated-collection-1%3Finclude=true"
   }
 }
