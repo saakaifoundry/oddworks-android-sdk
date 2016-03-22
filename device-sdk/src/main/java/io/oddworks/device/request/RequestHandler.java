@@ -252,6 +252,21 @@ public class RequestHandler {
     }
 
     /**
+     * @param port sets Oddworks API port
+     */
+    public void setPort(@NonNull int port) {
+        this.baseUrl = baseUrl.newBuilder().port(port).build();
+    }
+
+    /**
+     * @param scheme sets Oddworks API scheme
+     *               must be http or https
+     */
+    public void setScheme(@NonNull String scheme) {
+        this.baseUrl = baseUrl.newBuilder().scheme(scheme).build();
+    }
+
+    /**
      * @param versionName sets application version used in x-odd-user-agent header (build[version])
      */
     public void setVersionName(@NonNull String versionName) {
