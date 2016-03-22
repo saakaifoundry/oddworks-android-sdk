@@ -327,6 +327,20 @@ public class OddParserTest extends AndroidTestCase {
     }
 
     @Test
+    public void testParsePlayerWithEmptyPlayer() throws Exception {
+        String json = "{}";
+        JSONObject rawPlayer = new JSONObject(json);
+        Player player = oddParser.parsePlayer(rawPlayer);
+        assertThat(player.getPlayerType(), is(Player.PlayerType.NATIVE));
+    }
+
+    @Test
+    public void testParsePlayerWithNull() throws Exception {
+        Player player = oddParser.parsePlayer(null);
+        assertThat(player.getPlayerType(), is(Player.PlayerType.NATIVE));
+    }
+
+    @Test
     public void testParseMediaResponseTest() throws Exception {
         String json = AssetUtils.readFileToString(mContext, "LiveStreamWithIncluded.json");
         Media media = oddParser.parseMediaResponse(json);

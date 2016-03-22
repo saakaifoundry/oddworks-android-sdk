@@ -241,11 +241,15 @@ public class OddParser {
     }
 
     protected Player parsePlayer(final JSONObject rawPlayer) throws JSONException {
-        Player.PlayerType type = null;
+        Player.PlayerType type;
         try {
-            type = Player.PlayerType.valueOf(rawPlayer.getString("type").toUpperCase());
+            type = Player.PlayerType.valueOf(JSON.getString(rawPlayer, "type").toUpperCase());
         } catch(IllegalArgumentException e) {
-            throw new UnhandledPlayerTypeException("unsupported player type: " + rawPlayer);
+            Log.e(TAG, "Parsed player does not exist", e);
+            throw new UnhandledPlayerTypeException("Unsupported player type: " + rawPlayer);
+        } catch(Exception e) {
+            Log.e(TAG, "Unable to parse player, falling back to native", e);
+            type = Player.PlayerType.NATIVE;
         }
 
         Player player = null;
@@ -261,7 +265,7 @@ public class OddParser {
                 player = parseOoyalaPlayer(rawPlayer);
                 break;
             default:
-                throw new UnhandledPlayerTypeException("unsupported player type: " + type);
+                throw new UnhandledPlayerTypeException("Unsupported player type: " + type);
         }
         return player;
     }
@@ -278,13 +282,13 @@ public class OddParser {
 
     private OoyalaPlayer parseOoyalaPlayer(JSONObject rawPlayer) throws JSONException {
         return new OoyalaPlayer(Player.PlayerType.OOYALA,
-                rawPlayer.getString("pCode"),
-                rawPlayer.getString("embedCode"),
-                rawPlayer.getString("domain"));
+                JSON.getString(rawPlayer, "pCode"),
+                JSON.getString(rawPlayer, "embedCode"),
+                JSON.getString(rawPlayer, "domain"));
     }
 
     private ExternalPlayer parseExternalPlayer(JSONObject rawPlayer) throws JSONException {
-        return new ExternalPlayer(Player.PlayerType.EXTERNAL, rawPlayer.getString("url"));
+        return new ExternalPlayer(Player.PlayerType.EXTERNAL, JSON.getString(rawPlayer, "url"));
     }
 
     protected Promotion parsePromotion(final JSONObject rawPromotion) throws JSONException {

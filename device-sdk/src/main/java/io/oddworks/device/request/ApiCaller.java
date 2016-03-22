@@ -224,12 +224,30 @@ public class ApiCaller {
     }
 
     /**
-     * Set the Oddworks API host
+     * Set the Oddworks API host in the RequestHandler instance
      *
      * @param host
      */
     public void setHost(String host) {
         requestHandler.setHost(host);
+    }
+
+    /**
+     * Set the Oddworks API port in the RequestHandler instance
+     *
+     * @param port
+     */
+    public void setPort(int port) {
+        requestHandler.setPort(port);
+    }
+
+    /**
+     * Set Oddworks API scheme in the RequestHandler instance
+     *
+     * @param scheme must be http or https
+     */
+    public void setScheme(String scheme) {
+        requestHandler.setScheme(scheme);
     }
 
     /**
