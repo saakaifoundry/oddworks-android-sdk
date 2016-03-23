@@ -5,11 +5,15 @@ import android.util.Log;
 import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.TimeUnit;
 
 import io.oddworks.device.exception.BadResponseCodeException;
 import io.oddworks.device.exception.DeviceCodeExpiredException;
 import io.oddworks.device.exception.RestServicesNotInitialized;
 import io.oddworks.device.model.AuthToken;
+import rx.Observable;
+import rx.Subscriber;
+import rx.functions.Func1;
 
 /**
  * Class for polling authentication server until an auth code is generated
@@ -25,6 +29,8 @@ public class PollingAuthenticator {
     private final Object syncLock = new Object();
     private final ApiCaller apiCaller;
     private Timer timer;
+    /* used for rx authenticate method */
+    private Observable<Long> authTicker;
     /** don't access without using syncLock*/
     private volatile Boolean authenticating;
 
@@ -48,6 +54,9 @@ public class PollingAuthenticator {
         return verificationUrl;
     }
 
+    /** if this object is authenticating using the callback based authenticate method, then this will cancel future
+     * authentication requests. if using authenticate that returns an Observable, then this has no effect.
+     */
     public void cancelAuthentication() {
         synchronized (syncLock) {
             authenticating = false;
@@ -61,7 +70,11 @@ public class PollingAuthenticator {
         return expirationDate.compareTo(now) <= 0;
     }
 
-    /** @return true if currently polling for authentication token. Otherwise false */
+    /** @return true if currently polling for authentication token. Otherwise false.
+     *
+     * note: if authenticating through observable authenticate method, then this will return false. It only returns
+     * true if authenticating
+     *  using the callback based authenticate method */
     public boolean isAuthenticating() {
         synchronized (syncLock) {
             return authenticating;
@@ -71,6 +84,8 @@ public class PollingAuthenticator {
     /** If not expired then this will continue polling the server until time expires or an auth token is obtained
      * Callback.onFailure will be completed with DeviceCodeExpiredException if this object expires without getting an
      * auth token.
+     *
+     * It's not neccessary to use this method if you are using the rxAuthenticate method
      * @return true if polling started, otherwise false (expired) */
     public boolean authenticate(final OddCallback<AuthToken> callback) {
         synchronized (syncLock) {
@@ -87,6 +102,53 @@ public class PollingAuthenticator {
             }
             return true;
         }
+    }
+
+    /** Begin polling for an AuthToken. Unsubscribing will stop polling for an AuthToken.
+     * PollingAuthenticator.cancelAuthentication and PollingAuthenticator will have no effect.
+     * @return an observable that will emit 1 AuthToken or 1 exception. 404 responses will not be emitted.
+     * If this instance of PollingAuthenticator expires, then a BadResponseCodeException will be emitted
+     */
+    public Observable<AuthToken> authenticate() {
+        authTicker = Observable.interval(interval, TimeUnit.MILLISECONDS);
+        return authTicker.map(new Func1<Long, Long>() {
+
+            @Override
+            public Long call(Long tick) {
+                if(isExpired())
+                    throw new DeviceCodeExpiredException();
+                else
+                    return tick;
+            }
+        })
+                .flatMap(new Func1<Long, Observable<AuthToken>>() {
+                    @Override
+                    public Observable<AuthToken> call(Long aLong) {
+                        return Observable.create(new Observable.OnSubscribe<AuthToken>() {
+                            @Override
+                            public void call(final Subscriber<? super AuthToken> subscriber) {
+                                apiCaller.tryGetAuthToken(deviceCode, new OddCallback<AuthToken>() {
+                                    @Override
+                                    public void onSuccess(AuthToken entity) {
+                                        subscriber.onNext(entity);
+                                        subscriber.onCompleted();
+                                    }
+
+                                    @Override
+                                    public void onFailure(Exception exception) {
+                                        // if the response is 404, then don't emit anything.
+                                        // if some other error occurred, then emit exception and complete
+                                        if(!(exception instanceof BadResponseCodeException &&
+                                                ((BadResponseCodeException)exception).getCode() == 404)) {
+                                            subscriber.onError(exception);
+                                            subscriber.onCompleted();
+                                        }
+                                    }
+                                });
+                            }
+                        });
+                    }
+                });
     }
 
     private TimerTask getExpiredTask(final OddCallback<AuthToken> callback) {
