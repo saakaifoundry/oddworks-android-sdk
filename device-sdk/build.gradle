@@ -15,7 +15,7 @@ ext {
     siteUrl = 'http://android.guide.oddnetworks.com'
     gitUrl = 'https://github.com/oddnetworks/OddworksDeviceSDK'
 
-    libraryVersion = '1.7.0'
+    libraryVersion = '1.7.1'
 
     developerId = 'brkattk'
     developerName = 'Erik Straub, Dan Pallas'

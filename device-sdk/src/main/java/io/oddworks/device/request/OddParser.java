@@ -15,8 +15,27 @@ import java.util.Map;
 
 import io.oddworks.device.exception.OddParseException;
 import io.oddworks.device.exception.UnhandledPlayerTypeException;
-import io.oddworks.device.model.*;
-import io.oddworks.device.model.players.*;
+import io.oddworks.device.model.Article;
+import io.oddworks.device.model.AuthToken;
+import io.oddworks.device.model.Config;
+import io.oddworks.device.model.DeviceCodeResponse;
+import io.oddworks.device.model.Event;
+import io.oddworks.device.model.External;
+import io.oddworks.device.model.Identifier;
+import io.oddworks.device.model.Media;
+import io.oddworks.device.model.MediaAd;
+import io.oddworks.device.model.MediaImage;
+import io.oddworks.device.model.Metric;
+import io.oddworks.device.model.MetricsConfig;
+import io.oddworks.device.model.OddCollection;
+import io.oddworks.device.model.OddObject;
+import io.oddworks.device.model.OddView;
+import io.oddworks.device.model.Promotion;
+import io.oddworks.device.model.Relationship;
+import io.oddworks.device.model.Sharing;
+import io.oddworks.device.model.players.ExternalPlayer;
+import io.oddworks.device.model.players.OoyalaPlayer;
+import io.oddworks.device.model.players.Player;
 //todo stop swallowing exceptions
 
 public class OddParser {
@@ -445,12 +464,9 @@ public class OddParser {
             addRelationshipsToOddObject(JSON.getJSONObject(data, "relationships", true), view);
 
             // fill the view's included{Type} arrays with parsable objects
-            if (!resultObject.isNull("included")) {
-                JSONArray includedArray = JSON.getJSONArray(resultObject, "included", true);
-                addIncluded(view, includedArray);
-                // backfill newly created collections with newly created entities
-                view.fillIncludedCollections();
-            }
+            addIncludedFromResponse(view, resultObject);
+            // backfill newly created collections with newly created entities
+            view.fillIncludedCollections();
 
             return view;
         } catch (JSONException e) {
@@ -489,8 +505,7 @@ public class OddParser {
             JSONObject raw = new JSONObject(responseBody);
             JSONObject data = JSON.getJSONObject(raw, DATA, true);
             collection = parseCollection(data);
-            JSONArray included = JSON.getJSONArray(raw, "included", true);
-            addIncluded(collection, included);
+            addIncludedFromResponse(collection, raw);
         } catch (Exception e) {
             throw new OddParseException(e);
         }
@@ -588,14 +603,21 @@ public class OddParser {
         return new JSONObject(responseBody).getString("message");
     }
 
+    /** adds included objects from response to the OddObject if there are included objects in the response. Otherwise
+     * does nothing.
+     */
+    protected void addIncludedFromResponse(OddObject oddObject, JSONObject response) throws JSONException {
+        JSONArray included = JSON.getJSONArray(response, "included", false);
+        if(included != null) addIncluded(oddObject, included);
+    }
+
     protected Media parseMediaResponse(String responseBody) {
         Media media = null;
         try {
             JSONObject response = new JSONObject(responseBody);
             JSONObject data = JSON.getJSONObject(response, DATA, true);
             media = parseMedia(data);
-            JSONArray included = JSON.getJSONArray(response, "included", true);
-            addIncluded(media, included);
+            addIncludedFromResponse(media, response);
         } catch (Throwable e) {
             throw new OddParseException(e);
         }
@@ -608,8 +630,7 @@ public class OddParser {
             JSONObject response = new JSONObject(responseBody);
             JSONObject data = JSON.getJSONObject(response, DATA, true);
             promotion = parsePromotion(data);
-            JSONArray included = JSON.getJSONArray(response, "included", true);
-            addIncluded(promotion, included);
+            addIncludedFromResponse(promotion, response);
         } catch (Throwable e) {
             throw new OddParseException(e);
         }
@@ -622,8 +643,7 @@ public class OddParser {
             JSONObject response = new JSONObject(responseBody);
             JSONObject data = JSON.getJSONObject(response, DATA, true);
             external = parseExternal(data);
-            JSONArray included = JSON.getJSONArray(response, "included", true);
-            addIncluded(external, included);
+            addIncludedFromResponse(external, response);
         } catch (Throwable e) {
             throw new OddParseException(e);
         }
@@ -636,22 +656,20 @@ public class OddParser {
             JSONObject response = new JSONObject(responseBody);
             JSONObject data = JSON.getJSONObject(response, DATA, true);
             event = parseEvent(data);
-            JSONArray included = JSON.getJSONArray(response, "included", true);
-            addIncluded(event, included);
+            addIncludedFromResponse(event, response);
         } catch (Throwable e) {
             throw new OddParseException(e);
         }
         return event;
     }
 
-    protected Article parseArticalResponse(String responseBody) {
+    protected Article parseArticleResponse(String responseBody) {
         Article article = null;
         try {
             JSONObject response = new JSONObject(responseBody);
             JSONObject data = JSON.getJSONObject(response, DATA, true);
             article = parseArticle(data);
-            JSONArray included = JSON.getJSONArray(response, "included", true);
-            addIncluded(article, included);
+            addIncludedFromResponse(article, response);
         } catch (Throwable e) {
             throw new OddParseException(e);
         }

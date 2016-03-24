@@ -398,7 +398,7 @@ public class CachingApiCaller {
         Callback requestCallback = new RequestCallback<>(cb, new ParseCall<Article>() {
             @Override
             public Article parse(String responseBody) {
-                return parser.parseArticalResponse(responseBody);
+                return parser.parseArticleResponse(responseBody);
             }
         });
         requestHandler.getArticle(id, requestCallback, fetchIncluded);
