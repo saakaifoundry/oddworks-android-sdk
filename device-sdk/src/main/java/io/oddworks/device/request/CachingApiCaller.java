@@ -11,7 +11,7 @@ import org.json.JSONException;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -444,10 +444,10 @@ public class CachingApiCaller {
 
     /** returns a list of all objects which are both included in this object and included in a 1st level relationship */
     private List<OddObject> getAllRelated(OddObject object) {
-        Set<OddObject> related = new HashSet<>();
+        Set<OddObject> related = new LinkedHashSet<>();
         for (Relationship relationship : object.getRelationships()) {
-            List<OddObject> relatinshipEntities = object.getIncludedByRelationship(relationship.getName());
-            related.addAll(relatinshipEntities);
+            List<OddObject> relationshipEntities = object.getIncludedByRelationship(relationship.getName());
+            related.addAll(relationshipEntities);
         }
         return new ArrayList<>(related);
     }

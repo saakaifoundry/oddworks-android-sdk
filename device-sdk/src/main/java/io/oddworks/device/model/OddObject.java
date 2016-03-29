@@ -6,7 +6,7 @@ import android.support.annotation.Nullable;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
@@ -146,12 +146,14 @@ abstract public class OddObject {
         if (relationship == null) {
             return includedOfRelationship;
         }
-        for(OddObject oddObject : getIncluded()) {
-            for(Identifier identifier : relationship.getIdentifiers()) {
-                if(identifier.getId().equals(oddObject.getId()) && identifier.getType().equals(oddObject.getType())) {
-                    includedOfRelationship.add(oddObject);
-                }
-            }
+        HashMap<Identifier, OddObject> includedObjects = new HashMap<>(included.size());
+        for (OddObject oddObject : included) {
+            includedObjects.put(oddObject.getIdentifier(), oddObject);
+        }
+        for(Identifier identifier : relationship.getIdentifiers()) {
+            OddObject object = includedObjects.get(identifier);
+            if(object != null)
+                includedOfRelationship.add(object);
         }
         return includedOfRelationship;
     }

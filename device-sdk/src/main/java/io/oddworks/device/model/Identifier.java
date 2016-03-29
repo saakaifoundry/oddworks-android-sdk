@@ -49,4 +49,23 @@ public class Identifier implements Parcelable {
         dest.writeString(id);
         dest.writeString(type);
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Identifier that = (Identifier) o;
+
+        if (!id.equals(that.id)) return false;
+        return type.equals(that.type);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id.hashCode();
+        result = 31 * result + type.hashCode();
+        return result;
+    }
 }
