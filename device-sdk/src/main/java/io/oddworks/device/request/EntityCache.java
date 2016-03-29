@@ -80,7 +80,7 @@ public class EntityCache {
             List<OddObject> objects = getObjects(relationship.getIdentifiers());
             for(OddObject object : objects) {
                 if(object != null)
-                    items.addAll(objects);
+                    items.add(object);
                 else
                     return null;
             }
