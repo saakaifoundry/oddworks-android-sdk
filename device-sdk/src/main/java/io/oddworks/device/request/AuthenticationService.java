@@ -2,12 +2,9 @@ package io.oddworks.device.request;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.util.JsonReader;
 import android.util.Log;
 
-import org.json.JSONException;
 import org.json.JSONObject;
-import org.json.JSONStringer;
 
 import io.oddworks.device.model.AuthToken;
 
@@ -64,7 +61,7 @@ public class AuthenticationService {
             JSONObject entitlementCredentials = null;
             try {
                 entitlementCredentials = new JSONObject(entitlementCredentialsString);
-            } catch (JSONException e) {
+            } catch (Throwable e) {
                 Log.e(AuthenticationService.class.getSimpleName(), "Unable to parse entitlementCredentials: " + e);
             }
 
