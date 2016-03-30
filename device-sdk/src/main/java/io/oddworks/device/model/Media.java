@@ -7,6 +7,7 @@ import java.util.Map;
 
 import io.oddworks.device.model.players.Player;
 
+import static io.oddworks.device.Util.getBoolean;
 import static io.oddworks.device.Util.getDateTime;
 import static io.oddworks.device.Util.getInteger;
 import static io.oddworks.device.Util.getString;
@@ -23,6 +24,7 @@ public class Media extends OddObject {
     private String url;
     private Player player;
     private Sharing sharing;
+    private boolean currentlyLive;
 
     public Media(Identifier identifier) {
         super(identifier);
@@ -83,6 +85,7 @@ public class Media extends OddObject {
         this.releaseDate = getDateTime(attributes, "releaseDate", null);
         this.duration = getInteger(attributes, "duration", null);
         this.url = getString(attributes, "url", null);
+        this.currentlyLive = getBoolean(attributes, "isLive");
     }
 
     @Override
@@ -96,7 +99,13 @@ public class Media extends OddObject {
         attributes.put("releaseDate", getReleaseDate());
         attributes.put("duration", getDuration());
         attributes.put("url", getUrl());
+        attributes.put("isLive", isCurrentlyLive());
         return attributes;
+    }
+
+    /** returns true if this Media stream is broadcasting now. */
+    public boolean isCurrentlyLive() {
+        return this.currentlyLive;
     }
 
     @Override

@@ -250,6 +250,7 @@ public class OddParser {
         }
 
         attributes.put("url", JSON.getString(rawAttributes, "url"));
+        attributes.put("isLive", JSON.getString(rawAttributes, "isLive"));
         attributes.put("mediaImage", parseMediaImage(images));
         attributes.put("mediaAd", parseMediaAd(rawAttributes));
         media.setAttributes(attributes);

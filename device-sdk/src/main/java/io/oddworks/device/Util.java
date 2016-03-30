@@ -41,6 +41,13 @@ public class Util {
         }
     }
 
+    /** @return true if the object stored in map at key is a string that is "true" ignoring case, otherwise false.
+     */
+    public static boolean getBoolean(Map<String, Object> map, String key) {
+        Object obj = map.get(key);
+        return obj instanceof String && Boolean.parseBoolean((String) obj);
+    }
+
     private Util() {
         // nope
     }
