@@ -1,6 +1,7 @@
 package io.oddworks.device.request;
 
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 import rx.Observable;
 import rx.Subscriber;
@@ -16,6 +17,7 @@ import rx.functions.Action1;
  * @since 1.2 on 02/26/2016
  */
 public class RxOddCall<T> implements Observable.OnSubscribe<T>{
+    public static final String TAG = RxOddCall.class.getSimpleName();
 
     private final Action1<OddCallback<T>> f;
 
@@ -69,7 +71,12 @@ public class RxOddCall<T> implements Observable.OnSubscribe<T>{
             @Override
             public void onFailure(Exception e) {
                 if(subscriber != null) {
-                    subscriber.onError(e);
+                    try {
+                        subscriber.onError(e);
+                    } catch (Throwable err) {
+                        Log.e(TAG, "call() failed to call subscriber.onError() with: " + err);
+                        subscriber.onError(new IllegalStateException("This should never happen", err));
+                    }
                     subscriber.onCompleted();
                 }
             }
