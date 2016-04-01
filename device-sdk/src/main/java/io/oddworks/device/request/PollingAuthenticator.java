@@ -21,6 +21,7 @@ import rx.functions.Func1;
  * @since v1.0 on 9/24/15
  */
 public class PollingAuthenticator {
+    public static final String TAG = PollingAuthenticator.class.getSimpleName();
     private final String deviceCode;
     private final String userCode;
     private final String verificationUrl;
@@ -140,7 +141,12 @@ public class PollingAuthenticator {
                                         // if some other error occurred, then emit exception and complete
                                         if(!(exception instanceof BadResponseCodeException &&
                                                 ((BadResponseCodeException)exception).getCode() == 404)) {
-                                            subscriber.onError(exception);
+                                            try {
+                                                subscriber.onError(exception);
+                                            } catch (Throwable e) {
+                                                Log.e(TAG, "authenticate() failed to call subscriber.onError: " + e);
+                                                subscriber.onError(new IllegalStateException("This should never happen", e));
+                                            }
                                             subscriber.onCompleted();
                                         }
                                     }
@@ -174,7 +180,7 @@ public class PollingAuthenticator {
                     @Override
                     public void onSuccess(AuthToken entity) {
                         synchronized (syncLock) {
-                            Log.d(PollingAuthenticator.class + ".getPollTask", "onSuccess AuthToken: " + entity.toString());
+                            Log.d(TAG, "getPollTask() onSuccess AuthToken: " + entity.toString());
                             if (authenticating) {
                                 timer.cancel();
                                 authenticating = false;
