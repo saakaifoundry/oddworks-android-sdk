@@ -25,6 +25,7 @@ import io.oddworks.device.metric.OddViewLoadMetric;
 import io.oddworks.device.model.Article;
 import io.oddworks.device.model.AuthToken;
 import io.oddworks.device.model.Config;
+import io.oddworks.device.model.DisplayAdsConfig;
 import io.oddworks.device.model.Event;
 import io.oddworks.device.model.Identifier;
 import io.oddworks.device.model.Media;
@@ -156,6 +157,36 @@ public class OddParserTest extends AndroidTestCase {
     @Test
     public void testParseErrorMessage() throws Exception {
 
+    }
+
+    @Test
+    public  void testParseConfigWithDfpAds() throws Exception {
+        String json = AssetUtils.readFileToString(mContext, "ConfigWithDfpAds.json");
+        Config config = oddParser.parseConfig(json);
+
+        assertThat(config.getDisplayAdsConfig(), isA(DisplayAdsConfig.class));
+        assertThat(config.getDisplayAdsConfig().getEnabled(), is(true));
+        assertThat(config.getDisplayAdsConfig().getPublisherId(), is("53247333"));
+        assertThat(config.getDisplayAdsConfig().getDefaultUnitId(), is("/53247333/PBRLive"));
+        assertThat(config.getDisplayAdsConfig().getHomeUnitId(), is("/53247332/PBRLive"));
+    }
+
+    @Test
+    public  void testParseConfigWithDisabledDfpAds() throws Exception {
+        String json = AssetUtils.readFileToString(mContext, "ConfigWithDisabledDfpAds.json");
+        Config config = oddParser.parseConfig(json);
+
+        assertThat(config.getDisplayAdsConfig(), isA(DisplayAdsConfig.class));
+        assertThat(config.getDisplayAdsConfig().getEnabled(), is(false));
+    }
+
+    @Test
+    public  void testParseConfigWithNoDfpAds() throws Exception {
+        String json = AssetUtils.readFileToString(mContext, "ConfigWithNoDfpAds.json");
+        Config config = oddParser.parseConfig(json);
+
+        assertThat(config.getDisplayAdsConfig(), isA(DisplayAdsConfig.class));
+        assertThat(config.getDisplayAdsConfig().getEnabled(), is(false));
     }
 
     @Test

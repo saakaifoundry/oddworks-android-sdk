@@ -19,6 +19,7 @@ import io.oddworks.device.model.Article;
 import io.oddworks.device.model.AuthToken;
 import io.oddworks.device.model.Config;
 import io.oddworks.device.model.DeviceCodeResponse;
+import io.oddworks.device.model.DisplayAdsConfig;
 import io.oddworks.device.model.Event;
 import io.oddworks.device.model.External;
 import io.oddworks.device.model.Identifier;
@@ -407,6 +408,34 @@ public class OddParser {
         }
     }
 
+    protected DisplayAdsConfig parseDisplayAds(JSONObject rawFeatures) {
+        try {
+            JSONObject rawAds = JSON.getJSONObject(rawFeatures, "ads", true);
+            JSONObject rawDfp = JSON.getJSONObject(rawAds, "bannerAds", false);
+
+            String publisherId = null;
+            String defaultUnitId = null;
+            String homeUnitId = null;
+            boolean dfpEnabled = false;
+
+            if (rawDfp == null) {
+                return new DisplayAdsConfig(dfpEnabled, publisherId, defaultUnitId, homeUnitId);
+            } else {
+                dfpEnabled = JSON.getBoolean(rawDfp, "enabled");
+                if (dfpEnabled) {
+                    publisherId = JSON.getString(rawDfp, "publisherId");
+                    defaultUnitId = JSON.getString(rawDfp, "defaultUnitId");
+                    homeUnitId = JSON.getString(rawDfp, "homeViewUnitId");
+                }
+
+                return new DisplayAdsConfig(dfpEnabled, publisherId, defaultUnitId, homeUnitId);
+            }
+        } catch (JSONException e) {
+            Log.w(TAG, "failed to parse display ads feature from config");
+            return null;
+        }
+    }
+
     protected Config parseConfig(final String result) {
         try {
             JSONObject resultJSONObject = new JSONObject(result);
@@ -423,9 +452,10 @@ public class OddParser {
 
             JSONObject rawFeatures = parseFeatures(rawAttributes);
             MetricsConfig metrics = parseMetrics(rawFeatures);
+            DisplayAdsConfig displayAds = parseDisplayAds(rawFeatures);
 
             boolean authEnabled = isAuthEnabled(rawFeatures);
-            return new Config(views, authEnabled, metrics);
+            return new Config(views, authEnabled, metrics, displayAds);
         } catch (JSONException e) {
             e.printStackTrace();
         }
