@@ -17,10 +17,12 @@ public class OddRxBus {
     public static final String TAG = OddRxBus.class.getSimpleName();
     private static final OddRxBus INSTANCE = new OddRxBus();
 
+    private final SerializedSubject<OddRxBusEvent, OddRxBusEvent> bus;
 
-    private SerializedSubject<OddRxBusEvent, OddRxBusEvent> bus =
-            new SerializedSubject<>(PublishSubject.<OddRxBusEvent>create());
-    private OddRxBus() { /* singleton */ }
+    private OddRxBus() {
+        bus = new SerializedSubject<>(PublishSubject.<OddRxBusEvent>create());
+        bus.onBackpressureBuffer();
+    }
 
     @NonNull public static OddRxBus getInstance() {
         return INSTANCE;
