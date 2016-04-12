@@ -254,6 +254,8 @@ public class OddParser {
         attributes.put("mediaImage", parseMediaImage(images));
         attributes.put("mediaAd", parseMediaAd(rawAttributes));
         media.setAttributes(attributes);
+        JSONObject relationships = JSON.getJSONObject(dataObject, "relationships", false);
+        if(relationships != null) addRelationshipsToOddObject(relationships, media);
         media.setPlayer(parsePlayer(JSON.getJSONObject(rawAttributes, "player", true)));
         media.setSharing(parseSharing(JSON.getJSONObject(rawAttributes, "sharing", false)));
 
