@@ -7,6 +7,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import static org.hamcrest.CoreMatchers.equalTo;
@@ -26,18 +27,19 @@ public class ArticleTest {
     private String source = "asourceisasourceofcourseofcourse";
     private String url = "http://oddnetworks.com/foo.html";
     private DateTime createdAt = new DateTime("2015-12-01T01:45:21Z");
-    private MediaImage mediaImage = new MediaImage("a", "b", "c", "d", "e");
+    private MediaImage mediaImage = new MediaImage("a", "b", 1, 1, "e");
     private HashMap<String, Object> attributes = new HashMap<>();
 
     @Before
     public void beforeEach() {
         attributes.put("title", title);
         attributes.put("description", description);
-        attributes.put("mediaImage", mediaImage);
         attributes.put("url", url);
         attributes.put("category", category);
         attributes.put("source", source);
-        attributes.put("mediaImage", mediaImage);
+        ArrayList<MediaImage> images = new ArrayList<>();
+        images.add(mediaImage);
+        attributes.put("images", images);
         attributes.put("createdAt", createdAt);
         article.setAttributes(attributes);
     }
@@ -68,8 +70,10 @@ public class ArticleTest {
     }
 
     @Test
-    public void testGetMediaImage() throws Exception {
-        assertEquals(mediaImage, article.getMediaImage());
+    public void testGetImages() throws Exception {
+        ArrayList<MediaImage> images = new ArrayList<>();
+        images.add(mediaImage);
+        assertEquals(images, article.getImages());
     }
 
     @Test
@@ -98,7 +102,7 @@ public class ArticleTest {
 
         assertEquals(null, article.getTitle());
         assertEquals(null, article.getDescription());
-        assertEquals(null, article.getMediaImage());
+        assertEquals(null, article.getImages());
         assertEquals(null, article.getUrl());
         assertEquals(null, article.getCategory());
         assertEquals(null, article.getSource());
@@ -112,7 +116,9 @@ public class ArticleTest {
 
         assertEquals(title, article.getTitle());
         assertEquals(description, article.getDescription());
-        assertEquals(mediaImage, article.getMediaImage());
+        ArrayList<MediaImage> images = new ArrayList<>();
+        images.add(mediaImage);
+        assertEquals(images, article.getImages());
         assertEquals(url, article.getUrl());
         assertEquals(category, article.getCategory());
         assertEquals(source, article.getSource());
@@ -122,22 +128,5 @@ public class ArticleTest {
     @Test
     public void testGetAttributes() throws Exception {
         assertEquals(attributes, article.getAttributes());
-    }
-
-    @Test
-    public void isPresentableShouldReturnTrue() {
-        Article media = new Article(id, typeArticle);
-        assertThat(media.isPresentable(), is(true));
-    }
-
-    @Test
-    public void toPresentableFieldsShouldEqualMediasFields() {
-        Article media = new Article(id, typeArticle);
-        media.setAttributes(attributes);
-        Presentable presentable = media.toPresentable();
-
-        assertThat("titles should match", presentable.getTitle(), is(equalTo(media.getTitle())));
-        assertThat("descriptions should match", presentable.getDescription(), is(equalTo(media.getDescription())));
-        assertThat("MediaImages should match", presentable.getMediaImage(), is(equalTo(media.getMediaImage())));
     }
 }

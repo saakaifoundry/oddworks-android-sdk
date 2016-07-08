@@ -3,6 +3,7 @@ package io.oddworks.device.model;
 import org.joda.time.DateTime;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import io.oddworks.device.model.players.Player;
@@ -15,15 +16,11 @@ import static io.oddworks.device.Util.getString;
 public class Media extends OddObject {
     public static final String TAG = Media.class.getSimpleName();
     private String title;
-    private String subtitle;
     private String description;
-    private MediaImage mediaImage;
+    private List<MediaImage> images;
     private DateTime releaseDate;
-    private MediaAd mediaAd;
     private Integer duration;
     private String url;
-    private Player player;
-    private Sharing sharing;
     private boolean currentlyLive;
 
     public Media(Identifier identifier) {
@@ -38,16 +35,12 @@ public class Media extends OddObject {
         return title;
     }
 
-    public String getSubtitle() {
-        return subtitle;
-    }
-
     public String getDescription() {
         return description;
     }
 
-    public MediaImage getMediaImage() {
-        return mediaImage;
+    public List<MediaImage> getImages() {
+        return images;
     }
 
     public DateTime getReleaseDate() {
@@ -66,9 +59,6 @@ public class Media extends OddObject {
         return duration;
     }
 
-    public MediaAd getMediaAd() {
-        return mediaAd;
-    }
 
     /** returns true if this Media is a liveStream object in the api's catalog */
     public Boolean isLive() {
@@ -78,10 +68,8 @@ public class Media extends OddObject {
     @Override
     public void setAttributes(Map<String, Object> attributes) {
         this.title = getString(attributes, "title", null);
-        this.subtitle = getString(attributes, "subtitle", null);
         this.description = getString(attributes, "description", null);
-        this.mediaImage = (MediaImage) attributes.get("mediaImage");
-        this.mediaAd = (MediaAd) attributes.get("mediaAd");
+        this.images = (List<MediaImage>) attributes.get("images");
         this.releaseDate = getDateTime(attributes, "releaseDate", null);
         this.duration = getInteger(attributes, "duration", null);
         this.url = getString(attributes, "url", null);
@@ -92,10 +80,8 @@ public class Media extends OddObject {
     public Map<String, Object> getAttributes() {
         HashMap<String, Object> attributes = new HashMap<>();
         attributes.put("title", getTitle());
-        attributes.put("subtitle", getSubtitle());
         attributes.put("description", getDescription());
-        attributes.put("mediaImage", getMediaImage());
-        attributes.put("mediaAd", getMediaAd());
+        attributes.put("images", getImages());
         attributes.put("releaseDate", getReleaseDate());
         attributes.put("duration", getDuration());
         attributes.put("url", getUrl());
@@ -108,45 +94,16 @@ public class Media extends OddObject {
         return this.currentlyLive;
     }
 
-    @Override
-    public boolean isPresentable() {
-        return true;
-    }
-
-    public Player getPlayer() {
-        return player;
-    }
-
-    public void setPlayer(Player player) {
-        this.player = player;
-    }
-
-    public Sharing getSharing() {
-        return sharing;
-    }
-
-    public void setSharing(Sharing sharing) {
-        this.sharing = sharing;
-    }
-
-    @Override
-    public Presentable toPresentable() {
-        return new Presentable(title, description, mediaImage);
-    }
 
     @Override
     public String toString() {
         return "Media{" +
                 "title='" + title + '\'' +
-                ", subtitle='" + subtitle + '\'' +
                 ", description='" + description + '\'' +
-                ", mediaImage=" + mediaImage +
+                ", images=" + images +
                 ", releaseDate=" + releaseDate +
-                ", mediaAd=" + mediaAd +
                 ", duration=" + duration +
                 ", url='" + url + '\'' +
-                ", player=" + player +
-                ", sharing=" + sharing +
                 '}';
     }
 }

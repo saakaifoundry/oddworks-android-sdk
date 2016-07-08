@@ -1,6 +1,7 @@
 package io.oddworks.device.model;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import io.oddworks.device.Util;
@@ -10,7 +11,7 @@ public class Promotion extends OddObject {
 
     private String title;
     private String description;
-    private MediaImage mediaImage;
+    private List<MediaImage> images;
     private String url;
 
     public Promotion(Identifier identifier) {
@@ -29,8 +30,8 @@ public class Promotion extends OddObject {
         return description;
     }
 
-    public MediaImage getMediaImage() {
-        return mediaImage;
+    public List<MediaImage> getImages() {
+        return images;
     }
 
     public String getUrl() {
@@ -41,7 +42,7 @@ public class Promotion extends OddObject {
     public void setAttributes(Map<String, Object> attributes) {
         this.title = Util.getString(attributes, "title", null);
         this.description = Util.getString(attributes, "description", null);
-        this.mediaImage = (MediaImage) attributes.get("mediaImage");
+        this.images = (List<MediaImage>) attributes.get("images");
         this.url = Util.getString(attributes, "url", null);
     }
 
@@ -50,20 +51,10 @@ public class Promotion extends OddObject {
         HashMap<String, Object> attributes = new HashMap<>();
         attributes.put("title", getTitle());
         attributes.put("description", getDescription());
-        attributes.put("mediaImage", getMediaImage());
+        attributes.put("images", getImages());
         attributes.put("url", getUrl());
 
         return attributes;
-    }
-
-    @Override
-    public boolean isPresentable() {
-        return true;
-    }
-
-    @Override
-    public Presentable toPresentable() {
-        return new Presentable(title, description, mediaImage);
     }
 
     @Override
@@ -73,7 +64,7 @@ public class Promotion extends OddObject {
                 "type='" + getType() + "', " +
                 "title='" + getTitle() + "', " +
                 "description='" + getDescription() + "', " +
-                "mediaImage='" + getMediaImage() + "', " +
+                "images='" + getImages() + "', " +
                 "url='" + getUrl() + "')";
     }
 }

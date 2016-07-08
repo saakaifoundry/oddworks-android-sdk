@@ -7,6 +7,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import static org.hamcrest.CoreMatchers.equalTo;
@@ -31,18 +32,19 @@ public class EventTest {
     private DateTime dateTimeStart = new DateTime("2016-02-13T08:00:00-0600");
     private DateTime dateTimeEnd = new DateTime("2016-02-14T17:59:00-0600");
     private String location = "Las Vegas, NV";
-    private MediaImage mediaImage = new MediaImage("a", "b", "c", "d", "e");
+    private MediaImage mediaImage = new MediaImage("a", "b", 1, 1, "e");
     private HashMap<String, Object> attributes = new HashMap<>();
 
     @Before
     public void beforeEach() {
         attributes.put("title", title);
         attributes.put("description", description);
-        attributes.put("mediaImage", mediaImage);
+        ArrayList<MediaImage> images = new ArrayList<>();
+        images.add(mediaImage);
+        attributes.put("images", images);
         attributes.put("url", url);
         attributes.put("category", category);
         attributes.put("source", source);
-        attributes.put("mediaImage", mediaImage);
         attributes.put("createdAt", createdAt);
         attributes.put("dateTimeStart", dateTimeStart);
         attributes.put("dateTimeEnd", dateTimeEnd);
@@ -76,8 +78,10 @@ public class EventTest {
     }
 
     @Test
-    public void testGetMediaImage() throws Exception {
-        assertEquals(mediaImage, event.getMediaImage());
+    public void testGetImages() throws Exception {
+        ArrayList<MediaImage> images = new ArrayList<>();
+        images.add(mediaImage);
+        assertEquals(images, event.getImages());
     }
 
     @Test
@@ -147,7 +151,7 @@ public class EventTest {
 
         assertEquals(null, event.getTitle());
         assertEquals(null, event.getDescription());
-        assertEquals(null, event.getMediaImage());
+        assertEquals(null, event.getImages());
         assertEquals(null, event.getUrl());
         assertEquals(null, event.getCategory());
         assertEquals(null, event.getSource());
@@ -164,7 +168,9 @@ public class EventTest {
 
         assertEquals(title, event.getTitle());
         assertEquals(description, event.getDescription());
-        assertEquals(mediaImage, event.getMediaImage());
+        ArrayList<MediaImage> images = new ArrayList<>();
+        images.add(mediaImage);
+        assertEquals(images, event.getImages());
         assertEquals(url, event.getUrl());
         assertEquals(category, event.getCategory());
         assertEquals(source, event.getSource());
@@ -177,22 +183,5 @@ public class EventTest {
     @Test
     public void testGetAttributes() throws Exception {
         assertEquals(attributes, event.getAttributes());
-    }
-
-    @Test
-    public void isPresentableShouldReturnTrue() {
-        Event event = new Event(id, typeEvent);
-        assertThat(event.isPresentable(), is(true));
-    }
-
-    @Test
-    public void toPresentableFieldsShouldEqualMediasFields() {
-        Event event = new Event(id, typeEvent);
-        event.setAttributes(attributes);
-        Presentable presentable = event.toPresentable();
-
-        assertThat("titles should match", presentable.getTitle(), is(equalTo(event.getTitle())));
-        assertThat("descriptions should match", presentable.getDescription(), is(equalTo(event.getDescription())));
-        assertThat("MediaImages should match", presentable.getMediaImage(), is(equalTo(event.getMediaImage())));
     }
 }

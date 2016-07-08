@@ -3,6 +3,7 @@ package io.oddworks.device.model;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import static org.hamcrest.CoreMatchers.equalTo;
@@ -18,14 +19,16 @@ public class ExternalTest {
     private String title = "Odd the Great and Powerful";
     private String description = "Odd is good! Odd is great!";
     private String url = "http://oddnetworks.com/foo.html";
-    private MediaImage mediaImage = new MediaImage("a", "b", "c", "d", "e");
+    private MediaImage mediaImage = new MediaImage("a", "b", 1, 1, "e");
     private HashMap<String, Object> attributes = new HashMap<>();
 
     @Before
     public void beforeEach() {
         attributes.put("title", title);
         attributes.put("description", description);
-        attributes.put("mediaImage", mediaImage);
+        ArrayList<MediaImage> images = new ArrayList<>();
+        images.add(mediaImage);
+        attributes.put("images", images);
         attributes.put("url", url);
         attributes.put("mediaImage", mediaImage);
         external.setAttributes(attributes);
@@ -57,8 +60,10 @@ public class ExternalTest {
     }
 
     @Test
-    public void testGetMediaImage() throws Exception {
-        assertEquals(mediaImage, external.getMediaImage());
+    public void testGetImages() throws Exception {
+        ArrayList<MediaImage> images = new ArrayList<>();
+        images.add(mediaImage);
+        assertEquals(images, external.getImages());
     }
 
     @Test
@@ -72,7 +77,7 @@ public class ExternalTest {
 
         assertEquals(null, article.getTitle());
         assertEquals(null, article.getDescription());
-        assertEquals(null, article.getMediaImage());
+        assertEquals(null, article.getImages());
         assertEquals(null, article.getUrl());
     }
 
@@ -83,29 +88,14 @@ public class ExternalTest {
 
         assertEquals(title, article.getTitle());
         assertEquals(description, article.getDescription());
-        assertEquals(mediaImage, article.getMediaImage());
+        ArrayList<MediaImage> images = new ArrayList<>();
+        images.add(mediaImage);
+        assertEquals(images, article.getImages());
         assertEquals(url, article.getUrl());
     }
 
     @Test
     public void testGetAttributes() throws Exception {
         assertEquals(attributes, external.getAttributes());
-    }
-
-    @Test
-    public void isPresentableShouldReturnTrue() {
-        External external = new External(id, typeExternal);
-        assertThat(external.isPresentable(), is(true));
-    }
-
-    @Test
-    public void toPresentableFieldsShouldEqualMediasFields() {
-        External external = new External(id, typeExternal);
-        external.setAttributes(attributes);
-        Presentable presentable = external.toPresentable();
-
-        assertThat("titles should match", presentable.getTitle(), is(equalTo(external.getTitle())));
-        assertThat("descriptions should match", presentable.getDescription(), is(equalTo(external.getDescription())));
-        assertThat("MediaImages should match", presentable.getMediaImage(), is(equalTo(external.getMediaImage())));
     }
 }

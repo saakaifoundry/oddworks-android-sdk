@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
+import io.oddworks.device.model.Config;
 import io.oddworks.device.model.Identifier;
 import io.oddworks.device.model.OddObject;
 import io.oddworks.device.model.Relationship;
@@ -23,8 +24,30 @@ import io.oddworks.device.model.Relationship;
  */
 public class EntityCache {
     private final ConcurrentMap<String, StoredObject> objectStore = new ConcurrentHashMap<>();
+    private final ConcurrentMap<String, StoredConfig> configStore = new ConcurrentHashMap<>();
+    private static final String CONFIG_KEY = EntityCache.class.getName() + ".config";
 
     protected EntityCache() { }
+
+    @Nullable protected Config getConfig() {
+        StoredConfig storedConfig = configStore.get(CONFIG_KEY);
+        Config config = null;
+        if (storedConfig != null) {
+            if (storedConfig.expiration > new Date().getTime()) {
+                config = storedConfig.config;
+            } else {
+                configStore.remove(CONFIG_KEY);
+            }
+        }
+        return config;
+    }
+
+    /** stores config. Sets a maxAge for the config resource
+     * @param maxAge object will expire after this many milliseconds */
+    protected void storeConfig(@NonNull Config config, long maxAge) {
+        long expiration = maxAge + new Date().getTime();
+        configStore.put(CONFIG_KEY, new StoredConfig(config, expiration));
+    }
 
     @Nullable protected OddObject getObject(@NonNull String id) {
         StoredObject storedObject = objectStore.get(id);
@@ -94,6 +117,7 @@ public class EntityCache {
     /** removes all objects from store */
     protected void clear() {
         objectStore.clear();
+        configStore.clear();
     }
 
     private static class StoredObject {
@@ -102,6 +126,16 @@ public class EntityCache {
 
         private StoredObject(OddObject object, long expiration) {
             this.object = object;
+            this.expiration = expiration;
+        }
+    }
+
+    private static class StoredConfig {
+        private final Config config;
+        private final long expiration;
+
+        private StoredConfig(Config config, long expiration) {
+            this.config = config;
             this.expiration = expiration;
         }
     }

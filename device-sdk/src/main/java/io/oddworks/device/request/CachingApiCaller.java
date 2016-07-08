@@ -19,6 +19,7 @@ import io.oddworks.device.exception.BadResponseCodeException;
 import io.oddworks.device.exception.OddAuthTokenUserMismatch;
 import io.oddworks.device.exception.OddParseException;
 import io.oddworks.device.model.Article;
+import io.oddworks.device.model.Config;
 import io.oddworks.device.model.Event;
 import io.oddworks.device.model.External;
 import io.oddworks.device.model.Identifier;
@@ -53,196 +54,119 @@ public class CachingApiCaller {
     /**
      * @param forceFetchFromApi if true, do not attempt to get from cache. Get directly from api
      */
+    public void getConfig(@NonNull OddCallback<Config> cb, boolean forceFetchFromApi) {
+        Config stored = cache.getConfig();
+        if(!forceFetchFromApi && stored != null) {
+            cb.onSuccess(stored);
+        } else {
+            getConfigFromApi(cb);
+        }
+    }
+    /**
+     * @param forceFetchFromApi if true, do not attempt to get from cache. Get directly from api
+     */
     public void getPromotion(@NonNull String id,
+                             @NonNull List<String> included,
                              @NonNull OddCallback<Promotion> cb,
                              boolean forceFetchFromApi) {
         Promotion stored = (Promotion)cache.getObject(id);
         if(!forceFetchFromApi && stored != null) {
             cb.onSuccess(stored);
         } else {
-            getPromotionFromApi(id, cb, false);
+            getPromotionFromApi(id, included, cb);
         }
     }
 
-
-    public void getPromotion(@NonNull String id, @NonNull OddCallback<Promotion> cb) {
-        getPromotion(id, cb, false);
-    }
-
-    /**
-     * @param forceFetchFromApi if true, do not attempt to get from cache. Get directly from api
-     */
-    public void getProtionWithAllRelated(@NonNull final String id,
-                                         @NonNull final OddCallback<ObjectWithRelated<Promotion>> cb,
-                                         boolean forceFetchFromApi) {
-        if(forceFetchFromApi || !completeGetAllRelatedFromCache(id, cb))
-            getPromotionFromApi(id, new GatherAllRelatedCb<Promotion>(cb), true);
-    }
-
-    /**
-     * @param forceFetchFromApi if true, do not attempt to get from cache. Get directly from api
-     */
-    public void getProtionWithRelationship(@NonNull final String id,
-                                         @NonNull final OddCallback<ObjectWithRelated<Promotion>> cb,
-                                         @NonNull final String relationshipName,
-                                         boolean forceFetchFromApi) {
-        if(forceFetchFromApi || !completeGetRelationshipFromCache(id, relationshipName, cb))
-            getPromotionFromApi(id, new GatherRelationshipCb<Promotion>(cb, relationshipName), true);
-    }
-
-    private void getPromotionFromApi(String promotionId, final OddCallback<Promotion> cb, boolean fetchIncluded) {
+    private void getPromotionFromApi(String promotionId, List<String> included, final OddCallback<Promotion> cb) {
         Callback requestCallback = new RequestCallback<>(cb, new ParseCall<Promotion>() {
             @Override
             public Promotion parse(String responseBody) {
                 return parser.parsePromotionResponse(responseBody);
             }
         });
-        requestHandler.getPromotion(promotionId, requestCallback, fetchIncluded);
+        requestHandler.getPromotion(promotionId, included, requestCallback);
+    }
+
+    private void getConfigFromApi(final OddCallback<Config> cb) {
+        Callback requestCallback = new RequestCallback<>(cb, new ParseCall<Config>() {
+            @Override
+            public Config parse(String responseBody) throws JSONException {
+                return parser.parseConfig(responseBody);
+            }
+        });
+        requestHandler.getConfig(requestCallback);
     }
 
     /**
      * @param forceFetchFromApi if true, do not attempt to get from cache. Get directly from api
      */
-    public void getExternal(@NonNull String id, @NonNull OddCallback<External> cb, boolean forceFetchFromApi) {
+    public void getExternal(@NonNull String id, @NonNull List<String> included, @NonNull OddCallback<External> cb, boolean forceFetchFromApi) {
         External stored = (External)cache.getObject(id);
         if(!forceFetchFromApi && stored != null) {
             cb.onSuccess(stored);
         } else {
-            getExternalFromApi(id, cb, false);
+            getExternalFromApi(id, included, cb);
         }
     }
 
-    public void getExternal(@NonNull String id, @NonNull OddCallback<External> cb) {
-        getExternal(id, cb, false);
-    }
-
-    /**
-     * @param forceFetchFromApi if true, do not attempt to get from cache. Get directly from api
-     */
-    public void getExternalWithAllRelated(@NonNull final String id,
-                                         @NonNull final OddCallback<ObjectWithRelated<External>> cb,
-                                         boolean forceFetchFromApi) {
-        if(forceFetchFromApi || !completeGetAllRelatedFromCache(id, cb))
-            getExternalFromApi(id, new GatherAllRelatedCb<External>(cb), true);
-    }
-
-    /**
-     * @param forceFetchFromApi if true, do not attempt to get from cache. Get directly from api
-     */
-    public void getExternalWithRelationship(@NonNull final String id,
-                                           @NonNull final OddCallback<ObjectWithRelated<External>> cb,
-                                           @NonNull final String relationshipName,
-                                           boolean forceFetchFromApi) {
-        if(forceFetchFromApi || !completeGetRelationshipFromCache(id, relationshipName, cb))
-            getExternalFromApi(id, new GatherRelationshipCb<>(cb, relationshipName), true);
-    }
-
-    private void getExternalFromApi(String id, OddCallback<External> cb, boolean fetchIncluded) {
+    private void getExternalFromApi(String id, List<String> included, OddCallback<External> cb) {
         Callback requestCallback = new RequestCallback<>(cb, new ParseCall<External>() {
             @Override
             public External parse(String responseBody) {
                 return parser.parseExternalResponse(responseBody);
             }
         });
-        requestHandler.getExternal(id, requestCallback, fetchIncluded);
+        requestHandler.getExternal(id, included, requestCallback);
     }
 
     /**
      * @param forceFetchFromApi if true, do not attempt to get from cache. Get directly from api
      */
     public void getCollection(@NonNull String id,
+                              @NonNull List<String> included,
                               @NonNull OddCallback<OddCollection> cb,
                               boolean forceFetchFromApi) {
         OddCollection stored = (OddCollection)cache.getObject(id);
         if(!forceFetchFromApi && stored != null) {
             cb.onSuccess(stored);
         } else {
-            getCollectionFromApi(id, cb, false);
+            getCollectionFromApi(id, included, cb);
         }
     }
 
-    public void getCollection(@NonNull String id, @NonNull OddCallback<OddCollection> cb) {
-        getCollection(id, cb, false);
-    }
-
-    /**
-     * @param forceFetchFromApi if true, do not attempt to get from cache. Get directly from api
-     */
-    public void getCollectionWithAllRelated(@NonNull final String id,
-                                            @NonNull final OddCallback<ObjectWithRelated<OddCollection>> cb,
-                                            boolean forceFetchFromApi) {
-        if(forceFetchFromApi || !completeGetAllRelatedFromCache(id, cb))
-            getCollectionFromApi(id, new GatherAllRelatedCb<OddCollection>(cb), true);
-    }
-
-    /**
-     * @param forceFetchFromApi if true, do not attempt to get from cache. Get directly from api
-     */
-    public void getCollectionWithRelationship(@NonNull final String id,
-                                              @NonNull final OddCallback<ObjectWithRelated<OddCollection>> cb,
-                                              @NonNull final String relationshipName,
-                                              boolean forceFetchFromApi) {
-        if(forceFetchFromApi || !completeGetRelationshipFromCache(id, relationshipName, cb))
-            getCollectionFromApi(id, new GatherRelationshipCb<>(cb, relationshipName), true);
-    }
-
-    private void getCollectionFromApi(String id, OddCallback<OddCollection> cb, boolean fetchIncluded) {
+    private void getCollectionFromApi(String id, List<String> included, OddCallback<OddCollection> cb) {
         Callback requestCallback = new RequestCallback<>(cb, new ParseCall<OddCollection>() {
             @Override
             public OddCollection parse(String responseBody) {
                 return parser.parseCollectionResponse(responseBody);
             }
         });
-        requestHandler.getCollection(id, requestCallback);
+        requestHandler.getCollection(id, included, requestCallback);
     }
 
     /**
      * @param forceFetchFromApi if true, do not attempt to get from cache. Get directly from api
      */
     public void getEvent(@NonNull String id,
+                         @NonNull List<String> included,
                          @NonNull OddCallback<Event> cb,
                          boolean forceFetchFromApi) {
         Event stored = (Event)cache.getObject(id);
         if(!forceFetchFromApi && stored != null) {
             cb.onSuccess(stored);
         } else {
-            getEventFromApi(id, cb, false);
+            getEventFromApi(id, included,cb);
         }
     }
 
-    public void getEvent(@NonNull String id, @NonNull OddCallback<Event> cb) {
-        getEvent(id, cb, false);
-    }
-
-    /**
-     * @param forceFetchFromApi if true, do not attempt to get from cache. Get directly from api
-     */
-    public void getEventWithAllRelated(@NonNull final String id,
-                                               @NonNull final OddCallback<ObjectWithRelated<Event>> cb,
-                                               boolean forceFetchFromApi) {
-        if(forceFetchFromApi || !completeGetAllRelatedFromCache(id, cb))
-            getEventFromApi(id, new GatherAllRelatedCb<Event>(cb), true);
-    }
-
-    /**
-     * @param forceFetchFromApi if true, do not attempt to get from cache. Get directly from api
-     */
-    public void getEventWithRelationship(@NonNull final String id,
-                                                 @NonNull final OddCallback<ObjectWithRelated<Event>> cb,
-                                                 @NonNull final String relationshipName,
-                                                 boolean forceFetchFromApi) {
-        if(forceFetchFromApi || !completeGetRelationshipFromCache(id, relationshipName, cb))
-            getEventFromApi(id, new GatherRelationshipCb<>(cb, relationshipName), true);
-    }
-
-    private void getEventFromApi(String id, OddCallback<Event> cb, boolean fetchIncluded) {
+    private void getEventFromApi(String id, List<String> included, OddCallback<Event> cb) {
         Callback requestCallback = new RequestCallback<>(cb, new ParseCall<Event>() {
             @Override
             public Event parse(String responseBody) {
                 return parser.parseEventResponse(responseBody);
             }
         });
-        requestHandler.getEvent(id, requestCallback, false);
+        requestHandler.getEvent(id, included, requestCallback);
     }
 
     /**
@@ -250,6 +174,7 @@ public class CachingApiCaller {
      * @param  isLiveStream true if this Media is a liveStream object in the api's catalog otherwise false.
      *                      If Media#isLive() returns true then then this should be true. **/
     public void getMedia(@NonNull String id,
+                         @NonNull List<String> included,
                          @NonNull OddCallback<Media> cb,
                          boolean isLiveStream,
                          boolean forceFetchFromApi) {
@@ -257,45 +182,12 @@ public class CachingApiCaller {
         if(!forceFetchFromApi && stored != null) {
             cb.onSuccess(stored);
         } else {
-            getMediaFromApi(id, cb, false, false);
+            getMediaFromApi(id, included, cb, false);
         }
     }
 
-    /**
-     * @param  isLiveStream true if this Media is a liveStream object in the api's catalog otherwise false.
-     *                      If Media#isLive() returns true then then this should be true. **/
-    public void getMedia(@NonNull String id, @NonNull OddCallback<Media> cb, boolean isLiveStream) {
-        getMedia(id, cb, isLiveStream, false);
-    }
 
-    /**
-     * @param forceFetchFromApi if true, do not attempt to get from cache. Get directly from api
-     * @param isLiveStream true if this Media is a liveStream object in the api's catalog otherwise false.
-     *                      If Media#isLive() returns true then then this should be true.
-     */
-    public void getMediaWithAllRelated(@NonNull final String id,
-                                       boolean isLiveStream,
-                                       @NonNull final OddCallback<ObjectWithRelated<Media>> cb,
-                                       boolean forceFetchFromApi) {
-        if(forceFetchFromApi || !completeGetAllRelatedFromCache(id, cb))
-            getMediaFromApi(id, new GatherAllRelatedCb<>(cb), isLiveStream, true);
-    }
-
-    /**
-     * @param forceFetchFromApi if true, do not attempt to get from cache. Get directly from api
-     * @param isLiveStream true if this Media is a liveStream object in the api's catalog otherwise false.
-     *                      If Media#isLive() returns true then then this should be true.
-     */
-    public void getMediaWithRelationship(@NonNull final String id,
-                                                 @NonNull final OddCallback<ObjectWithRelated<Media>> cb,
-                                                boolean isLiveStream,
-                                                 @NonNull final String relationshipName,
-                                         boolean forceFetchFromApi) {
-        if(forceFetchFromApi || !completeGetRelationshipFromCache(id, relationshipName, cb))
-            getMediaFromApi(id, new GatherRelationshipCb<>(cb, relationshipName), isLiveStream, true);
-    }
-
-    private void getMediaFromApi(String id, OddCallback<Media> cb, boolean isLiveStream,  boolean fetchIncluded) {
+    private void getMediaFromApi(String id, List<String> included, OddCallback<Media> cb, boolean isLiveStream) {
         Callback requestCallback = new RequestCallback<>(cb, new ParseCall<Media>() {
             @Override
             public Media parse(String responseBody) {
@@ -303,105 +195,63 @@ public class CachingApiCaller {
             }
         });
         if(isLiveStream)
-            requestHandler.getLiveStream(id, requestCallback);
+            requestHandler.getLiveStream(id, included, requestCallback);
         else
-            requestHandler.getVideo(id, requestCallback);
+            requestHandler.getVideo(id, included, requestCallback);
     }
 
     /**
-     * @param forceFetchFromApi if true, do not attempt to get from cache. Get directly from api */
+     * @param id id of view to fetch
+     * @param included list of relationship names to include with results
+     * @param cb callback
+     * @param forceFetchFromApi if true, do not attempt to get from cache. Get directly from api
+     *
+     */
     public void getView(@NonNull String id,
+                        @NonNull List<String> included,
                         @NonNull OddCallback<OddView> cb,
                         boolean forceFetchFromApi) {
         OddView stored = (OddView)cache.getObject(id);
         if(!forceFetchFromApi && stored != null) {
             cb.onSuccess(stored);
         } else {
-            getViewFromApi(id, cb, true);
+            getViewFromApi(id, included, cb);
         }
     }
 
-    public void getView(@NonNull String id, @NonNull OddCallback<OddView> cb) {
-        getView(id, cb, false);
-    }
 
-    /**
-     * @param forceFetchFromApi if true, do not attempt to get from cache. Get directly from api
-     */
-    public void getViewWithAllRelated(@NonNull final String id,
-                                       @NonNull final OddCallback<ObjectWithRelated<OddView>> cb,
-                                       boolean forceFetchFromApi) {
-        if(forceFetchFromApi || !completeGetAllRelatedFromCache(id, cb))
-            getViewFromApi(id, new GatherAllRelatedCb<>(cb), true);
-    }
-
-    /**
-     * @param forceFetchFromApi if true, do not attempt to get from cache. Get directly from api
-     */
-    public void getViewWithRelationship(@NonNull final String id,
-                                         @NonNull final OddCallback<ObjectWithRelated<OddView>> cb,
-                                         @NonNull final String relationshipName,
-                                         boolean forceFetchFromApi) {
-        if(forceFetchFromApi || !completeGetRelationshipFromCache(id, relationshipName, cb))
-            getViewFromApi(id, new GatherRelationshipCb<>(cb, relationshipName), true);
-    }
-
-    private void getViewFromApi(String id, OddCallback<OddView> cb, boolean fetchIncluded) {
+    private void getViewFromApi(String id, List<String> included, OddCallback<OddView> cb) {
         Callback requestCallback = new RequestCallback<>(cb, new ParseCall<OddView>() {
             @Override
             public OddView parse(String responseBody) {
                 return parser.parseViewResponse(responseBody);
             }
         });
-        requestHandler.getView(id, requestCallback);
+        requestHandler.getView(id, included, requestCallback);
     }
 
     /**
      * @param forceFetchFromApi if true, do not attempt to get from cache. Get directly from api */
     public void getArticle(@NonNull String id,
+                           @NonNull List<String> included,
                            @NonNull OddCallback<Article> cb,
                            boolean forceFetchFromApi) {
         Article stored = (Article)cache.getObject(id);
         if(!forceFetchFromApi && stored != null) {
             cb.onSuccess(stored);
         } else {
-            getArticleFromApi(id, cb, false);
+            getArticleFromApi(id, included, cb);
         }
     }
 
-    public void getArticle(@NonNull String id, @NonNull OddCallback<Article> cb) {
-        getArticle(id, cb, false);
-    }
-
-    /**
-     * @param forceFetchFromApi if true, do not attempt to get from cache. Get directly from api
-     */
-    public void getArticleWithAllRelated(@NonNull final String id,
-                                      @NonNull final OddCallback<ObjectWithRelated<Article>> cb,
-                                      boolean forceFetchFromApi) {
-        if(forceFetchFromApi || !completeGetAllRelatedFromCache(id, cb))
-            getArticleFromApi(id, new GatherAllRelatedCb<>(cb), true);
-    }
-
-    /**
-     * @param forceFetchFromApi if true, do not attempt to get from cache. Get directly from api
-     */
-    public void getArticleWithRelationship(@NonNull final String id,
-                                        @NonNull final OddCallback<ObjectWithRelated<Article>> cb,
-                                        @NonNull final String relationshipName,
-                                        boolean forceFetchFromApi) {
-        if(forceFetchFromApi || !completeGetRelationshipFromCache(id, relationshipName, cb))
-            getArticleFromApi(id, new GatherRelationshipCb<>(cb, relationshipName), true);
-    }
-
-    private void getArticleFromApi(String id, OddCallback<Article> cb, boolean fetchIncluded) {
+    private void getArticleFromApi(String id, List<String> included, OddCallback<Article> cb) {
         Callback requestCallback = new RequestCallback<>(cb, new ParseCall<Article>() {
             @Override
             public Article parse(String responseBody) {
                 return parser.parseArticleResponse(responseBody);
             }
         });
-        requestHandler.getArticle(id, requestCallback, fetchIncluded);
+        requestHandler.getArticle(id, included, requestCallback);
     }
 
     /** attempt to complete callback with data from cache

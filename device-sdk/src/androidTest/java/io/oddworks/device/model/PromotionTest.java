@@ -6,6 +6,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import static org.hamcrest.CoreMatchers.equalTo;
@@ -22,23 +23,9 @@ public class PromotionTest {
         HashMap<String, Object> attributes = new HashMap<>();
         attributes.put("title", "title1");
         attributes.put("description", "description1");
-        attributes.put("mediaImage", new MediaImage("a", "b", "c", "d", "e"));
+        ArrayList<MediaImage> images = new ArrayList<>();
+        images.add(new MediaImage("a", "b", 1, 1, "e"));
+        attributes.put("images", images);
         mPromotion.setAttributes(attributes);
-    }
-
-    @Test
-    public void isPresentableShouldReturnTrue() {
-        assertThat(mPromotion.isPresentable(), is(true));
-    }
-
-    @Test
-    public void toPresentableFieldsShouldMatchThisFields() {
-        Presentable presentable = mPromotion.toPresentable();
-        assertThat("titles should match", presentable.getTitle(),
-                is(equalTo(mPromotion.getTitle())));
-        assertThat("descriptions should match", presentable.getDescription(),
-                is(equalTo(mPromotion.getDescription())));
-        assertThat("MediaImage should match", presentable.getMediaImage(),
-                is(equalTo(mPromotion.getMediaImage())));
     }
 }

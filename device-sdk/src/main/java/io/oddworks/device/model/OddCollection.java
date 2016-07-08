@@ -3,6 +3,7 @@ package io.oddworks.device.model;
 import org.joda.time.DateTime;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import io.oddworks.device.Util;
@@ -16,7 +17,7 @@ public class OddCollection extends OddObject {
     private String title;
     private String subtitle;
     private String description;
-    private MediaImage mediaImage;
+    private List<MediaImage> images;
     private DateTime releaseDate;
 
     public OddCollection(final Identifier identifier) {
@@ -39,8 +40,8 @@ public class OddCollection extends OddObject {
         return description;
     }
 
-    public MediaImage getMediaImage() {
-        return mediaImage;
+    public List<MediaImage> getImages() {
+        return images;
     }
 
     public DateTime getReleaseDate() {
@@ -52,7 +53,7 @@ public class OddCollection extends OddObject {
         this.title = getString(attributes, "title", null);
         this.subtitle = getString(attributes, "subtitle", null);
         this.description = getString(attributes, "description", null);
-        this.mediaImage = (MediaImage) attributes.get("mediaImage");
+        this.images = (List<MediaImage>) attributes.get("images");
         this.releaseDate = Util.getDateTime(attributes, "releaseDate", null);
     }
 
@@ -62,19 +63,9 @@ public class OddCollection extends OddObject {
         attributes.put("title", getTitle());
         attributes.put("subtitle", getSubtitle());
         attributes.put("description", getDescription());
-        attributes.put("mediaImage", getMediaImage());
+        attributes.put("images", getImages());
         attributes.put("releaseDate", getReleaseDate());
         return attributes;
-    }
-
-    @Override
-    public boolean isPresentable() {
-        return true;
-    }
-
-    @Override
-    public Presentable toPresentable() {
-        return new Presentable(title, description, mediaImage);
     }
 
     @Override
@@ -83,7 +74,7 @@ public class OddCollection extends OddObject {
                 "title='" + getTitle() + '\'' +
                 ", subtitle='" + getSubtitle() + '\'' +
                 ", description='" + getDescription() + '\'' +
-                ", mediaImage=" + getMediaImage() +
+                ", images=" + getImages() +
                 ", releaseDate=" + getReleaseDate() +
                 '}';
     }

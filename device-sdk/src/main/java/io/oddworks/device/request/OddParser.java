@@ -14,7 +14,6 @@ import java.util.List;
 import java.util.Map;
 
 import io.oddworks.device.exception.OddParseException;
-import io.oddworks.device.exception.UnhandledPlayerTypeException;
 import io.oddworks.device.model.Article;
 import io.oddworks.device.model.AuthToken;
 import io.oddworks.device.model.Config;
@@ -23,7 +22,6 @@ import io.oddworks.device.model.Event;
 import io.oddworks.device.model.External;
 import io.oddworks.device.model.Identifier;
 import io.oddworks.device.model.Media;
-import io.oddworks.device.model.MediaAd;
 import io.oddworks.device.model.MediaImage;
 import io.oddworks.device.model.Metric;
 import io.oddworks.device.model.MetricsConfig;
@@ -32,10 +30,6 @@ import io.oddworks.device.model.OddObject;
 import io.oddworks.device.model.OddView;
 import io.oddworks.device.model.Promotion;
 import io.oddworks.device.model.Relationship;
-import io.oddworks.device.model.Sharing;
-import io.oddworks.device.model.players.ExternalPlayer;
-import io.oddworks.device.model.players.OoyalaPlayer;
-import io.oddworks.device.model.players.Player;
 //todo stop swallowing exceptions
 
 public class OddParser {
@@ -55,45 +49,32 @@ public class OddParser {
         return INSTANCE;
     }
 
-    public MediaImage parseMediaImage(final JSONObject data) throws JSONException {
-        if (data == null) {
-            return null;
+    public List<MediaImage> parseMediaImages(final JSONArray images) throws JSONException {
+        ArrayList<MediaImage> parsedImages = new ArrayList<>();
+
+        if (images == null) {
+            return parsedImages;
         }
-        String aspect16x9 = JSON.getString(data, "aspect16x9");
-        String aspect4x3 = JSON.getString(data, "aspect4x3");
-        String aspect3x4 = JSON.getString(data, "aspect3x4");
-        String aspect1x1 = JSON.getString(data, "aspect1x1");
-        String aspect2x3 = JSON.getString(data, "aspect2x3");
 
-        return new MediaImage(aspect16x9, aspect3x4, aspect4x3, aspect1x1, aspect2x3);
-    }
+        for (int i = 0; i < images.length(); i++) {
+            JSONObject image = images.getJSONObject(i);
 
-    public MediaAd parseMediaAd(final JSONObject data) throws JSONException {
-        try {
-            JSONObject rawAds = data.getJSONObject("ads");
+            String url = JSON.getString(image, "url");
+            String mimeType = JSON.getString(image, "mimeType");
+            int width = JSON.getInt(image, "width");
+            int height = JSON.getInt(image, "height");
+            String label = JSON.getString(image, "label");
 
-            HashMap<String, Object> properties = new HashMap<>();
-            Iterator<String> adKeys = rawAds.keys();
-            while(adKeys.hasNext()) {
-                String adProperty = adKeys.next();
-                if (adProperty.equals("enabled")) {
-                    properties.put(adProperty, JSON.getBoolean(rawAds, adProperty));
-                } else if (adProperty.equals("networkId")) {
-                    properties.put(adProperty, JSON.getInt(rawAds, adProperty));
-                } else {
-                    properties.put(adProperty, JSON.getString(rawAds, adProperty));
-                }
-            }
-            return new MediaAd(properties);
-        } catch (Exception e) {
-            return new MediaAd();
+            parsedImages.add(new MediaImage(url, mimeType, width, height, label));
         }
+
+        return parsedImages;
     }
 
     public OddCollection parseCollection(final JSONObject data) throws JSONException {
         JSONObject rawAttributes = JSON.getJSONObject(data, ATTRIBUTES, true);
         JSONObject meta = JSON.getJSONObject(data, META, false);
-        JSONObject images = JSON.getJSONObject(rawAttributes, "images", false);
+        JSONArray images = JSON.getJSONArray(rawAttributes, "images", false);
 
         String id = JSON.getString(data, "id");
         String type = JSON.getString(data, "type");
@@ -103,7 +84,7 @@ public class OddParser {
         attributes.put("subtitle", JSON.getString(rawAttributes, "subtitle"));
         attributes.put("description", JSON.getString(rawAttributes, "description"));
         attributes.put("releaseDate", JSON.getDateTime(rawAttributes, "releaseDate"));
-        attributes.put("mediaImage", parseMediaImage(images));
+        attributes.put("images", parseMediaImages(images));
 
         OddCollection collection = new OddCollection(id, type);
         collection.setAttributes(attributes);
@@ -156,7 +137,7 @@ public class OddParser {
     protected Event parseEvent(final JSONObject dataObject) throws JSONException {
         JSONObject rawAttributes = JSON.getJSONObject(dataObject, ATTRIBUTES, true);
         JSONObject meta = JSON.getJSONObject(dataObject, META, false);
-        JSONObject images = JSON.getJSONObject(rawAttributes, "images", false);
+        JSONArray images = JSON.getJSONArray(rawAttributes, "images", false);
         JSONObject ical = JSON.getJSONObject(rawAttributes, "ical", true);
 
         Event event = new Event(
@@ -167,7 +148,7 @@ public class OddParser {
         HashMap<String, Object> attributes = new HashMap<>();
         attributes.put("title", JSON.getString(rawAttributes, "title"));
         attributes.put("description", JSON.getString(rawAttributes, "description"));
-        attributes.put("mediaImage", parseMediaImage(images));
+        attributes.put("images", parseMediaImages(images));
         attributes.put("category", JSON.getString(rawAttributes, "category"));
         attributes.put("source", JSON.getString(rawAttributes, "source"));
         attributes.put("createdAt", JSON.getDateTime(rawAttributes, "createdAt"));
@@ -185,7 +166,7 @@ public class OddParser {
     protected External parseExternal(final JSONObject dataObject) throws JSONException {
         JSONObject rawAttributes = JSON.getJSONObject(dataObject, ATTRIBUTES, true);
         JSONObject meta = JSON.getJSONObject(dataObject, META, false);
-        JSONObject images = JSON.getJSONObject(rawAttributes, "images", false);
+        JSONArray images = JSON.getJSONArray(rawAttributes, "images", false);
 
         External external = new External(
                 JSON.getString(dataObject, "id"),
@@ -195,7 +176,7 @@ public class OddParser {
         HashMap<String, Object> attributes = new HashMap<>();
         attributes.put("title", JSON.getString(rawAttributes, "title"));
         attributes.put("description", JSON.getString(rawAttributes, "description"));
-        attributes.put("mediaImage", parseMediaImage(images));
+        attributes.put("images", parseMediaImages(images));
         attributes.put("url", JSON.getString(rawAttributes, "url"));
 
         external.setAttributes(attributes);
@@ -206,7 +187,7 @@ public class OddParser {
     protected Article parseArticle(final JSONObject dataObject) throws JSONException {
         JSONObject rawAttributes = JSON.getJSONObject(dataObject, ATTRIBUTES, true);
         JSONObject meta = JSON.getJSONObject(dataObject, META, false);
-        JSONObject images = JSON.getJSONObject(rawAttributes, "images", false);
+        JSONArray images = JSON.getJSONArray(rawAttributes, "images", false);
 
         Article article = new Article(
                 JSON.getString(dataObject, "id"),
@@ -216,7 +197,7 @@ public class OddParser {
         HashMap<String, Object> attributes = new HashMap<>();
         attributes.put("title", JSON.getString(rawAttributes, "title"));
         attributes.put("description", JSON.getString(rawAttributes, "description"));
-        attributes.put("mediaImage", parseMediaImage(images));
+        attributes.put("images", parseMediaImages(images));
         attributes.put("category", JSON.getString(rawAttributes, "category"));
         attributes.put("source", JSON.getString(rawAttributes, "source"));
         attributes.put("createdAt", JSON.getDateTime(rawAttributes, "createdAt"));
@@ -230,7 +211,7 @@ public class OddParser {
     protected Media parseMedia(final JSONObject dataObject) throws JSONException {
         JSONObject rawAttributes = JSON.getJSONObject(dataObject, ATTRIBUTES, true);
         JSONObject meta = JSON.getJSONObject(dataObject, META, false);
-        JSONObject images = JSON.getJSONObject(rawAttributes, "images", false);
+        JSONArray images = JSON.getJSONArray(rawAttributes, "images", false);
 
         Media media = new Media(
                 JSON.getString(dataObject, "id"),
@@ -239,7 +220,6 @@ public class OddParser {
 
         HashMap<String, Object> attributes = new HashMap<>();
         attributes.put("title", JSON.getString(rawAttributes, "title"));
-        attributes.put("subtitle", JSON.getString(rawAttributes, "subtitle"));
         attributes.put("description", JSON.getString(rawAttributes, "description"));
         attributes.put("releaseDate", JSON.getDateTime(rawAttributes, "releaseDate"));
         try {
@@ -251,72 +231,18 @@ public class OddParser {
 
         attributes.put("url", JSON.getString(rawAttributes, "url"));
         attributes.put("isLive", JSON.getString(rawAttributes, "isLive"));
-        attributes.put("mediaImage", parseMediaImage(images));
-        attributes.put("mediaAd", parseMediaAd(rawAttributes));
+        attributes.put("images", parseMediaImages(images));
         media.setAttributes(attributes);
         JSONObject relationships = JSON.getJSONObject(dataObject, "relationships", false);
         if(relationships != null) addRelationshipsToOddObject(relationships, media);
-        media.setPlayer(parsePlayer(JSON.getJSONObject(rawAttributes, "player", true)));
-        media.setSharing(parseSharing(JSON.getJSONObject(rawAttributes, "sharing", false)));
 
         return media;
-    }
-
-    protected Player parsePlayer(final JSONObject rawPlayer) throws JSONException {
-        Player.PlayerType type;
-        try {
-            type = Player.PlayerType.valueOf(JSON.getString(rawPlayer, "type").toUpperCase());
-        } catch(IllegalArgumentException e) {
-            Log.e(TAG, "Parsed player does not exist", e);
-            throw new UnhandledPlayerTypeException("Unsupported player type: " + rawPlayer);
-        } catch(Exception e) {
-            Log.e(TAG, "Unable to parse player, falling back to native", e);
-            type = Player.PlayerType.NATIVE;
-        }
-
-        Player player = null;
-        switch (type) {
-            case NATIVE:
-            case BRIGHTCOVE:
-                player = new Player(type);
-                break;
-            case EXTERNAL:
-                player = parseExternalPlayer(rawPlayer);
-                break;
-            case OOYALA:
-                player = parseOoyalaPlayer(rawPlayer);
-                break;
-            default:
-                throw new UnhandledPlayerTypeException("Unsupported player type: " + type);
-        }
-        return player;
-    }
-
-    protected Sharing parseSharing(final JSONObject rawSharing) throws JSONException {
-        boolean enabled = false;
-        String text = "";
-        if (rawSharing != null) {
-            enabled = JSON.getBoolean(rawSharing, "enabled");
-            text = JSON.getString(rawSharing, "text");
-        }
-        return new Sharing(enabled, text);
-    }
-
-    private OoyalaPlayer parseOoyalaPlayer(JSONObject rawPlayer) throws JSONException {
-        return new OoyalaPlayer(Player.PlayerType.OOYALA,
-                JSON.getString(rawPlayer, "pCode"),
-                JSON.getString(rawPlayer, "embedCode"),
-                JSON.getString(rawPlayer, "domain"));
-    }
-
-    private ExternalPlayer parseExternalPlayer(JSONObject rawPlayer) throws JSONException {
-        return new ExternalPlayer(Player.PlayerType.EXTERNAL, JSON.getString(rawPlayer, "url"));
     }
 
     protected Promotion parsePromotion(final JSONObject rawPromotion) throws JSONException {
         JSONObject rawAttributes = JSON.getJSONObject(rawPromotion, ATTRIBUTES, true);
         JSONObject meta = JSON.getJSONObject(rawPromotion, META, false);
-        JSONObject images = JSON.getJSONObject(rawAttributes, "images", false);
+        JSONArray images = JSON.getJSONArray(rawAttributes, "images", false);
 
         Promotion promotion = new Promotion(
                 JSON.getString(rawPromotion, "id"),
@@ -327,7 +253,7 @@ public class OddParser {
         attributes.put("title", JSON.getString(rawAttributes, "title"));
         attributes.put("description", JSON.getString(rawAttributes, "description"));
         attributes.put("url", JSON.getString(rawAttributes, "url"));
-        attributes.put("mediaImage", parseMediaImage(images));
+        attributes.put("images", parseMediaImages(images));
 
         promotion.setAttributes(attributes);
 
@@ -503,7 +429,7 @@ public class OddParser {
     }
 
     public OddCollection parseCollectionResponse(String responseBody) {
-        OddCollection collection = null;
+        OddCollection collection;
         try {
             JSONObject raw = new JSONObject(responseBody);
             JSONObject data = JSON.getJSONObject(raw, DATA, true);
@@ -615,7 +541,7 @@ public class OddParser {
     }
 
     protected Media parseMediaResponse(String responseBody) {
-        Media media = null;
+        Media media;
         try {
             JSONObject response = new JSONObject(responseBody);
             JSONObject data = JSON.getJSONObject(response, DATA, true);
@@ -628,7 +554,7 @@ public class OddParser {
     }
 
     protected Promotion parsePromotionResponse(String responseBody) {
-        Promotion promotion = null;
+        Promotion promotion;
         try {
             JSONObject response = new JSONObject(responseBody);
             JSONObject data = JSON.getJSONObject(response, DATA, true);
@@ -641,7 +567,7 @@ public class OddParser {
     }
 
     protected External parseExternalResponse(String responseBody) {
-        External external = null;
+        External external;
         try {
             JSONObject response = new JSONObject(responseBody);
             JSONObject data = JSON.getJSONObject(response, DATA, true);
@@ -654,7 +580,7 @@ public class OddParser {
     }
 
     protected Event parseEventResponse(String responseBody) {
-        Event event = null;
+        Event event;
         try {
             JSONObject response = new JSONObject(responseBody);
             JSONObject data = JSON.getJSONObject(response, DATA, true);
@@ -667,7 +593,7 @@ public class OddParser {
     }
 
     protected Article parseArticleResponse(String responseBody) {
-        Article article = null;
+        Article article;
         try {
             JSONObject response = new JSONObject(responseBody);
             JSONObject data = JSON.getJSONObject(response, DATA, true);

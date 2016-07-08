@@ -3,6 +3,7 @@ package io.oddworks.device.model;
 import org.joda.time.DateTime;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import io.oddworks.device.Util;
@@ -12,7 +13,7 @@ public class Article extends OddObject {
     public static final String TAG = Article.class.getSimpleName();
     private String title;
     private String description;
-    private MediaImage mediaImage;
+    private List<MediaImage> images;
     private String url;
     private String category;
     private String source;
@@ -34,8 +35,8 @@ public class Article extends OddObject {
         return description;
     }
 
-    public MediaImage getMediaImage() {
-        return mediaImage;
+    public List<MediaImage> getImages() {
+        return images;
     }
 
     public String getUrl() {
@@ -62,7 +63,7 @@ public class Article extends OddObject {
     public void setAttributes(Map<String, Object> attributes) {
         title = Util.getString(attributes, "title", null);
         description = Util.getString(attributes, "description", null);
-        mediaImage = (MediaImage) attributes.get("mediaImage");
+        images = (List<MediaImage>) attributes.get("images");
         url = Util.getString(attributes, "url", null);
         category = Util.getString(attributes, "category", null);
         source = Util.getString(attributes, "source", null);
@@ -74,22 +75,12 @@ public class Article extends OddObject {
         HashMap<String, Object> attributes = new HashMap<>();
         attributes.put("title", getTitle());
         attributes.put("description", getDescription());
-        attributes.put("mediaImage", getMediaImage());
+        attributes.put("images", getImages());
         attributes.put("url", getUrl());
         attributes.put("category", getCategory());
         attributes.put("source", getSource());
         attributes.put("createdAt", getCreatedAt());
         return attributes;
-    }
-
-    @Override
-    public boolean isPresentable() {
-        return true;
-    }
-
-    @Override
-    public Presentable toPresentable() {
-        return new Presentable(title, description, mediaImage);
     }
 
     @Override

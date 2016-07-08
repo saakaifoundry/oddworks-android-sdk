@@ -13,6 +13,7 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.isA;
 import static org.hamcrest.CoreMatchers.nullValue;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 
 public class CollectionTest {
@@ -22,7 +23,7 @@ public class CollectionTest {
     private String subtitle = null;
     private String description = "Odd is good! Odd is great!";
     private DateTime releaseDate = new DateTime("2015-04-20T16:20:00-0400");
-    private MediaImage mediaImage = new MediaImage("a", "b", "c", "d", "e");
+    private MediaImage mediaImage = new MediaImage("a", "b", 1, 1, "e");
     private OddCollection collection = new OddCollection(id, type);
     private Map<String, Object> attributes = new HashMap<>();
 
@@ -32,7 +33,9 @@ public class CollectionTest {
         attributes.put("subtitle", subtitle);
         attributes.put("description", description);
         attributes.put("releaseDate", releaseDate);
-        attributes.put("mediaImage", mediaImage);
+        ArrayList<MediaImage> images = new ArrayList<>();
+        images.add(mediaImage);
+        attributes.put("images", images);
         collection.setAttributes(attributes);
     }
 
@@ -67,8 +70,10 @@ public class CollectionTest {
     }
 
     @Test
-    public void testGetMediaImage() throws Exception {
-        assertThat(collection.getMediaImage(), is(equalTo(mediaImage)));
+    public void testGetImages() throws Exception {
+        ArrayList<MediaImage> images = new ArrayList<>();
+        images.add(mediaImage);
+        assertEquals(images, collection.getImages());
     }
 
     @Test
@@ -78,7 +83,7 @@ public class CollectionTest {
         assertThat(collection.getTitle(), is(nullValue()));
         assertThat(collection.getDescription(), is(nullValue()));
         assertThat(collection.getReleaseDate(), is(is(nullValue())));
-        assertThat(collection.getMediaImage(), is(nullValue()));
+        assertThat(collection.getImages(), is(nullValue()));
     }
 
     @Test
@@ -89,7 +94,9 @@ public class CollectionTest {
         assertThat(collection.getTitle(), is(equalTo(title)));
         assertThat(collection.getDescription(), is(equalTo(description)));
         assertThat(collection.getReleaseDate().toString(), is(equalTo(releaseDate.toString())));
-        assertThat(collection.getMediaImage(), is(equalTo(mediaImage)));
+        ArrayList<MediaImage> images = new ArrayList<>();
+        images.add(mediaImage);
+        assertEquals(images, collection.getImages());
     }
 
     @Test
@@ -104,7 +111,7 @@ public class CollectionTest {
         otherAttributes.put("subtitle", null);
         otherAttributes.put("description", "ZZZ");
         otherAttributes.put("releaseDate", new DateTime("2012-11-13T09:30:00+0100"));
-        otherAttributes.put("mediaImage", new MediaImage("e", "d", "c", "b", "a"));
+        otherAttributes.put("mediaImage", new MediaImage("e", "d", 1, 1, "a"));
 
         OddCollection collection2 = new OddCollection("1", "type");
         collection2.setAttributes(otherAttributes);
@@ -232,21 +239,5 @@ public class CollectionTest {
         Identifier videoId = new Identifier("1", "video");
 
         assertThat(collection.findIncludedByIdentifier(videoId), is(nullValue()));
-    }
-
-    @Test
-    public void isPresentableShouldReturnTrue() {
-        assertThat(collection.isPresentable(), is(true));
-    }
-
-    @Test
-    public void toPresentableFieldsShouldEqualMediasFields() {
-        Presentable presentable = collection.toPresentable();
-
-        assertThat("titles should match", presentable.getTitle(), is(equalTo(collection.getTitle())));
-        assertThat("descriptions should match", presentable.getDescription(),
-                is(equalTo(collection.getDescription())));
-        assertThat("MediaImages should match", presentable.getMediaImage(),
-                is(equalTo(collection.getMediaImage())));
     }
 }

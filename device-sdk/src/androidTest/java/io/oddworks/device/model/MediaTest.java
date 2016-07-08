@@ -7,6 +7,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import static org.hamcrest.CoreMatchers.equalTo;
@@ -27,8 +28,7 @@ public class MediaTest {
     private DateTime releaseDate = new DateTime("2013-07-04T12:30:59Z");
     private String url = "http://oddnetworks.com";
     private int duration = 2345;
-    private MediaAd mediaAd = new MediaAd();
-    private MediaImage mediaImage = new MediaImage("a", "b", "c", "d", "e");
+    private MediaImage mediaImage = new MediaImage("a", "b", 1, 1, "e");
     private Media video = new Media(id, typeVideo);
     private HashMap<String, Object> attributes = new HashMap<>();
 
@@ -40,8 +40,9 @@ public class MediaTest {
         attributes.put("releaseDate", releaseDate);
         attributes.put("url", url);
         attributes.put("duration", duration);
-        attributes.put("mediaAd", mediaAd);
-        attributes.put("mediaImage", mediaImage);
+        ArrayList<MediaImage> images = new ArrayList<>();
+        images.add(mediaImage);
+        attributes.put("images", images);
         video.setAttributes(attributes);
     }
 
@@ -76,8 +77,10 @@ public class MediaTest {
     }
 
     @Test
-    public void testGetMediaImage() throws Exception {
-        assertEquals(mediaImage, video.getMediaImage());
+    public void testGetImages() throws Exception {
+        ArrayList<MediaImage> images = new ArrayList<>();
+        images.add(mediaImage);
+        assertEquals(images, video.getImages());
     }
 
     @Test
@@ -88,11 +91,6 @@ public class MediaTest {
     @Test
     public void testGetUrl() throws Exception {
         assertEquals(url, video.getUrl());
-    }
-
-    @Test
-    public void testGetMediaAd() throws Exception {
-        assertEquals(mediaAd, video.getMediaAd());
     }
 
     @Test
@@ -114,10 +112,9 @@ public class MediaTest {
         assertEquals(null, media.getTitle());
         assertEquals(null, media.getDescription());
         assertEquals(null, media.getReleaseDate());
-        assertEquals(null, media.getMediaImage());
+        assertEquals(null, media.getImages());
         assertEquals(Integer.toString(0), Integer.toString(media.getDuration()));
         assertEquals(null, media.getUrl());
-        assertEquals(null, media.getMediaAd());
     }
 
     @Test
@@ -128,31 +125,13 @@ public class MediaTest {
         assertEquals(title, media.getTitle());
         assertEquals(description, video.getDescription());
         assertEquals(releaseDate, video.getReleaseDate());
-        assertEquals(mediaImage, video.getMediaImage());
+        assertEquals(mediaImage, video.getImages());
         assertEquals(Integer.toString(duration), Integer.toString(video.getDuration()));
         assertEquals(url, video.getUrl());
-        assertEquals(mediaAd, video.getMediaAd());
     }
 
     @Test
     public void testGetAttributes() throws Exception {
         assertEquals(attributes, video.getAttributes());
-    }
-
-    @Test
-    public void isPresentableShouldReturnTrue() {
-        Media media = new Media(id, typeVideo);
-        assertThat(media.isPresentable(), is(true));
-    }
-
-    @Test
-    public void toPresentableFieldsShouldEqualMediasFields() {
-        Media media = new Media(id, typeVideo);
-        media.setAttributes(attributes);
-        Presentable presentable = media.toPresentable();
-
-        assertThat("titles should match", presentable.getTitle(), is(equalTo(media.getTitle())));
-        assertThat("descriptions should match", presentable.getDescription(), is(equalTo(media.getDescription())));
-        assertThat("MediaImages should match", presentable.getMediaImage(), is(equalTo(media.getMediaImage())));
     }
 }

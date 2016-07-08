@@ -55,14 +55,14 @@ public class ApiCaller {
         requestHandler.getConfig(requestCallback);
     }
 
-    public void getView(final String id, final OddCallback<OddView> cb) {
+    public void getView(final String id, final List<String> included, final OddCallback<OddView> cb) {
         Callback requestCallback = getRequestCallback(cb, new ParseCall<OddView>() {
             @Override
             public OddView parse(String responseBody) {
                 return parser.parseViewResponse(responseBody);
             }
         });
-        requestHandler.getView(id, requestCallback);
+        requestHandler.getView(id, included, requestCallback);
     }
 
     public void getCollectionEntities(final OddCollection col, final OddCallback<List<OddObject>> cb) {
@@ -76,20 +76,20 @@ public class ApiCaller {
     }
 
     /** gets OddCollection and all entities within **/
-    public void getCollection(String collectionId, final OddCallback<OddCollection> cb) {
+    public void getCollection(String collectionId, final List<String> included, final OddCallback<OddCollection> cb) {
         Callback requestCallback = getRequestCallback(cb, new ParseCall<OddCollection>() {
             @Override
             public OddCollection parse(String responseBody) {
                 return parser.parseCollectionResponse(responseBody);
             }
         });
-        requestHandler.getCollection(collectionId, requestCallback);
+        requestHandler.getCollection(collectionId, included, requestCallback);
     }
 
     /** gets video with all related entities
      * @param  isLiveStream true if this Media is a liveStream object in the api's catalog otherwise false.
      *                          If Media#isLive() returns true then then this should be true. **/
-    public void getMedia(String collectionId, boolean isLiveStream, final OddCallback<Media> cb) {
+    public void getMedia(String collectionId, List<String> included, boolean isLiveStream, final OddCallback<Media> cb) {
         Callback requestCallback = getRequestCallback(cb, new ParseCall<Media>() {
             @Override
             public Media parse(String responseBody) {
@@ -97,9 +97,9 @@ public class ApiCaller {
             }
         });
         if(isLiveStream)
-            requestHandler.getLiveStream(collectionId, requestCallback);
+            requestHandler.getLiveStream(collectionId, included, requestCallback);
         else
-            requestHandler.getVideo(collectionId, requestCallback);
+            requestHandler.getVideo(collectionId, included, requestCallback);
     }
 
     public void getSearch(final String term, final int limit, final int offset, final OddCallback<List<OddObject>> cb) {
@@ -224,10 +224,18 @@ public class ApiCaller {
     }
 
     /**
+     * Set the Oddworks API base url in the RequestHandler instance
+     */
+    public void setBaseUrl(String baseUrl) {
+        requestHandler.setBaseUrl(baseUrl);
+    }
+
+    /**
      * Set the Oddworks API host in the RequestHandler instance
      *
      * @param host
      */
+    @Deprecated
     public void setHost(String host) {
         requestHandler.setHost(host);
     }
@@ -237,6 +245,7 @@ public class ApiCaller {
      *
      * @param port
      */
+    @Deprecated
     public void setPort(int port) {
         requestHandler.setPort(port);
     }
@@ -246,6 +255,7 @@ public class ApiCaller {
      *
      * @param scheme must be http or https
      */
+    @Deprecated
     public void setScheme(String scheme) {
         requestHandler.setScheme(scheme);
     }
@@ -254,6 +264,7 @@ public class ApiCaller {
      * Set the Oddworks API version
      * @param apiVersion
      */
+    @Deprecated
     public void setApiVersion(String apiVersion) {
         requestHandler.setApiVersion(apiVersion);
     }

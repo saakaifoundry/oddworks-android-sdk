@@ -9,7 +9,6 @@ import io.oddworks.device.request.ApiCaller;
 import io.oddworks.device.request.OddCallback;
 import io.oddworks.device.request.RestServiceProvider;
 import io.oddworks.device.service.OddBus;
-import io.oddworks.device.service.OddRxBus;
 import rx.Observable;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
@@ -42,29 +41,18 @@ public class OddMetricHandler {
      * Registers the instance of OddMetricHandler on the OddRxBus
      * so it can begin receiving posted event objects.
      */
-    public void enableRx() {
-        Observable<OddRxBus.OddRxBusEvent> observable = OddRxBus.getInstance().getObservable();
+    public void enable() {
+        Observable<OddBus.OddRxBusEvent> observable = OddBus.getInstance().getObservable();
         observable
                 .observeOn(Schedulers.io())
-                .subscribe(new Action1<OddRxBus.OddRxBusEvent>() {
+                .subscribe(new Action1<OddBus.OddRxBusEvent>() {
                     @Override
-                    public void call(OddRxBus.OddRxBusEvent event) {
+                    public void call(OddBus.OddRxBusEvent event) {
                         if (event instanceof OddMetric) {
                             postMetric((OddMetric) event);
                         }
                     }
                 });
-    }
-
-    /**
-     * Deprecated. Use OddMetricHandler#enableRx() instead.
-     *
-     * Registers the instance of OddMetricHandler on the OddBus
-     * so it can begin receiving posted event objects.
-     **/
-    @Deprecated
-    public static void enable() {
-        OddBus.getInstance().register(INSTANCE);
     }
 
     @Subscribe

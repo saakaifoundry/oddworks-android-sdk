@@ -1,0 +1,117 @@
+{
+  "data": {
+    "id": "homepage",
+    "type": "view",
+    "relationships": {
+      "promotion": {
+        "data": {
+          "id": "daily-show",
+          "type": "promotion"
+        }
+      },
+      "featuredMedia": {
+        "data": {
+          "id": "0db5528d4c3c7ae4d5f24cce1c9fae51",
+          "type": "video"
+        }
+      },
+      "featuredCollections": {
+        "data": {
+          "id": "51c12f4b70ff4a70925a1be26b8442af",
+          "type": "collection"
+        }
+      }
+    },
+    "attributes": {
+      "channel": "nasa",
+      "title": "Nasa Sample Homepage"
+    },
+    "links": {
+      "self": "http://192.168.12.111:3000/views/homepage"
+    },
+    "meta": {}
+  },
+  "links": {
+    "self": "http://192.168.12.111:3000/views/homepage?include=promotion,featuredMedia,featuredCollections"
+  },
+  "meta": {
+    "channel": "nasa",
+    "platform": "APPLE_IOS"
+  },
+  "included": [{
+    "id": "daily-show",
+    "type": "promotion",
+    "attributes": {
+      "channel": "nasa",
+      "title": "NASA's Daily Show",
+      "description": "Promote your content with Odd Networks!",
+      "images": [{
+        "url": "http://dummyimage.com/16:9x1440&text=Promotion",
+        "mimeType": "image/png"
+      }]
+    },
+    "relationships": {},
+    "links": {
+      "self": "http://192.168.12.111:3000/promotions/daily-show"
+    },
+    "meta": {}
+  }, {
+    "id": "0db5528d4c3c7ae4d5f24cce1c9fae51",
+    "type": "video",
+    "meta": {
+      "source": "itunes"
+    },
+    "attributes": {
+      "title": "Trek to Mount Sharp Begins",
+      "description": "After busily exploring the Glenelg region of Gale Crater, Curiosity is moving on. The rover is starting a 5 mile, or about an 8 kilometer trek southwest towards the foothills of Mt Sharp.",
+      "images": [{
+        "url": "http://image.oddworks.io/NASA/space1.jpeg",
+        "mimeType": "image/jpeg"
+      }],
+      "url": "http://www.nasa.gov/sites/default/files/com20130711-320-jpl.mp4",
+      "duration": 1234567,
+      "channel": "nasa"
+    },
+    "relationships": {},
+    "links": {
+      "self": "http://192.168.12.111:3000/videos/0db5528d4c3c7ae4d5f24cce1c9fae51"
+    }
+  }, {
+    "id": "51c12f4b70ff4a70925a1be26b8442af",
+    "type": "collection",
+    "relationships": {
+      "entities": {
+        "data": [{
+          "id": "ab2d92ee98b6309299e92024a487d4c0",
+          "type": "collection"
+        }, {
+          "id": "e12d91547a9e021aefbcc154807e87db",
+          "type": "collection"
+        }, {
+          "id": "ab2d92ee98b6309299e92024a487d4c0",
+          "type": "collection"
+        }, {
+          "id": "b33a04848951a46b4c700114e4bcfdd7",
+          "type": "collection"
+        }, {
+          "id": "e12d91547a9e021aefbcc154807e87db",
+          "type": "collection"
+        }]
+      }
+    },
+    "meta": {
+      "source": "itunes"
+    },
+    "attributes": {
+      "title": "NASA: Featured Collections",
+      "images": [{
+        "url": "https://spaceholder.cc/1920x1080",
+        "mimeType": "image/jpeg"
+      }],
+      "channel": "nasa"
+    },
+    "links": {
+      "self": "http://192.168.12.111:3000/collections/51c12f4b70ff4a70925a1be26b8442af"
+    }
+  }]
+}
