@@ -1,14 +1,20 @@
 package io.oddworks.device.model.common
 
-import io.oddworks.device.model.common.Identifier
-import io.oddworks.device.model.common.Relationship
+import io.oddworks.device.model.common.OddIdentifier
+import io.oddworks.device.model.common.OddRelationship
 import org.json.JSONObject
 
-open class OddResource(val identifier: Identifier, var relationships: MutableSet<Relationship>, val included: MutableSet<OddResource>, val meta: JSONObject?) {
-    fun getRelationship(name: String): Relationship? {
+open class OddResource(val identifier: OddIdentifier, var relationships: MutableSet<OddRelationship>, val included: MutableSet<OddResource>, val meta: JSONObject?) {
+    fun getRelationship(name: String): OddRelationship? {
         return relationships.find {
             it.name == name
         }
+    }
+
+    fun getIdentifiersByRelationship(name: String): Set<OddIdentifier> {
+        val relationship = getRelationship(name) ?: return emptySet()
+
+        return relationship.identifiers
     }
 
     fun getIncludedByRelationship(name: String): Set<OddResource> {
@@ -30,5 +36,9 @@ open class OddResource(val identifier: Identifier, var relationships: MutableSet
             }
         }
         return isMissing
+    }
+
+    fun addIncluded(resource: OddResource) {
+        included.add(resource)
     }
 }

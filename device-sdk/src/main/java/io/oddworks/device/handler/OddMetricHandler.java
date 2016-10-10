@@ -2,13 +2,11 @@ package io.oddworks.device.handler;
 
 import android.util.Log;
 
-import com.squareup.otto.Subscribe;
 
 import io.oddworks.device.metric.OddMetric;
 import io.oddworks.device.request.ApiCaller;
 import io.oddworks.device.request.OddCallback;
 import io.oddworks.device.request.RestServiceProvider;
-import io.oddworks.device.service.OddBus;
 import io.oddworks.device.service.OddRxBus;
 import rx.Observable;
 import rx.functions.Action1;
@@ -43,7 +41,7 @@ public class OddMetricHandler {
      * so it can begin receiving posted event objects.
      */
     public void enableRx() {
-        Observable<OddRxBus.OddRxBusEvent> observable = OddRxBus.getInstance().getObservable();
+        Observable<OddRxBus.OddRxBusEvent> observable = OddRxBus.INSTANCE.getObservable();
         observable
                 .observeOn(Schedulers.io())
                 .subscribe(new Action1<OddRxBus.OddRxBusEvent>() {
@@ -54,28 +52,6 @@ public class OddMetricHandler {
                         }
                     }
                 });
-    }
-
-    /**
-     * Deprecated. Use OddMetricHandler#enableRx() instead.
-     *
-     * Registers the instance of OddMetricHandler on the OddBus
-     * so it can begin receiving posted event objects.
-     **/
-    @Deprecated
-    public static void enable() {
-        OddBus.getInstance().register(INSTANCE);
-    }
-
-    @Subscribe
-    public void handleOddMetric(OddMetric metric) {
-        if (!metric.getEnabled()) {
-            // do not post the metric if it is disabled
-            Log.d(TAG, "handleOddMetric: " + metric.getClass().getSimpleName() + " disabled");
-            return;
-        }
-
-        postMetric(metric);
     }
 
     private void postMetric(OddMetric metric) {

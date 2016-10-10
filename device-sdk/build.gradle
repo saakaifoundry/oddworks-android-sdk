@@ -1,4 +1,5 @@
 apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
 apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: 'com.jfrog.bintray'
 
@@ -15,7 +16,7 @@ ext {
     siteUrl = 'http://android.guide.oddnetworks.com'
     gitUrl = 'https://github.com/oddnetworks/OddworksDeviceSDK'
 
-    libraryVersion = '1.8.3'
+    libraryVersion = '3.0.0-beta'
 
     developerId = 'brkattk'
     developerName = 'Erik Straub, Dan Pallas'
@@ -90,19 +91,22 @@ android {
     lintOptions {
         disable 'InvalidPackage'
     }
+    sourceSets {
+        main.java.srcDirs += 'src/main/kotlin'
+    }
 }
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
 
-    compile 'com.squareup.okhttp:okhttp:2.5.0'
-    compile 'com.squareup:otto:1.3.8'
-    compile 'net.danlew:android.joda:2.9.1'
-    compile 'com.android.support:support-annotations:23.2.0'
-    compile "io.reactivex:rxandroid:1.1.0"
+    compile 'com.squareup.okhttp:okhttp:2.7.5'
+    compile 'net.danlew:android.joda:2.9.4.2'
+    compile 'com.android.support:support-annotations:24.2.1'
+    compile "io.reactivex:rxandroid:1.2.1"
+    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 
-    androidTestCompile 'com.android.support.test:runner:0.4'
-    androidTestCompile 'com.android.support.test:rules:0.4'
+    androidTestCompile 'com.android.support.test:runner:0.5'
+    androidTestCompile 'com.android.support.test:rules:0.5'
     androidTestCompile 'org.skyscreamer:jsonassert:1.2.3'
     androidTestCompile 'org.hamcrest:hamcrest-core:1.3'
 }
@@ -111,25 +115,25 @@ task sourcesJar(type: Jar) {
     from android.sourceSets.main.java.srcDirs
     classifier = 'sources'
 }
-
-task javadoc(type: Javadoc) {
-    source = android.sourceSets.main.java.srcDirs
-    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
-}
-
-task javadocJar(type: Jar, dependsOn: javadoc) {
-    classifier = 'javadoc'
-    from javadoc.destinationDir
-}
-
-task copyDocs(type: Copy, dependsOn: javadoc) {
-    from 'build/docs/javadoc'
-    into "../docs/docs/javadoc/$version"
-}
+//
+//task javadoc(type: Javadoc) {
+//    source = android.sourceSets.main.java.srcDirs
+//    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+//}
+//
+//task javadocJar(type: Jar, dependsOn: javadoc) {
+//    classifier = 'javadoc'
+//    from javadoc.destinationDir
+//}
+//
+//task copyDocs(type: Copy, dependsOn: javadoc) {
+//    from 'build/docs/javadoc'
+//    into "../docs/docs/javadoc/$version"
+//}
 
 artifacts {
     archives sourcesJar
-    archives javadocJar
+//    archives javadocJar
 }
 
 bintray {
@@ -156,4 +160,7 @@ bintray {
             }
         }
     }
+}
+repositories {
+    mavenCentral()
 }

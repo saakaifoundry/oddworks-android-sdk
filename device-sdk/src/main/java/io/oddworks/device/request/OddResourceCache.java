@@ -8,27 +8,22 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
 import io.oddworks.device.model.common.OddIdentifier;
-import io.oddworks.device.model.OddObject;
-import io.oddworks.device.model.common.Relationship;
+import io.oddworks.device.model.common.OddResource;
+import io.oddworks.device.model.common.OddRelationship;
 
-/**
- * Cache to be used by CachingApiCaller
- *
- * @author Dan Pallas
- * @since v1.4 03/01/2016
- */
 public class OddResourceCache {
     private final ConcurrentMap<String, StoredObject> objectStore = new ConcurrentHashMap<>();
 
     protected OddResourceCache() { }
 
-    @Nullable protected OddObject getObject(@NonNull String id) {
+    @Nullable protected OddResource getObject(@NonNull String id) {
         StoredObject storedObject = objectStore.get(id);
-        OddObject object = null;
+        OddResource object = null;
         if (storedObject != null) {
             if(storedObject.expiration > new Date().getTime())
                 object = storedObject.object;
@@ -38,56 +33,55 @@ public class OddResourceCache {
         return object;
     }
 
-    @Nullable protected OddObject getObject(@NonNull OddIdentifier identifier) {
+    @Nullable protected OddResource getObject(@NonNull OddIdentifier identifier) {
         return getObject(identifier.getId());
     }
 
     /** stores object and all included. Sets a maxAge for this object and all included objects
      * @param maxAge object will expire after this many milliseconds */
-    protected void storeObject(@NonNull OddObject object, long maxAge) {
+    protected void storeObject(@NonNull OddResource object, long maxAge) {
         long expiration = maxAge + new Date().getTime();
-        objectStore.put(object.getId(), new StoredObject(object, expiration));
-        List<OddObject> included = object.getIncluded();
+        objectStore.put(object.getIdentifier().getId(), new StoredObject(object, expiration));
+        Set<OddResource> included = object.getIncluded();
         if (!included.isEmpty()) {
             storeObjects(included, maxAge);
         }
     }
 
-    protected void storeObjects(@NonNull Collection<? extends OddObject> objects, Long maxAge) {
-        for (OddObject object : objects) {
+    protected void storeObjects(@NonNull Collection<OddResource> objects, Long maxAge) {
+        for (OddResource object : objects) {
             storeObject(object, maxAge);
         }
     }
 
     /** objects that do not exist will be represented by null entries in the list.
      * @param identifiers elements may be null */
-    @NonNull protected List<OddObject> getObjects(@NonNull Collection<OddIdentifier> identifiers) {
-        List<OddObject> objects = new ArrayList<>();
+    @NonNull protected List<OddResource> getObjects(@NonNull Collection<OddIdentifier> identifiers) {
+        List<OddResource> objects = new ArrayList<>();
         for (OddIdentifier identifier : identifiers) {
-            OddObject object = getObject(identifier);
+            OddResource object = getObject(identifier);
             objects.add(object);
         }
         return objects;
     }
 
-    /** Get all OddObjects contained in all of the relationships of an OddObject. Recursive relationships are not
+    /** Get all OddResources contained in all of the relationships of an OddResource. Recursive relationships are not
      * resolved.
      * @return if all related objects are contained in the store then they are returned as a list, otherwise null
      *  Related objects that aren't in the OddResourceCache will not be included in list. */
-    @Nullable protected List<OddObject> getRelatedObjectsOrNull(@NonNull OddObject oddObject) {
-        LinkedHashSet<OddObject> items = new LinkedHashSet<>();
-        for (Relationship relationship : oddObject.getRelationships()) {
-            List<OddObject> objects = getObjects(relationship.getIdentifiers());
-            for(OddObject object : objects) {
+    @Nullable protected Set<OddResource> getRelatedObjectsOrNull(@NonNull OddResource oddObject) {
+        LinkedHashSet<OddResource> items = new LinkedHashSet<>();
+        for (OddRelationship relationship : oddObject.getRelationships()) {
+            List<OddResource> objects = getObjects(relationship.getIdentifiers());
+            for(OddResource object : objects) {
                 if(object != null)
                     items.add(object);
                 else
                     return null;
             }
         }
-        ArrayList<OddObject> list = new ArrayList<OddObject>();
-        list.addAll(items);
-        return list;
+
+        return items;
     }
 
 
@@ -97,10 +91,10 @@ public class OddResourceCache {
     }
 
     private static class StoredObject {
-        private final OddObject object;
+        private final OddResource object;
         private final long expiration;
 
-        private StoredObject(OddObject object, long expiration) {
+        private StoredObject(OddResource object, long expiration) {
             this.object = object;
             this.expiration = expiration;
         }

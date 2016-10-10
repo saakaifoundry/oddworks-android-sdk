@@ -5,8 +5,6 @@ import android.support.annotation.NonNull;
 
 import net.danlew.android.joda.JodaTimeAndroid;
 
-import io.oddworks.device.model.AuthToken;
-
 
 /**
  * Class to initialize services in the io.oddworks.device.request package
@@ -15,17 +13,14 @@ public class RestServiceProvider {
     private static RestServiceProvider instance;
 
     private ApiCaller apiCaller;
-    private AuthenticationService authenticationService;
     private CachingApiCaller cachingApiCaller;
 
     private RestServiceProvider(@NonNull Context context) {
         RequestHandler.instance = new RequestHandler(context);
-        ApiCaller.instance = new ApiCaller(RequestHandler.instance, OddParser.getInstance());
+        ApiCaller.instance = new ApiCaller(RequestHandler.instance, OddParser.INSTANCE);
         this.cachingApiCaller =
-                new CachingApiCaller(RequestHandler.instance, OddParser.getInstance(), new EntityCache());
+                new CachingApiCaller(RequestHandler.instance, OddParser.INSTANCE, new OddResourceCache());
         this.apiCaller = ApiCaller.instance;
-        AuthenticationService.instance = new AuthenticationService(ApiCaller.instance, context);
-        this.authenticationService = AuthenticationService.instance;
 
         JodaTimeAndroid.init(context);
     }
@@ -49,21 +44,5 @@ public class RestServiceProvider {
 
     public CachingApiCaller getCachingApiCaller() {
         return this.cachingApiCaller;
-    }
-
-    public AuthenticationService getAuthenticationService() {
-        return this.authenticationService;
-    }
-
-    public void setAuthToken(AuthToken authToken) {
-        RequestHandler.instance.setAuthToken(authToken);
-    }
-
-    public void removeAuthToken() {
-        RequestHandler.instance.removeAuthToken();
-    }
-
-    public boolean isAuthTokenSet() {
-        return RequestHandler.instance.isAuthTokenSet();
     }
 }

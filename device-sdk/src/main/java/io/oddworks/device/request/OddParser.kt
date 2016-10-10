@@ -1,676 +1,605 @@
 package io.oddworks.device.request
 
-import android.util.Log
-
-import org.json.JSONArray
+import io.oddworks.device.exception.OddParseException
+import io.oddworks.device.model.*
 import org.json.JSONException
 import org.json.JSONObject
 
-import java.util.ArrayList
-import java.util.HashMap
-import java.util.LinkedHashMap
-
-import io.oddworks.device.exception.OddParseException
-import io.oddworks.device.exception.UnhandledPlayerTypeException
-import io.oddworks.device.model.Article
-import io.oddworks.device.model.AuthToken
-import io.oddworks.device.model.Config
-import io.oddworks.device.model.DeviceCodeResponse
-import io.oddworks.device.model.Event
-import io.oddworks.device.model.External
-import io.oddworks.device.model.Identifier
-import io.oddworks.device.model.Media
-import io.oddworks.device.model.MediaAd
-import io.oddworks.device.model.MediaImage
-import io.oddworks.device.model.Metric
-import io.oddworks.device.model.MetricsConfig
-import io.oddworks.device.model.OddCollection
-import io.oddworks.device.model.OddObject
-import io.oddworks.device.model.OddView
-import io.oddworks.device.model.Promotion
-import io.oddworks.device.model.Relationship
-import io.oddworks.device.model.Sharing
+import io.oddworks.device.model.common.*
 import io.oddworks.device.model.config.Display
 import io.oddworks.device.model.config.Features
-import io.oddworks.device.model.players.ExternalPlayer
-import io.oddworks.device.model.players.OoyalaPlayer
-import io.oddworks.device.model.players.Player
+import io.oddworks.device.model.config.features.*
+import io.oddworks.device.model.video.OddCast
+import io.oddworks.device.model.video.OddSource
+import org.json.JSONArray
 
-//todo stop swallowing exceptions
 
-class OddParser private constructor()// singleton
-{
+// TODO - handle missing resource attributes that would potentially kill client apps
+
+object OddParser {
+    private val JSON = JSONParser.getInstance()
+
+    private val DATA = "data"
+    private val ERRORS = "errors"
+    private val ATTRIBUTES = "attributes"
+    private val META = "meta"
+    private val INCLUDED = "included"
+    private val ID = "id"
+    private val TYPE = "type"
+    private val RELATIONSHIPS = "relationships"
 
     @Throws(JSONException::class)
-    fun parseMediaImage(data: JSONObject?): MediaImage? {
-        if (data == null) {
-            return null
-        }
-        val aspect16x9 = JSON.getString(data, "aspect16x9")
-        val aspect4x3 = JSON.getString(data, "aspect4x3")
-        val aspect3x4 = JSON.getString(data, "aspect3x4")
-        val aspect1x1 = JSON.getString(data, "aspect1x1")
-        val aspect2x3 = JSON.getString(data, "aspect2x3")
-
-        return MediaImage(aspect16x9, aspect3x4, aspect4x3, aspect1x1, aspect2x3)
+    fun parseMultipleResponse(responseBody: String): Set<OddResource> {
+        val rawBody = JSONObject(responseBody)
+        val rawData = JSON.getJSONArray(rawBody, DATA, true)!!
+        return parseResourceArray(rawData)
     }
 
-    @Throws(JSONException::class)
-    fun parseMediaAd(data: JSONObject): MediaAd {
-        try {
-            val rawAds = data.getJSONObject("ads")
+    @Throws(JSONException::class, IllegalArgumentException::class, OddParseException::class)
+    fun parseSingleResponse(responseBody: String): OddResource {
+        val rawBody = JSONObject(responseBody)
+        val rawData = JSON.getJSONObject(rawBody, DATA, true)!!
+        val rawIncluded = JSON.getJSONArray(rawBody, INCLUDED, false)
+        val rawType = JSON.getString(rawData, TYPE)?.toUpperCase() ?: throw OddParseException("parseSingleResponse() unable to determine resource type")
 
-            val properties = HashMap<String, Any>()
-            val adKeys = rawAds.keys()
-            while (adKeys.hasNext()) {
-                val adProperty = adKeys.next()
-                if (adProperty == "enabled") {
-                    properties.put(adProperty, JSON.getBoolean(rawAds, adProperty))
-                } else if (adProperty == "networkId") {
-                    properties.put(adProperty, JSON.getInt(rawAds, adProperty))
-                } else {
-                    properties.put(adProperty, JSON.getString(rawAds, adProperty))
-                }
-            }
-            return MediaAd(properties)
-        } catch (e: Exception) {
-            return MediaAd()
+        return when (OddResourceType.valueOf(rawType)) {
+            OddResourceType.COLLECTION -> parseCollection(rawData, rawIncluded)
+            OddResourceType.PROMOTION -> parsePromotion(rawData, rawIncluded)
+            OddResourceType.VIDEO -> parseVideo(rawData, rawIncluded)
+            OddResourceType.VIEW -> parseView(rawData, rawIncluded)
+            OddResourceType.CONFIG -> parseConfig(rawData)
         }
 
     }
 
     @Throws(JSONException::class)
-    fun parseCollection(data: JSONObject): OddCollection? {
-        val rawAttributes = JSON.getJSONObject(data, ATTRIBUTES, true)
-        val meta = JSON.getJSONObject(data, META, false)
-        val images = JSON.getJSONObject(rawAttributes, "images", false)
+    fun parseErrorMessage(responseBody: String): Set<OddError> {
+        val rawBody = JSONObject(responseBody)
+        val rawErrors = JSON.getJSONArray(rawBody, ERRORS, true)!!
+        val errors = mutableSetOf<OddError>()
 
-        val id = JSON.getString(data, "id")
-        val type = JSON.getString(data, "type")
+        for(i in 0..(rawErrors.length())) {
+            val rawError = rawErrors.getJSONObject(i)
 
-        val attributes = HashMap<String, Any>()
-        attributes.put("title", JSON.getString(rawAttributes, "title"))
-        attributes.put("subtitle", JSON.getString(rawAttributes, "subtitle"))
-        attributes.put("description", JSON.getString(rawAttributes, "description"))
-        attributes.put("releaseDate", JSON.getDateTime(rawAttributes, "releaseDate"))
-        attributes.put("mediaImage", parseMediaImage(images))
+            val id = JSON.getString(rawError, ID) ?: ""
+            val status = JSON.getString(rawError, "status") ?: ""
+            val code = JSON.getString(rawError, "code") ?: ""
+            val title = JSON.getString(rawError, "title") ?: ""
+            val detail = JSON.getString(rawError, "detail") ?: ""
+            val meta = JSON.getJSONObject(rawError, META, false)
 
-        val collection = OddCollection(id, type)
-        collection.attributes = attributes
-        collection.meta = meta
+            errors.add(OddError(id, status, code, title, detail, meta))
+        }
 
-
-        val relationships = JSON.getJSONObject(data, "relationships", true)
-
-        addRelationshipsToOddObject(relationships, collection)
-
-        collection.fillIncludedCollections()
-
-        return collection
+        return errors
     }
 
-    /**
-     * parses included and adds it to an OddObject
-     * @param addTo addTo.addIncluded is called on the parsed included objects
-     * *
-     * @throws JSONException
-     */
-    @Throws(JSONException::class)
-    private fun addIncluded(addTo: OddObject, included: JSONArray) {
-        for (i in 0..included.length() - 1) {
-            val includedObject = included.getJSONObject(i)
-            val includedType = JSON.getString(includedObject, "type")
+    @Throws(JSONException::class, IllegalArgumentException::class, OddParseException::class)
+    private fun parseResourceArray(rawArray: JSONArray?): MutableSet<OddResource> {
+        val resources = mutableSetOf<OddResource>()
+        if (rawArray == null) {
+            return resources
+        }
+        for (i in 0..rawArray.length() - 1) {
+            val includedObject = rawArray.getJSONObject(i)
+            val rawType = JSON.getString(includedObject, TYPE)?.toUpperCase() ?: throw OddParseException("parseResourceArray() unable to determine resource type")
+
+            val includedType = OddResourceType.valueOf(rawType)
 
             when (includedType) {
-                OddObject.TYPE_ARTICLE -> addTo.addIncluded(parseArticle(includedObject))
-                OddObject.TYPE_COLLECTION -> addTo.addIncluded(parseCollection(includedObject))
-                OddObject.TYPE_EVENT -> addTo.addIncluded(parseEvent(includedObject))
-                OddObject.TYPE_EXTERNAL -> addTo.addIncluded(parseExternal(includedObject))
-                OddObject.TYPE_PROMOTION -> addTo.addIncluded(parsePromotion(includedObject))
-                OddObject.TYPE_LIVE_STREAM, OddObject.TYPE_VIDEO -> addTo.addIncluded(parseMedia(includedObject))
+                OddResourceType.COLLECTION -> resources.add(parseCollection(includedObject))
+                OddResourceType.PROMOTION -> resources.add(parsePromotion(includedObject))
+                OddResourceType.VIDEO -> resources.add(parseVideo(includedObject))
+                OddResourceType.VIEW -> resources.add(parseView(includedObject))
+                OddResourceType.CONFIG -> resources.add(parseConfig(includedObject))
             }
         }
+
+        return resources
     }
 
-    @Throws(JSONException::class)
-    protected fun parseEvent(dataObject: JSONObject): Event? {
-        val rawAttributes = JSON.getJSONObject(dataObject, ATTRIBUTES, true)
-        val meta = JSON.getJSONObject(dataObject, META, false)
-        val images = JSON.getJSONObject(rawAttributes, "images", false)
-        val ical = JSON.getJSONObject(rawAttributes, "ical", true)
+    @Throws(JSONException::class, IllegalArgumentException::class)
+    private fun parseConfig(rawData: JSONObject): OddConfig {
+        val id = JSON.getString(rawData, ID) ?: throw OddParseException("parseConfig() missing id property")
+        val identifier = OddIdentifier(id, OddResourceType.CONFIG)
 
-        val event = Event(
-                JSON.getString(dataObject, "id"),
-                JSON.getString(dataObject, "type"))
-        event.meta = meta
+        val rawAttributes = JSON.getJSONObject(rawData, ATTRIBUTES, true)
+        val meta = JSON.getJSONObject(rawData, META, false)
 
-        val attributes = HashMap<String, Any>()
-        attributes.put("title", JSON.getString(rawAttributes, "title"))
-        attributes.put("description", JSON.getString(rawAttributes, "description"))
-        attributes.put("mediaImage", parseMediaImage(images))
-        attributes.put("category", JSON.getString(rawAttributes, "category"))
-        attributes.put("source", JSON.getString(rawAttributes, "source"))
-        attributes.put("createdAt", JSON.getDateTime(rawAttributes, "createdAt"))
-        attributes.put("url", JSON.getString(rawAttributes, "url"))
-
-        attributes.put("dateTimeStart", JSON.getDateTime(ical, "dtstart"))
-        attributes.put("dateTimeEnd", JSON.getDateTime(ical, "dtend"))
-        attributes.put("location", JSON.getString(ical, "location"))
-
-        event.attributes = attributes
-
-        return event
-    }
-
-    @Throws(JSONException::class)
-    protected fun parseExternal(dataObject: JSONObject): External? {
-        val rawAttributes = JSON.getJSONObject(dataObject, ATTRIBUTES, true)
-        val meta = JSON.getJSONObject(dataObject, META, false)
-        val images = JSON.getJSONObject(rawAttributes, "images", false)
-
-        val external = External(
-                JSON.getString(dataObject, "id"),
-                JSON.getString(dataObject, "type"))
-        external.meta = meta
-
-        val attributes = HashMap<String, Any>()
-        attributes.put("title", JSON.getString(rawAttributes, "title"))
-        attributes.put("description", JSON.getString(rawAttributes, "description"))
-        attributes.put("mediaImage", parseMediaImage(images))
-        attributes.put("url", JSON.getString(rawAttributes, "url"))
-
-        external.attributes = attributes
-
-        return external
-    }
-
-    @Throws(JSONException::class)
-    protected fun parseArticle(dataObject: JSONObject): Article? {
-        val rawAttributes = JSON.getJSONObject(dataObject, ATTRIBUTES, true)
-        val meta = JSON.getJSONObject(dataObject, META, false)
-        val images = JSON.getJSONObject(rawAttributes, "images", false)
-
-        val article = Article(
-                JSON.getString(dataObject, "id"),
-                JSON.getString(dataObject, "type"))
-        article.meta = meta
-
-        val attributes = HashMap<String, Any>()
-        attributes.put("title", JSON.getString(rawAttributes, "title"))
-        attributes.put("description", JSON.getString(rawAttributes, "description"))
-        attributes.put("mediaImage", parseMediaImage(images))
-        attributes.put("category", JSON.getString(rawAttributes, "category"))
-        attributes.put("source", JSON.getString(rawAttributes, "source"))
-        attributes.put("createdAt", JSON.getDateTime(rawAttributes, "createdAt"))
-        attributes.put("url", JSON.getString(rawAttributes, "url"))
-
-        article.attributes = attributes
-
-        return article
-    }
-
-    @Throws(JSONException::class)
-    protected fun parseMedia(dataObject: JSONObject): Media? {
-        val rawAttributes = JSON.getJSONObject(dataObject, ATTRIBUTES, true)
-        val meta = JSON.getJSONObject(dataObject, META, false)
-        val images = JSON.getJSONObject(rawAttributes, "images", false)
-
-        val media = Media(
-                JSON.getString(dataObject, "id"),
-                JSON.getString(dataObject, "type"))
-        media.meta = meta
-
-        val attributes = HashMap<String, Any>()
-        attributes.put("title", JSON.getString(rawAttributes, "title"))
-        attributes.put("subtitle", JSON.getString(rawAttributes, "subtitle"))
-        attributes.put("description", JSON.getString(rawAttributes, "description"))
-        attributes.put("releaseDate", JSON.getDateTime(rawAttributes, "releaseDate"))
-        try {
-            attributes.put("duration", JSON.getInt(rawAttributes, "duration"))
-        } catch (e: Exception) {
-            Log.d(TAG, "Invalid duration: " + e.toString())
-            attributes.put("duration", 0)
-        }
-
-        attributes.put("url", JSON.getString(rawAttributes, "url"))
-        attributes.put("isLive", JSON.getString(rawAttributes, "isLive"))
-        attributes.put("mediaImage", parseMediaImage(images))
-        attributes.put("mediaAd", parseMediaAd(rawAttributes))
-        media.attributes = attributes
-        val relationships = JSON.getJSONObject(dataObject, "relationships", false)
-        if (relationships != null) addRelationshipsToOddObject(relationships, media)
-        media.player = parsePlayer(JSON.getJSONObject(rawAttributes, "player", true))
-        media.sharing = parseSharing(JSON.getJSONObject(rawAttributes, "sharing", false))
-
-        return media
-    }
-
-    @Throws(JSONException::class)
-    fun parsePlayer(rawPlayer: JSONObject): Player {
-        var type: Player.PlayerType
-        try {
-            type = Player.PlayerType.valueOf(JSON.getString(rawPlayer, "type").toUpperCase())
-        } catch (e: IllegalArgumentException) {
-            Log.e(TAG, "Parsed player does not exist", e)
-            throw UnhandledPlayerTypeException("Unsupported player type: " + rawPlayer)
-        } catch (e: Exception) {
-            Log.e(TAG, "Unable to parse player, falling back to native", e)
-            type = Player.PlayerType.NATIVE
-        }
-
-        var player: Player? = null
-        when (type) {
-            Player.PlayerType.NATIVE, Player.PlayerType.BRIGHTCOVE -> player = Player(type)
-            Player.PlayerType.EXTERNAL -> player = parseExternalPlayer(rawPlayer)
-            Player.PlayerType.OOYALA -> player = parseOoyalaPlayer(rawPlayer)
-            else -> throw UnhandledPlayerTypeException("Unsupported player type: " + type)
-        }
-        return player
-    }
-
-    @Throws(JSONException::class)
-    protected fun parseSharing(rawSharing: JSONObject?): Sharing {
-        var enabled = false
-        var text = ""
-        if (rawSharing != null) {
-            enabled = JSON.getBoolean(rawSharing, "enabled")
-            text = JSON.getString(rawSharing, "text")
-        }
-        return Sharing(enabled, text)
-    }
-
-    @Throws(JSONException::class)
-    private fun parseOoyalaPlayer(rawPlayer: JSONObject): OoyalaPlayer {
-        return OoyalaPlayer(Player.PlayerType.OOYALA,
-                JSON.getString(rawPlayer, "pCode"),
-                JSON.getString(rawPlayer, "embedCode"),
-                JSON.getString(rawPlayer, "domain"))
-    }
-
-    @Throws(JSONException::class)
-    private fun parseExternalPlayer(rawPlayer: JSONObject): ExternalPlayer {
-        return ExternalPlayer(Player.PlayerType.EXTERNAL, JSON.getString(rawPlayer, "url"))
-    }
-
-    @Throws(JSONException::class)
-    protected fun parsePromotion(rawPromotion: JSONObject): Promotion {
-        val rawAttributes = JSON.getJSONObject(rawPromotion, ATTRIBUTES, true)
-        val meta = JSON.getJSONObject(rawPromotion, META, false)
-        val images = JSON.getJSONObject(rawAttributes, "images", false)
-
-        val promotion = Promotion(
-                JSON.getString(rawPromotion, "id"),
-                JSON.getString(rawPromotion, "type"))
-        promotion.meta = meta
-
-        val attributes = HashMap<String, Any>()
-        attributes.put("title", JSON.getString(rawAttributes, "title"))
-        attributes.put("description", JSON.getString(rawAttributes, "description"))
-        attributes.put("url", JSON.getString(rawAttributes, "url"))
-        attributes.put("mediaImage", parseMediaImage(images))
-
-        promotion.attributes = attributes
-
-        return promotion
-    }
-
-    fun parseEntityList(result: String): List<OddObject> {
-        val entities = ArrayList<OddObject>()
-        try {
-            val entitiesResponse = JSONObject(result)
-            val rawEntities = entitiesResponse.getJSONArray(DATA)
-            for (i in 0..rawEntities.length() - 1) {
-                val rawEntity = rawEntities.getJSONObject(i)
-                val type = JSON.getString(rawEntity, "type")
-                when (type) {
-                    OddObject.TYPE_ARTICLE -> entities.add(parseArticle(rawEntity))
-                    OddObject.TYPE_COLLECTION -> entities.add(parseCollection(rawEntity))
-                    OddObject.TYPE_EVENT -> entities.add(parseEvent(rawEntity))
-                    OddObject.TYPE_EXTERNAL -> entities.add(parseExternal(rawEntity))
-                    OddObject.TYPE_PROMOTION -> entities.add(parsePromotion(rawEntity))
-                    OddObject.TYPE_LIVE_STREAM, OddObject.TYPE_VIDEO -> entities.add(parseMedia(rawEntity))
-                }
-            }
-        } catch (e: JSONException) {
-            e.printStackTrace()
-        }
-
-        return entities
-    }
-
-    protected fun parseMetrics(rawFeatures: JSONObject): MetricsConfig? {
-        try {
-            val rawMetrics = JSON.getJSONObject(rawFeatures, "metrics", true)
-
-            val metrics = ArrayList<Metric>()
-            for (key in MetricsConfig.ACTION_KEYS) {
-                val attributes = HashMap<String, Any>()
-                val rawMetric = JSON.getJSONObject(rawMetrics, key, true)
-                val mkeys = rawMetric.keys()
-                while (mkeys.hasNext()) {
-                    val mkey = mkeys.next()
-                    when (mkey) {
-                        Metric.ENABLED -> attributes.put(mkey, JSON.getBoolean(rawMetric, mkey))
-                        Metric.INTERVAL -> attributes.put(mkey, JSON.getInt(rawMetric, mkey))
-                        else -> attributes.put(mkey, JSON.getString(rawMetric, mkey))
-                    }
-                }
-
-                metrics.add(Metric(key, attributes))
-            }
-
-            val metricsConfig = MetricsConfig(metrics)
-
-            metricsConfig.setupOddMetrics() // MAGIC!
-
-            return metricsConfig
-        } catch (e: JSONException) {
-            Log.w(TAG, "failed to parse metrics feature from config")
-            return null
-        }
-
-    }
-
-    fun parseConfig(result: String): Config? {
-        try {
-            val resultJSONObject = JSONObject(result)
-            val dataJSONObject = JSON.getJSONObject(resultJSONObject, DATA, true)
-            val rawAttributes = JSON.getJSONObject(dataJSONObject, ATTRIBUTES, true)
-
-            val views = LinkedHashMap<String, String>()
-            val rawViews = JSON.getJSONObject(rawAttributes, "views", true)
+        val views = mutableMapOf<String, String>()
+        val rawViews = JSON.getJSONObject(rawAttributes, "views", false)
+        if (rawViews != null) {
             val viewNames = rawViews.keys()
             while (viewNames.hasNext()) {
                 val viewName = viewNames.next()
-                views.put(viewName, JSON.getString(rawViews, viewName))
+                val viewId = JSON.getString(rawViews, viewName) ?: throw OddParseException("parseConfig() missing View id")
+                views.put(viewName, viewId)
             }
-
-            val display = parseDisplay(rawAttributes)
-            val features = parseFeatures(rawAttributes)
-
-            val jwt = JSON.getString(rawAttributes, "jwt")
-
-            return Config(views, display, features, jwt)
-        } catch (e: JSONException) {
-            e.printStackTrace()
         }
 
-        return null
+        val display = parseDisplay(rawAttributes!!)
+        val features = parseFeatures(rawAttributes!!)
+
+        val jwt = JSON.getString(rawAttributes, "jwt")
+
+        return OddConfig(identifier, meta, views, display, features, jwt)
+    }
+
+    @Throws(JSONException::class)
+    private fun parseCollection(rawData: JSONObject, rawIncluded: JSONArray? = null): OddCollection {
+        val id = JSON.getString(rawData, ID) ?: throw OddParseException("parseCollection() missing id property")
+        val identifier = OddIdentifier(id, OddResourceType.COLLECTION)
+
+        val rawAttributes = JSON.getJSONObject(rawData, ATTRIBUTES, true)
+        val meta = JSON.getJSONObject(rawData, META, false)
+        val rawImages = JSON.getJSONArray(rawAttributes, "images", false)
+
+        val title = JSON.getString(rawAttributes, "title") ?: ""
+        val description = JSON.getString(rawAttributes, "description") ?: ""
+        val releaseDate = JSON.getDateTime(rawAttributes, "releaseDate")
+        val images = parseImages(rawImages)
+
+        val rawRelationships = JSON.getJSONObject(rawData, RELATIONSHIPS, false)
+        val relationships = parseRelationships(rawRelationships)
+
+        val rawGenres = JSON.getJSONArray(rawAttributes, "genres", false)
+        val genres = parseGenres(rawGenres)
+
+        val included = parseResourceArray(rawIncluded)
+
+        return OddCollection(
+                identifier,
+                relationships,
+                included,
+                meta,
+                title,
+                description,
+                images,
+                genres,
+                releaseDate)
+    }
+
+    @Throws(JSONException::class)
+    private fun parseVideo(rawData: JSONObject, rawIncluded: JSONArray? = null): OddVideo {
+        val id = JSON.getString(rawData, ID) ?: throw OddParseException("parseVideo() missing id property")
+        val identifier = OddIdentifier(id, OddResourceType.VIDEO)
+
+        val rawAttributes = JSON.getJSONObject(rawData, ATTRIBUTES, true)
+        val meta = JSON.getJSONObject(rawData, META, false)
+        val rawImages = JSON.getJSONArray(rawAttributes, "images", false)
+
+        val title = JSON.getString(rawAttributes, "title") ?: ""
+        val description = JSON.getString(rawAttributes, "description") ?: ""
+        val images = parseImages(rawImages)
+        val releaseDate = JSON.getDateTime(rawAttributes, "releaseDate")
+        val duration = JSON.getInt(rawAttributes, "duration")
+
+        val rawSources = JSON.getJSONArray(rawAttributes, "sources", false)
+        val sources = parseSources(rawSources)
+
+        val rawRelationships = JSON.getJSONObject(rawData, RELATIONSHIPS, false)
+        val relationships = parseRelationships(rawRelationships)
+
+        val rawGenres = JSON.getJSONArray(rawAttributes, "genres", false)
+        val genres = parseGenres(rawGenres)
+
+
+        val rawCast = JSON.getJSONArray(rawAttributes, "cast", false)
+        val cast = parseCast(rawCast)
+
+        val included = parseResourceArray(rawIncluded)
+
+        return OddVideo(
+                identifier,
+                relationships,
+                included,
+                meta,
+                title,
+                description,
+                images,
+                sources,
+                duration,
+                genres,
+                cast,
+                releaseDate)
+    }
+
+    @Throws(JSONException::class)
+    private fun parsePromotion(rawData: JSONObject, rawIncluded: JSONArray? = null): OddPromotion {
+        val id = JSON.getString(rawData, ID) ?: throw OddParseException("parseVideo() missing id property")
+        val identifier = OddIdentifier(id, OddResourceType.PROMOTION)
+
+        val rawAttributes = JSON.getJSONObject(rawData, ATTRIBUTES, true)
+        val meta = JSON.getJSONObject(rawData, META, false)
+        val rawImages = JSON.getJSONArray(rawAttributes, "images", false)
+
+        val title = JSON.getString(rawAttributes, "title") ?: ""
+        val description = JSON.getString(rawAttributes, "description") ?: ""
+        val url = JSON.getString(rawAttributes, "url") ?: ""
+        val images = parseImages(rawImages)
+
+        val rawRelationships = JSON.getJSONObject(rawData, RELATIONSHIPS, false)
+        val relationships = parseRelationships(rawRelationships)
+
+        val included = parseResourceArray(rawIncluded)
+
+        return OddPromotion(identifier, relationships, included, meta, title, description, images, url)
+    }
+
+    @Throws(JSONException::class)
+    private fun parseView(rawData: JSONObject, rawIncluded: JSONArray? = null): OddView {
+        val id = JSON.getString(rawData, ID) ?: throw OddParseException("parseVideo() missing id property")
+        val identifier = OddIdentifier(id, OddResourceType.VIEW)
+
+        val rawAttributes = JSON.getJSONObject(rawData, ATTRIBUTES, true)
+        val meta = JSON.getJSONObject(rawData, META, false)
+        val rawImages = JSON.getJSONArray(rawAttributes, "images", false)
+
+        val images = parseImages(rawImages)
+
+        val title = JSON.getString(rawAttributes, "title") ?: ""
+
+        val rawRelationships = JSON.getJSONObject(rawData, RELATIONSHIPS, false)
+        val relationships = parseRelationships(rawRelationships)
+
+        val included = parseResourceArray(rawIncluded)
+
+        return OddView(
+                identifier,
+                relationships,
+                included,
+                meta,
+                title,
+                images
+                )
     }
 
     @Throws(JSONException::class)
     private fun parseDisplay(rawAttributes: JSONObject): Display {
-        val rawDisplay = JSON.getJSONObject(rawAttributes, "display", true)
+        val rawDisplay = JSON.getJSONObject(rawAttributes, "display", false)
 
-        return Display(null, null, null)
+        if (rawDisplay != null) {
+            val rawImages = JSON.getJSONArray(rawDisplay, "images", false)
+            val rawColors = JSON.getJSONArray(rawDisplay, "colors", false)
+            val rawFonts = JSON.getJSONArray(rawDisplay, "fonts", false)
+            return Display(parseImages(rawImages), parseColors(rawColors), parseFonts(rawFonts))
+        } else {
+            return Display(emptySet(), emptySet(), emptySet())
+        }
     }
 
     @Throws(JSONException::class)
+    private fun parseImages(rawImages: JSONArray?): Set<OddImage> {
+        if (rawImages == null) {
+            return emptySet()
+        }
+        val images = mutableSetOf<OddImage>()
+
+        for(i in 0..(rawImages.length() -1)) {
+            val rawImage = rawImages.getJSONObject(i)
+
+            val url = JSON.getString(rawImage, "url") ?: ""
+            val mimeType = JSON.getString(rawImage, "mimeType") ?: ""
+            val width = JSON.getInt(rawImage, "width")
+            val height = JSON.getInt(rawImage, "height")
+            val label = JSON.getString(rawImage, "label") ?: ""
+
+            images.add(OddImage(url, mimeType, width, height, label))
+        }
+
+        return images.toSet()
+    }
+
+    @Throws(JSONException::class)
+    private fun parseColors(rawColors: JSONArray?): Set<OddColor> {
+        if (rawColors == null) {
+            return emptySet()
+        }
+        val colors = mutableSetOf<OddColor>()
+
+        for(i in 0..(rawColors.length() -1)) {
+            val rawColor = rawColors.getJSONObject(i)
+
+            val red = JSON.getInt(rawColor, "red")
+            val green = JSON.getInt(rawColor, "green")
+            val blue = JSON.getInt(rawColor, "blue")
+            val alpha = JSON.getInt(rawColor, "alpha")
+            val label = JSON.getString(rawColor, "label") ?: ""
+
+            colors.add(OddColor(red, green, blue, alpha, label))
+        }
+
+        return colors.toSet()
+    }
+
+    @Throws(JSONException::class)
+    private fun parseFonts(rawFonts: JSONArray?): Set<OddFont> {
+        if (rawFonts == null) {
+            return emptySet()
+        }
+        val fonts = mutableSetOf<OddFont>()
+
+        for(i in 0..(rawFonts.length() -1)) {
+            val rawFont = rawFonts.getJSONObject(i)
+
+            val name = JSON.getString(rawFont, "name") ?: ""
+            val size = JSON.getInt(rawFont, "size")
+            val label = JSON.getString(rawFont, "label") ?: ""
+
+            fonts.add(OddFont(name, size, label))
+        }
+
+        return fonts.toSet()
+    }
+
     private fun parseFeatures(rawAttributes: JSONObject): Features {
-        val rawFeatures = JSON.getJSONObject(rawAttributes, "features", true)
+        val rawFeatures = JSON.getJSONObject(rawAttributes, "features", false) ?: return Features(Authentication(false, Authentication.AuthenticationType.DISABLED), Sharing(false), emptySet(), false)
 
-        return Features(null, null, null)
+        val metricsConfig = parseMetricsFeature(rawFeatures)
+
+        return Features(parseAuthenticationFeature(rawFeatures), parseSharingFeature(rawFeatures), metricsConfig.first, metricsConfig.second)
     }
 
-    @Throws(JSONException::class)
-    private fun isAuthEnabled(rawFeatures: JSONObject): Boolean {
-        try {
-            val rawAuth = JSON.getJSONObject(rawFeatures, "authentication", true)
-            return JSON.getBoolean(rawAuth, "enabled")
-        } catch (e: JSONException) {
-            return false
+    @Throws(JSONException::class, IllegalArgumentException::class)
+    private fun parseAuthenticationFeature(rawFeatures: JSONObject): Authentication {
+        val rawAuthentication = JSON.getJSONObject(rawFeatures, "authentication", false) ?: return Authentication(false, Authentication.AuthenticationType.DISABLED)
+
+        val enabled = JSON.getBoolean(rawAuthentication, "enabled")
+        val type = JSON.getString(rawAuthentication, TYPE)?.toUpperCase()
+        val authenticationType = if (type == null) {
+            Authentication.AuthenticationType.DISABLED
+        } else {
+            Authentication.AuthenticationType.valueOf(type)
         }
 
-    }
 
-    fun parseViewResponse(result: String): OddView? {
-        try {
-            val resultObject = JSONObject(result)
-            val data = JSON.getJSONObject(resultObject, DATA, true)
-            val meta = JSON.getJSONObject(resultObject, META, false)
-            val rawAttributes = JSON.getJSONObject(data, ATTRIBUTES, true)
-            val view = OddView(
-                    JSON.getString(data, "id"),
-                    JSON.getString(data, "type"))
-            view.meta = meta
-
-            val attributes = HashMap<String, Any>()
-            attributes.put("title", JSON.getString(rawAttributes, "title"))
-            view.attributes = attributes
-
-            // use relationships to build view's ArrayList<Relationship>
-            addRelationshipsToOddObject(JSON.getJSONObject(data, "relationships", true), view)
-
-            // fill the view's included{Type} arrays with parsable objects
-            addIncludedFromResponse(view, resultObject)
-            // backfill newly created collections with newly created entities
-            view.fillIncludedCollections()
-
-            return view
-        } catch (e: JSONException) {
-            e.printStackTrace()
-        }
-
-        return null
-    }
-
-    @Throws(JSONException::class)
-    fun parseAuthToken(responseBody: String): AuthToken {
-        val raw = JSONObject(responseBody)
-        val data = JSON.getJSONObject(raw, DATA, true)
-        val attributes = JSON.getJSONObject(data, ATTRIBUTES, true)
-        val deviceUserProfile = JSON.getJSONObject(attributes, "deviceUserProfile", true)
-        val entitlementCredentials = JSON.getJSONObject(deviceUserProfile, "entitlementCredentials", false)
-        val accessToken = attributes.getString("access_token")
-        val tokenType = attributes.getString("token_type")
-        return AuthToken(accessToken, tokenType, entitlementCredentials)
-    }
-
-    @Throws(JSONException::class)
-    protected fun parseDeviceCodeResponse(responseBody: String): DeviceCodeResponse {
-        val raw = JSONObject(responseBody)
-        val data = JSON.getJSONObject(raw, DATA, true)
-        val attributes = JSON.getJSONObject(data, ATTRIBUTES, true)
-        val deviceCode = attributes.getString("device_code")
-        val userCode = attributes.getString("user_code")
-        val verificationUrl = attributes.getString("verification_url")
-        val expiresIn = attributes.getInt("expires_in")
-        val interval = attributes.getInt("interval")
-        return DeviceCodeResponse(deviceCode, userCode, verificationUrl, expiresIn, interval)
-    }
-
-    fun parseCollectionResponse(responseBody: String): OddCollection {
-        var collection: OddCollection? = null
-        try {
-            val raw = JSONObject(responseBody)
-            val data = JSON.getJSONObject(raw, DATA, true)
-            collection = parseCollection(data)
-            addIncludedFromResponse(collection, raw)
-        } catch (e: Exception) {
-            throw OddParseException(e)
-        }
-
-        return collection
-    }
-
-    fun parseSearch(result: String): List<OddObject> {
-        val searchResult = ArrayList<OddObject>()
-        try {
-            val resultObject = JSONObject(result)
-            val dataArray = resultObject.getJSONArray(DATA)
-            for (i in 0..dataArray.length() - 1) {
-                val item = dataArray.getJSONObject(i)
-                val type = JSON.getString(item, "type")
-
-                when (type) {
-                    OddObject.TYPE_VIDEO, OddObject.TYPE_LIVE_STREAM -> {
-                        val video = parseMedia(item)
-                        if (video != null) {
-                            searchResult.add(video)
-                        }
-                    }
-                    OddObject.TYPE_ARTICLE -> {
-                        val article = parseArticle(item)
-                        if (article != null) {
-                            searchResult.add(article)
-                        }
-                    }
-                    OddObject.TYPE_EVENT -> {
-                        val event = parseEvent(item)
-                        if (event != null) {
-                            searchResult.add(event)
-                        }
-                    }
-                    OddObject.TYPE_EXTERNAL -> {
-                        val external = parseExternal(item)
-                        if (external != null) {
-                            searchResult.add(external)
-                        }
-                    }
-                    OddObject.TYPE_COLLECTION -> {
-                        val collection = parseCollection(item)
-                        if (collection != null) {
-                            searchResult.add(collection)
-                        }
-                    }
+        val properties = mutableMapOf<String, String>()
+        rawAuthentication.keys().forEach {
+            when (it) {
+                "enabled" -> {}
+                TYPE -> {}
+                else -> {
+                    properties.put(it, JSON.getString(rawAuthentication, it) ?: "")
                 }
             }
-        } catch (e: JSONException) {
-            e.printStackTrace()
         }
 
-        return searchResult
+
+        return Authentication(enabled, authenticationType, properties)
     }
 
-    protected fun addRelationshipsToOddObject(relationships: JSONObject, relatable: OddObject) {
-        val relationshipNames = relationships.keys()
-        try {
-            while (relationshipNames.hasNext()) {
-                val name = relationshipNames.next()
-                val relationship = JSON.getJSONObject(relationships, name, true)
-                if (relationship != null) {
-                    val identifiers = ArrayList<Identifier>()
+    @Throws(JSONException::class)
+    private fun parseSharingFeature(rawFeatures: JSONObject): Sharing {
+        val rawSharing = JSON.getJSONObject(rawFeatures, "sharing", false) ?: return Sharing(false)
+        return parseSharing(rawSharing)
+    }
 
-                    if (relationship.get(DATA) is JSONObject) {
-                        //handle single relationship.data
-                        val identifier = JSON.getJSONObject(relationship, DATA, true)
-                        val relId = identifier.getString("id")
-                        val relType = identifier.getString("type")
-                        identifiers.add(Identifier(relId, relType))
+    @Throws(JSONException::class)
+    private fun parseMetricsFeature(rawFeatures: JSONObject): Pair<Set<Metric>, Boolean> {
+        val rawMetrics = JSON.getJSONObject(rawFeatures, "metrics", false) ?: return Pair(emptySet(), false)
 
-                    } else if (relationship.get(DATA) is JSONArray) {
-                        // handle multiple relationship.data
-                        val rawIdentifiers = JSON.getJSONArray(relationship, DATA, true)
+        val enabled = JSON.getBoolean(rawMetrics, "enabled")
 
-                        for (i in 0..rawIdentifiers.length() - 1) {
-                            val identifier = rawIdentifiers.getJSONObject(i)
-                            val relId = identifier.getString("id")
-                            val relType = identifier.getString("type")
-                            identifiers.add(Identifier(relId, relType))
-                        }
-                    }
+        val metrics = mutableSetOf<Metric>()
+        Metric.MetricType.values().forEach {
+            val rawMetric = JSON.getJSONObject(rawMetrics, it.key, false) ?: return@forEach
+            val individualEnabled = JSON.getBoolean(rawMetric, "enabled")
+            val action = JSON.getString(rawMetric, "action")
+            val interval = JSON.getInt(rawMetric, "interval")
+            metrics.add(Metric(it, individualEnabled, action, interval))
+        }
 
-                    relatable.addRelationship(Relationship(name, identifiers))
+        Metric.setupOddMetrics(metrics.toSet()) // MAGIC!
+
+        return Pair(metrics, enabled)
+
+    }
+
+    @Throws(JSONException::class)
+    private fun parseSharing(rawSharing: JSONObject): Sharing {
+        val enabled = JSON.getBoolean(rawSharing, "enabled")
+        val text = JSON.getString(rawSharing, "text") ?: ""
+        return Sharing(enabled, text)
+    }
+
+    @Throws(JSONException::class)
+    private fun parseGenres(rawGenres: JSONArray?): MutableSet<String> {
+        val genres = mutableSetOf<String>()
+        if (rawGenres != null) {
+            for (i in 0..(rawGenres.length() -1)) {
+                val genre = rawGenres.getString(i)
+                if (genre != null) {
+                    genres.add(genre)
                 }
             }
-        } catch (e: JSONException) {
-            Log.e(TAG, e.toString())
-            e.printStackTrace()
         }
-
+        return genres
     }
 
     @Throws(JSONException::class)
-    fun parseErrorMessage(responseBody: String): String {
-        return JSONObject(responseBody).getString("message")
+    private fun parseSources(rawSources: JSONArray?): MutableSet<OddSource> {
+        val sources = mutableSetOf<OddSource>()
+        if (rawSources != null) {
+            for (i in 0..(rawSources.length() -1)) {
+                val rawSource = rawSources.getJSONObject(i)
+
+                val url = JSON.getString(rawSource, "url") ?: ""
+                val container = JSON.getString(rawSource, "container") ?: ""
+                val mimeType = JSON.getString(rawSource, "mimeType") ?: ""
+                val width = JSON.getInt(rawSource, "width")
+                val height = JSON.getInt(rawSource, "height")
+                val maxBitrate = JSON.getInt(rawSource, "maxBitrate")
+                val label = JSON.getString(rawSource, "label") ?: ""
+
+                sources.add(OddSource(url, container, mimeType, width, height, maxBitrate, label))
+            }
+        }
+
+        return sources
     }
 
-    /** adds included objects from response to the OddObject if there are included objects in the response. Otherwise
-     * does nothing.
-     */
     @Throws(JSONException::class)
-    protected fun addIncludedFromResponse(oddObject: OddObject, response: JSONObject) {
-        val included = JSON.getJSONArray(response, "included", false)
-        if (included != null) addIncluded(oddObject, included)
-    }
+    private fun parseCast(rawCast: JSONArray?): MutableSet<OddCast> {
+        val cast = mutableSetOf<OddCast>()
+        if (rawCast != null) {
+            for (i in 0..(rawCast.length() -1)) {
+                val rawCastMember = rawCast.getJSONObject(i)
 
-    fun parseMediaResponse(responseBody: String): Media {
-        var media: Media? = null
-        try {
-            val response = JSONObject(responseBody)
-            val data = JSON.getJSONObject(response, DATA, true)
-            media = parseMedia(data)
-            addIncludedFromResponse(media, response)
-        } catch (e: Throwable) {
-            throw OddParseException(e)
+                val name = JSON.getString(rawCastMember, "name") ?: ""
+                val role = JSON.getString(rawCastMember, "role") ?: ""
+                val character = JSON.getString(rawCastMember, "character") ?: ""
+
+                cast.add(OddCast(name, role, character))
+            }
         }
 
-        return media
+        return cast
     }
 
-    fun parsePromotionResponse(responseBody: String): Promotion {
-        var promotion: Promotion? = null
-        try {
-            val response = JSONObject(responseBody)
-            val data = JSON.getJSONObject(response, DATA, true)
-            promotion = parsePromotion(data)
-            addIncludedFromResponse(promotion, response)
-        } catch (e: Throwable) {
-            throw OddParseException(e)
+//    @Throws(JSONException::class)
+//    protected fun parsePromotion(rawPromotion: JSONObject): OddPromotion {
+//        val rawAttributes = JSON.getJSONObject(rawPromotion, ATTRIBUTES, true)
+//        val meta = JSON.getJSONObject(rawPromotion, META, false)
+//        val images = JSON.getJSONObject(rawAttributes, "images", false)
+//
+//        val promotion = OddPromotion(
+//                JSON.getString(rawPromotion, ID),
+//                JSON.getString(rawPromotion, TYPE))
+//        promotion.meta = meta
+//
+//        val attributes = HashMap<String, Any>()
+//        attributes.put("title", JSON.getString(rawAttributes, "title"))
+//        attributes.put("description", JSON.getString(rawAttributes, "description"))
+//        attributes.put("url", JSON.getString(rawAttributes, "url"))
+//        attributes.put("mediaImage", parseMediaImage(images))
+//
+//        promotion.attributes = attributes
+//
+//        return promotion
+//    }
+
+//    fun parseEntityList(result: String): List<OddObject> {
+//        val entities = ArrayList<OddObject>()
+//        try {
+//            val entitiesResponse = JSONObject(result)
+//            val rawEntities = entitiesResponse.getJSONArray(DATA)
+//            for (i in 0..rawEntities.length() - 1) {
+//                val rawEntity = rawEntities.getJSONObject(i)
+//                val type = JSON.getString(rawEntity, TYPE)
+//                when (type) {
+//                    OddObject.TYPE_ARTICLE -> entities.add(parseArticle(rawEntity))
+//                    OddObject.TYPE_COLLECTION -> entities.add(parseCollection(rawEntity))
+//                    OddObject.TYPE_EVENT -> entities.add(parseEvent(rawEntity))
+//                    OddObject.TYPE_EXTERNAL -> entities.add(parseExternal(rawEntity))
+//                    OddObject.TYPE_PROMOTION -> entities.add(parsePromotion(rawEntity))
+//                    OddObject.TYPE_LIVE_STREAM, OddObject.TYPE_VIDEO -> entities.add(parseMedia(rawEntity))
+//                }
+//            }
+//        } catch (e: JSONException) {
+//            e.printStackTrace()
+//        }
+//
+//        return entities
+//    }
+
+//    fun parseViewResponse(result: String): OddView? {
+//        try {
+//            val resultObject = JSONObject(result)
+//            val data = JSON.getJSONObject(resultObject, DATA, true)
+//            val meta = JSON.getJSONObject(resultObject, META, false)
+//            val rawAttributes = JSON.getJSONObject(data, ATTRIBUTES, true)
+//            val view = OddView(
+//                    JSON.getString(data, ID),
+//                    JSON.getString(data, TYPE))
+//            view.meta = meta
+//
+//            val attributes = HashMap<String, Any>()
+//            attributes.put("title", JSON.getString(rawAttributes, "title"))
+//            view.attributes = attributes
+//
+//            // use relationships to build view's ArrayList<OddRelationship>
+//            parseRelationships(JSON.getJSONObject(data, RELATIONSHIPS, true), view)
+//
+//            // fill the view's included{Type} arrays with parsable objects
+//            addIncludedFromResponse(view, resultObject)
+//            // backfill newly created collections with newly created entities
+//            view.fillIncludedCollections()
+//
+//            return view
+//        } catch (e: JSONException) {
+//            e.printStackTrace()
+//        }
+//
+//        return null
+//    }
+
+//    fun parseSearch(result: String): List<OddObject> {
+//        val searchResult = ArrayList<OddObject>()
+//        try {
+//            val resultObject = JSONObject(result)
+//            val dataArray = resultObject.getJSONArray(DATA)
+//            for (i in 0..dataArray.length() - 1) {
+//                val item = dataArray.getJSONObject(i)
+//                val type = JSON.getString(item, TYPE)
+//
+//                when (type) {
+//                    OddObject.TYPE_VIDEO, OddObject.TYPE_LIVE_STREAM -> {
+//                        val video = parseMedia(item)
+//                        if (video != null) {
+//                            searchResult.add(video)
+//                        }
+//                    }
+//                    OddObject.TYPE_COLLECTION -> {
+//                        val collection = parseCollection(item)
+//                        if (collection != null) {
+//                            searchResult.add(collection)
+//                        }
+//                    }
+//                }
+//            }
+//        } catch (e: JSONException) {
+//            e.printStackTrace()
+//        }
+//
+//        return searchResult
+//    }
+
+    @Throws(JSONException::class, IllegalArgumentException::class)
+    private fun parseRelationships(rawRelationships: JSONObject?): MutableSet<OddRelationship> {
+        val relationships = mutableSetOf<OddRelationship>()
+        if (rawRelationships == null) {
+            return relationships
         }
+        val relationshipNames = rawRelationships.keys()
+        while (relationshipNames.hasNext()) {
+            val name = relationshipNames.next()
+            val relationship = JSON.getJSONObject(rawRelationships, name, true)
+            if (relationship != null) {
+                val identifiers = mutableSetOf<OddIdentifier>()
 
-        return promotion
-    }
+                if (relationship.get(DATA) is JSONObject) {
+                    //handle single relationship.data
+                    val identifier = JSON.getJSONObject(relationship, DATA, true)!!
+                    val relId = JSON.getString(identifier, ID) ?: throw OddParseException("parseRelationships() missing id property")
+                    val relType = JSON.getString(identifier, TYPE)?.toUpperCase() ?: throw OddParseException("parseRelationships() missing type property")
+                    identifiers.add(OddIdentifier(relId, OddResourceType.valueOf(relType)))
 
-    protected fun parseExternalResponse(responseBody: String): External {
-        var external: External? = null
-        try {
-            val response = JSONObject(responseBody)
-            val data = JSON.getJSONObject(response, DATA, true)
-            external = parseExternal(data)
-            addIncludedFromResponse(external, response)
-        } catch (e: Throwable) {
-            throw OddParseException(e)
+                } else if (relationship.get(DATA) is JSONArray) {
+                    // handle multiple relationship.data
+                    val rawIdentifiers = JSON.getJSONArray(relationship, DATA, true)!!
+
+                    for (i in 0..rawIdentifiers.length() - 1) {
+                        val identifier = rawIdentifiers.getJSONObject(i)
+                        val relId = JSON.getString(identifier, ID) ?: throw OddParseException("parseRelationships() missing id property")
+                        val relType = JSON.getString(identifier, TYPE)?.toUpperCase() ?: throw OddParseException("parseRelationships() missing type property")
+                        identifiers.add(OddIdentifier(relId, OddResourceType.valueOf(relType)))
+                    }
+                }
+
+                relationships.add(OddRelationship(name, identifiers))
+            }
         }
-
-        return external
+        return relationships
     }
 
-    protected fun parseEventResponse(responseBody: String): Event {
-        var event: Event? = null
-        try {
-            val response = JSONObject(responseBody)
-            val data = JSON.getJSONObject(response, DATA, true)
-            event = parseEvent(data)
-            addIncludedFromResponse(event, response)
-        } catch (e: Throwable) {
-            throw OddParseException(e)
-        }
-
-        return event
-    }
-
-    protected fun parseArticleResponse(responseBody: String): Article {
-        var article: Article? = null
-        try {
-            val response = JSONObject(responseBody)
-            val data = JSON.getJSONObject(response, DATA, true)
-            article = parseArticle(data)
-            addIncludedFromResponse(article, response)
-        } catch (e: Throwable) {
-            throw OddParseException(e)
-        }
-
-        return article
-    }
-
-    companion object {
-        private val TAG = OddParser::class.java.simpleName
-        val instance = OddParser()
-        private val JSON = JSONParser.getInstance()
-
-        private val DATA = "data"
-        private val ATTRIBUTES = "attributes"
-        private val META = "meta"
-    }
 }

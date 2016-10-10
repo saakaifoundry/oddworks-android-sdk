@@ -9,8 +9,8 @@ import org.junit.runner.RunWith;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import io.oddworks.device.model.common.Identifier;
-import io.oddworks.device.model.common.Relationship;
+import io.oddworks.device.model.common.OddIdentifier;
+import io.oddworks.device.model.common.OddRelationship;
 
 import static org.junit.Assert.assertEquals;
 
@@ -51,7 +51,7 @@ public class OddViewTest {
 
     @Test
 	public void testGetRelationship() throws Exception {
-        Relationship expected = new Relationship("rel", new ArrayList<Identifier>());
+        OddRelationship expected = new OddRelationship("rel", new ArrayList<OddIdentifier>());
         view.addRelationship(expected);
 
         assertEquals(expected, view.getRelationship("rel"));
@@ -59,8 +59,8 @@ public class OddViewTest {
 
     @Test
 	public void testGetRelationships() throws Exception {
-        Relationship relationship = new Relationship(relationshipName, new ArrayList<Identifier>());
-        ArrayList<Relationship> expected = new ArrayList<>();
+        OddRelationship relationship = new OddRelationship(relationshipName, new ArrayList<OddIdentifier>());
+        ArrayList<OddRelationship> expected = new ArrayList<>();
         expected.add(relationship);
         view.addRelationship(relationship);
 
@@ -69,14 +69,14 @@ public class OddViewTest {
 
     @Test
 	public void testAddRelationship() throws Exception {
-        Relationship expected = new Relationship(relationshipName, new ArrayList<Identifier>());
+        OddRelationship expected = new OddRelationship(relationshipName, new ArrayList<OddIdentifier>());
         view.addRelationship(expected);
         assertEquals(expected, view.getRelationship(relationshipName));
     }
 
     @Test
 	public void testAddIncluded() throws Exception {
-        Identifier mediaIdentifier = new Identifier(id, type);
+        OddIdentifier mediaIdentifier = new OddIdentifier(id, type);
         OddVideo expected = new OddVideo(mediaIdentifier);
         view.addIncluded(expected);
         assertEquals(expected, view.findIncludedByIdentifier(mediaIdentifier));
@@ -117,23 +117,23 @@ public class OddViewTest {
 	public void testFillIncludedCollections() throws Exception {
         String mcId = "12345";
         String mcType = "collection";
-        Identifier mcIdentifier = new Identifier(mcId, mcType);
+        OddIdentifier mcIdentifier = new OddIdentifier(mcId, mcType);
 
         OddCollection mediaCollection = new OddCollection(mcIdentifier);
 
-        ArrayList<Identifier> mcIdentifiers = new ArrayList<>();
+        ArrayList<OddIdentifier> mcIdentifiers = new ArrayList<>();
         mcIdentifiers.add(mcIdentifier);
 
         String mId = "67890";
         String mType = "video";
-        Identifier mIdentifier = new Identifier(mId, mType);
+        OddIdentifier mIdentifier = new OddIdentifier(mId, mType);
         OddVideo oddVideo = new OddVideo(mIdentifier);
 
-        ArrayList<Identifier> mIdentifiers = new ArrayList<>();
+        ArrayList<OddIdentifier> mIdentifiers = new ArrayList<>();
         mIdentifiers.add(mIdentifier);
-        mediaCollection.addRelationship(new Relationship("videos", mIdentifiers));
+        mediaCollection.addRelationship(new OddRelationship("videos", mIdentifiers));
 
-        view.addRelationship(new Relationship("featured", mcIdentifiers));
+        view.addRelationship(new OddRelationship("featured", mcIdentifiers));
         view.addIncluded(mediaCollection);
         view.addIncluded(oddVideo);
 

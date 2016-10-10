@@ -13,7 +13,7 @@ import rx.subjects.SerializedSubject
  * *
  * @since v1.2 on 02/26/2016
  */
-class OddRxBus private constructor() {
+object OddRxBus {
 
     private val bus: SerializedSubject<OddRxBusEvent, OddRxBusEvent>
 
@@ -24,7 +24,6 @@ class OddRxBus private constructor() {
 
     fun publish(event: OddRxBusEvent) {
         bus.onNext(event)
-        Log.d(TAG, "event published:" + event)
     }
 
     /** events will be emitted through this observable  */
@@ -33,9 +32,4 @@ class OddRxBus private constructor() {
 
     /** for type safety and hinting  */
     interface OddRxBusEvent
-
-    companion object {
-        val TAG = OddRxBus::class.java.simpleName
-        val instance = OddRxBus()
-    }
 }

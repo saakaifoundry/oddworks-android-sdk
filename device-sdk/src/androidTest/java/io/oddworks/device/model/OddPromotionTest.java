@@ -8,6 +8,8 @@ import org.junit.runner.RunWith;
 
 import java.util.HashMap;
 
+import io.oddworks.device.model.common.OddIdentifier;
+
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
@@ -18,11 +20,11 @@ public class OddPromotionTest {
 
     @Before
     public void beforeEach() {
-        mOddPromotion = new OddPromotion(new Identifier("123", OddObject.TYPE_PROMOTION));
+        mOddPromotion = new OddPromotion(new OddIdentifier("123", OddObject.TYPE_PROMOTION));
         HashMap<String, Object> attributes = new HashMap<>();
         attributes.put("title", "title1");
         attributes.put("description", "description1");
-        attributes.put("mediaImage", new MediaImage("a", "b", "c", "d", "e"));
+//        attributes.put("mediaImage", new MediaImage("a", "b", "c", "d", "e"));
         mOddPromotion.setAttributes(attributes);
     }
 

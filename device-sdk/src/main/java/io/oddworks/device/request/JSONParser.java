@@ -1,5 +1,7 @@
 package io.oddworks.device.request;
 
+import android.support.annotation.Nullable;
+
 import org.joda.time.DateTime;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -21,6 +23,7 @@ public class JSONParser {
      * @param key   key at which the String value is located
      * @return      defaults to null
      **/
+    @Nullable
     public String getString(final JSONObject json, String key) {
         try {
             if (json.isNull(key)) {
@@ -37,6 +40,7 @@ public class JSONParser {
      * @param key   key at which the DateTime value is located
      * @return      defaults to null
      **/
+    @Nullable
     public DateTime getDateTime(final JSONObject json, String key) throws JSONException {
         if (!json.isNull(key)) {
             return new DateTime(json.getString(key));
@@ -62,6 +66,7 @@ public class JSONParser {
         return json.optBoolean(key, false);
     }
 
+    @Nullable
     public JSONObject getJSONObject(final JSONObject json, String key, Boolean throwOnNull) throws JSONException {
         JSONObject jsonObject = json.optJSONObject(key);
         if (throwOnNull && jsonObject == null) {
@@ -70,6 +75,7 @@ public class JSONParser {
         return jsonObject;
     }
 
+    @Nullable
     public JSONArray getJSONArray(final JSONObject json, String key, Boolean throwOnNull) throws JSONException {
         JSONArray jsonArray = json.optJSONArray(key);
         if (throwOnNull && jsonArray == null) {

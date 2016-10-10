@@ -9,6 +9,8 @@ import org.junit.runner.RunWith;
 
 import java.util.HashMap;
 
+import io.oddworks.device.model.common.OddIdentifier;
+
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.is;
@@ -47,7 +49,7 @@ public class OddVideoTest {
 
     @Test
     public void testGetIdentifier() throws Exception {
-        assertThat(video.getIdentifier(), is(instanceOf(Identifier.class)));
+        assertThat(video.getIdentifier(), is(instanceOf(OddIdentifier.class)));
     }
 
     @Test

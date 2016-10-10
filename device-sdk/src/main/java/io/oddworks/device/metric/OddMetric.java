@@ -16,6 +16,8 @@ public abstract class OddMetric implements OddRxBus.OddRxBusEvent {
     public static final String ACTION_VIDEO_PLAYING = "video:playing";
     public static final String ACTION_VIDEO_STOP = "video:stop";
     public static final String ACTION_VIDEO_ERROR = "video:error";
+    public static final String ACTION_VIDEO_LOAD = "video:load";
+    public static final String ACTION_USER_NEW = "user:new";
 
     protected String organizationId;
     protected String contentType;
