@@ -10,8 +10,21 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.io.IOException;
+import java.util.Iterator;
+import java.util.LinkedHashSet;
 
+import io.oddworks.device.model.OddCollection;
 import io.oddworks.device.model.OddConfig;
+import io.oddworks.device.model.OddPromotion;
+import io.oddworks.device.model.OddView;
+import io.oddworks.device.model.common.OddIdentifier;
+import io.oddworks.device.model.common.OddImage;
+import io.oddworks.device.model.common.OddRelationship;
+import io.oddworks.device.model.common.OddResource;
+import io.oddworks.device.model.common.OddResourceType;
+import io.oddworks.device.model.config.Display;
+import io.oddworks.device.model.config.Features;
+import io.oddworks.device.model.config.features.Authentication;
 import io.oddworks.device.testutils.AssetUtils;
 
 import static org.hamcrest.CoreMatchers.is;
@@ -20,142 +33,139 @@ import static org.junit.Assert.assertThat;
 @RunWith(AndroidJUnit4.class)
 public class OddParserTest extends AndroidTestCase {
 
-    private OddParser oddParser;
     private Context mContext;
 
     @Before
     public void beforeEach() throws IOException {
-        oddParser = OddParser.INSTANCE;
         mContext = InstrumentationRegistry.getTargetContext();
     }
-//
-//    @Test
-//    public void testParseViewV2() throws Exception {
-//        String viewResponseV2 = AssetUtils.readFileToString(mContext, "ViewResponseV2.json");
-//
-//        OddView view = oddParser.parseViewResponse(viewResponseV2);
-//        List<OddObject> promotions = view.getIncludedByRelationship("oddPromotion");
-//        List<OddObject> featuredMedia = view.getIncludedByRelationship("featuredMedia");
-//        List<OddObject> featuredCollections = view.getIncludedByRelationship("featuredCollections");
-//
-//        assertFalse(promotions.isEmpty());
-//        OddPromotion oddPromotion = (OddPromotion) promotions.get(0);
-//        assertThat(oddPromotion.getTitle(), is("This is a oddPromotion title!"));
-//        assertThat(oddPromotion.getUrl(), is("http://website.com"));
-//
-//        assertFalse(featuredMedia.isEmpty());
-//        OddVideo oddVideoSharingEnabled = (OddVideo) featuredMedia.get(0);
-//        assertThat(oddVideoSharingEnabled.getDescription(), is("Louder, come on"));
-//        assertTrue(oddVideoSharingEnabled.getSharing().isEnabled());
-//        assertThat(oddVideoSharingEnabled.getSharing().getText(), is("Share this with your friends."));
-//
-//        OddVideo oddVideoNoSharing = (OddVideo) featuredMedia.get(1);
-//        assertFalse(oddVideoNoSharing.getSharing().isEnabled());
-//
-//        OddVideo oddVideoSharingDisabled = (OddVideo) featuredMedia.get(2);
-//        assertFalse(oddVideoSharingDisabled.getSharing().isEnabled());
-//
-//        assertFalse(featuredCollections.isEmpty());
-//        OddCollection collection = (OddCollection) featuredCollections.get(0);
-//        assertThat(collection.getTitle(), is("Automotive Pros Featured Collections"));
-//
-//        List<OddObject> subCollections = collection.getIncludedByRelationship("entities");
-//        OddCollection subCollection = (OddCollection) subCollections.get(0);
-//        assertThat(subCollection.getTitle(), is("The Black Eyed Peas"));
-//    }
-//
-//    @Test
-//    public void testParseMenuViewResponseV2() throws Exception {
-//        String json = AssetUtils.readFileToString(mContext, "MenuViewResponseV2.json");
-//
-//        OddView menu = oddParser.parseViewResponse(json);
-//        List<OddObject> items = menu.getIncludedByRelationship("items");
-//
-//        assertFalse(items.isEmpty());
-//
-//        OddCollection articles = (OddCollection) items.get(1);
-//        assertNull(articles.getMediaImage());
-//        assertThat(articles.getTitle(), is("News"));
-//        Article article = (Article) articles.getIncludedByRelationship("entities").get(0);
-//        assertThat(article.getTitle(), is("Stock Contractor of the Year Berger has bulls at NFR"));
-//        assertNull(article.getMediaImage());
-//
-//        OddCollection events = (OddCollection) items.get(2);
-//        assertThat(events.getTitle(), is("Expert Series - Schedule"));
-//        assertNull(events.getMediaImage());
-//        Event event = (Event) events.getIncludedByRelationship("entities").get(0);
-//        assertThat(event.getTitle(), is("2015 Expert thing"));
-//        MediaImage eventImage = event.getMediaImage();
-//        assertThat(eventImage.getAspect16x9(), is("http://vbr.com/media/resized/96117_0_640x360.jpg"));
-//    }
-//
-//    @Test
-//    public void testParseHomepageViewResponseV2() throws Exception {
-//        String json = AssetUtils.readFileToString(mContext, "HomepageViewResponseV2.json");
-//
-//        OddView homepage = oddParser.parseViewResponse(json);
-//        List<OddObject> promotions = homepage.getIncludedByRelationship("promotion");
-//        List<OddObject> featuredMedia = homepage.getIncludedByRelationship("featuredMedia");
-//        List<OddObject> featuredCollections = homepage.getIncludedByRelationship("featuredCollections");
-//    }
-//
-//    @Test
-//    public void testParseDeviceCodeResponse() throws Exception {
-//
-//    }
-//
-//    @Test
-//    public void testParseSearchV2() throws Exception {
-//        String json = AssetUtils.readFileToString(mContext, "SearchResponseV2.json");
-//
-//        List<OddObject> results = oddParser.parseSearch(json);
-//    }
-//
-//    @Test
-//    public void testParseErrorMessage() throws Exception {
-//
-//    }
 
     @Test
-    public  void testParseConfig() throws Exception {
+    public void testParseConfigResponse() throws Exception {
         String json = AssetUtils.readFileToString(mContext, "ConfigResponse.json");
-        OddConfig oddConfig = oddParser.parseConfig(json);
+        OddConfig oddConfig = (OddConfig) OddParser.INSTANCE.parseSingleResponse(json);
+
+        assertThat(oddConfig.getIdentifier().getId(), is("channel-id-channel-id-android"));
+        assertThat(oddConfig.getIdentifier().getType(), is(OddResourceType.CONFIG));
 
         // Views
-        assertThat(oddConfig.getViews().size(), is(2));
-        String homepageId = "channel-id-homepage";
+        assertThat(oddConfig.getViews().size(), is(3));
+        String homepageId = "channel-id-home-view";
         assertThat(oddConfig.getViews().get("homepage"), is(homepageId));
-        String splashId = "channel-id-splash";
+        String splashId = "channel-id-splash-view";
         assertThat(oddConfig.getViews().get("splash"), is(splashId));
 
         // Features
+        Features features = oddConfig.getFeatures();
+        // - Sharing
+        assertTrue(features.getSharing().getEnabled());
+        assertThat(features.getSharing().getText(), is("Watch the Channel Name shows Live on mobile and TV connected platforms!"));
+        // - Authentication
+        assertTrue(features.getAuthentication().getEnabled());
+        assertThat(features.getAuthentication().getType(), is(Authentication.AuthenticationType.LINK));
+        assertThat(features.getAuthentication().getProperties().get("url"), is("http://oddchannels.com/login"));
+        // - Metrics
+        assertTrue(features.getMetricsEnabled());
+        assertThat(features.getMetrics().size(), is(8));
 
-
+        // Display
+        Display display = oddConfig.getDisplay();
+        // - Images
+        assertThat(display.getImages().size(), is(1));
+        OddImage image = display.getImages().iterator().next();
+        assertThat(image.getUrl(), is("https://assets.oddnetworks.com/paul.svg"));
+        assertThat(image.getLabel(), is("logo"));
+        assertThat(image.getMimeType(), is("image/svg+xml"));
+        assertThat(image.getWidth(), is(0));
+        assertThat(image.getHeight(), is(0));
+        // - Colors
+        assertThat(display.getColors().size(), is(0));
+        // - Fonts
+        assertThat(display.getFonts().size(), is(0));
     }
-//
-//
-//    @Test
-//    public void testParseCollectionWithIncludedV2() throws Exception {
-//        String json = AssetUtils.readFileToString(mContext, "NestedCollectionWithIncludedV2.json");
-//        OddCollection mc = oddParser.parseCollectionResponse(json);
-//        assertThat(mc.getId(), is("custom-collection-1"));
-//        assertThat(mc.getAttributes(), is(notNullValue()));
-//        assertThat(mc.getRelationships().size(), is(1));
-//        List<OddIdentifier> relationshipIds = mc.getRelationships().get(0).getIdentifiers();
-//        OddIdentifier firstRelationship = relationshipIds.get(0);
-//        assertThat(firstRelationship.getId(), is("DEEDDEEDDEEDDEEDDEEDDEEDDEEDDEED"));
-//        assertThat(mc.findIncludedByIdentifier(firstRelationship), is(notNullValue()));
-//        OddIdentifier secondRelationship = relationshipIds.get(1);
-//        assertThat(secondRelationship.getId(), is("KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK"));
-//        assertThat(mc.findIncludedByIdentifier(secondRelationship), is(notNullValue()));
-//    }
 
-//
-//    @Test
-//    public void testParseMediaResponseTest() throws Exception {
-//        String json = AssetUtils.readFileToString(mContext, "LiveStreamWithIncluded.json");
-//        OddVideo oddVideo = oddParser.parseMediaResponse(json);
-//        assertThat(oddVideo.getId(), is("test-1"));
-//    }
+    @Test
+    public void testParseViewResponse() throws Exception {
+        String json = AssetUtils.readFileToString(mContext, "ViewResponse.json");
+        OddView oddView = (OddView) OddParser.INSTANCE.parseSingleResponse(json);
 
+        assertThat(oddView.getIdentifier().getId(), is("channel-id-home-view"));
+        assertThat(oddView.getIdentifier().getType(), is(OddResourceType.VIEW));
+
+        assertThat(oddView.getTitle(), is("Channel Sample Homepage"));
+
+        // Relationships
+        assertThat(oddView.getRelationships().size(), is(2));
+        OddRelationship callouts = oddView.getRelationship("callouts");
+        assertThat(callouts.getName(), is("callouts"));
+        Iterator<OddIdentifier> identifiers = callouts.getIdentifiers().iterator();
+        OddIdentifier id1 = identifiers.next();
+        OddIdentifier id2 = identifiers.next();
+        OddIdentifier id3 = identifiers.next();
+        assertFalse(identifiers.hasNext());
+        assertThat(id1.getId(), is("channel-id-callout-1"));
+        assertThat(id1.getType(), is(OddResourceType.COLLECTION));
+        assertThat(id2.getId(), is("channel-id-callout-2"));
+        assertThat(id2.getType(), is(OddResourceType.COLLECTION));
+        assertThat(id3.getId(), is("channel-id-callout-3"));
+        assertThat(id3.getType(), is(OddResourceType.COLLECTION));
+
+        OddRelationship promotion = oddView.getRelationship("promotion");
+        assertThat(promotion.getName(), is("promotion"));
+        Iterator<OddIdentifier> promotionIdentifiers = promotion.getIdentifiers().iterator();
+        OddIdentifier pid1 = promotionIdentifiers.next();
+        assertFalse(promotionIdentifiers.hasNext());
+        assertThat(pid1.getId(), is("channel-id-promotion"));
+        assertThat(pid1.getType(), is(OddResourceType.PROMOTION));
+    }
+
+    @Test
+    public void testParseViewResponseWithIncluded() throws Exception {
+        String json = AssetUtils.readFileToString(mContext, "ViewResponseWithIncluded.json");
+        OddView oddView = (OddView) OddParser.INSTANCE.parseSingleResponse(json);
+
+        assertThat(oddView.getIdentifier().getId(), is("channel-id-home-view"));
+        assertThat(oddView.getIdentifier().getType(), is(OddResourceType.VIEW));
+
+        assertThat(oddView.getTitle(), is("Channel Sample Homepage"));
+
+        // Relationships
+        assertThat(oddView.getRelationships().size(), is(2));
+        OddRelationship calloutRelationship = oddView.getRelationship("callouts");
+        assertThat(calloutRelationship.getName(), is("callouts"));
+        Iterator<OddIdentifier> calloutIdentifiers = calloutRelationship.getIdentifiers().iterator();
+        OddIdentifier id1 = calloutIdentifiers.next();
+        OddIdentifier id2 = calloutIdentifiers.next();
+        OddIdentifier id3 = calloutIdentifiers.next();
+        assertFalse(calloutIdentifiers.hasNext());
+        assertThat(id1.getId(), is("channel-id-callout-1"));
+        assertThat(id1.getType(), is(OddResourceType.COLLECTION));
+        assertThat(id2.getId(), is("channel-id-callout-2"));
+        assertThat(id2.getType(), is(OddResourceType.COLLECTION));
+        assertThat(id3.getId(), is("channel-id-callout-3"));
+        assertThat(id3.getType(), is(OddResourceType.COLLECTION));
+
+        OddRelationship promotionRelationship = oddView.getRelationship("promotion");
+        assertThat(promotionRelationship.getName(), is("promotion"));
+        Iterator<OddIdentifier> promotionIdentifiers = promotionRelationship.getIdentifiers().iterator();
+        OddIdentifier pid1 = promotionIdentifiers.next();
+        assertFalse(promotionIdentifiers.hasNext());
+        assertThat(pid1.getId(), is("channel-id-promotion"));
+        assertThat(pid1.getType(), is(OddResourceType.PROMOTION));
+
+        // Included
+        assertThat(oddView.getIncluded().size(), is(4));
+        // - callouts
+        LinkedHashSet<OddResource> callouts = oddView.getIncludedByRelationship("callouts");
+        Iterator<OddResource> calloutIterator = callouts.iterator();
+        OddCollection callout1 = (OddCollection) calloutIterator.next();
+        OddCollection callout2 = (OddCollection) calloutIterator.next();
+        OddCollection callout3 = (OddCollection) calloutIterator.next();
+        assertFalse(calloutIterator.hasNext());
+        // - promotion
+        LinkedHashSet<OddResource> promotion = oddView.getIncludedByRelationship("promotion");
+        Iterator<OddResource> promotionIterator = promotion.iterator();
+        OddPromotion promotion1 = (OddPromotion) promotionIterator.next();
+        assertFalse(promotionIterator.hasNext());
+    }
 }
