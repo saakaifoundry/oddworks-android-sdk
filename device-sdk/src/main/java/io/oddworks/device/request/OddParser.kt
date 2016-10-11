@@ -12,9 +12,7 @@ import io.oddworks.device.model.config.features.*
 import io.oddworks.device.model.video.OddCast
 import io.oddworks.device.model.video.OddSource
 import org.json.JSONArray
-
-
-// TODO - handle missing resource attributes that would potentially kill client apps
+import java.util.*
 
 object OddParser {
     private val JSON = JSONParser.getInstance()
@@ -29,7 +27,7 @@ object OddParser {
     private val RELATIONSHIPS = "relationships"
 
     @Throws(JSONException::class)
-    fun parseMultipleResponse(responseBody: String): Set<OddResource> {
+    fun parseMultipleResponse(responseBody: String): LinkedHashSet<OddResource> {
         val rawBody = JSONObject(responseBody)
         val rawData = JSON.getJSONArray(rawBody, DATA, true)!!
         return parseResourceArray(rawData)
@@ -75,8 +73,8 @@ object OddParser {
     }
 
     @Throws(JSONException::class, IllegalArgumentException::class, OddParseException::class)
-    private fun parseResourceArray(rawArray: JSONArray?): MutableSet<OddResource> {
-        val resources = mutableSetOf<OddResource>()
+    private fun parseResourceArray(rawArray: JSONArray?): LinkedHashSet<OddResource> {
+        val resources = linkedSetOf<OddResource>()
         if (rawArray == null) {
             return resources
         }
@@ -575,7 +573,7 @@ object OddParser {
             val name = relationshipNames.next()
             val relationship = JSON.getJSONObject(rawRelationships, name, true)
             if (relationship != null) {
-                val identifiers = mutableSetOf<OddIdentifier>()
+                val identifiers = linkedSetOf<OddIdentifier>()
 
                 if (relationship.get(DATA) is JSONObject) {
                     //handle single relationship.data

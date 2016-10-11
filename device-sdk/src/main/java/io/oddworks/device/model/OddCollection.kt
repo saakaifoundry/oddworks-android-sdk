@@ -8,7 +8,7 @@ import org.joda.time.DateTime
 import org.json.JSONObject
 
 class OddCollection(identifier: OddIdentifier,
-                    relationships: MutableSet<OddRelationship>,
+                    relationships: Set<OddRelationship>,
                     included: MutableSet<OddResource>,
                     meta: JSONObject?,
                     val title: String,

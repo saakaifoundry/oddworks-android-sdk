@@ -1,28 +1,34 @@
 package io.oddworks.device.model.common
 
-import io.oddworks.device.model.common.OddIdentifier
-import io.oddworks.device.model.common.OddRelationship
 import org.json.JSONObject
+import java.util.*
 
-open class OddResource(val identifier: OddIdentifier, var relationships: MutableSet<OddRelationship>, val included: MutableSet<OddResource>, val meta: JSONObject?) {
+open class OddResource(val identifier: OddIdentifier, var relationships: Set<OddRelationship>, val included: MutableSet<OddResource>, val meta: JSONObject?) {
     fun getRelationship(name: String): OddRelationship? {
         return relationships.find {
             it.name == name
         }
     }
 
-    fun getIdentifiersByRelationship(name: String): Set<OddIdentifier> {
-        val relationship = getRelationship(name) ?: return emptySet()
+    fun getIdentifiersByRelationship(name: String): LinkedHashSet<OddIdentifier> {
+        val relationship = getRelationship(name) ?: return linkedSetOf()
 
         return relationship.identifiers
     }
 
-    fun getIncludedByRelationship(name: String): Set<OddResource> {
-        val relationship = getRelationship(name) ?: return emptySet()
+    fun getIncludedByRelationship(name: String): LinkedHashSet<OddResource> {
+        val relationship = getRelationship(name) ?: return linkedSetOf()
 
-        return relationship.identifiers.map { identifier ->
-            included.find { it.identifier == identifier }
-        }.filterNotNull().toSet()
+        val inc = linkedSetOf<OddResource>()
+
+        relationship.identifiers.forEach { identifier ->
+            val found = included.find { it.identifier == identifier }
+            if (found != null) {
+                inc.add(found)
+            }
+        }
+
+        return inc
     }
 
     fun isMissingIncluded(): Boolean {
@@ -36,9 +42,5 @@ open class OddResource(val identifier: OddIdentifier, var relationships: Mutable
             }
         }
         return isMissing
-    }
-
-    fun addIncluded(resource: OddResource) {
-        included.add(resource)
     }
 }

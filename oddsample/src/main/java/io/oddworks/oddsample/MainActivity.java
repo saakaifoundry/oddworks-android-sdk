@@ -69,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
                         OddRelationship personalitites = oddView.getRelationship("personalities");
                         OddRelationship promotion = oddView.getRelationship("promotion");
 
-                        
+
 
                     }
                 }, new Action1<Throwable>() {
