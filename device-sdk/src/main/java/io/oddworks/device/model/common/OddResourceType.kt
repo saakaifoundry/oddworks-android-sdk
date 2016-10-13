@@ -2,9 +2,11 @@ package io.oddworks.device.model.common
 
 enum class OddResourceType {
     CONFIG,
-    VIDEO,
     COLLECTION,
+    EVENT,
     PROMOTION,
+    SEARCH,
+    VIDEO,
     VIEW
 }
 
