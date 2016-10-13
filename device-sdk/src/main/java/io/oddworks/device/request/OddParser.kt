@@ -46,6 +46,9 @@ object OddParser {
             OddResourceType.VIDEO -> parseVideo(rawData, rawIncluded)
             OddResourceType.VIEW -> parseView(rawData, rawIncluded)
             OddResourceType.CONFIG -> parseConfig(rawData)
+            else -> {
+                throw OddParseException("Attempting to parse un-parseable OddResourceType")
+            }
         }
 
     }
@@ -90,6 +93,9 @@ object OddParser {
                 OddResourceType.VIDEO -> resources.add(parseVideo(includedObject))
                 OddResourceType.VIEW -> resources.add(parseView(includedObject))
                 OddResourceType.CONFIG -> resources.add(parseConfig(includedObject))
+                else -> {
+                    throw OddParseException("Attempting to parse un-parseable OddResourceType")
+                }
             }
         }
 
