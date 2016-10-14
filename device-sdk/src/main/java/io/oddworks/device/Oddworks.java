@@ -2,9 +2,6 @@ package io.oddworks.device;
 
 import android.content.Context;
 
-import io.oddworks.device.request.ApiCaller;
-import io.oddworks.device.request.RestServiceProvider;
-
 /**
  * Created by brkattk on 10/5/16.
  */
@@ -39,13 +36,5 @@ public class Oddworks {
 
     private Oddworks() {
         throw new AssertionError();
-    }
-
-    public static void initialize(Context context) {
-        RestServiceProvider.init(context);
-    }
-
-    public static ApiCaller getApiCaller() {
-        return RestServiceProvider.getInstance().getApiCaller();
     }
 }
