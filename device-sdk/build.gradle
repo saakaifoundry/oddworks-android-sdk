@@ -1,5 +1,6 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
+//apply plugin: 'org.jetbrains.dokka-android'
 apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: 'com.jfrog.bintray'
 
@@ -115,18 +116,28 @@ task sourcesJar(type: Jar) {
     from android.sourceSets.main.java.srcDirs
     classifier = 'sources'
 }
-//
-//task javadoc(type: Javadoc) {
-//    source = android.sourceSets.main.java.srcDirs
-//    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+
+//dokka {
+//    moduleName = 'device-sdk'
+//    outputFormat = 'javadoc'
+//    outputDirectory = "$buildDir/docs/javadoc"
+////    processConfigurations = ['compile', 'extra']
+////    includes = ['packages.md', 'extra.md']
+////    samples = ['samples/basic.kt', 'samples/advanced.kt']
+//    linkMapping {
+//        dir = "src/main/java"
+//        url = "https://github.com/oddnetworks/oddworks-android-sdk/blob/master/device-sdk/src/main/java"
+//        suffix = "#L"
+//    }
+//    sourceDirs = files('src/main/java')
 //}
-//
-//task javadocJar(type: Jar, dependsOn: javadoc) {
+
+//task javadocJar(type: Jar, dependsOn: dokka) {
 //    classifier = 'javadoc'
-//    from javadoc.destinationDir
+//    from dokka.outputDirectory
 //}
 //
-//task copyDocs(type: Copy, dependsOn: javadoc) {
+//task copyDocs(type: Copy, dependsOn: dokka) {
 //    from 'build/docs/javadoc'
 //    into "../docs/docs/javadoc/$version"
 //}
