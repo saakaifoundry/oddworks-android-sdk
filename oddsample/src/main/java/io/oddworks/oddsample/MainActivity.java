@@ -5,12 +5,16 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 
-import io.oddworks.device.Oddworks;
+import java.util.LinkedHashSet;
+
+import io.oddworks.device.model.OddCollection;
 import io.oddworks.device.model.OddConfig;
+import io.oddworks.device.model.OddPromotion;
+import io.oddworks.device.model.OddVideo;
 import io.oddworks.device.model.OddView;
 import io.oddworks.device.model.common.OddRelationship;
+import io.oddworks.device.model.common.OddResource;
 import io.oddworks.device.model.common.OddResourceType;
-import io.oddworks.device.request.ApiCaller;
 import io.oddworks.device.request.OddCallback;
 import io.oddworks.device.request.OddRequest;
 import io.oddworks.device.request.RxOddCall;
@@ -52,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
                 }, new Action1<Throwable>() {
                     @Override
                     public void call(Throwable throwable) {
-                        Log.e(TAG, "getConfig failed", throwable);
+                        Log.e(TAG, "get config failed", throwable);
                     }
                 });
     }
@@ -67,6 +71,7 @@ public class MainActivity extends AppCompatActivity {
                         new OddRequest.Builder(ctx)
                                 .resourceType(OddResourceType.VIEW)
                                 .resourceId(viewId)
+                                .include("personalities,promotion")
                                 .build()
                                 .enqueueRequest(oddViewOddCallback);
                     }
@@ -76,17 +81,50 @@ public class MainActivity extends AppCompatActivity {
                 .subscribe(new Action1<OddView>() {
                     @Override
                     public void call(OddView oddView) {
-                        OddRelationship personalitites = oddView.getRelationship("personalities");
-                        OddRelationship promotion = oddView.getRelationship("promotion");
+                        LinkedHashSet<OddResource> personalitites = oddView.getIncludedByRelationship("personalities");
+                        LinkedHashSet<OddResource> promotions = oddView.getIncludedByRelationship("promotion");
 
-                        
+                        OddPromotion promotion = (OddPromotion) promotions.iterator().next();
+                        OddCollection personality1 = (OddCollection) personalitites.iterator().next();
 
+                        Log.d(TAG, "promotion: " + promotion.getTitle());
+                        Log.d(TAG, "first personality: " + personality1.getTitle());
+                        getVideos();
                     }
                 }, new Action1<Throwable>() {
 
                     @Override
                     public void call(Throwable throwable) {
-                        Log.e(TAG, "getView failed", throwable);
+                        Log.e(TAG, "get view failed", throwable);
+                    }
+                });
+    }
+
+    private void getVideos() {
+        final Context ctx = this;
+        RxOddCall
+                .observableFrom(new Action1<OddCallback<LinkedHashSet<OddVideo>>>() {
+
+                    @Override
+                    public void call(OddCallback<LinkedHashSet<OddVideo>> oddVideoCallback) {
+                        new OddRequest.Builder(ctx)
+                                .resourceType(OddResourceType.VIDEO)
+                                .build()
+                                .enqueueRequest(oddVideoCallback);
+                    }
+                })
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<LinkedHashSet<OddVideo>>() {
+                    @Override
+                    public void call(LinkedHashSet<OddVideo> videos) {
+                        Log.d(TAG, "get videos success " + videos.size());
+                    }
+                }, new Action1<Throwable>() {
+
+                    @Override
+                    public void call(Throwable throwable) {
+                        Log.e(TAG, "get videos failed", throwable);
                     }
                 });
     }
