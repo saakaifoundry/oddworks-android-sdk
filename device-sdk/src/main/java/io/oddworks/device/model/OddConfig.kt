@@ -21,6 +21,6 @@ class OddConfig(identifier: OddIdentifier,
             throw OddResourceException("Mismatched OddResourceType identifier: $identifier")
         }
 
-        Log.d(OddConfig::class.java.simpleName, "views[${views.keys}] jwt[exists: ${!jwt.isNullOrBlank()}")
+        Log.d(OddConfig::class.java.simpleName, "views[${views.keys}] jwt[exists: ${!jwt.isNullOrBlank()}]")
     }
 }
