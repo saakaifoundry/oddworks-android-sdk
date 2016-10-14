@@ -122,18 +122,18 @@ class OddRequest(builder: Builder) {
                 // TODO - handle when the response body is empty a little more gracefully
                 Log.d("ResponseCb onResponse", "code: ${response.code()} responseBody: ${response.body()}")
                 if (response.isSuccessful) {
+                    var responseBody = ""
                     try {
-                        val obj = parseCall.parse(response.body().string())
+                        responseBody = response.body().string()
+                        val obj = parseCall.parse(responseBody)
                         oddCallback.onSuccess(obj)
                     } catch (e: Exception) {
-                        val bodyString = if (response.body() != null) {
-                            response.body().string()
-                        } else {
+                        val responseBody = if (responseBody.isNullOrBlank()) {
                             "response.body() was empty"
+                        } else {
+                            responseBody
                         }
-                        oddCallback.onFailure(OddParseException("Response body parse failed: $bodyString", e))
-                    } finally {
-                        response.body().close()
+                        oddCallback.onFailure(OddParseException("Response body parse failed: $responseBody", e))
                     }
                 } else {
                     // remove JWT on status 401
@@ -141,6 +141,14 @@ class OddRequest(builder: Builder) {
                         clearJWT()
                     }
                     oddCallback.onFailure(BadResponseCodeException(response.code()))
+                }
+            }
+
+            private fun tryGetResponseBody(response: Response): String {
+                return try {
+                    response.body().string()
+                } catch (e: Exception) {
+                    "response.body() was empty"
                 }
             }
         }
