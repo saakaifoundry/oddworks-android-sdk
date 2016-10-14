@@ -1,6 +1,7 @@
 package io.oddworks.device.request
 
 import android.content.Context
+import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.os.Build
 import android.util.Log
@@ -10,7 +11,7 @@ import io.oddworks.device.exception.BadResponseCodeException
 import io.oddworks.device.exception.OddParseException
 import io.oddworks.device.exception.OddRequestException
 import io.oddworks.device.metric.OddMetric
-import io.oddworks.device.model.common.OddResource
+import io.oddworks.device.model.OddConfig
 import io.oddworks.device.model.common.OddResourceType
 import org.json.JSONException
 import java.io.IOException
@@ -20,6 +21,7 @@ class OddRequest(builder: Builder) {
     private val acceptLanguageHeader: String
     private val authorizationJWT: String
     private val baseURL: HttpUrl
+    private val context: Context
     private val event: OddMetric?
     private val include: String?
     private val limit: Int?
@@ -33,14 +35,30 @@ class OddRequest(builder: Builder) {
     private val versionName: String
 
     init {
+        context = builder.context
         resourceType = builder.resourceType ?: throw OddRequestException("Missing resourceType")
-        baseURL = HttpUrl.parse(builder.apiBaseURL)
+
+        // use package info to retrieve default values
+        val info = context.packageManager.getApplicationInfo(context.packageName, PackageManager.GET_META_DATA)
+        val packageInfo = context.packageManager.getPackageInfo(context.packageName, 0)
+
+        val defaultVersionName = packageInfo.versionName
+        val configJWT = info.metaData.getString(Oddworks.CONFIG_JWT_KEY)
+        val baseUrlString = builder.apiBaseURL ?: info.metaData.getString(Oddworks.API_BASE_URL_KEY, Oddworks.DEFAULT_API_BASE_URL)
+
+        // Set OkHttp Cache if it isn't already set
+        if (OKHTTP_CLIENT.cache == null) {
+            OKHTTP_CLIENT.cache = Cache(context.cacheDir, MAX_CACHE_SIZE)
+        }
+
+        // override default values (or empty) with builder values
+        baseURL = HttpUrl.parse(baseUrlString)
         resourceId = builder.resourceId
         relationshipName = builder.relationshipName
         include = builder.include
         acceptLanguageHeader = builder.acceptLanguageHeader
-        authorizationJWT = builder.authorizationJWT
-        versionName = builder.versionName
+        authorizationJWT = builder.authorizationJWT ?: getAuthorizationJWT(configJWT)
+        versionName = builder.versionName ?: defaultVersionName
         limit = builder.limit
         offset = builder.offset
         sort = builder.sort
@@ -54,7 +72,7 @@ class OddRequest(builder: Builder) {
     }
 
     /**
-     * Builds an OkHttp GET Request
+     * Builds and executes an OkHttp Request
      *
      * @param callback - an {@link OddCallback}
      */
@@ -71,7 +89,7 @@ class OddRequest(builder: Builder) {
         // add headers
         val builder = Request.Builder()
                 .url(endpoint.toString())
-                .addHeader("authorization", getAuthorization())
+                .addHeader("authorization", getAuthorizationHeader())
                 .addHeader("x-odd-user-agent", getOddUserAgent())
                 .addHeader("accept", ACCEPT_HEADER)
                 .addHeader("accept-language", acceptLanguageHeader)
@@ -119,6 +137,10 @@ class OddRequest(builder: Builder) {
                         response.body().close()
                     }
                 } else {
+                    // remove JWT on status 401
+                    if (response.code() == 401) {
+                        clearJWT()
+                    }
                     oddCallback.onFailure(BadResponseCodeException(response.code()))
                 }
             }
@@ -146,7 +168,13 @@ class OddRequest(builder: Builder) {
         } else {
             object: ParseCall<T> {
                 override fun parse(responseBody: String): T {
-                    return OddParser.parseSingleResponse(responseBody) as T
+                    val obj = OddParser.parseSingleResponse(responseBody) as T
+
+                    if (obj is OddConfig) {
+                        stashJWT(obj.jwt)
+                    }
+
+                    return obj
                 }
             }
         }
@@ -178,6 +206,9 @@ class OddRequest(builder: Builder) {
 
     private fun getQueryParameters(): Map<String, String> {
         val parameters = mutableMapOf<String, String>()
+        if (relationshipName == null && include != null && !isListEndpoint() && !isEventPost() && resourceType != OddResourceType.CONFIG) {
+            parameters.put("include", include)
+        }
         if (limit != null && isListEndpoint()) {
             parameters.put("limit", limit.toString())
         }
@@ -214,8 +245,7 @@ class OddRequest(builder: Builder) {
         }
     }
 
-    private fun getAuthorization(): String {
-        // TODO - logic to swap out with the JWT stored in SharedPreferences
+    private fun getAuthorizationHeader(): String {
         return "Bearer $authorizationJWT"
     }
 
@@ -223,12 +253,30 @@ class OddRequest(builder: Builder) {
         return "platform[name]=Android&model[name]=${Build.MANUFACTURER}&model[version]=${Build.MODEL}&os[name]=${Build.VERSION.CODENAME}&os[version]=${Build.VERSION.SDK_INT}&build[version]=$versionName"
     }
 
-    class Builder(context: Context) {
+    private fun getAuthorizationJWT(configJWT: String): String {
+        val prefs = context.getSharedPreferences(AUTHORIZATION_PREFERENCES, Context.MODE_PRIVATE)
+        return prefs.getString(AUTHORIZATION_PREFERENCE_JWT, configJWT)
+    }
+
+    private fun stashJWT(jwt: String?) {
+        if (jwt == null) return
+        val prefs = context.getSharedPreferences(AUTHORIZATION_PREFERENCES, Context.MODE_PRIVATE).edit()
+        prefs.putString(AUTHORIZATION_PREFERENCE_JWT, jwt)
+        prefs.apply()
+    }
+
+    private fun clearJWT() {
+        val prefs = context.getSharedPreferences(AUTHORIZATION_PREFERENCES, Context.MODE_PRIVATE).edit()
+        prefs.remove(AUTHORIZATION_PREFERENCE_JWT)
+        prefs.apply()
+    }
+
+    class Builder(val context: Context) {
         var include: String? = null
-        var authorizationJWT: String
-        var versionName: String
+        var authorizationJWT: String? = null
+        var versionName: String? = null
         var acceptLanguageHeader: String = LOCALE
-        var apiBaseURL: String
+        var apiBaseURL: String? = null
         var resourceType: OddResourceType? = null
         var resourceId: String? = null
         var relationshipName: String? = null
@@ -237,22 +285,7 @@ class OddRequest(builder: Builder) {
         var sort: String? = null
         var term: String? = null
         var event: OddMetric? = null
-        var skipCache: Boolean = true
-
-        init {
-            val info = context.packageManager.getApplicationInfo(context.packageName, PackageManager.GET_META_DATA)
-            val packageInfo = context.packageManager.getPackageInfo(context.packageName, 0)
-
-            versionName = packageInfo.versionName
-
-            authorizationJWT = info.metaData.getString(Oddworks.CONFIG_JWT_KEY)
-            apiBaseURL = info.metaData.getString(Oddworks.API_BASE_URL_KEY, Oddworks.DEFAULT_API_BASE_URL)
-
-            // Set OkHttp Cache if it isn't already set
-            if (OKHTTP_CLIENT.cache == null) {
-                OKHTTP_CLIENT.cache = Cache(context.cacheDir, MAX_CACHE_SIZE)
-            }
-        }
+        var skipCache: Boolean = false
 
         /**
          * Allows Builder to tell which resource path to use
@@ -466,12 +499,13 @@ class OddRequest(builder: Builder) {
 
 
     companion object {
+        private val AUTHORIZATION_PREFERENCES = "${OddRequest::class.java.name}.AUTHORIZATION_PREFERENCES"
+        private val AUTHORIZATION_PREFERENCE_JWT = "${OddRequest::class.java.name}.AUTHORIZATION_PREFERENCE_JWT"
         private val JSON = MediaType.parse("application/json; charset=utf-8")
         private val ACCEPT_HEADER = "application/json"
         private val LANGUAGE = Locale.getDefault().language.toLowerCase()
         private val COUNTRY = Locale.getDefault().country.toLowerCase()
         private val LOCALE = "$LANGUAGE-$COUNTRY"
-        private val SEARCH = "search"
         private val MAX_CACHE_SIZE: Long = 10 * 1024 * 1024 // 10MB
         private val OKHTTP_CLIENT = OkHttpClient()
     }
