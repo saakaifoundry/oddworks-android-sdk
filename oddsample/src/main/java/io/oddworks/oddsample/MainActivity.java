@@ -30,7 +30,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initializeOddData() {
-        final ApiCaller apiCaller = Oddworks.getApiCaller();
         final Context ctx = this;
         RxOddCall
                 .observableFrom(new Action1<OddCallback<OddConfig>>() {
@@ -59,7 +58,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void getHomepage(final String viewId) {
-        final ApiCaller apiCaller = Oddworks.getApiCaller();
         final Context ctx = this;
         RxOddCall
                 .observableFrom(new Action1<OddCallback<OddView>>() {
@@ -69,7 +67,6 @@ public class MainActivity extends AppCompatActivity {
                         new OddRequest.Builder(ctx)
                                 .resourceType(OddResourceType.VIEW)
                                 .resourceId(viewId)
-                                .fromCache(true)
                                 .build()
                                 .enqueueRequest(oddViewOddCallback);
                     }
@@ -82,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
                         OddRelationship personalitites = oddView.getRelationship("personalities");
                         OddRelationship promotion = oddView.getRelationship("promotion");
 
-
+                        
 
                     }
                 }, new Action1<Throwable>() {
