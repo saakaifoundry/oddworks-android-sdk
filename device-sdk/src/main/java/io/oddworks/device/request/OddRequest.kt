@@ -71,9 +71,9 @@ class OddRequest(builder: Builder) {
     }
 
     /**
-     * Builds and executes an OkHttp Request
+     * Builds and executes an [com.squareup.okhttp.Request]
      *
-     * @param callback - an {@link OddCallback}
+     * @param callback - an [OddCallback]
      */
     fun <T> enqueueRequest(oddCallback: OddCallback<T>) {
         // get base endpoint
@@ -289,10 +289,10 @@ class OddRequest(builder: Builder) {
         /**
          * Allows Builder to tell which resource path to use
          *
-         * <p> Ex. {@code resourceType(OddResourceType.VIEW)}
-         * {@code https://base.url/views}
+         * Ex. `resourceType(OddResourceType.VIEW)`
+         * `https://base.url/views`
          *
-         * @param resourceType - the {@link OddResourceType}
+         * @param resourceType - the [OddResourceType]
          */
         fun resourceType(resourceType: OddResourceType): Builder {
             this.resourceType = resourceType
@@ -302,10 +302,10 @@ class OddRequest(builder: Builder) {
         /**
          * Allows Builder to tell which resource id to request
          *
-         * <p>Requires {@code resourceType} to be present
+         * Requires [resourceType] to be present
          *
-         * <p>Ex. {@code resourceId("12345")}
-         * {@code https://base.url/resourceType/12345}
+         * Ex. `resourceId("12345")`
+         * `https://base.url/resourceType/12345`
          *
          * @param resourceId - the OddResource ID
          */
@@ -317,10 +317,10 @@ class OddRequest(builder: Builder) {
         /**
          * Allows Builder to tell when to request a resource's relationship resources
          *
-         * <p>Requires {@code resourceType} and {@code resourceId} to be present
+         * Requires [resourceType] and [resourceId] to be present.
          *
-         * <p>Ex. {@code relationshipName("videos")}
-         * {@code https://base.url/resourceType/resourceId/relationships/videos}
+         * Ex. `relationshipName("videos")`
+         * `https://base.url/resourceType/resourceId/relationships/videos`
          *
          * @param relationshipName - the relationship name
          */
@@ -333,16 +333,15 @@ class OddRequest(builder: Builder) {
          * Used to specify which relationships' resources you want to include in the
          * response. The relationship must exist.
          *
-         * <p>For best results, use sparingly. This can drastically increase response sizes
+         * For best results, use sparingly. This can drastically increase response sizes
          * if a relationship's data set is large.
          *
-         * <p>When present will enable 'include' query parameter.
+         * When present will enable 'include' query parameter.
          *
-         * <p>Ex: {@code include("relationship,relationship2")}
+         * Ex: `include("relationship,relationship2")`  
+         * `https://base.url/resourceType/resourceId?include=relationship,relationship2`
          *
-         * <p>{@code https://base.url/resourceType/resourceId?include=relationship,relationship2}
-         *
-         * <p>This is only applied to single-resource response types (non-list)
+         * This is only applied to single-resource response types (non-list)
          *
          * @param include - comma separated list of relationship names to include
          * with request
@@ -356,7 +355,7 @@ class OddRequest(builder: Builder) {
          * Overrides the default Authorization JWT. This should be overridden for all
          * non-config requests.
          *
-         * <p>Defaults to the token specified in {@code io.oddworks.configJWT} in the application
+         * Defaults to the token specified in `io.oddworks.configJWT` in the application
          * meta data.
          *
          * @param authorizationJWT - the JWT you wish to specify
@@ -370,7 +369,7 @@ class OddRequest(builder: Builder) {
          * Overrides the default versionName of the application, taken from the
          * applications package info.
          *
-         * <p>This is only used in the {@code x-odd-user-agent} header.
+         * This is only used in the `x-odd-user-agent` header used by metric events service.
          *
          * @param versionName - the version name you wish to specify
          */
@@ -383,13 +382,13 @@ class OddRequest(builder: Builder) {
          * Overrides the default base URL of the Oddworks instance where requests
          * will be sent.
          *
-         * <p>The default is set in {@code io.oddworks.apiBaseURL} in the
+         * The default is set in `io.oddworks.apiBaseURL` in the
          * application meta data.
          *
-         * <p>If not set there, a fallback of {@link Oddworks#DEFAULT_API_BASE_URL}
+         * If not set there, a fallback of [Oddworks.DEFAULT_API_BASE_URL]
          * is used.
          *
-         * <p>This is usually not necessary to override via OddRequest.Builder
+         * This is usually not necessary to override.
          *
          * @param apiBaseURL - the base URL for your Oddworks instance
          */
@@ -401,8 +400,7 @@ class OddRequest(builder: Builder) {
         /**
          * Overrides the default Accept-Language header.
          *
-         * <p>Defaults to a combination of {@code Locale.getDefault().getLanguage()} and
-         * {@code Locale.getDefault().getCountry()}
+         * Defaults to a combination of [Locale] default language and country.
          *
          * @param acceptLanguage - the accept language header value
          */
@@ -414,8 +412,8 @@ class OddRequest(builder: Builder) {
         /**
          * Limits the number of results from a multi-resource (list) request.
          *
-         * <p>Ex. {@code limit(5)}
-         * <p>{@code https://base.url/resourceType?page[limit]=5}
+         * Ex. `limit(5)`
+         * `https://base.url/resourceType?page\[limit\]=5`
          *
          * @param limit - the number of resources to return
          */
@@ -427,8 +425,8 @@ class OddRequest(builder: Builder) {
         /**
          * Offset the result set in a multi-resource (list) request.
          *
-         * <p>Ex. {@code offset(10)}
-         * <p>{@code https://base.url/resourceType?page[offset]=10}
+         * Ex. `offset(10)`
+         * `https://base.url/resourceType?page\[offset\]=10`
          *
          * @param offset - the number of resources to offset
          */
@@ -440,11 +438,11 @@ class OddRequest(builder: Builder) {
         /**
          * Sort the result set in a multi-resource (list) request.
          *
-         * <p>Use this to specify the property used to sort the result
+         * Use this to specify the property used to sort the result
          * set with a single property using dot notation.
          *
-         * <p>Ex. {@code sort("meta.source")}
-         * <p>{@code https://base.url/resourceType?sort=meta.source}
+         * Ex. `sort("meta.source")`
+         * `https://base.url/resourceType?sort=meta.source`
          *
          * @param sort - the property to use to sort the result set
          */
@@ -483,9 +481,9 @@ class OddRequest(builder: Builder) {
         /**
          * Force OkHttp to hit Oddworks API instead of relying on cache.
          *
-         * <p>Defaults to {@code true}
+         * Defaults to `true`
          *
-         * <p>Certain endpoints are not cacheable. Also, see {@link OddRequest#MAX_CACHE_SIZE}
+         * Certain endpoints are not cacheable. Also, see [OddRequest.MAX_CACHE_SIZE]
          *
          * @param skipCache - whether to skip cache and hit API
          */
