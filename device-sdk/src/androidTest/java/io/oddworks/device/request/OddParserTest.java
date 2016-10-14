@@ -3,7 +3,6 @@ package io.oddworks.device.request;
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
-import android.test.AndroidTestCase;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -29,20 +28,22 @@ import io.oddworks.device.testutils.AssetUtils;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertFalse;
 
 @RunWith(AndroidJUnit4.class)
-public class OddParserTest extends AndroidTestCase {
+public class OddParserTest {
 
-    private Context mContext;
+    private Context ctx;
 
     @Before
     public void beforeEach() throws IOException {
-        mContext = InstrumentationRegistry.getTargetContext();
+        ctx = InstrumentationRegistry.getTargetContext();
     }
 
     @Test
     public void testParseConfigResponse() throws Exception {
-        String json = AssetUtils.readFileToString(mContext, "ConfigResponse.json");
+        String json = AssetUtils.readFileToString(ctx, "ConfigResponse.json");
         OddConfig oddConfig = (OddConfig) OddParser.INSTANCE.parseSingleResponse(json);
 
         assertThat(oddConfig.getIdentifier().getId(), is("channel-id-channel-id-android"));
@@ -86,7 +87,7 @@ public class OddParserTest extends AndroidTestCase {
 
     @Test
     public void testParseViewResponse() throws Exception {
-        String json = AssetUtils.readFileToString(mContext, "ViewResponse.json");
+        String json = AssetUtils.readFileToString(ctx, "ViewResponse.json");
         OddView oddView = (OddView) OddParser.INSTANCE.parseSingleResponse(json);
 
         assertThat(oddView.getIdentifier().getId(), is("channel-id-home-view"));
@@ -121,7 +122,7 @@ public class OddParserTest extends AndroidTestCase {
 
     @Test
     public void testParseViewResponseWithIncluded() throws Exception {
-        String json = AssetUtils.readFileToString(mContext, "ViewResponseWithIncluded.json");
+        String json = AssetUtils.readFileToString(ctx, "ViewResponseWithIncluded.json");
         OddView oddView = (OddView) OddParser.INSTANCE.parseSingleResponse(json);
 
         assertThat(oddView.getIdentifier().getId(), is("channel-id-home-view"));

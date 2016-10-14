@@ -41,9 +41,7 @@ class OddRequest(builder: Builder) {
         val info = context.packageManager.getApplicationInfo(context.packageName, PackageManager.GET_META_DATA)
         val packageInfo = context.packageManager.getPackageInfo(context.packageName, 0)
 
-        val defaultVersionName = packageInfo.versionName
-        val configJWT = info.metaData.getString(Oddworks.CONFIG_JWT_KEY)
-        val baseUrlString = builder.apiBaseURL ?: info.metaData.getString(Oddworks.API_BASE_URL_KEY, Oddworks.DEFAULT_API_BASE_URL)
+        val baseUrlString = builder.apiBaseURL ?: info.metaData?.getString(Oddworks.API_BASE_URL_KEY, Oddworks.DEFAULT_API_BASE_URL) ?: throw OddRequestException("Missing ${Oddworks.API_BASE_URL_KEY} in Application meta-data")
 
         // Set OkHttp Cache if it isn't already set
         if (OKHTTP_CLIENT.cache == null) {
@@ -56,8 +54,8 @@ class OddRequest(builder: Builder) {
         relationshipName = builder.relationshipName
         include = builder.include
         acceptLanguageHeader = builder.acceptLanguageHeader
-        authorizationJWT = builder.authorizationJWT ?: getAuthorizationJWT(configJWT)
-        versionName = builder.versionName ?: defaultVersionName
+        authorizationJWT = builder.authorizationJWT ?: fetchJWTSharedPreferences() ?: info.metaData?.getString(Oddworks.CONFIG_JWT_KEY) ?: throw OddRequestException("Missing ${Oddworks.CONFIG_JWT_KEY} in Application meta-data")
+        versionName = builder.versionName ?: packageInfo.versionName ?: throw OddRequestException("Application PackageInfo versionName is somehow missing")
         limit = builder.limit
         offset = builder.offset
         sort = builder.sort
@@ -138,7 +136,7 @@ class OddRequest(builder: Builder) {
                 } else {
                     // remove JWT on status 401
                     if (response.code() == 401) {
-                        clearJWT()
+                        clearJWTSharedPreferences()
                     }
                     oddCallback.onFailure(BadResponseCodeException(response.code()))
                 }
@@ -178,7 +176,7 @@ class OddRequest(builder: Builder) {
                     val obj = OddParser.parseSingleResponse(responseBody) as T
 
                     if (obj is OddConfig) {
-                        stashJWT(obj.jwt)
+                        stashJWTSharedPreferences(obj.jwt)
                     }
 
                     return obj
@@ -260,19 +258,19 @@ class OddRequest(builder: Builder) {
         return "platform[name]=Android&model[name]=${Build.MANUFACTURER}&model[version]=${Build.MODEL}&os[name]=${Build.VERSION.CODENAME}&os[version]=${Build.VERSION.SDK_INT}&build[version]=$versionName"
     }
 
-    private fun getAuthorizationJWT(configJWT: String): String {
+    private fun fetchJWTSharedPreferences(): String? {
         val prefs = context.getSharedPreferences(AUTHORIZATION_PREFERENCES, Context.MODE_PRIVATE)
-        return prefs.getString(AUTHORIZATION_PREFERENCE_JWT, configJWT)
+        return prefs.getString(AUTHORIZATION_PREFERENCE_JWT, null)
     }
 
-    private fun stashJWT(jwt: String?) {
+    private fun stashJWTSharedPreferences(jwt: String?) {
         if (jwt == null) return
         val prefs = context.getSharedPreferences(AUTHORIZATION_PREFERENCES, Context.MODE_PRIVATE).edit()
         prefs.putString(AUTHORIZATION_PREFERENCE_JWT, jwt)
         prefs.apply()
     }
 
-    private fun clearJWT() {
+    private fun clearJWTSharedPreferences() {
         val prefs = context.getSharedPreferences(AUTHORIZATION_PREFERENCES, Context.MODE_PRIVATE).edit()
         prefs.remove(AUTHORIZATION_PREFERENCE_JWT)
         prefs.apply()
@@ -363,7 +361,7 @@ class OddRequest(builder: Builder) {
          * Overrides the default Authorization JWT. This should be overridden for all
          * non-config requests.
          *
-         * Defaults to the token specified in `io.oddworks.configJWT` in the application
+         * Defaults to the token specified in [Oddworks.CONFIG_JWT_KEY] in the application
          * meta data.
          *
          * @param authorizationJWT - the JWT you wish to specify
@@ -390,7 +388,7 @@ class OddRequest(builder: Builder) {
          * Overrides the default base URL of the Oddworks instance where requests
          * will be sent.
          *
-         * The default is set in `io.oddworks.apiBaseURL` in the
+         * The default is set in [Oddworks.API_BASE_URL_KEY] in the
          * application meta data.
          *
          * If not set there, a fallback of [Oddworks.DEFAULT_API_BASE_URL]
