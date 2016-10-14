@@ -38,11 +38,11 @@ public class MainActivity extends AppCompatActivity {
         RxOddCall
                 .observableFrom(new Action1<OddCallback<OddConfig>>() {
                     @Override
-                    public void call(OddCallback<OddConfig> configOddCallback) {
+                    public void call(OddCallback<OddConfig> oddCallback) {
                         new OddRequest.Builder(ctx)
                                 .resourceType(OddResourceType.CONFIG)
                                 .build()
-                                .enqueueRequest(configOddCallback);
+                                .enqueueRequest(oddCallback);
                     }
                 })
                 .subscribeOn(Schedulers.io())
@@ -67,13 +67,13 @@ public class MainActivity extends AppCompatActivity {
                 .observableFrom(new Action1<OddCallback<OddView>>() {
 
                     @Override
-                    public void call(OddCallback<OddView> oddViewOddCallback) {
+                    public void call(OddCallback<OddView> oddCallback) {
                         new OddRequest.Builder(ctx)
                                 .resourceType(OddResourceType.VIEW)
                                 .resourceId(viewId)
                                 .include("personalities,promotion")
                                 .build()
-                                .enqueueRequest(oddViewOddCallback);
+                                .enqueueRequest(oddCallback);
                     }
                 })
                 .subscribeOn(Schedulers.io())
@@ -90,6 +90,7 @@ public class MainActivity extends AppCompatActivity {
                         Log.d(TAG, "promotion: " + promotion.getTitle());
                         Log.d(TAG, "first personality: " + personality1.getTitle());
                         getVideos();
+                        getPersonalityEntities(personality1.getIdentifier().getId());
                     }
                 }, new Action1<Throwable>() {
 
@@ -106,11 +107,11 @@ public class MainActivity extends AppCompatActivity {
                 .observableFrom(new Action1<OddCallback<LinkedHashSet<OddVideo>>>() {
 
                     @Override
-                    public void call(OddCallback<LinkedHashSet<OddVideo>> oddVideoCallback) {
+                    public void call(OddCallback<LinkedHashSet<OddVideo>> oddCallback) {
                         new OddRequest.Builder(ctx)
                                 .resourceType(OddResourceType.VIDEO)
                                 .build()
-                                .enqueueRequest(oddVideoCallback);
+                                .enqueueRequest(oddCallback);
                     }
                 })
                 .subscribeOn(Schedulers.io())
@@ -125,6 +126,35 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void call(Throwable throwable) {
                         Log.e(TAG, "get videos failed", throwable);
+                    }
+                });
+    }
+
+    private void getPersonalityEntities(final String personalityId) {
+        final Context ctx = this;
+        RxOddCall
+                .observableFrom(new Action1<OddCallback<LinkedHashSet<OddResource>>>() {
+                    @Override
+                    public void call(OddCallback<LinkedHashSet<OddResource>> oddCallback) {
+                        new OddRequest.Builder(ctx)
+                                .resourceType(OddResourceType.COLLECTION)
+                                .resourceId(personalityId)
+                                .relationshipName(OddCollection.RELATIONSHIP_ENTITIES)
+                                .build()
+                                .enqueueRequest(oddCallback);
+                    }
+                })
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<LinkedHashSet<OddResource>>() {
+                    @Override
+                    public void call(LinkedHashSet<OddResource> oddResources) {
+                        Log.d(TAG, "get collection entities success " + oddResources.size());
+                    }
+                }, new Action1<Throwable>() {
+                    @Override
+                    public void call(Throwable throwable) {
+                        Log.e(TAG, "get collection entities failed", throwable);
                     }
                 });
     }
