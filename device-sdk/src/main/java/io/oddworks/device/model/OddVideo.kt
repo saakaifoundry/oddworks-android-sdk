@@ -25,4 +25,8 @@ class OddVideo(identifier: OddIdentifier,
             throw OddResourceException("Mismatched OddResourceType identifier: $identifier")
         }
     }
+
+    companion object {
+        @JvmField val RELATIONSHIP_RELATED = "related"
+    }
 }
