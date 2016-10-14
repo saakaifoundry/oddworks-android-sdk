@@ -346,7 +346,7 @@ class OddRequest(builder: Builder) {
          *
          * When present will enable 'include' query parameter.
          *
-         * Ex: `include("relationship,relationship2")`  
+         * Ex: `include("relationship,relationship2")`
          * `https://base.url/resourceType/resourceId?include=relationship,relationship2`
          *
          * This is only applied to single-resource response types (non-list)
