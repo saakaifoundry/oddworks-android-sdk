@@ -13,8 +13,8 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
 import io.oddworks.device.model.common.OddIdentifier;
-import io.oddworks.device.model.common.OddResource;
 import io.oddworks.device.model.common.OddRelationship;
+import io.oddworks.device.model.common.OddResource;
 
 public class OddResourceCache {
     private final ConcurrentMap<String, StoredObject> objectStore = new ConcurrentHashMap<>();

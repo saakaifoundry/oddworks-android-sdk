@@ -1,7 +1,5 @@
 package io.oddworks.device.service
 
-import android.util.Log
-
 import rx.Observable
 import rx.subjects.PublishSubject
 import rx.subjects.SerializedSubject

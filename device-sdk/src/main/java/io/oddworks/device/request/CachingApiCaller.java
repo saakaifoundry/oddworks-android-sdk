@@ -17,8 +17,8 @@ import java.util.Set;
 import io.oddworks.device.exception.BadResponseCodeException;
 import io.oddworks.device.exception.OddParseException;
 import io.oddworks.device.model.common.OddIdentifier;
-import io.oddworks.device.model.common.OddResource;
 import io.oddworks.device.model.common.OddRelationship;
+import io.oddworks.device.model.common.OddResource;
 
 /**
  * This class contains methods for fetching data from the API Server with automatic caching. Http Cache-Control headers

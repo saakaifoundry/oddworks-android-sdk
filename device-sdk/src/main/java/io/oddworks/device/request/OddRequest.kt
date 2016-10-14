@@ -1,7 +1,6 @@
 package io.oddworks.device.request
 
 import android.content.Context
-import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.os.Build
 import android.util.Log

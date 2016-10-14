@@ -1,10 +1,8 @@
 package io.oddworks.device.model
 
 
-import io.oddworks.device.exception.OddRequestException
 import io.oddworks.device.exception.OddResourceException
 import io.oddworks.device.model.common.*
-
 import io.oddworks.device.model.video.OddCast
 import io.oddworks.device.model.video.OddSource
 import org.joda.time.DateTime

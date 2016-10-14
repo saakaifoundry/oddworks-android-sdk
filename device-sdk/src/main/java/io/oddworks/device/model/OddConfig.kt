@@ -1,9 +1,9 @@
 package io.oddworks.device.model
 
 import android.util.Log
+import io.oddworks.device.exception.OddResourceException
 import io.oddworks.device.model.common.OddIdentifier
 import io.oddworks.device.model.common.OddResource
-import io.oddworks.device.exception.OddResourceException
 import io.oddworks.device.model.common.OddResourceType
 import io.oddworks.device.model.config.Display
 import io.oddworks.device.model.config.Features

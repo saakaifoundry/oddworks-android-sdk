@@ -2,8 +2,8 @@ package io.oddworks.device.model
 
 import io.oddworks.device.model.common.OddIdentifier
 import io.oddworks.device.model.common.OddImage
-import io.oddworks.device.model.common.OddResource
 import io.oddworks.device.model.common.OddRelationship
+import io.oddworks.device.model.common.OddResource
 import org.joda.time.DateTime
 import org.json.JSONObject
 

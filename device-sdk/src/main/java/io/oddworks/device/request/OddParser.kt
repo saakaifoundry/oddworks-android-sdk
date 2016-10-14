@@ -2,16 +2,16 @@ package io.oddworks.device.request
 
 import io.oddworks.device.exception.OddParseException
 import io.oddworks.device.model.*
-import org.json.JSONException
-import org.json.JSONObject
-
 import io.oddworks.device.model.common.*
 import io.oddworks.device.model.config.Display
 import io.oddworks.device.model.config.Features
-import io.oddworks.device.model.config.features.*
+import io.oddworks.device.model.config.features.Authentication
+import io.oddworks.device.model.config.features.Metric
 import io.oddworks.device.model.video.OddCast
 import io.oddworks.device.model.video.OddSource
 import org.json.JSONArray
+import org.json.JSONException
+import org.json.JSONObject
 import java.util.*
 
 object OddParser {
