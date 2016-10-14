@@ -25,12 +25,12 @@ class OddRequest(builder: Builder) {
     private val include: String?
     private val limit: Int?
     private val offset: Int?
+    private val query: String?
     private val relationshipName: String?
     private val resourceId: String?
     private val resourceType: OddResourceType
     private val skipCache: Boolean
     private val sort: String?
-    private val term: String?
     private val versionName: String
 
     init {
@@ -61,7 +61,7 @@ class OddRequest(builder: Builder) {
         limit = builder.limit
         offset = builder.offset
         sort = builder.sort
-        term = builder.term
+        query = builder.query
         event = builder.event
         skipCache = builder.skipCache
 
@@ -217,8 +217,8 @@ class OddRequest(builder: Builder) {
         if (sort != null && isListEndpoint()) {
             parameters.put("sort", sort)
         }
-        if (term != null && resourceType == OddResourceType.SEARCH) {
-            parameters.put("term", term)
+        if (query != null && resourceType == OddResourceType.SEARCH) {
+            parameters.put("q", query)
         }
         return parameters
     }
@@ -282,7 +282,7 @@ class OddRequest(builder: Builder) {
         var limit: Int? = null
         var offset: Int? = null
         var sort: String? = null
-        var term: String? = null
+        var query: String? = null
         var event: OddMetric? = null
         var skipCache: Boolean = false
 
@@ -454,21 +454,24 @@ class OddRequest(builder: Builder) {
         }
 
         /**
-         * Specifies the search term.
+         * Specifies the search query.
          *
-         * <p>Required when {@code resourceType} is {@link OddResourceType#SEARCH}
+         * <p>Required when [resourceType] is [OddResourceType.SEARCH]
          *
-         * @param term - the search term
+         * Ex. `query("the term")`
+         * `https://base.url/search?q=the%20term`
+         *
+         * @param query - the search term
          */
-        fun term(term: String): Builder {
-            this.term = term
+        fun query(query: String): Builder {
+            this.query = query
             return this
         }
 
         /**
-         * Specifies the {@link OddMetric} event to POST.
+         * Specifies the [OddMetric] event to POST.
          *
-         * <p>Required when {@code resourceType} is {@link OddResourceType#EVENT}
+         * Required when [resourceType] is [OddResourceType.EVENT]
          *
          * @param event - the event metric
          */
