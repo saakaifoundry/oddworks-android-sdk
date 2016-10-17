@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          package="io.oddworks.oddsample">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity android:name=".MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+        <activity android:name=".KotlinActivity">
+        </activity>
+        <meta-data android:name="io.oddworks.apiBaseURL"
+                   android:value="http://odd-content-crtv-staging.herokuapp.com/v2" />
+        <meta-data android:name="io.oddworks.configJWT"
+                   android:value="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjaGFubmVsIjoiY3J0diIsInBsYXRmb3JtIjoiY3J0di1hbmRyb2lkIiwiaWF0IjoxNDc1Njc5MTk1LCJhdWQiOlsicGxhdGZvcm0iXSwiaXNzIjoidXJuOm9kZHdvcmtzOmNydHYifQ.9_XtBD-c6KX7yNMwd21gui8SBvqJeypgsNRA-x3Ks2I" />
+    </application>
+
+</manifest>

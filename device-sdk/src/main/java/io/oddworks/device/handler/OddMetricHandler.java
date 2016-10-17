@@ -1,14 +1,12 @@
 package io.oddworks.device.handler;
 
+import android.content.Context;
 import android.util.Log;
 
-import com.squareup.otto.Subscribe;
-
 import io.oddworks.device.metric.OddMetric;
-import io.oddworks.device.request.ApiCaller;
+import io.oddworks.device.model.common.OddResourceType;
 import io.oddworks.device.request.OddCallback;
-import io.oddworks.device.request.RestServiceProvider;
-import io.oddworks.device.service.OddBus;
+import io.oddworks.device.request.OddRequest;
 import io.oddworks.device.service.OddRxBus;
 import rx.Observable;
 import rx.functions.Action1;
@@ -42,46 +40,9 @@ public class OddMetricHandler {
      * Registers the instance of OddMetricHandler on the OddRxBus
      * so it can begin receiving posted event objects.
      */
-    public void enableRx() {
-        Observable<OddRxBus.OddRxBusEvent> observable = OddRxBus.getInstance().getObservable();
-        observable
-                .observeOn(Schedulers.io())
-                .subscribe(new Action1<OddRxBus.OddRxBusEvent>() {
-                    @Override
-                    public void call(OddRxBus.OddRxBusEvent event) {
-                        if (event instanceof OddMetric) {
-                            postMetric((OddMetric) event);
-                        }
-                    }
-                });
-    }
-
-    /**
-     * Deprecated. Use OddMetricHandler#enableRx() instead.
-     *
-     * Registers the instance of OddMetricHandler on the OddBus
-     * so it can begin receiving posted event objects.
-     **/
-    @Deprecated
-    public static void enable() {
-        OddBus.getInstance().register(INSTANCE);
-    }
-
-    @Subscribe
-    public void handleOddMetric(OddMetric metric) {
-        if (!metric.getEnabled()) {
-            // do not post the metric if it is disabled
-            Log.d(TAG, "handleOddMetric: " + metric.getClass().getSimpleName() + " disabled");
-            return;
-        }
-
-        postMetric(metric);
-    }
-
-    private void postMetric(OddMetric metric) {
-        RestServiceProvider restServiceProvider = RestServiceProvider.getInstance();
-        ApiCaller apiCaller = restServiceProvider.getApiCaller();
-        apiCaller.postMetric(metric, new OddCallback<OddMetric>() {
+    public void enableRx(final Context context) {
+        Observable<OddRxBus.OddRxBusEvent> observable = OddRxBus.INSTANCE.getObservable();
+        final OddCallback<OddMetric> oddMetricCallback = new OddCallback<OddMetric>() {
             @Override
             public void onSuccess(OddMetric entity) {
                 Log.d(TAG, "handleOddMetric: SUCCESS " + entity.toString());
@@ -91,6 +52,17 @@ public class OddMetricHandler {
             public void onFailure(Exception exception) {
                 Log.d(TAG, "handleOddMetric: FAILURE " + exception.toString());
             }
-        });
+        };
+
+        observable
+                .observeOn(Schedulers.io())
+                .subscribe(new Action1<OddRxBus.OddRxBusEvent>() {
+                    @Override
+                    public void call(OddRxBus.OddRxBusEvent event) {
+                        if (event instanceof OddMetric) {
+                            new OddRequest.Builder(context).resourceType(OddResourceType.EVENT).event((OddMetric) event).build().enqueueRequest(oddMetricCallback);
+                        }
+                    }
+                });
     }
 }

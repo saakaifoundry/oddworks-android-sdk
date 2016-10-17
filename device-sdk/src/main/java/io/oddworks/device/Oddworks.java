@@ -1,5 +1,11 @@
 package io.oddworks.device;
 
+import android.content.Context;
+
+/**
+ * Created by brkattk on 10/5/16.
+ */
+
 public class Oddworks {
 
     public static final String ENDPOINT_AUTH_DEVICE_CODE = "auth/device/code";
@@ -23,15 +29,10 @@ public class Oddworks {
     public static final String QUERY_PARAM_TERM = "term";
 
 
-    public static final String API_HOST = "device.oddworks.io";
-    public static final String API_HOST_STAGING = "device-staging.oddworks.io";
-    public static final String API_HOST_DEMO = "beta.oddworks.io";
+    public static final String DEFAULT_API_BASE_URL = "https://content.oddworks.io/v2";
 
-    public static final String API_PROTOCOL = "https";
-
-    public static final String API_VERSION = "v2";
-
-    public static final String ODD_NETWORKS_ACCESS_TOKEN_KEY = "io.oddworks.accessToken";
+    public static final String CONFIG_JWT_KEY = "io.oddworks.configJWT";
+    public static final String API_BASE_URL_KEY = "io.oddworks.apiBaseURL";
 
     private Oddworks() {
         throw new AssertionError();
