@@ -25,8 +25,7 @@ class KotlinActivity: AppCompatActivity() {
     private fun initializeOddData() {
         RxOddCall
                 .observableFrom<OddConfig> {
-                    OddRequest.Builder(this)
-                            .resourceType(OddResourceType.CONFIG)
+                    OddRequest.Builder(this, OddResourceType.CONFIG)
                             .build()
                             .enqueueRequest(it)
                 }
@@ -43,8 +42,7 @@ class KotlinActivity: AppCompatActivity() {
     private fun initializeHomeView(viewId: String) {
         RxOddCall
                 .observableFrom<OddView> {
-                    OddRequest.Builder(this)
-                            .resourceType(OddResourceType.VIEW)
+                    OddRequest.Builder(this, OddResourceType.VIEW)
                             .resourceId(viewId)
                             .include("personalities,promotion")
                             .build()

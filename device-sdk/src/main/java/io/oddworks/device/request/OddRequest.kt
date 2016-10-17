@@ -3,6 +3,7 @@ package io.oddworks.device.request
 import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Build
+import android.os.Bundle
 import android.util.Log
 import com.squareup.okhttp.*
 import io.oddworks.device.Oddworks
@@ -16,52 +17,90 @@ import org.json.JSONException
 import java.io.IOException
 import java.util.*
 
-class OddRequest(builder: Builder) {
-    private val acceptLanguageHeader: String
-    private val authorizationJWT: String
+class OddRequest(
+        private val context: Context,
+        private val resourceType: OddResourceType,
+        private val resourceId: String? = null,
+        private val apiBaseURL: String? = null,
+        private val authorizationJWT: String? = null,
+        private val acceptLanguageHeader: String?,
+        private val versionName: String? = null,
+        private val relationshipName: String?,
+        private val include: String? = null,
+        private val limit: Int? = null,
+        private val offset: Int? = null,
+        private val sort: String? = null,
+        private val query: String? = null,
+        private val event: OddMetric? = null,
+        private val skipCache: Boolean = false) {
+
+    private val packageManager by lazy {
+        context.packageManager
+    }
+
+    private val applicationInfo by lazy {
+        packageManager.getApplicationInfo(context.packageName, PackageManager.GET_META_DATA)
+    }
+
+    private val packageInfo by lazy {
+        packageManager.getPackageInfo(context.packageName, 0)
+    }
+
+    private val metaData: Bundle? by lazy {
+        applicationInfo.metaData
+    }
+
+
     private val baseURL: HttpUrl
-    private val context: Context
-    private val event: OddMetric?
-    private val include: String?
-    private val limit: Int?
-    private val offset: Int?
-    private val query: String?
-    private val relationshipName: String?
-    private val resourceId: String?
-    private val resourceType: OddResourceType
-    private val skipCache: Boolean
-    private val sort: String?
-    private val versionName: String
+        get() {
+            val baseUrlString = apiBaseURL ?: metaData?.getString(Oddworks.API_BASE_URL_KEY, Oddworks.DEFAULT_API_BASE_URL) ?: throw OddRequestException("Missing ${Oddworks.API_BASE_URL_KEY} in Application meta-data")
+
+            return HttpUrl.parse(baseUrlString)
+        }
+
+    private val oddUserAgent: String
+        get() {
+            val version = versionName ?: packageInfo.versionName ?: throw OddRequestException("Application PackageInfo versionName is somehow missing")
+            return "platform[name]=Android&model[name]=${Build.MANUFACTURER}&model[version]=${Build.MODEL}&os[name]=${Build.VERSION.CODENAME}&os[version]=${Build.VERSION.SDK_INT}&build[version]=$version"
+        }
+
+    private val acceptLanguage: String
+        get() {
+            return acceptLanguageHeader ?: LOCALE
+        }
+
+    private val authorization: String
+        get() {
+            val jwt = authorizationJWT ?: fetchJWTSharedPreferences() ?: metaData?.getString(Oddworks.CONFIG_JWT_KEY) ?: throw OddRequestException("Missing ${Oddworks.CONFIG_JWT_KEY} in Application meta-data")
+            return "Bearer $jwt"
+        }
+
+    constructor(builder: Builder): this(builder.context,
+            builder.resourceType,
+            builder.resourceId,
+            builder.apiBaseURL,
+            builder.authorizationJWT,
+            builder.acceptLanguageHeader,
+            builder.versionName,
+            builder.relationshipName,
+            builder.include,
+            builder.limit,
+            builder.offset,
+            builder.sort,
+            builder.query,
+            builder.event,
+            builder.skipCache) {
+    }
 
     init {
-        context = builder.context
-        resourceType = builder.resourceType ?: throw OddRequestException("Missing resourceType")
-
-        // use package info to retrieve default values
-        val info = context.packageManager.getApplicationInfo(context.packageName, PackageManager.GET_META_DATA)
-        val packageInfo = context.packageManager.getPackageInfo(context.packageName, 0)
-
-        val baseUrlString = builder.apiBaseURL ?: info.metaData?.getString(Oddworks.API_BASE_URL_KEY, Oddworks.DEFAULT_API_BASE_URL) ?: throw OddRequestException("Missing ${Oddworks.API_BASE_URL_KEY} in Application meta-data")
+        if (resourceType == null) {
+            throw OddRequestException("Missing resourceType")
+        }
 
         // Set OkHttp Cache if it isn't already set
         if (OKHTTP_CLIENT.cache == null) {
             OKHTTP_CLIENT.cache = Cache(context.cacheDir, MAX_CACHE_SIZE)
         }
-
-        // override default values (or empty) with builder values
-        baseURL = HttpUrl.parse(baseUrlString)
-        resourceId = builder.resourceId
-        relationshipName = builder.relationshipName
-        include = builder.include
-        acceptLanguageHeader = builder.acceptLanguageHeader
-        authorizationJWT = builder.authorizationJWT ?: fetchJWTSharedPreferences() ?: info.metaData?.getString(Oddworks.CONFIG_JWT_KEY) ?: throw OddRequestException("Missing ${Oddworks.CONFIG_JWT_KEY} in Application meta-data")
-        versionName = builder.versionName ?: packageInfo.versionName ?: throw OddRequestException("Application PackageInfo versionName is somehow missing")
-        limit = builder.limit
-        offset = builder.offset
-        sort = builder.sort
-        query = builder.query
-        event = builder.event
-        skipCache = builder.skipCache
 
         if (null == event && resourceType == OddResourceType.EVENT) {
             throw OddRequestException("Missing event metric for POST request")
@@ -86,10 +125,10 @@ class OddRequest(builder: Builder) {
         // add headers
         val builder = Request.Builder()
                 .url(endpoint.toString())
-                .addHeader("authorization", getAuthorizationHeader())
-                .addHeader("x-odd-user-agent", getOddUserAgent())
+                .addHeader("authorization", authorization)
+                .addHeader("x-odd-user-agent", oddUserAgent)
                 .addHeader("accept", ACCEPT_HEADER)
-                .addHeader("accept-language", acceptLanguageHeader)
+                .addHeader("accept-language", acceptLanguage)
 
 
         val request = if (isEventPost()) {
@@ -138,7 +177,13 @@ class OddRequest(builder: Builder) {
                     if (response.code() == 401) {
                         clearJWTSharedPreferences()
                     }
-                    oddCallback.onFailure(BadResponseCodeException(response.code()))
+                    // try to get OddErrors, if any
+                    try {
+                        val oddErrors = OddParser.parseErrorMessage(response.body().string())
+                        oddCallback.onFailure(BadResponseCodeException(response.code(), oddErrors))
+                    } catch (e: Exception) {
+                        oddCallback.onFailure(BadResponseCodeException(response.code()))
+                    }
                 }
             }
 
@@ -250,14 +295,6 @@ class OddRequest(builder: Builder) {
         }
     }
 
-    private fun getAuthorizationHeader(): String {
-        return "Bearer $authorizationJWT"
-    }
-
-    private fun getOddUserAgent(): String {
-        return "platform[name]=Android&model[name]=${Build.MANUFACTURER}&model[version]=${Build.MODEL}&os[name]=${Build.VERSION.CODENAME}&os[version]=${Build.VERSION.SDK_INT}&build[version]=$versionName"
-    }
-
     private fun fetchJWTSharedPreferences(): String? {
         val prefs = context.getSharedPreferences(AUTHORIZATION_PREFERENCES, Context.MODE_PRIVATE)
         return prefs.getString(AUTHORIZATION_PREFERENCE_JWT, null)
@@ -276,13 +313,18 @@ class OddRequest(builder: Builder) {
         prefs.apply()
     }
 
-    class Builder(val context: Context) {
+    /**
+     * Build an OddRequest
+     *
+     * @param context - provide context for fetching package meta data
+     * @param resourceType - provide [OddResourceType] to specify REST resource
+     */
+    class Builder(val context: Context, val resourceType: OddResourceType) {
         var include: String? = null
         var authorizationJWT: String? = null
         var versionName: String? = null
-        var acceptLanguageHeader: String = LOCALE
+        var acceptLanguageHeader: String? = null
         var apiBaseURL: String? = null
-        var resourceType: OddResourceType? = null
         var resourceId: String? = null
         var relationshipName: String? = null
         var limit: Int? = null
@@ -292,18 +334,6 @@ class OddRequest(builder: Builder) {
         var event: OddMetric? = null
         var skipCache: Boolean = false
 
-        /**
-         * Allows Builder to tell which resource path to use
-         *
-         * Ex. `resourceType(OddResourceType.VIEW)`
-         * `https://base.url/views`
-         *
-         * @param resourceType - the [OddResourceType]
-         */
-        fun resourceType(resourceType: OddResourceType): Builder {
-            this.resourceType = resourceType
-            return this
-        }
 
         /**
          * Allows Builder to tell which resource id to request

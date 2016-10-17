@@ -5,10 +5,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.LinkedHashSet;
 
+import io.oddworks.device.exception.BadResponseCodeException;
 import io.oddworks.device.model.OddCollection;
 import io.oddworks.device.model.OddConfig;
+import io.oddworks.device.model.OddError;
 import io.oddworks.device.model.OddPromotion;
 import io.oddworks.device.model.OddVideo;
 import io.oddworks.device.model.OddView;
@@ -35,12 +39,24 @@ public class MainActivity extends AppCompatActivity {
 
     private void initializeOddData() {
         final Context ctx = this;
+
+        OddCallback<OddConfig> configCallback = new OddCallback<OddConfig>() {
+            @Override
+            public void onSuccess(OddConfig entity) {
+
+            }
+
+            @Override
+            public void onFailure(@NotNull Exception exception) {
+
+            }
+        };
+
         RxOddCall
                 .observableFrom(new Action1<OddCallback<OddConfig>>() {
                     @Override
                     public void call(OddCallback<OddConfig> oddCallback) {
-                        new OddRequest.Builder(ctx)
-                                .resourceType(OddResourceType.CONFIG)
+                        new OddRequest.Builder(ctx, OddResourceType.CONFIG)
                                 .build()
                                 .enqueueRequest(oddCallback);
                     }
@@ -65,12 +81,11 @@ public class MainActivity extends AppCompatActivity {
         final Context ctx = this;
         RxOddCall
                 .observableFrom(new Action1<OddCallback<OddView>>() {
-
                     @Override
                     public void call(OddCallback<OddView> oddCallback) {
-                        new OddRequest.Builder(ctx)
-                                .resourceType(OddResourceType.VIEW)
-                                .resourceId(viewId)
+                        new OddRequest.Builder(ctx, OddResourceType.VIEW)
+//                                .resourceId(viewId)
+                                .resourceId("unknown-view-id")
                                 .include("personalities,promotion")
                                 .build()
                                 .enqueueRequest(oddCallback);
@@ -93,10 +108,14 @@ public class MainActivity extends AppCompatActivity {
                         getPersonalityEntities(personality1.getIdentifier().getId());
                     }
                 }, new Action1<Throwable>() {
-
                     @Override
                     public void call(Throwable throwable) {
-                        Log.e(TAG, "get view failed", throwable);
+                        if (throwable instanceof BadResponseCodeException) {
+                            LinkedHashSet<OddError> errors = ((BadResponseCodeException) throwable).getOddErrors();
+                            Log.w(TAG, "get view failed - errors: " + errors);
+                        } else {
+                            Log.e(TAG, "get view failed", throwable);
+                        }
                     }
                 });
     }
@@ -108,8 +127,7 @@ public class MainActivity extends AppCompatActivity {
 
                     @Override
                     public void call(OddCallback<LinkedHashSet<OddVideo>> oddCallback) {
-                        new OddRequest.Builder(ctx)
-                                .resourceType(OddResourceType.VIDEO)
+                        new OddRequest.Builder(ctx, OddResourceType.VIDEO)
                                 .build()
                                 .enqueueRequest(oddCallback);
                     }
@@ -136,8 +154,7 @@ public class MainActivity extends AppCompatActivity {
                 .observableFrom(new Action1<OddCallback<LinkedHashSet<OddResource>>>() {
                     @Override
                     public void call(OddCallback<LinkedHashSet<OddResource>> oddCallback) {
-                        new OddRequest.Builder(ctx)
-                                .resourceType(OddResourceType.COLLECTION)
+                        new OddRequest.Builder(ctx, OddResourceType.COLLECTION)
                                 .resourceId(personalityId)
                                 .relationshipName(OddCollection.RELATIONSHIP_ENTITIES)
                                 .build()

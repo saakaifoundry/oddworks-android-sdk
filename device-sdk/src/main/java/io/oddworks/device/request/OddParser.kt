@@ -54,12 +54,12 @@ object OddParser {
     }
 
     @Throws(JSONException::class)
-    fun parseErrorMessage(responseBody: String): Set<OddError> {
+    fun parseErrorMessage(responseBody: String): LinkedHashSet<OddError> {
         val rawBody = JSONObject(responseBody)
         val rawErrors = JSON.getJSONArray(rawBody, ERRORS, true)!!
-        val errors = mutableSetOf<OddError>()
+        val errors = linkedSetOf<OddError>()
 
-        for(i in 0..(rawErrors.length())) {
+        for(i in 0..(rawErrors.length() -1)) {
             val rawError = rawErrors.getJSONObject(i)
 
             val id = JSON.getString(rawError, ID) ?: ""
