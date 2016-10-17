@@ -5,77 +5,138 @@ Android SDK for Oddworks
 
 An [Oddworks](https://github.com/oddnetworks/oddworks) device client SDK for Android Mobile, Tablet, Amazon Fire TV, and more. Check out [Odd Networks](https://www.oddnetworks.com/) for more information.
 
-* Create a new [Android TV](https://www.android.com/tv/) streaming app for [Nexus Player](https://www.google.com/nexus/player/) or [Nvidia Shield](https://shield.nvidia.com/).
-* Create your own channel on [Amazon Fire TV](http://www.amazon.com/b/?node=8521791011).
-* Augment your existing Android app with video streaming content from [Oddworks](https://github.com/oddnetworks/oddworks).
-* All the above en route to world domination.
+## Download
 
-_Become your own video distribution channel!_
+[![Download](https://api.bintray.com/packages/oddnetworks/maven/device-sdk/images/download.svg)](https://bintray.com/oddnetworks/maven/device-sdk/_latestVersion) or grab via Maven:
 
-## Table of contents
+```xml
+<dependency>
+  <groupId>io.oddworks</groupId>
+  <artifactId>device-sdk</artifactId>
+  <version>3.0.0-beta</version>
+</dependency>
+```
 
-* [Resources](#resources)
-* [Oddworks Content Server](#oddworks-content-server)
-* [Oddworks Sample Apps](#oddworks-sample-apps)
-* [Oddworks Android Guide](#oddworks-android-guide)
-* [Technology](#technology)
-* [Versioning](#versioning)
-* [Motivation](#motivation)
-* [Community](#community)
-* [License](#license)
+or Gradle:
 
-## Resources
+```
+repositories {
+    maven {
+        url 'http://oddnetworks.bintray.org/maven'
+    }
+}
 
-#### Oddworks Content Server
-The Oddworks Android SDK is designed specifically as a client for the open source [Oddworks Content Server](https://github.com/oddnetworks/oddworks). Together the server and client allow you to structure your content and deliver it specifically to your application.
+dependencies {
+    compile 'io.oddworks:device-sdk:3.0.0-beta'
+}
+```
 
-#### Oddworks Sample Apps
-The [sample apps](https://github.com/oddnetworks/odd-sample-apps) are designed as reference apps for creating content rich applications for Android TV and mobile devices. These are open source as well, and should provide the quickest way to get started with this SDK for your app.
+## Overview
 
-* Android SDK (You are here) Used for mobile, tablet, Android TV, and Fire TV.
-* [Apple iOS & tvOS SDK](https://github.com/oddnetworks/oddworks-ios-tvos-sdk) Used for iPhone, iPad, and Apple TV.
+At a high level, this SDK wraps the Oddworks API with an OkHttp client, parsing the [JSON API format](http://jsonapi.org/format/) into helpful `OddResource` objects.
 
-_Coming soon:_
+### Configuring device-sdk
 
-* Roku SDK
-* JavaScript SDK for use in [Windows Universal](https://msdn.microsoft.com/en-us/windows/uwp/get-started/universal-application-platform-guide) and web applications.
+You will need to configure two pieces of application meta-data to get started.
 
+First, you will need to specify the device-specific JSON Web Token (JWT) given by Oddworks.
 
-#### Oddworks Android Guide
-The [Android guide](http://android.guide.oddnetworks.com/) contains the full documentation for working with Android devices in the Oddworks ecosystem.
-* [Quick Start](http://android.guide.oddnetworks.com/sample_application/)
-* [Overview](http://android.guide.oddnetworks.com/overview/)
-* [Full Walkthrough](http://android.guide.oddnetworks.com/setup/)
+```xml
+<application>
+    <meta-data
+        android:name="io.oddworks.configJWT"
+        android:value="the-device-specific-jwt-given-by-the-oddworks-server" />
+</application>
+```
 
-## Technology
+Then you will need to specify the base Oddworks API endpoint. You can skip this part if you are using the non-enterprise Oddworks content service at `https://content.oddworks.io/v2`.
 
-The Oddworks Platform is written for the [Node.js](https://nodejs.org/) runtime, and uses the well known [Express.js](http://expressjs.com/) framework for HTTP communication.
+```xml
+<application>
+    <meta-data
+        android:name="io.oddworks.configJWT"
+        android:value="the-device-specific-jwt-given-by-the-oddworks-server" />
+    <meta-data
+        android:name="io.oddworks.apiBaseURL"
+        android:value="https://path-to-your-oddworks.com/version" />
+</application>
+```
 
-Oddworks is designed to be database agnostic so long as the underlying database can support JSON document storage, including some RDMSs like PostgreSQL. Currently the only supported and tested database is MongoDB.
+### Requesting Data
 
-Although communication between the devices and the REST API is typically done in a synchronous way, the inner guts of the system is designed to communicate via asynchronous message passing. This makes it easier to extend the platform with plugins and other loosely coupled modules without worrying about upstream changes like you would in tightly coupled platforms.
+We need to build an `OddRequest` and enqueue it, passing along an `OddCallback`.
 
-## Versioning
+`OddRequest.Builder` can be used to do this. Minimally, pass the current application context and an `OddResourceType`
 
-For transparency into our release cycle and in striving to maintain backward compatibility, Oddworks is maintained under [the Semantic Versioning guidelines](http://semver.org/).
+```java
+// Create the OddCallback instance
+OddCallback<OddConfig> configCallback = new OddCallback<OddConfig>() {
+    @Override
+    public void onSuccess(OddConfig resource) {
+        // do what you need to do with the OddConfig resource
+        Log.d(TAG, "request successful - id: " + resource.getIdentifier().getId());
+    }
 
-## Motivation
+    @Override
+    public void onFailure(@NotNull Exception exception) {
+        Log.e(TAG, "request failed", exception);
 
-The Oddworks Platform was designed and developed by [Odd Networks](https://www.oddnetworks.com/) to lower the barrier for developers and content owners to create your own streaming content network. Based on our experience in video gaming we thought that TV could use a big improvement. We believe in the future of television and, with the Oddworks open source platform, we hope you'll make that future a reality.
+        // if non 200 status code, Exception will be a BadResponseCodeException
+        if (exception instanceof BadResponseCodeException) {
+            // Useful for determining cause of bad response
+            LinkedHashSet<OddError> errors = ((BadResponseCodeException) exception).oddErrors;
+            Log.d(TAG, "parsed server errors: " + errors);
+        }
+    }
+};
 
-We proudly stand behind our open source work and, in addition to maintaining the Oddworks project, Odd Networks also provides hosted services, a Pro Dashboard, a Live Stream Generator, and a Recommendation Service.
+// Create the OddRequest instance
+OddRequest request = new OddRequest.Builder(context, OddResourceType.CONFIG).build();
 
-Check out [www.oddnetworks.com](https://www.oddnetworks.com/)
+// Build and enqueue the OkHttp.Call using OddRequest and OddCallback
+request.enqueueRequest(configCallback);
+```
 
-## Community
+You can also wrap this in an `RxOddCall` if you are into [RxJava](https://github.com/ReactiveX/RxJava)
 
-Get updates on Odd Network's development and chat with the project maintainers and community members.
+```java
+RxOddCall
+    .observableFrom(new Action1<OddCallback<OddConfig>>() {
+        @Override
+        public void call(OddCallback<OddConfig> oddCallback) {
+            new OddRequest.Builder(context, OddResourceType.CONFIG)
+                    .build()
+                    .enqueueRequest(oddCallback);
+        }
+    })
+    .subscribeOn(Schedulers.io())
+    .observeOn(AndroidSchedulers.mainThread())
+    .subscribe(new Action1<OddConfig>() {
+        @Override
+        public void call(OddConfig oddConfig) {
+            // do what you need to do with the OddConfig resource
+            Log.d(TAG, "request successful - id: " + resource.getIdentifier().getId());
+        }
+    }, new Action1<Throwable>() {
+        @Override
+        public void call(Throwable throwable) {
+            Log.e(TAG, "request failed", throwable);
 
-* Follow [@oddnetworks on Twitter](https://twitter.com/OddNetworks).
-* Join [the official Slack room](http://slack.oddnetworks.com/).
-* Submit an [issue](https://github.com/oddnetworks/oddworks/issues).
-* Check out the [API sample responses](https://www.oddnetworks.com/documentation/oddworks/).
-* Read and subscribe to [The Official Odd Networks Blog](http://blog.oddnetworks.com/).
+            // if non 200 status code, Throwable will be a BadResponseCodeException
+            if (throwable instanceof BadResponseCodeException) {
+                // Useful for determining cause of bad response
+                LinkedHashSet<OddError> errors = ((BadResponseCodeException) throwable).oddErrors;
+                Log.d(TAG, "parsed server errors: " + errors);
+            }
+        }
+    });
+```
+
+## Contributing
+
+If you would like to contribute code you can do so through GitHub by forking the repository and sending a pull request.
+
+When submitting code, please make every effort to follow existing conventions and style in order to keep the code as readable as possible.
 
 ## License
 
