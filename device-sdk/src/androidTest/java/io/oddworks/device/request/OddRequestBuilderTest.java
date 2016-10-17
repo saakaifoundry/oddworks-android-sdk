@@ -34,7 +34,7 @@ public class OddRequestBuilderTest {
     @Before
     public void beforeEach() {
         ctx = InstrumentationRegistry.getTargetContext();
-        builder = new OddRequest.Builder(ctx);
+        builder = new OddRequest.Builder(ctx, OddResourceType.CONFIG);
     }
 
     @Test
@@ -60,8 +60,7 @@ public class OddRequestBuilderTest {
 
     @Test
     public void testAcceptLanguageHeader() throws Exception {
-        String defaultLocale = Locale.getDefault().getLanguage().toLowerCase() + "-" + Locale.getDefault().getCountry().toLowerCase();
-        assertThat(builder.getAcceptLanguageHeader(), is(defaultLocale));
+        assertNull(builder.getAcceptLanguageHeader());
         OddRequest.Builder test = builder.acceptLanguage("pt-br");
         assertThat(test.getAcceptLanguageHeader(), is("pt-br"));
     }
@@ -71,13 +70,6 @@ public class OddRequestBuilderTest {
         assertNull(builder.getApiBaseURL());
         OddRequest.Builder test = builder.apiBaseURL("http://foo.bar");
         assertThat(test.getApiBaseURL(), is("http://foo.bar"));
-    }
-
-    @Test
-    public void testResourceType() throws Exception {
-        assertNull(builder.getResourceType());
-        OddRequest.Builder test = builder.resourceType(OddResourceType.COLLECTION);
-        assertThat(test.getResourceType(), is(OddResourceType.COLLECTION));
     }
 
     @Test
@@ -142,7 +134,6 @@ public class OddRequestBuilderTest {
     public void testBuildFailsMissingApiBaseURL() throws Exception {
         try {
             builder
-                    .resourceType(OddResourceType.COLLECTION)
                     .versionName("blowfish")
                     .build();
         } catch (OddRequestException e) {
@@ -153,7 +144,6 @@ public class OddRequestBuilderTest {
     @Test
     public void testBuildWithUserDefinedJWTAndVersionNameAndURL() throws Exception {
         OddRequest request = builder
-                                .resourceType(OddResourceType.COLLECTION)
                                 .versionName("blowfish")
                                 .authorizationJWT("c58654a3-0be7-4ea7-a6f9-ed1cc6a403ea")
                                 .apiBaseURL("http://example.com")

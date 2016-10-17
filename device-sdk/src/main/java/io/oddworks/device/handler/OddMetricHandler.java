@@ -60,7 +60,7 @@ public class OddMetricHandler {
                     @Override
                     public void call(OddRxBus.OddRxBusEvent event) {
                         if (event instanceof OddMetric) {
-                            new OddRequest.Builder(context).resourceType(OddResourceType.EVENT).event((OddMetric) event).build().enqueueRequest(oddMetricCallback);
+                            new OddRequest.Builder(context, OddResourceType.EVENT).event((OddMetric) event).build().enqueueRequest(oddMetricCallback);
                         }
                     }
                 });
