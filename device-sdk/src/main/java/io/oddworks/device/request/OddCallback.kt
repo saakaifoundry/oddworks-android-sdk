@@ -10,6 +10,6 @@ package io.oddworks.device.request
  * @param  type of {@link OddResource} returned on success
  */
 interface OddCallback<T> {
-    fun onSuccess(entity: T)
+    fun onSuccess(resource: T)
     fun onFailure(exception: Exception)
 }
