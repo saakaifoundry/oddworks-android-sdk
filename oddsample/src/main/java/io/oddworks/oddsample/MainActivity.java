@@ -16,7 +16,6 @@ import io.oddworks.device.model.OddError;
 import io.oddworks.device.model.OddPromotion;
 import io.oddworks.device.model.OddVideo;
 import io.oddworks.device.model.OddView;
-import io.oddworks.device.model.common.OddRelationship;
 import io.oddworks.device.model.common.OddResource;
 import io.oddworks.device.model.common.OddResourceType;
 import io.oddworks.device.request.OddCallback;
@@ -37,46 +36,33 @@ public class MainActivity extends AppCompatActivity {
         initializeOddData();
     }
 
+    /**
+     * example using plain OddCallback
+     */
     private void initializeOddData() {
         final Context ctx = this;
 
         OddCallback<OddConfig> configCallback = new OddCallback<OddConfig>() {
             @Override
-            public void onSuccess(OddConfig entity) {
-
+            public void onSuccess(OddConfig resource) {
+                String viewId = resource.getViews().get("homepage");
+                getHomepage(viewId);
             }
 
             @Override
             public void onFailure(@NotNull Exception exception) {
-
+                handleRequestException("getConfig", exception);
             }
         };
 
-        RxOddCall
-                .observableFrom(new Action1<OddCallback<OddConfig>>() {
-                    @Override
-                    public void call(OddCallback<OddConfig> oddCallback) {
-                        new OddRequest.Builder(ctx, OddResourceType.CONFIG)
-                                .build()
-                                .enqueueRequest(oddCallback);
-                    }
-                })
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<OddConfig>() {
-                    @Override
-                    public void call(OddConfig oddConfig) {
-                        String viewId = oddConfig.getViews().get("homepage");
-                        getHomepage(viewId);
-                    }
-                }, new Action1<Throwable>() {
-                    @Override
-                    public void call(Throwable throwable) {
-                        Log.e(TAG, "get config failed", throwable);
-                    }
-                });
+        new OddRequest.Builder(ctx, OddResourceType.CONFIG)
+                .build()
+                .enqueueRequest(configCallback);
     }
 
+    /**
+     * example using RxOddCall, wrapping OddRequest in an RxJava Observable
+     */
     private void getHomepage(final String viewId) {
         final Context ctx = this;
         RxOddCall
@@ -110,12 +96,7 @@ public class MainActivity extends AppCompatActivity {
                 }, new Action1<Throwable>() {
                     @Override
                     public void call(Throwable throwable) {
-                        if (throwable instanceof BadResponseCodeException) {
-                            LinkedHashSet<OddError> errors = ((BadResponseCodeException) throwable).getOddErrors();
-                            Log.w(TAG, "get view failed - errors: " + errors);
-                        } else {
-                            Log.e(TAG, "get view failed", throwable);
-                        }
+                        handleRequestException("getHomepage", throwable);
                     }
                 });
     }
@@ -143,7 +124,7 @@ public class MainActivity extends AppCompatActivity {
 
                     @Override
                     public void call(Throwable throwable) {
-                        Log.e(TAG, "get videos failed", throwable);
+                        handleRequestException("getVideos", throwable);
                     }
                 });
     }
@@ -171,8 +152,17 @@ public class MainActivity extends AppCompatActivity {
                 }, new Action1<Throwable>() {
                     @Override
                     public void call(Throwable throwable) {
-                        Log.e(TAG, "get collection entities failed", throwable);
+                        handleRequestException("getPersonalityEntities", throwable);
                     }
                 });
+    }
+
+    private void handleRequestException(String requestType, Throwable throwable) {
+        Log.w(TAG, requestType + " request failed", throwable);
+        if (throwable instanceof BadResponseCodeException) {
+            int code = ((BadResponseCodeException) throwable).getCode();
+            LinkedHashSet<OddError> errors = ((BadResponseCodeException) throwable).getOddErrors();
+            Log.w(TAG, requestType + " request failed - code: " + code + " errors: " + errors);
+        }
     }
 }
