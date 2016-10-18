@@ -2,6 +2,7 @@ package io.oddworks.device.handler
 
 import android.content.Context
 import android.util.Log
+import io.oddworks.device.exception.BadResponseCodeException
 
 import io.oddworks.device.metric.OddMetric
 import io.oddworks.device.model.common.OddResourceType
@@ -42,6 +43,9 @@ object OddMetricHandler {
 
             override fun onFailure(exception: Exception) {
                 Log.d(TAG, "handleOddMetric: FAILURE $exception")
+                if (exception is BadResponseCodeException) {
+                    Log.d(TAG, "handleOddMetric code: ${exception.code} errors: ${exception.oddErrors}")
+                }
             }
         }
 
