@@ -53,8 +53,11 @@ class OddRequest(
 
     private val baseURL: HttpUrl
         get() {
-            val baseUrlString = apiBaseURL ?: metaData?.getString(Oddworks.API_BASE_URL_KEY, Oddworks.DEFAULT_API_BASE_URL) ?: throw OddRequestException("Missing ${Oddworks.API_BASE_URL_KEY} in Application meta-data")
-
+            val baseUrlString = if (isEventPost()) {
+                apiBaseURL ?: metaData?.getString(Oddworks.ANALYTICS_API_BASE_URL_KEY, Oddworks.DEFAULT_ANALYTICS_API_BASE_URL) ?: throw OddRequestException("Missing ${Oddworks.ANALYTICS_API_BASE_URL_KEY} in Application meta-data")
+            } else {
+                apiBaseURL ?: metaData?.getString(Oddworks.API_BASE_URL_KEY, Oddworks.DEFAULT_API_BASE_URL) ?: throw OddRequestException("Missing ${Oddworks.API_BASE_URL_KEY} in Application meta-data")
+            }
             return HttpUrl.parse(baseUrlString)
         }
 
@@ -93,10 +96,6 @@ class OddRequest(
     }
 
     init {
-        if (resourceType == null) {
-            throw OddRequestException("Missing resourceType")
-        }
-
         // Set OkHttp Cache if it isn't already set
         if (OKHTTP_CLIENT.cache == null) {
             OKHTTP_CLIENT.cache = Cache(context.cacheDir, MAX_CACHE_SIZE)
@@ -108,9 +107,9 @@ class OddRequest(
     }
 
     /**
-     * Builds and executes an [com.squareup.okhttp.Request]
+     * Builds and executes an [Request]
      *
-     * @param callback - an [OddCallback]
+     * @param oddCallback - an [OddCallback]
      */
     fun <T> enqueueRequest(oddCallback: OddCallback<T>) {
         // get base endpoint
@@ -148,15 +147,12 @@ class OddRequest(
 
     private fun <T> getCallback(oddCallback: OddCallback<T>, parseCall: ParseCall<T>): Callback {
         return object : Callback {
-            private val MS_IN_SECONDS = 1000
-
             override fun onFailure(request: Request, e: IOException) {
                 Log.e("ResponseCb onFailure", "Failed", e)
                 oddCallback.onFailure(e)
             }
 
             override fun onResponse(response: Response) {
-                // TODO - handle when the response body is empty a little more gracefully
                 Log.d("ResponseCb onResponse", "code: ${response.code()} responseBody: ${response.body()}")
                 if (response.isSuccessful) {
                     var responseBody = ""
@@ -165,7 +161,7 @@ class OddRequest(
                         val obj = parseCall.parse(responseBody)
                         oddCallback.onSuccess(obj)
                     } catch (e: Exception) {
-                        val responseBody = if (responseBody.isNullOrBlank()) {
+                        responseBody = if (responseBody.isNullOrBlank()) {
                             "response.body() was empty"
                         } else {
                             responseBody
@@ -186,14 +182,6 @@ class OddRequest(
                     }
                 }
             }
-
-            private fun tryGetResponseBody(response: Response): String {
-                return try {
-                    response.body().string()
-                } catch (e: Exception) {
-                    "response.body() was empty"
-                }
-            }
         }
     }
 
@@ -206,18 +194,21 @@ class OddRequest(
         return if (isListEndpoint()) {
             object: ParseCall<T> {
                 override fun parse(responseBody: String): T {
+                    @Suppress("UNCHECKED_CAST")
                     return OddParser.parseMultipleResponse(responseBody) as T
                 }
             }
         } else if (isEventPost()) {
             object: ParseCall<T> {
                 override fun parse(responseBody: String): T {
+                    @Suppress("UNCHECKED_CAST")
                     return event as T
                 }
             }
         } else {
             object: ParseCall<T> {
                 override fun parse(responseBody: String): T {
+                    @Suppress("UNCHECKED_CAST")
                     val obj = OddParser.parseSingleResponse(responseBody) as T
 
                     if (obj is OddConfig) {
@@ -333,7 +324,6 @@ class OddRequest(
         var query: String? = null
         var event: OddMetric? = null
         var skipCache: Boolean = false
-
 
         /**
          * Allows Builder to tell which resource id to request

@@ -10,18 +10,19 @@ import org.jetbrains.annotations.NotNull;
 import java.util.LinkedHashSet;
 
 import io.oddworks.device.exception.BadResponseCodeException;
+import io.oddworks.device.metric.OddAppInitMetric;
 import io.oddworks.device.model.OddCollection;
 import io.oddworks.device.model.OddConfig;
 import io.oddworks.device.model.OddError;
 import io.oddworks.device.model.OddPromotion;
 import io.oddworks.device.model.OddVideo;
 import io.oddworks.device.model.OddView;
-import io.oddworks.device.model.common.OddRelationship;
 import io.oddworks.device.model.common.OddResource;
 import io.oddworks.device.model.common.OddResourceType;
 import io.oddworks.device.request.OddCallback;
 import io.oddworks.device.request.OddRequest;
 import io.oddworks.device.request.RxOddCall;
+import io.oddworks.device.service.OddRxBus;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
@@ -37,46 +38,39 @@ public class MainActivity extends AppCompatActivity {
         initializeOddData();
     }
 
+    /**
+     * example using plain OddCallback
+     */
     private void initializeOddData() {
         final Context ctx = this;
 
         OddCallback<OddConfig> configCallback = new OddCallback<OddConfig>() {
             @Override
-            public void onSuccess(OddConfig entity) {
+            public void onSuccess(OddConfig resource) {
+                String viewId = resource.getViews().get("homepage");
 
+                OddAppInitMetric metric = new OddAppInitMetric();
+                metric.setOrganizationId("oddsample");
+
+                OddRxBus.INSTANCE.publish(metric);
+
+                getHomepage(viewId);
             }
 
             @Override
             public void onFailure(@NotNull Exception exception) {
-
+                handleRequestException("getConfig", exception);
             }
         };
 
-        RxOddCall
-                .observableFrom(new Action1<OddCallback<OddConfig>>() {
-                    @Override
-                    public void call(OddCallback<OddConfig> oddCallback) {
-                        new OddRequest.Builder(ctx, OddResourceType.CONFIG)
-                                .build()
-                                .enqueueRequest(oddCallback);
-                    }
-                })
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<OddConfig>() {
-                    @Override
-                    public void call(OddConfig oddConfig) {
-                        String viewId = oddConfig.getViews().get("homepage");
-                        getHomepage(viewId);
-                    }
-                }, new Action1<Throwable>() {
-                    @Override
-                    public void call(Throwable throwable) {
-                        Log.e(TAG, "get config failed", throwable);
-                    }
-                });
+        new OddRequest.Builder(ctx, OddResourceType.CONFIG)
+                .build()
+                .enqueueRequest(configCallback);
     }
 
+    /**
+     * example using RxOddCall, wrapping OddRequest in an RxJava Observable
+     */
     private void getHomepage(final String viewId) {
         final Context ctx = this;
         RxOddCall
@@ -84,9 +78,8 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void call(OddCallback<OddView> oddCallback) {
                         new OddRequest.Builder(ctx, OddResourceType.VIEW)
-//                                .resourceId(viewId)
-                                .resourceId("unknown-view-id")
-                                .include("personalities,promotion")
+                                .resourceId(viewId)
+                                .include("featuredCollections,promotion")
                                 .build()
                                 .enqueueRequest(oddCallback);
                     }
@@ -96,26 +89,21 @@ public class MainActivity extends AppCompatActivity {
                 .subscribe(new Action1<OddView>() {
                     @Override
                     public void call(OddView oddView) {
-                        LinkedHashSet<OddResource> personalitites = oddView.getIncludedByRelationship("personalities");
+                        LinkedHashSet<OddResource> featuredCollections = oddView.getIncludedByRelationship("featuredCollections");
                         LinkedHashSet<OddResource> promotions = oddView.getIncludedByRelationship("promotion");
 
                         OddPromotion promotion = (OddPromotion) promotions.iterator().next();
-                        OddCollection personality1 = (OddCollection) personalitites.iterator().next();
+                        OddCollection collection1 = (OddCollection) featuredCollections.iterator().next();
 
                         Log.d(TAG, "promotion: " + promotion.getTitle());
-                        Log.d(TAG, "first personality: " + personality1.getTitle());
+                        Log.d(TAG, "first collection: " + collection1.getTitle());
                         getVideos();
-                        getPersonalityEntities(personality1.getIdentifier().getId());
+                        getCollectionEntities(collection1.getIdentifier().getId());
                     }
                 }, new Action1<Throwable>() {
                     @Override
                     public void call(Throwable throwable) {
-                        if (throwable instanceof BadResponseCodeException) {
-                            LinkedHashSet<OddError> errors = ((BadResponseCodeException) throwable).getOddErrors();
-                            Log.w(TAG, "get view failed - errors: " + errors);
-                        } else {
-                            Log.e(TAG, "get view failed", throwable);
-                        }
+                        handleRequestException("getHomepage", throwable);
                     }
                 });
     }
@@ -143,19 +131,19 @@ public class MainActivity extends AppCompatActivity {
 
                     @Override
                     public void call(Throwable throwable) {
-                        Log.e(TAG, "get videos failed", throwable);
+                        handleRequestException("getVideos", throwable);
                     }
                 });
     }
 
-    private void getPersonalityEntities(final String personalityId) {
+    private void getCollectionEntities(final String collectionId) {
         final Context ctx = this;
         RxOddCall
                 .observableFrom(new Action1<OddCallback<LinkedHashSet<OddResource>>>() {
                     @Override
                     public void call(OddCallback<LinkedHashSet<OddResource>> oddCallback) {
                         new OddRequest.Builder(ctx, OddResourceType.COLLECTION)
-                                .resourceId(personalityId)
+                                .resourceId(collectionId)
                                 .relationshipName(OddCollection.RELATIONSHIP_ENTITIES)
                                 .build()
                                 .enqueueRequest(oddCallback);
@@ -171,8 +159,17 @@ public class MainActivity extends AppCompatActivity {
                 }, new Action1<Throwable>() {
                     @Override
                     public void call(Throwable throwable) {
-                        Log.e(TAG, "get collection entities failed", throwable);
+                        handleRequestException("getCollectionEntities", throwable);
                     }
                 });
+    }
+
+    private void handleRequestException(String requestType, Throwable throwable) {
+        Log.w(TAG, requestType + " request failed", throwable);
+        if (throwable instanceof BadResponseCodeException) {
+            int code = ((BadResponseCodeException) throwable).getCode();
+            LinkedHashSet<OddError> errors = ((BadResponseCodeException) throwable).getOddErrors();
+            Log.w(TAG, requestType + " request failed - code: " + code + " errors: " + errors);
+        }
     }
 }
