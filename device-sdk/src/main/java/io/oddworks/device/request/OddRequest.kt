@@ -54,7 +54,7 @@ class OddRequest(
     private val baseURL: HttpUrl
         get() {
             val baseUrlString = if (isEventPost()) {
-                apiBaseURL ?: Oddworks.DEFAULT_ANALYTICS_API_BASE_URL
+                apiBaseURL ?: metaData?.getString(Oddworks.ANALYTICS_API_BASE_URL_KEY, Oddworks.DEFAULT_ANALYTICS_API_BASE_URL) ?: throw OddRequestException("Missing ${Oddworks.ANALYTICS_API_BASE_URL_KEY} in Application meta-data")
             } else {
                 apiBaseURL ?: metaData?.getString(Oddworks.API_BASE_URL_KEY, Oddworks.DEFAULT_API_BASE_URL) ?: throw OddRequestException("Missing ${Oddworks.API_BASE_URL_KEY} in Application meta-data")
             }
@@ -324,7 +324,6 @@ class OddRequest(
         var query: String? = null
         var event: OddMetric? = null
         var skipCache: Boolean = false
-
 
         /**
          * Allows Builder to tell which resource id to request
