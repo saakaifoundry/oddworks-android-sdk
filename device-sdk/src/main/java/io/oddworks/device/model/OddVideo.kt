@@ -5,8 +5,8 @@ import io.oddworks.device.exception.OddResourceException
 import io.oddworks.device.model.common.*
 import io.oddworks.device.model.video.OddCast
 import io.oddworks.device.model.video.OddSource
-import org.joda.time.DateTime
 import org.json.JSONObject
+import java.util.*
 
 class OddVideo(identifier: OddIdentifier,
                relationships: MutableSet<OddRelationship>,
@@ -19,11 +19,12 @@ class OddVideo(identifier: OddIdentifier,
                val duration: Int = 0,
                val genres: Set<String>,
                val cast: Set<OddCast>,
-               val releaseDate: DateTime?) : OddResource(identifier, relationships, included, meta) {
+               val releaseDate: Date?) : OddResource(identifier, relationships, included, meta) {
     init {
         if (identifier.type != OddResourceType.VIDEO) {
             throw OddResourceException("Mismatched OddResourceType identifier: $identifier")
         }
+
     }
 
     companion object {

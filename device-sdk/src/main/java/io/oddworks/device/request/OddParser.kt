@@ -140,7 +140,7 @@ object OddParser {
 
         val title = JSON.getString(rawAttributes, "title") ?: ""
         val description = JSON.getString(rawAttributes, "description") ?: ""
-        val releaseDate = JSON.getDateTime(rawAttributes, "releaseDate")
+        val releaseDate = JSON.getDate(rawAttributes, "releaseDate")
         val images = parseImages(rawImages)
 
         val rawRelationships = JSON.getJSONObject(rawData, RELATIONSHIPS, false)
@@ -175,7 +175,7 @@ object OddParser {
         val title = JSON.getString(rawAttributes, "title") ?: ""
         val description = JSON.getString(rawAttributes, "description") ?: ""
         val images = parseImages(rawImages)
-        val releaseDate = JSON.getDateTime(rawAttributes, "releaseDate")
+        val releaseDate = JSON.getDate(rawAttributes, "releaseDate")
         val duration = JSON.getInt(rawAttributes, "duration")
 
         val rawSources = JSON.getJSONArray(rawAttributes, "sources", false)

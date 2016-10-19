@@ -2,10 +2,15 @@ package io.oddworks.device.request;
 
 import android.support.annotation.Nullable;
 
-import org.joda.time.DateTime;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 public class JSONParser {
     private static final JSONParser INSTANCE = new JSONParser();
@@ -41,9 +46,14 @@ public class JSONParser {
      * @return      defaults to null
      **/
     @Nullable
-    public DateTime getDateTime(final JSONObject json, String key) throws JSONException {
+    public Date getDate(final JSONObject json, String key) {
         if (!json.isNull(key)) {
-            return new DateTime(json.getString(key));
+            try {
+                ISO8601DateFormat df = new ISO8601DateFormat();
+                return df.parse(getString(json, key));
+            } catch (ParseException exception) {
+                return null;
+            }
         }
         return null;
     }

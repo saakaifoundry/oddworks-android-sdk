@@ -2,8 +2,8 @@ package io.oddworks.device.model
 
 import io.oddworks.device.exception.OddResourceException
 import io.oddworks.device.model.common.*
-import org.joda.time.DateTime
 import org.json.JSONObject
+import java.util.*
 
 class OddCollection(identifier: OddIdentifier,
                     relationships: Set<OddRelationship>,
@@ -13,7 +13,7 @@ class OddCollection(identifier: OddIdentifier,
                     val description: String,
                     val images: Set<OddImage>,
                     val genres: Set<String>,
-                    val releaseDate: DateTime?) : OddResource(identifier, relationships, included, meta) {
+                    val releaseDate: Date?) : OddResource(identifier, relationships, included, meta) {
 
     init {
         if (identifier.type != OddResourceType.COLLECTION) {
