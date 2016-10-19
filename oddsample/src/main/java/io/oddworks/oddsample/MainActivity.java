@@ -78,9 +78,8 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void call(OddCallback<OddView> oddCallback) {
                         new OddRequest.Builder(ctx, OddResourceType.VIEW)
-//                                .resourceId(viewId)
-                                .resourceId("unknown-view-id")
-                                .include("personalities,promotion")
+                                .resourceId(viewId)
+                                .include("featuredCollections,promotion")
                                 .build()
                                 .enqueueRequest(oddCallback);
                     }
@@ -90,16 +89,16 @@ public class MainActivity extends AppCompatActivity {
                 .subscribe(new Action1<OddView>() {
                     @Override
                     public void call(OddView oddView) {
-                        LinkedHashSet<OddResource> personalitites = oddView.getIncludedByRelationship("personalities");
+                        LinkedHashSet<OddResource> featuredCollections = oddView.getIncludedByRelationship("featuredCollections");
                         LinkedHashSet<OddResource> promotions = oddView.getIncludedByRelationship("promotion");
 
                         OddPromotion promotion = (OddPromotion) promotions.iterator().next();
-                        OddCollection personality1 = (OddCollection) personalitites.iterator().next();
+                        OddCollection collection1 = (OddCollection) featuredCollections.iterator().next();
 
                         Log.d(TAG, "promotion: " + promotion.getTitle());
-                        Log.d(TAG, "first personality: " + personality1.getTitle());
+                        Log.d(TAG, "first collection: " + collection1.getTitle());
                         getVideos();
-                        getPersonalityEntities(personality1.getIdentifier().getId());
+                        getCollectionEntities(collection1.getIdentifier().getId());
                     }
                 }, new Action1<Throwable>() {
                     @Override
@@ -137,14 +136,14 @@ public class MainActivity extends AppCompatActivity {
                 });
     }
 
-    private void getPersonalityEntities(final String personalityId) {
+    private void getCollectionEntities(final String collectionId) {
         final Context ctx = this;
         RxOddCall
                 .observableFrom(new Action1<OddCallback<LinkedHashSet<OddResource>>>() {
                     @Override
                     public void call(OddCallback<LinkedHashSet<OddResource>> oddCallback) {
                         new OddRequest.Builder(ctx, OddResourceType.COLLECTION)
-                                .resourceId(personalityId)
+                                .resourceId(collectionId)
                                 .relationshipName(OddCollection.RELATIONSHIP_ENTITIES)
                                 .build()
                                 .enqueueRequest(oddCallback);
@@ -160,7 +159,7 @@ public class MainActivity extends AppCompatActivity {
                 }, new Action1<Throwable>() {
                     @Override
                     public void call(Throwable throwable) {
-                        handleRequestException("getPersonalityEntities", throwable);
+                        handleRequestException("getCollectionEntities", throwable);
                     }
                 });
     }
