@@ -10,6 +10,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.LinkedHashSet;
 
 import io.oddworks.device.exception.BadResponseCodeException;
+import io.oddworks.device.metric.OddAppInitMetric;
 import io.oddworks.device.model.OddCollection;
 import io.oddworks.device.model.OddConfig;
 import io.oddworks.device.model.OddError;
@@ -21,6 +22,7 @@ import io.oddworks.device.model.common.OddResourceType;
 import io.oddworks.device.request.OddCallback;
 import io.oddworks.device.request.OddRequest;
 import io.oddworks.device.request.RxOddCall;
+import io.oddworks.device.service.OddRxBus;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
@@ -46,6 +48,12 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onSuccess(OddConfig resource) {
                 String viewId = resource.getViews().get("homepage");
+
+                OddAppInitMetric metric = new OddAppInitMetric();
+                metric.setOrganizationId("oddsample");
+
+                OddRxBus.INSTANCE.publish(metric);
+
                 getHomepage(viewId);
             }
 
