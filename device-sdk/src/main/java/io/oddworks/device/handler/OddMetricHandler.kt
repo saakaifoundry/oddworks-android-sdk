@@ -15,16 +15,12 @@ import rx.schedulers.Schedulers
 
 /**
  * A singleton that handles the HTTP POST calls for OddMetric events.
-
+ *
  * This class must be explicitly enabled, otherwise it will not listen
- * for events posted to the OddBus.
-
- * Once enabled, any OddMetric object that is picked up on the OddBus
- * will automatically be sent back to Oddworks via the ApiCaller.
-
- * @author Erik Straub, Dan Pallas
- * *
- * @since v1.0
+ * for events posted to the OddRxBus.
+ *
+ * Once enabled, any OddMetric object that is picked up on the OddRxBus
+ * will automatically be sent back to Oddworks via an OddRequest.
  */
 object OddMetricHandler {
 
@@ -34,7 +30,7 @@ object OddMetricHandler {
      * Registers the instance of OddMetricHandler on the OddRxBus
      * so it can begin receiving posted event objects.
      */
-    fun enableRx(context: Context) {
+    fun enable(context: Context) {
         val observable = OddRxBus.observable
         val oddMetricCallback = object : OddCallback<OddMetric> {
             override fun onSuccess(resource: OddMetric) {
