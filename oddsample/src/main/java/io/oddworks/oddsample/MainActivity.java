@@ -50,7 +50,6 @@ public class MainActivity extends AppCompatActivity {
                 String viewId = resource.getViews().get("homepage");
 
                 OddAppInitMetric metric = new OddAppInitMetric();
-                metric.setOrganizationId("oddsample");
 
                 OddRxBus.INSTANCE.publish(metric);
 
