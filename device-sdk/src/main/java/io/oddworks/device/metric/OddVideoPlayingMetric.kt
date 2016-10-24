@@ -32,6 +32,10 @@ class OddVideoPlayingMetric(contentType: String, contentId: String, meta: JSONOb
         return json
     }
 
+    override fun toString(): String {
+        return "$TAG (type=$type, contentType=$contentType, contentId=$contentId, meta=${meta.toString()}, elapsed=$elapsed, duration=$duration)"
+    }
+
     companion object {
         private val TAG = OddVideoPlayingMetric::class.java.simpleName
 

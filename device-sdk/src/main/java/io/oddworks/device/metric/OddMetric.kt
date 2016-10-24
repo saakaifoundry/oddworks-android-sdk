@@ -37,14 +37,7 @@ abstract class OddMetric(protected val contentType: String?, protected val conte
     }
 
     override fun toString(): String {
-        return TAG + "(" +
-                "type=" + type + ", " +
-                "action=" + action + ", " +
-                "contentType=" + contentType + ", " +
-                "contentId=" + contentId +
-                "meta=" + meta.toString() +
-                ")"
-
+        return "$TAG (type=$type, action=$action, contentType=$contentType, contentId=$contentId, meta=${meta.toString()})"
     }
 
     companion object {
