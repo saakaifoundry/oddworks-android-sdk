@@ -5,8 +5,8 @@ import rx.subjects.PublishSubject
 import rx.subjects.SerializedSubject
 
 /**
- * Bus implementation using RxJava. Replacement for OddBus
-
+ * Bus implementation using RxJava
+ *
  * @author Dan Pallas
  * *
  * @since v1.2 on 02/26/2016
@@ -20,7 +20,8 @@ object OddRxBus {
         bus.onBackpressureBuffer()
     }
 
-    fun publish(event: OddRxBusEvent) {
+
+    @JvmStatic fun publish(event: OddRxBusEvent) {
         bus.onNext(event)
     }
 

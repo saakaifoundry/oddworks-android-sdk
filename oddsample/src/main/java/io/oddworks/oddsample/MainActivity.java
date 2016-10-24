@@ -11,6 +11,7 @@ import java.util.LinkedHashSet;
 
 import io.oddworks.device.exception.BadResponseCodeException;
 import io.oddworks.device.metric.OddAppInitMetric;
+import io.oddworks.device.metric.OddViewLoadMetric;
 import io.oddworks.device.model.OddCollection;
 import io.oddworks.device.model.OddConfig;
 import io.oddworks.device.model.OddError;
@@ -49,9 +50,11 @@ public class MainActivity extends AppCompatActivity {
             public void onSuccess(OddConfig resource) {
                 String viewId = resource.getViews().get("homepage");
 
-                OddAppInitMetric metric = new OddAppInitMetric();
+                OddAppInitMetric initMetric = new OddAppInitMetric();
+                OddViewLoadMetric viewLoadMetric = new OddViewLoadMetric("view", viewId, null);
 
-                OddRxBus.INSTANCE.publish(metric);
+                OddRxBus.publish(initMetric);
+                OddRxBus.publish(viewLoadMetric);
 
                 getHomepage(viewId);
             }
