@@ -11,14 +11,13 @@ import static org.junit.Assert.assertEquals;
 
 @RunWith(AndroidJUnit4.class)
 public class OddViewLoadMetricTest {
-    private String orgId = "odd-networks";
     private String contentType = "aThing";
     private String contentId = "thingId";
     private OddViewLoadMetric oddViewLoadMetric;
 
     @Before
     public void beforeEach() {
-        oddViewLoadMetric = new OddViewLoadMetric();
+        oddViewLoadMetric = new OddViewLoadMetric(contentType, contentId, null);
     }
 
     @Test
@@ -27,44 +26,31 @@ public class OddViewLoadMetricTest {
     }
 
     @Test
-	public void testGetOrganizationId() throws Exception {
-        oddViewLoadMetric.setOrganizationId(orgId);
-        assertEquals(orgId, oddViewLoadMetric.getOrganizationId());
-    }
-
-    @Test
 	public void testGetAction() throws Exception {
-        assertEquals(OddAppInitMetric.ACTION_VIEW_LOAD, oddViewLoadMetric.getAction());
+        assertEquals(OddMetric.Companion.getACTION_VIEW_LOAD(), oddViewLoadMetric.getAction());
     }
 
     @Test
 	public void testGetContentType() throws Exception {
-        oddViewLoadMetric.setContentType(contentType);
         assertEquals(contentType, oddViewLoadMetric.getContentType());
     }
 
     @Test
 	public void testGetContentId() throws Exception {
-        oddViewLoadMetric.setContentId(contentId);
         assertEquals(contentId, oddViewLoadMetric.getContentId());
     }
 
     @Test
 	public void testToJSONObject() throws Exception {
-        OddViewLoadMetric metric = oddViewLoadMetric;
-        metric.setOrganizationId(orgId);
-        metric.setContentType(contentType);
-        metric.setContentId(contentId);
 
-        String expected = "{" +
-                "type: \"" + metric.getType() + "\"," +
+        String expected = "{\"data\": {" +
+                "type: \"" + oddViewLoadMetric.getType() + "\"," +
                 "attributes: {" +
-                "organizationId: \"" + metric.getOrganizationId() + "\"," +
-                "action: \"" + metric.getAction() + "\"," +
-                "contentType: \"" + metric.getContentType() + "\"," +
-                "contentId: \"" + metric.getContentId() + "\"" +
+                "action: \"" + oddViewLoadMetric.getAction() + "\"," +
+                "contentType: \"" + oddViewLoadMetric.getContentType() + "\"," +
+                "contentId: \"" + oddViewLoadMetric.getContentId() + "\"" +
                 "}" +
-                "}";
-        JSONAssert.assertEquals(expected, metric.toJSONObject(), true);
+                "}}";
+        JSONAssert.assertEquals(expected, oddViewLoadMetric.toJSONObject(), true);
     }
 }

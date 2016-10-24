@@ -35,36 +35,36 @@ class Metric(val type: MetricType, val enabled: Boolean, action: String?, val in
         private fun setupOddMetric(metric: Metric) {
             when(metric.type) {
                 MetricType.APP_INIT -> {
-                    OddAppInitMetric.setAction(metric.action)
+                    OddAppInitMetric.action = metric.action
                 }
                 MetricType.VIEW_LOAD -> {
-                    OddViewLoadMetric.setEnabled(metric.enabled)
-                    OddViewLoadMetric.setAction(metric.action)
+                    OddViewLoadMetric.enabled = metric.enabled
+                    OddViewLoadMetric.action = metric.action
                 }
                 MetricType.VIDEO_LOAD -> {
-                    OddVideoLoadMetric.setEnabled(metric.enabled)
-                    OddVideoLoadMetric.setAction(metric.action)
+                    OddVideoLoadMetric.enabled = metric.enabled
+                    OddVideoLoadMetric.action = metric.action
                 }
                 MetricType.VIDEO_PLAY -> {
-                    OddVideoPlayMetric.setEnabled(metric.enabled)
-                    OddVideoPlayMetric.setAction(metric.action)
+                    OddVideoPlayMetric.enabled = metric.enabled
+                    OddVideoPlayMetric.action = metric.action
                 }
                 MetricType.VIDEO_PLAYING -> {
-                    OddVideoPlayingMetric.setEnabled(metric.enabled)
-                    OddVideoPlayingMetric.setAction(metric.action)
-                    OddVideoPlayingMetric.setInterval(metric.interval)
+                    OddVideoPlayingMetric.enabled = metric.enabled
+                    OddVideoPlayingMetric.action = metric.action
+                    OddVideoPlayingMetric.interval = metric.interval
                 }
                 MetricType.VIDEO_STOP -> {
-                    OddVideoStopMetric.setEnabled(metric.enabled)
-                    OddVideoStopMetric.setAction(metric.action)
+                    OddVideoStopMetric.enabled = metric.enabled
+                    OddVideoStopMetric.action = metric.action
                 }
                 MetricType.VIDEO_ERROR -> {
-                    OddVideoErrorMetric.setEnabled(metric.enabled)
-                    OddVideoErrorMetric.setAction(metric.action)
+                    OddVideoErrorMetric.enabled = metric.enabled
+                    OddVideoErrorMetric.action = metric.action
                 }
                 MetricType.USER_NEW -> {
-                    OddUserNewMetric.setEnabled(metric.enabled)
-                    OddUserNewMetric.setAction(metric.action)
+                    OddUserNewMetric.enabled = metric.enabled
+                    OddUserNewMetric.action = metric.action
                 }
             }
         }

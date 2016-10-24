@@ -12,14 +12,13 @@ import static org.junit.Assert.assertEquals;
 
 @RunWith(AndroidJUnit4.class)
 public class OddVideoPlayMetricTest {
-    private String orgId = "odd-networks";
     private String contentType = "aThing";
     private String contentId = "thingId";
     private OddVideoPlayMetric oddVideoPlayMetric;
 
     @Before
     public void beforeEach() {
-        oddVideoPlayMetric = new OddVideoPlayMetric();
+        oddVideoPlayMetric = new OddVideoPlayMetric(contentType, contentId, null);
     }
 
     @Test
@@ -28,44 +27,30 @@ public class OddVideoPlayMetricTest {
     }
 
     @Test
-	public void testGetOrganizationId() throws Exception {
-        oddVideoPlayMetric.setOrganizationId(orgId);
-        assertEquals(orgId, oddVideoPlayMetric.getOrganizationId());
-    }
-
-    @Test
 	public void testGetAction() throws Exception {
-        assertEquals(OddAppInitMetric.ACTION_VIDEO_PLAY, oddVideoPlayMetric.getAction());
+        assertEquals(OddMetric.Companion.getACTION_VIDEO_PLAY(), oddVideoPlayMetric.getAction());
     }
 
     @Test
 	public void testGetContentType() throws Exception {
-        oddVideoPlayMetric.setContentType(contentType);
         assertEquals(contentType, oddVideoPlayMetric.getContentType());
     }
 
     @Test
 	public void testGetContentId() throws Exception {
-        oddVideoPlayMetric.setContentId(contentId);
         assertEquals(contentId, oddVideoPlayMetric.getContentId());
     }
 
     @Test
 	public void testToJSONObject() throws Exception {
-        OddVideoPlayMetric metric = new OddVideoPlayMetric();
-        metric.setOrganizationId(orgId);
-        metric.setContentType(contentType);
-        metric.setContentId(contentId);
-
-        String expected = "{" +
-                "type: \"" + metric.getType() + "\"," +
+        String expected = "{\"data\": {" +
+                "type: \"" + oddVideoPlayMetric.getType() + "\"," +
                 "attributes: {" +
-                "organizationId: \"" + metric.getOrganizationId() + "\"," +
-                "action: \"" + metric.getAction() + "\"," +
-                "contentType: \"" + metric.getContentType() + "\"," +
-                "contentId: \"" + metric.getContentId() + "\"" +
+                "action: \"" + oddVideoPlayMetric.getAction() + "\"," +
+                "contentType: \"" + oddVideoPlayMetric.getContentType() + "\"," +
+                "contentId: \"" + oddVideoPlayMetric.getContentId() + "\"" +
                 "}" +
-                "}";
-        JSONAssert.assertEquals(expected, metric.toJSONObject(), true);
+                "}}";
+        JSONAssert.assertEquals(expected, oddVideoPlayMetric.toJSONObject(), true);
     }
 }
