@@ -199,33 +199,49 @@ class OddRequest(
 
             override fun onResponse(response: Response) {
                 Log.d("ResponseCb onResponse", "code: ${response.code()} responseBody: ${response.body()}")
-                if (response.isSuccessful) {
-                    var responseBody = ""
-                    try {
-                        responseBody = response.body().string()
-                        val obj = parseCall.parse(responseBody)
-                        oddCallback.onSuccess(obj)
-                    } catch (e: Exception) {
-                        responseBody = if (responseBody.isNullOrBlank()) {
-                            "response.body() was empty"
-                        } else {
-                            responseBody
+
+                when {
+                    response.isSuccessful && (response.code() == 202 || response.code() == 204) -> {
+                        try {
+                            val obj = parseCall.parse("")
+                            oddCallback.onSuccess(obj)
+                        } catch (e: Exception) {
+                            handleFailedParse("", e)
                         }
-                        oddCallback.onFailure(OddParseException("Response body parse failed: $responseBody", e))
                     }
-                } else {
-                    // remove JWT on status 401
-                    if (response.code() == 401) {
-                        clearJWTSharedPreferences()
+                    response.isSuccessful -> {
+                        var responseBody = ""
+                        try {
+                            responseBody = response.body().string()
+                            val obj = parseCall.parse(responseBody)
+                            oddCallback.onSuccess(obj)
+                        } catch (e: Exception) {
+                            handleFailedParse(responseBody, e)
+                        }
                     }
-                    // try to get OddErrors, if any
-                    try {
-                        val oddErrors = OddParser.parseErrorMessage(response.body().string())
-                        oddCallback.onFailure(BadResponseCodeException(response.code(), oddErrors))
-                    } catch (e: Exception) {
-                        oddCallback.onFailure(BadResponseCodeException(response.code()))
+                    else -> {
+                        // remove JWT on status 401
+                        if (response.code() == 401) {
+                            clearJWTSharedPreferences()
+                        }
+                        // try to get OddErrors, if any
+                        try {
+                            val oddErrors = OddParser.parseErrorMessage(response.body().string())
+                            oddCallback.onFailure(BadResponseCodeException(response.code(), oddErrors))
+                        } catch (e: Exception) {
+                            oddCallback.onFailure(BadResponseCodeException(response.code()))
+                        }
                     }
                 }
+            }
+
+            private fun handleFailedParse(body: String?, throwable: Throwable) {
+                val responseBody = if (body.isNullOrBlank()) {
+                    "response.body() was empty"
+                } else {
+                    body
+                }
+                oddCallback.onFailure(OddParseException("Response body parse failed: $responseBody", throwable))
             }
         }
     }
@@ -235,33 +251,32 @@ class OddRequest(
         fun parse(responseBody: String): Any
     }
 
+    @Throws(JSONException::class)
     private fun <T> getParseCall(): ParseCall<T> {
-        return if (isListEndpoint()) {
-            object: ParseCall<T> {
-                override fun parse(responseBody: String): T {
-                    @Suppress("UNCHECKED_CAST")
-                    return OddParser.parseMultipleResponse(responseBody) as T
-                }
-            }
-        } else if (isEventResourceType()) {
-            object: ParseCall<T> {
-                override fun parse(responseBody: String): T {
-                    @Suppress("UNCHECKED_CAST")
-                    return event as T
-                }
-            }
-        } else {
-            object: ParseCall<T> {
-                override fun parse(responseBody: String): T {
-                    @Suppress("UNCHECKED_CAST")
-                    val obj = OddParser.parseSingleResponse(responseBody) as T
-
-                    // Automatically Store the Viewer's JWT in SharedPreferences
-                    if (obj is OddViewer) {
-                        stashJWTSharedPreferences(obj.jwt)
+        return object : ParseCall<T> {
+            override fun parse(responseBody: String): T {
+                @Suppress("UNCHECKED_CAST")
+                return when {
+                    isEventResourceType() -> {
+                        event as T
                     }
+                    isWatchlistAdd() || isWatchlistRemove() -> {
+                        watchlist!!.resource as T
+                    }
+                    isListEndpoint() -> {
+                        OddParser.parseMultipleResponse(responseBody) as T
+                    }
+                    else -> {
+                        val obj = OddParser.parseSingleResponse(responseBody) as T
 
-                    return obj
+                        // Automatically Store the Viewer's JWT in SharedPreferences
+                        if (obj is OddViewer) {
+                            stashJWTSharedPreferences(obj.jwt)
+                            stashViewer(obj)
+                        }
+
+                        obj
+                    }
                 }
             }
         }
@@ -357,22 +372,12 @@ class OddRequest(
         }
     }
 
-    private fun fetchJWTSharedPreferences(): String? {
-        val prefs = context.getSharedPreferences(AUTHORIZATION_PREFERENCES, Context.MODE_PRIVATE)
-        return prefs.getString(AUTHORIZATION_PREFERENCE_JWT, null)
-    }
-
-    private fun stashJWTSharedPreferences(jwt: String?) {
-        if (jwt == null) return
-        val prefs = context.getSharedPreferences(AUTHORIZATION_PREFERENCES, Context.MODE_PRIVATE).edit()
-        prefs.putString(AUTHORIZATION_PREFERENCE_JWT, jwt)
-        prefs.apply()
-    }
-
-    private fun clearJWTSharedPreferences() {
-        val prefs = context.getSharedPreferences(AUTHORIZATION_PREFERENCES, Context.MODE_PRIVATE).edit()
-        prefs.remove(AUTHORIZATION_PREFERENCE_JWT)
-        prefs.apply()
+    private fun stashViewer(viewer: OddViewer) {
+        val prefs = context.getSharedPreferences(AUTHORIZED_VIEWER, Context.MODE_PRIVATE).edit()
+        // TODO stash the viewer here
+        // TODO create an easy way to fetch the viewer from shared prefs
+        // TODO create a way to clear the viewer from shared prefs
+        // TODO clean up sending viewer to addToWatchlist/removeFromWatchlist/progress requests
     }
 
     /**
