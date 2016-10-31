@@ -11,7 +11,11 @@ import io.oddworks.device.exception.BadResponseCodeException
 import io.oddworks.device.exception.OddParseException
 import io.oddworks.device.exception.OddRequestException
 import io.oddworks.device.metric.OddMetric
-import io.oddworks.device.model.OddConfig
+import io.oddworks.device.model.OddAuthentication
+import io.oddworks.device.model.OddProgress
+import io.oddworks.device.model.OddViewer
+import io.oddworks.device.model.OddWatchlist
+import io.oddworks.device.model.common.OddResource
 import io.oddworks.device.model.common.OddResourceType
 import org.json.JSONException
 import java.io.IOException
@@ -32,6 +36,9 @@ class OddRequest(
         private val sort: String? = null,
         private val query: String? = null,
         private val event: OddMetric? = null,
+        private val authentication: OddAuthentication? = null,
+        private val watchlist: OddWatchlist? = null,
+        private val progress: OddProgress? = null,
         private val skipCache: Boolean = false) {
 
     private val packageManager by lazy {
@@ -53,10 +60,13 @@ class OddRequest(
 
     private val baseURL: HttpUrl
         get() {
-            val baseUrlString = if (isEventPost()) {
-                apiBaseURL ?: metaData?.getString(Oddworks.ANALYTICS_API_BASE_URL_KEY, Oddworks.DEFAULT_ANALYTICS_API_BASE_URL) ?: throw OddRequestException("Missing ${Oddworks.ANALYTICS_API_BASE_URL_KEY} in Application meta-data")
-            } else {
-                apiBaseURL ?: metaData?.getString(Oddworks.API_BASE_URL_KEY, Oddworks.DEFAULT_API_BASE_URL) ?: throw OddRequestException("Missing ${Oddworks.API_BASE_URL_KEY} in Application meta-data")
+            val baseUrlString = when {
+                isEventResourceType() -> {
+                    apiBaseURL ?: metaData?.getString(Oddworks.ANALYTICS_API_BASE_URL_KEY, Oddworks.DEFAULT_ANALYTICS_API_BASE_URL) ?: throw OddRequestException("Missing ${Oddworks.ANALYTICS_API_BASE_URL_KEY} in Application meta-data")
+                }
+                else -> {
+                    apiBaseURL ?: metaData?.getString(Oddworks.API_BASE_URL_KEY, Oddworks.DEFAULT_API_BASE_URL) ?: throw OddRequestException("Missing ${Oddworks.API_BASE_URL_KEY} in Application meta-data")
+                }
             }
             return HttpUrl.parse(baseUrlString)
         }
@@ -64,7 +74,7 @@ class OddRequest(
     private val oddUserAgent: String
         get() {
             val version = versionName ?: packageInfo.versionName ?: throw OddRequestException("Application PackageInfo versionName is somehow missing")
-            return "platform[name]=Android&model[name]=${Build.MANUFACTURER}&model[version]=${Build.MODEL}&os[name]=${Build.VERSION.CODENAME}&os[version]=${Build.VERSION.SDK_INT}&build[version]=$version"
+            return "model[manufacturer]=${Build.MANUFACTURER}&model[brand]=${Build.BRAND}&model[name]=${Build.MODEL}&model[version]=${Build.PRODUCT}&os[name]=${Build.VERSION.RELEASE}&os[version]=${Build.VERSION.SDK_INT}&build[version]=$version"
         }
 
     private val acceptLanguage: String
@@ -92,6 +102,9 @@ class OddRequest(
             builder.sort,
             builder.query,
             builder.event,
+            builder.authentication,
+            builder.watchlist,
+            builder.progress,
             builder.skipCache) {
     }
 
@@ -130,14 +143,46 @@ class OddRequest(
                 .addHeader("accept-language", acceptLanguage)
 
 
-        val request = if (isEventPost()) {
-            builder.post(RequestBody.create(JSON, event!!.toJSONObject().toString())).build()
-        } else if (shouldSkipCache()) {
-            builder.cacheControl(CacheControl.FORCE_NETWORK).build()
-        } else {
-            builder.build()
+        val request = when {
+            isEventResourceType() -> {
+                builder
+                        .cacheControl(CacheControl.FORCE_NETWORK)
+                        .post(RequestBody.create(JSON, event!!.toJSONObject().toString()))
+                        .build()
+            }
+            isLogin() -> {
+                builder
+                        .cacheControl(CacheControl.FORCE_NETWORK)
+                        .post(RequestBody.create(JSON, authentication!!.toJSONObject().toString()))
+                        .build()
+            }
+            isWatchlistRemove() -> {
+                builder
+                        .cacheControl(CacheControl.FORCE_NETWORK)
+                        .delete(RequestBody.create(JSON, watchlist!!.toJSONObject().toString()))
+                        .build()
+            }
+            isWatchlistAdd() -> {
+                builder
+                        .cacheControl(CacheControl.FORCE_NETWORK)
+                        .post(RequestBody.create(JSON, watchlist!!.toJSONObject().toString()))
+                        .build()
+            }
+            isVideoProgress() -> {
+                builder
+                        .cacheControl(CacheControl.FORCE_NETWORK)
+                        .post(RequestBody.create(JSON, progress!!.toJSONObject().toString()))
+                        .build()
+            }
+            shouldSkipCache() -> {
+                builder
+                        .cacheControl(CacheControl.FORCE_NETWORK)
+                        .build()
+            }
+            else -> {
+                builder.build()
+            }
         }
-
         Log.d(OddRequest::class.java.simpleName, request.toString())
 
         val callback = getCallback(oddCallback, getParseCall<T>())
@@ -198,7 +243,7 @@ class OddRequest(
                     return OddParser.parseMultipleResponse(responseBody) as T
                 }
             }
-        } else if (isEventPost()) {
+        } else if (isEventResourceType()) {
             object: ParseCall<T> {
                 override fun parse(responseBody: String): T {
                     @Suppress("UNCHECKED_CAST")
@@ -211,7 +256,8 @@ class OddRequest(
                     @Suppress("UNCHECKED_CAST")
                     val obj = OddParser.parseSingleResponse(responseBody) as T
 
-                    if (obj is OddConfig) {
+                    // Automatically Store the Viewer's JWT in SharedPreferences
+                    if (obj is OddViewer) {
                         stashJWTSharedPreferences(obj.jwt)
                     }
 
@@ -223,20 +269,29 @@ class OddRequest(
 
     private fun getPath(): String {
         return when {
-            resourceType == OddResourceType.SEARCH || resourceType == OddResourceType.CONFIG -> {
-                resourceType.toString().toLowerCase()
+            isLogin() -> {
+                // /login
+                OddAuthentication.ENDPOINT
             }
-            resourceId == null -> {
+            isWatchlistAdd() || isWatchlistRemove() -> {
+                // /viewers/viewerId/relationships/watchlist
+                OddResourceType.WATCHLIST.endpoint.replace(":id", watchlist!!.viewerId)
+            }
+            isVideoProgress() -> {
+                // /videos/:id/progress
+                OddResourceType.PROGRESS.endpoint.replace(":id", progress!!.videoId)
+            }
+            resourceId == null && resourceType != OddResourceType.VIEWER -> {
                 // /resourceType
-                "${resourceType.toString().toLowerCase()}s"
+                resourceType.endpoint
             }
             relationshipName == null -> {
                 // /resourceType/resourceId
-                "${resourceType.toString().toLowerCase()}s/$resourceId"
+                "${resourceType.endpoint}/$resourceId"
             }
             include == null -> {
                 // /resourceType/resourceId/relationships/{relationshipName}
-                "${resourceType.toString().toLowerCase()}s/$resourceId/relationships/$relationshipName"
+                "${resourceType.endpoint}/$resourceId/relationships/$relationshipName"
             }
             else -> {
                 // this should throw
@@ -247,7 +302,7 @@ class OddRequest(
 
     private fun getQueryParameters(): Map<String, String> {
         val parameters = mutableMapOf<String, String>()
-        if (relationshipName == null && include != null && !isListEndpoint() && !isEventPost() && resourceType != OddResourceType.CONFIG) {
+        if (relationshipName == null && include != null && !isListEndpoint() && !isEventResourceType() && resourceType != OddResourceType.CONFIG) {
             parameters.put("include", include)
         }
         if (limit != null && isListEndpoint()) {
@@ -266,23 +321,39 @@ class OddRequest(
     }
 
     private fun isListEndpoint(): Boolean {
-        return (resourceType != OddResourceType.CONFIG && resourceType != OddResourceType.EVENT) && ((resourceId == null && relationshipName == null) || (resourceId != null && relationshipName != null))
+        return (resourceType != OddResourceType.CONFIG && resourceType != OddResourceType.EVENT)
+                && ((resourceId == null && relationshipName == null) || (resourceId != null && relationshipName != null))
+                && (!isLogin())
     }
 
-    private fun isEventPost(): Boolean {
+    private fun isEventResourceType(): Boolean {
         return resourceType == OddResourceType.EVENT
+    }
+
+    private fun isLogin(): Boolean {
+        return resourceType == OddResourceType.VIEWER && authentication != null
+    }
+
+    private fun isWatchlistAdd(): Boolean {
+        return resourceType == OddResourceType.WATCHLIST && watchlist != null && watchlist.addToWatchlist
+    }
+
+    private fun isWatchlistRemove(): Boolean {
+        return resourceType == OddResourceType.WATCHLIST && watchlist != null && !watchlist.addToWatchlist
+    }
+
+    private fun isVideoProgress(): Boolean {
+        return resourceType == OddResourceType.PROGRESS && progress != null
     }
 
     private fun shouldSkipCache(): Boolean {
         if (skipCache) return true
         return when (resourceType) {
-            OddResourceType.CONFIG -> { true }
             OddResourceType.COLLECTION -> { skipCache }
-            OddResourceType.EVENT -> { true }
             OddResourceType.PROMOTION -> { skipCache }
-            OddResourceType.SEARCH -> { true }
             OddResourceType.VIDEO -> { skipCache }
             OddResourceType.VIEW -> { skipCache }
+            else -> { true }
         }
     }
 
@@ -311,6 +382,7 @@ class OddRequest(
      * @param resourceType - provide [OddResourceType] to specify REST resource
      */
     class Builder(val context: Context, val resourceType: OddResourceType) {
+        var authentication: OddAuthentication? = null
         var include: String? = null
         var authorizationJWT: String? = null
         var versionName: String? = null
@@ -323,6 +395,8 @@ class OddRequest(
         var sort: String? = null
         var query: String? = null
         var event: OddMetric? = null
+        var watchlist: OddWatchlist? = null
+        var progress: OddProgress? = null
         var skipCache: Boolean = false
 
         /**
@@ -501,6 +575,44 @@ class OddRequest(
          */
         fun event(event: OddMetric): Builder {
             this.event = event
+            return this
+        }
+
+        /**
+         * Specifies the [OddAuthentication] resource to POST.
+         *
+         * Required when [resourceType] is [OddResourceType.VIEWER]
+         *
+         * @param email - the email address
+         * @param password - the password
+         */
+        fun login(email: String, password: String): Builder {
+            val authentication = OddAuthentication(email, password)
+            this.authentication = authentication
+            return this
+        }
+
+        /**
+         * Specifies the [OddResource] to POST to the given [OddViewer]'s watchlist
+         * relationship.
+         *
+         * @param viewer - specifies the watchlist to manage
+         * @param resource - specifies the resource to add to the watchlist
+         */
+        fun addResourceToWatchlist(viewer: OddViewer, resource: OddResource): Builder {
+            this.watchlist = OddWatchlist(viewer, resource, true)
+            return this
+        }
+
+        /**
+         * Specifies the [OddResource] to DELETE from the given [OddViewer]'s
+         * watchlist relationship.
+         *
+         * @param viewer - specifies the watchlist to manage
+         * @param resource - specifies the resource to remove from the watchlist
+         */
+        fun removeResourceFromWatchlist(viewer: OddViewer, resource: OddResource): Builder {
+            this.watchlist = OddWatchlist(viewer, resource, false)
             return this
         }
 

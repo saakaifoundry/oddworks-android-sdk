@@ -11,12 +11,19 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.util.HashMap;
+import java.util.LinkedHashSet;
 import java.util.Locale;
+import java.util.Set;
 
 import io.oddworks.device.Oddworks;
 import io.oddworks.device.exception.OddRequestException;
 import io.oddworks.device.metric.OddAppInitMetric;
 import io.oddworks.device.metric.OddMetric;
+import io.oddworks.device.model.OddAuthentication;
+import io.oddworks.device.model.common.OddIdentifier;
+import io.oddworks.device.model.common.OddRelationship;
+import io.oddworks.device.model.common.OddResource;
 import io.oddworks.device.model.common.OddResourceType;
 
 import static junit.framework.Assert.assertFalse;
@@ -120,6 +127,15 @@ public class OddRequestBuilderTest {
         assertNull(builder.getEvent());
         OddRequest.Builder test = builder.event(event);
         assertThat(test.getEvent(), is((OddMetric) event));
+    }
+
+    @Test
+    public void testAuthentication() throws Exception {
+        String email = "email@example.com";
+        String password = "secret";
+        OddRequest.Builder test = builder.login("email@example.com", "secret");
+        assertThat(test.getAuthentication().getEmail(), is(email));
+        assertThat(test.getAuthentication().getPassword(), is(password));
     }
 
     @Test
