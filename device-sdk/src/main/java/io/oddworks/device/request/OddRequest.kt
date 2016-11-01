@@ -373,7 +373,12 @@ class OddRequest(
     }
 
     private fun stashViewer(viewer: OddViewer) {
-        val prefs = context.getSharedPreferences(AUTHORIZED_VIEWER, Context.MODE_PRIVATE).edit()
+        val prefs = context.getSharedPreferences(AUTHORIZED_VIEWER_PREFERENCES, Context.MODE_PRIVATE).edit()
+        prefs.putString(AUTHORIZED_VIEWER_ID, viewer.identifier.id)
+        prefs.putString(AUTHORIZED_VIEWER_EMAIL, viewer.email)
+        prefs.putStringSet(AUTHORIZED_VIEWER_ENTITLEMENTS, viewer.entitlements)
+        prefs.putString(AUTHORIZED_VIEWER_JWT, viewer.jwt)
+        prefs.apply()
         // TODO stash the viewer here
         // TODO create an easy way to fetch the viewer from shared prefs
         // TODO create a way to clear the viewer from shared prefs
@@ -642,8 +647,12 @@ class OddRequest(
 
 
     companion object {
-        private val AUTHORIZATION_PREFERENCES = "${OddRequest::class.java.name}.AUTHORIZATION_PREFERENCES"
-        private val AUTHORIZATION_PREFERENCE_JWT = "${OddRequest::class.java.name}.AUTHORIZATION_PREFERENCE_JWT"
+
+        private val AUTHORIZED_VIEWER_PREFERENCES = "${OddRequest::class.java.name}.AUTHORIZED_VIEWER_PREFERENCES"
+        private val AUTHORIZED_VIEWER_ID = "${OddRequest::class.java.name}.AUTHORIZED_VIEWER_ID"
+        private val AUTHORIZED_VIEWER_EMAIL = "${OddRequest::class.java.name}.AUTHORIZED_VIEWER_EMAIL"
+        private val AUTHORIZED_VIEWER_ENTITLEMENTS = "${OddRequest::class.java.name}.AUTHORIZED_VIEWER_ENTITLEMENTS"
+        private val AUTHORIZED_VIEWER_JWT = "${OddRequest::class.java.name}.AUTHORIZED_VIEWER_JWT"
         private val JSON = MediaType.parse("application/json; charset=utf-8")
         private val ACCEPT_HEADER = "application/json"
         private val LANGUAGE = Locale.getDefault().language.toLowerCase()
