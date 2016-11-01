@@ -30,7 +30,7 @@ object OddMetricHandler {
      * Registers the instance of OddMetricHandler on the OddRxBus
      * so it can begin receiving posted event objects.
      */
-    fun enable(context: Context) {
+    @JvmStatic fun enable(context: Context) {
         val observable = OddRxBus.observable
         val oddMetricCallback = object : OddCallback<OddMetric> {
             override fun onSuccess(resource: OddMetric) {

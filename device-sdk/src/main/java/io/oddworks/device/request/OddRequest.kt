@@ -1,12 +1,16 @@
 package io.oddworks.device.request
 
+import android.accounts.*
 import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
+import android.support.annotation.Nullable
 import android.util.Log
 import com.squareup.okhttp.*
 import io.oddworks.device.Oddworks
+import io.oddworks.device.R
+import io.oddworks.device.authentication.OddAuthGeneral
 import io.oddworks.device.exception.BadResponseCodeException
 import io.oddworks.device.exception.OddParseException
 import io.oddworks.device.exception.OddRequestException
@@ -26,6 +30,7 @@ class OddRequest(
         private val resourceType: OddResourceType,
         private val resourceId: String? = null,
         private val apiBaseURL: String? = null,
+        private val account: Account? = null,
         private val authorizationJWT: String? = null,
         private val acceptLanguageHeader: String?,
         private val versionName: String? = null,
@@ -40,6 +45,10 @@ class OddRequest(
         private val watchlist: OddWatchlist? = null,
         private val progress: OddProgress? = null,
         private val skipCache: Boolean = false) {
+
+    private val accountManager by lazy {
+        context.getSystemService(Context.ACCOUNT_SERVICE) as AccountManager
+    }
 
     private val packageManager by lazy {
         context.packageManager
@@ -82,9 +91,20 @@ class OddRequest(
             return acceptLanguageHeader ?: LOCALE
         }
 
+    private val viewerJWT: String?
+        get() {
+            if (account == null) return null
+            try {
+                return accountManager.blockingGetAuthToken(account, OddAuthGeneral.AUTH_TOKEN_TYPE_ODDWORKS_DEVICE, true)
+            } catch (e: Exception) {
+                Log.w(TAG, "viewerJWT failed - ${e.message}")
+            }
+            return null
+        }
+
     private val authorization: String
         get() {
-            val jwt = authorizationJWT ?: fetchJWTSharedPreferences() ?: metaData?.getString(Oddworks.CONFIG_JWT_KEY) ?: throw OddRequestException("Missing ${Oddworks.CONFIG_JWT_KEY} in Application meta-data")
+            val jwt = authorizationJWT ?: viewerJWT ?: metaData?.getString(Oddworks.CONFIG_JWT_KEY) ?: throw OddRequestException("Missing ${Oddworks.CONFIG_JWT_KEY} in Application meta-data")
             return "Bearer $jwt"
         }
 
@@ -92,6 +112,7 @@ class OddRequest(
             builder.resourceType,
             builder.resourceId,
             builder.apiBaseURL,
+            builder.account,
             builder.authorizationJWT,
             builder.acceptLanguageHeader,
             builder.versionName,
@@ -220,9 +241,10 @@ class OddRequest(
                         }
                     }
                     else -> {
-                        // remove JWT on status 401
-                        if (response.code() == 401) {
-                            clearJWTSharedPreferences()
+                        // invalidate JWT on status 401
+                        if (response.code() == 401 && account != null) {
+                            val accountType = context.getString(R.string.oddworks_account_type)
+                            accountManager.invalidateAuthToken(accountType, authorizationJWT)
                         }
                         // try to get OddErrors, if any
                         try {
@@ -267,15 +289,7 @@ class OddRequest(
                         OddParser.parseMultipleResponse(responseBody) as T
                     }
                     else -> {
-                        val obj = OddParser.parseSingleResponse(responseBody) as T
-
-                        // Automatically Store the Viewer's JWT in SharedPreferences
-                        if (obj is OddViewer) {
-                            stashJWTSharedPreferences(obj.jwt)
-                            stashViewer(obj)
-                        }
-
-                        obj
+                        OddParser.parseSingleResponse(responseBody) as T
                     }
                 }
             }
@@ -372,19 +386,6 @@ class OddRequest(
         }
     }
 
-    private fun stashViewer(viewer: OddViewer) {
-        val prefs = context.getSharedPreferences(AUTHORIZED_VIEWER_PREFERENCES, Context.MODE_PRIVATE).edit()
-        prefs.putString(AUTHORIZED_VIEWER_ID, viewer.identifier.id)
-        prefs.putString(AUTHORIZED_VIEWER_EMAIL, viewer.email)
-        prefs.putStringSet(AUTHORIZED_VIEWER_ENTITLEMENTS, viewer.entitlements)
-        prefs.putString(AUTHORIZED_VIEWER_JWT, viewer.jwt)
-        prefs.apply()
-        // TODO stash the viewer here
-        // TODO create an easy way to fetch the viewer from shared prefs
-        // TODO create a way to clear the viewer from shared prefs
-        // TODO clean up sending viewer to addToWatchlist/removeFromWatchlist/progress requests
-    }
-
     /**
      * Build an OddRequest
      *
@@ -392,6 +393,7 @@ class OddRequest(
      * @param resourceType - provide [OddResourceType] to specify REST resource
      */
     class Builder(val context: Context, val resourceType: OddResourceType) {
+        var account: Account? = null
         var authentication: OddAuthentication? = null
         var include: String? = null
         var authorizationJWT: String? = null
@@ -458,6 +460,18 @@ class OddRequest(
          */
         fun include(include: String): Builder {
             this.include = include
+            return this
+        }
+
+        /**
+         * Used to specify the OddViewer Account which contains an Authorization JWT.
+         *
+         * This can be overridden by [authorizationJWT]
+         *
+         * @param account - the android Account to use for authorizing the request.
+         */
+        fun account(@Nullable account: Account?): Builder {
+            this.account = account
             return this
         }
 
@@ -606,11 +620,11 @@ class OddRequest(
          * Specifies the [OddResource] to POST to the given [OddViewer]'s watchlist
          * relationship.
          *
-         * @param viewer - specifies the watchlist to manage
+         * @param viewerId - specifies the id of the OddViewer
          * @param resource - specifies the resource to add to the watchlist
          */
-        fun addResourceToWatchlist(viewer: OddViewer, resource: OddResource): Builder {
-            this.watchlist = OddWatchlist(viewer, resource, true)
+        fun addResourceToWatchlist(viewerId: String, resource: OddResource): Builder {
+            this.watchlist = OddWatchlist(viewerId, resource, true)
             return this
         }
 
@@ -618,11 +632,11 @@ class OddRequest(
          * Specifies the [OddResource] to DELETE from the given [OddViewer]'s
          * watchlist relationship.
          *
-         * @param viewer - specifies the watchlist to manage
+         * @param viewerId - specifies the id of the OddViewer
          * @param resource - specifies the resource to remove from the watchlist
          */
-        fun removeResourceFromWatchlist(viewer: OddViewer, resource: OddResource): Builder {
-            this.watchlist = OddWatchlist(viewer, resource, false)
+        fun removeResourceFromWatchlist(viewerId: String, resource: OddResource): Builder {
+            this.watchlist = OddWatchlist(viewerId, resource, false)
             return this
         }
 
@@ -647,12 +661,7 @@ class OddRequest(
 
 
     companion object {
-
-        private val AUTHORIZED_VIEWER_PREFERENCES = "${OddRequest::class.java.name}.AUTHORIZED_VIEWER_PREFERENCES"
-        private val AUTHORIZED_VIEWER_ID = "${OddRequest::class.java.name}.AUTHORIZED_VIEWER_ID"
-        private val AUTHORIZED_VIEWER_EMAIL = "${OddRequest::class.java.name}.AUTHORIZED_VIEWER_EMAIL"
-        private val AUTHORIZED_VIEWER_ENTITLEMENTS = "${OddRequest::class.java.name}.AUTHORIZED_VIEWER_ENTITLEMENTS"
-        private val AUTHORIZED_VIEWER_JWT = "${OddRequest::class.java.name}.AUTHORIZED_VIEWER_JWT"
+        private val TAG = OddRequest::class.java.simpleName
         private val JSON = MediaType.parse("application/json; charset=utf-8")
         private val ACCEPT_HEADER = "application/json"
         private val LANGUAGE = Locale.getDefault().language.toLowerCase()

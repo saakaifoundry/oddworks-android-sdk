@@ -1,16 +1,29 @@
 package io.oddworks.oddsample;
 
+import android.Manifest;
+import android.accounts.Account;
+import android.accounts.AccountManager;
+import android.accounts.AccountManagerCallback;
+import android.accounts.AccountManagerFuture;
 import android.content.Context;
-import android.support.annotation.Nullable;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Iterator;
 import java.util.LinkedHashSet;
 
+import io.oddworks.device.authentication.OddAuthGeneral;
 import io.oddworks.device.exception.BadResponseCodeException;
 import io.oddworks.device.metric.OddAppInitMetric;
 import io.oddworks.device.metric.OddViewLoadMetric;
@@ -20,7 +33,6 @@ import io.oddworks.device.model.OddError;
 import io.oddworks.device.model.OddPromotion;
 import io.oddworks.device.model.OddVideo;
 import io.oddworks.device.model.OddView;
-import io.oddworks.device.model.OddViewer;
 import io.oddworks.device.model.common.OddResource;
 import io.oddworks.device.model.common.OddResourceType;
 import io.oddworks.device.request.OddCallback;
@@ -33,14 +45,24 @@ import rx.schedulers.Schedulers;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = MainActivity.class.getSimpleName();
+    private static final int PERMISSIONS_REQUEST_GET_ACCOUNTS = 0;
 
     private Context ctx = this;
+    private AccountManager accountManager = null;
+    private Account account = null;
+    private String authorizationJWT = null;
+    private String splashId = null;
+    private String homepageId = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        accountManager = (AccountManager) getSystemService(ACCOUNT_SERVICE);
+
+        showSpinner();
+        hideButton();
         getConfig();
     }
 
@@ -51,10 +73,11 @@ public class MainActivity extends AppCompatActivity {
         OddCallback<OddConfig> configCallback = new OddCallback<OddConfig>() {
             @Override
             public void onSuccess(OddConfig config) {
-                String viewId = config.getViews().get("homepage");
+                homepageId = config.getViews().get("homepage");
+                splashId = config.getViews().get("splash");
 
                 OddAppInitMetric initMetric = new OddAppInitMetric();
-                OddViewLoadMetric viewLoadMetric = new OddViewLoadMetric("view", viewId, null);
+                OddViewLoadMetric viewLoadMetric = new OddViewLoadMetric("view", homepageId, null);
 
                 OddRxBus.publish(initMetric);
                 OddRxBus.publish(viewLoadMetric);
@@ -64,7 +87,12 @@ public class MainActivity extends AppCompatActivity {
                 if (config.getFeatures().getAuthentication().getEnabled()) {
                     Log.d(TAG, "authentication enabled");
                 }
-                getAuthentication(config);
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        checkAuthentication();
+                    }
+                });
             }
 
             @Override
@@ -74,6 +102,7 @@ public class MainActivity extends AppCompatActivity {
         };
 
         new OddRequest.Builder(ctx, OddResourceType.CONFIG)
+                .account(account)
                 .build()
                 .enqueueRequest(configCallback);
     }
@@ -81,46 +110,35 @@ public class MainActivity extends AppCompatActivity {
     /**
      * example login using Oddworks and RxOddCall
      */
-    private void getAuthentication(final OddConfig config) {
-        final String viewId = config.getViews().get("homepage");
-        RxOddCall
-                .observableFrom(new Action1<OddCallback<OddViewer>>() {
-                    @Override
-                    public void call(OddCallback<OddViewer> oddViewerCallback) {
-                        new OddRequest.Builder(ctx, OddResourceType.VIEWER)
-                                .login("paul@oddnetworks.com", "PaulIsPurple")
-                                .build()
-                                .enqueueRequest(oddViewerCallback);
-                    }
-                })
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<OddViewer>() {
-                   @Override
-                   public void call(OddViewer oddViewer) {
-                       Log.d(TAG, "getAuthentication success: " + oddViewer);
-
-                       getHomepage(viewId, oddViewer);
-                   }
-               },
-                new Action1<Throwable>() {
-                    @Override
-                    public void call(Throwable throwable) {
-                        handleRequestException("getAuthentication", throwable);
-                        getHomepage(viewId, null);
-                    }
-                });
+    private void checkAuthentication() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.GET_ACCOUNTS) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.GET_ACCOUNTS}, PERMISSIONS_REQUEST_GET_ACCOUNTS);
+        } else {
+            Account[] accounts = accountManager.getAccountsByType(getString(R.string.oddworks_account_type));
+            if (accounts.length == 0) {
+                hideSpinner();
+                showButton();
+                getView(splashId);
+            } else {
+                hideSpinner();
+                hideButton();
+                account = accounts[0];
+                updateSignInMessage("Signed in as " + account.name);
+                getView(homepageId);
+            }
+        }
     }
 
     /**
      * example using RxOddCall, wrapping OddRequest in an RxJava Observable
      */
-    private void getHomepage(final String viewId, @Nullable final OddViewer viewer) {
+    private void getView(final String viewId) {
         RxOddCall
                 .observableFrom(new Action1<OddCallback<OddView>>() {
                     @Override
                     public void call(OddCallback<OddView> oddCallback) {
                         new OddRequest.Builder(ctx, OddResourceType.VIEW)
+                                .account(account)
                                 .resourceId(viewId)
                                 .include("featuredCollections,promotion")
                                 .build()
@@ -138,28 +156,27 @@ public class MainActivity extends AppCompatActivity {
                         OddPromotion promotion = (OddPromotion) promotions.iterator().next();
                         OddCollection collection1 = (OddCollection) featuredCollections.iterator().next();
 
-                        Log.d(TAG, "getHomepage success: promotion " + promotion.getTitle() + " collection: " + collection1.getTitle());
-                        getVideos(viewer);
+                        Log.d(TAG, "getView success: promotion " + promotion.getTitle() + " collection: " + collection1.getTitle());
+                        getVideos();
                         getCollectionEntities(collection1.getIdentifier().getId());
-                        if (viewer != null) {
-                            addToWatchlist(viewer, collection1);
-                        }
+                        addToWatchlist(collection1);
                     }
                 }, new Action1<Throwable>() {
                     @Override
                     public void call(Throwable throwable) {
-                        handleRequestException("getHomepage", throwable);
+                        handleRequestException("getView", throwable);
                     }
                 });
     }
 
-    private void getVideos(@Nullable final OddViewer viewer) {
+    private void getVideos() {
         RxOddCall
                 .observableFrom(new Action1<OddCallback<LinkedHashSet<OddVideo>>>() {
 
                     @Override
                     public void call(OddCallback<LinkedHashSet<OddVideo>> oddCallback) {
                         new OddRequest.Builder(ctx, OddResourceType.VIDEO)
+                                .account(account)
                                 .build()
                                 .enqueueRequest(oddCallback);
                     }
@@ -173,9 +190,9 @@ public class MainActivity extends AppCompatActivity {
                         Iterator<OddVideo> oddVideoIterator = videos.iterator();
                         if (oddVideoIterator.hasNext()) {
                             OddVideo vid = oddVideoIterator.next();
-                            if (viewer != null) {
-                                addToWatchlist(viewer, vid);
-                                removeFromWatchlist(viewer, vid);
+                            if (account != null) {
+                                addToWatchlist(vid);
+                                removeFromWatchlist(vid);
                             }
                         }
                     }
@@ -194,6 +211,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void call(OddCallback<LinkedHashSet<OddResource>> oddCallback) {
                         new OddRequest.Builder(ctx, OddResourceType.COLLECTION)
+                                .account(account)
                                 .resourceId(collectionId)
                                 .relationshipName(OddCollection.RELATIONSHIPS.ENTITIES)
                                 .build()
@@ -215,13 +233,17 @@ public class MainActivity extends AppCompatActivity {
                 });
     }
 
-    private void addToWatchlist(final OddViewer viewer, final OddResource resource) {
+    private void addToWatchlist(final OddResource resource) {
+        if (account == null) {
+            Log.d(TAG, "addToWatchlist not called - no account");
+        }
         RxOddCall
                 .observableFrom(new Action1<OddCallback<OddResource>>() {
                     @Override
                     public void call(OddCallback<OddResource> oddResourceOddCallback) {
                         new OddRequest.Builder(ctx, OddResourceType.WATCHLIST)
-                                .addResourceToWatchlist(viewer, resource)
+                                .account(account)
+                                .addResourceToWatchlist(account.name, resource)
                                 .build()
                                 .enqueueRequest(oddResourceOddCallback);
                     }
@@ -241,13 +263,17 @@ public class MainActivity extends AppCompatActivity {
                 });
     }
 
-    private void removeFromWatchlist(final OddViewer viewer, final OddResource resource) {
+    private void removeFromWatchlist(final OddResource resource) {
+        if (account == null) {
+            Log.d(TAG, "removeFromWatchlist not called - no account");
+        }
         RxOddCall
                 .observableFrom(new Action1<OddCallback<OddResource>>() {
                     @Override
                     public void call(OddCallback<OddResource> oddResourceOddCallback) {
                         new OddRequest.Builder(ctx, OddResourceType.WATCHLIST)
-                                .removeResourceFromWatchlist(viewer, resource)
+                                .account(account)
+                                .removeResourceFromWatchlist(account.name, resource)
                                 .build()
                                 .enqueueRequest(oddResourceOddCallback);
                     }
@@ -273,6 +299,82 @@ public class MainActivity extends AppCompatActivity {
             int code = ((BadResponseCodeException) throwable).getCode();
             LinkedHashSet<OddError> errors = ((BadResponseCodeException) throwable).getOddErrors();
             Log.w(TAG, requestType + " code: " + code + " errors: " + errors);
+        }
+    }
+
+    private void showButton() {
+        View signInButton = findViewById(R.id.sign_in_button);
+        if (signInButton != null) {
+            signInButton.setVisibility(View.VISIBLE);
+            signInButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    addNewAccount(getString(R.string.oddworks_account_type), OddAuthGeneral.AUTH_TOKEN_TYPE_ODDWORKS_DEVICE);
+                }
+            });
+        }
+    }
+
+    private void hideButton() {
+        View signInButton = findViewById(R.id.sign_in_button);
+        if (signInButton != null) {
+            signInButton.setVisibility(View.GONE);
+        }
+    }
+
+    private void showSpinner() {
+        View progressBar = findViewById(R.id.sign_in_spinner);
+        if (progressBar != null) {
+            progressBar.setVisibility(View.VISIBLE);
+        }
+    }
+
+    private void hideSpinner() {
+        View progressBar = findViewById(R.id.sign_in_spinner);
+        if (progressBar != null) {
+            progressBar.setVisibility(View.GONE);
+        }
+    }
+
+    private void updateSignInMessage(String message) {
+        TextView signInMessage = (TextView) findViewById(R.id.sign_in_message);
+        if (signInMessage != null) {
+            signInMessage.setText(message);
+        }
+    }
+
+    private void addNewAccount(String accountType, String authTokenType) {
+        accountManager.addAccount(accountType, authTokenType, null, null, this, new AccountManagerCallback<Bundle>() {
+            @Override
+            public void run(AccountManagerFuture<Bundle> accountManagerFuture) {
+                try {
+                    Bundle res = accountManagerFuture.getResult();
+                    Toast.makeText(ctx, "Account was created", Toast.LENGTH_SHORT).show();
+                    Log.d(TAG, "addNewAccount Bundle is " + res);
+                    restartActivity();
+                } catch (Exception e) {
+                    Log.w(TAG, "addNewAccount failed", e);
+                    Toast.makeText(ctx, "Account creation failed", Toast.LENGTH_SHORT).show();
+                }
+            }
+        }, null);
+    }
+
+    private void restartActivity() {
+        Intent intent = getIntent();
+        finish();
+        startActivity(intent);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch (requestCode) {
+            case PERMISSIONS_REQUEST_GET_ACCOUNTS: {
+                checkAuthentication();
+            }
+            default: {
+                super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+            }
         }
     }
 }

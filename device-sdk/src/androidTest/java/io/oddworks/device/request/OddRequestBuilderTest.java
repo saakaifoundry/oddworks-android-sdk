@@ -153,7 +153,7 @@ public class OddRequestBuilderTest {
                     .versionName("blowfish")
                     .build();
         } catch (OddRequestException e) {
-            assertThat(e.getMessage(), is("Missing " + Oddworks.API_BASE_URL_KEY + " in Application meta-data"));
+            assertThat(e.getMessage(), is("Missing " + Oddworks.Companion.getAPI_BASE_URL_KEY() + " in Application meta-data"));
         }
     }
 
