@@ -50,7 +50,6 @@ public class MainActivity extends AppCompatActivity {
     private Context ctx = this;
     private AccountManager accountManager = null;
     private Account account = null;
-    private String authorizationJWT = null;
     private String splashId = null;
     private String homepageId = null;
 
