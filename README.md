@@ -13,7 +13,7 @@ An [Oddworks](https://github.com/oddnetworks/oddworks) device client SDK for And
 <dependency>
   <groupId>io.oddworks</groupId>
   <artifactId>device-sdk</artifactId>
-  <version>3.0.0-rc1</version>
+  <version>3.0.0-rc2</version>
 </dependency>
 ```
 
@@ -37,7 +37,7 @@ At a high level, this SDK wraps the Oddworks API with an OkHttp client, parsing 
 
 ### Configuring device-sdk
 
-You will need to configure two pieces of application meta-data to get started.
+You will need to configure a few pieces of application meta-data in `AndroidManifest.xml` to get started.
 
 First, you will need to specify the device-specific JSON Web Token (JWT) given by Oddworks.
 
@@ -49,7 +49,7 @@ First, you will need to specify the device-specific JSON Web Token (JWT) given b
 </application>
 ```
 
-Then you will need to specify the base Oddworks API endpoint. You can skip this part if you are using the non-enterprise Oddworks content service at `https://content.oddworks.io/v2`.
+Then, if you are using the enterprise Oddworks content service, you will need to add the `io.oddworks.apiBaseURL` meta-data. If you leave this out, the default endpoint will be used. See `Oddworks.DEFAULT_API_BASE_URL`.
 
 ```xml
 <application>
@@ -61,6 +61,23 @@ Then you will need to specify the base Oddworks API endpoint. You can skip this 
         android:value="https://path-to-your-oddworks.com/version" />
 </application>
 ```
+
+Finally, if you are using the enterprise Oddworks analytics service, you will need to add the `io.oddworks.analyticsApiBaseURL` meta-data. If you leave this out, the default endpoint will be used. See `Oddworks.DEFAULT_ANALYTICS_API_BASE_URL`.
+
+```xml
+<application>
+    <meta-data
+        android:name="io.oddworks.configJWT"
+        android:value="the-device-specific-jwt-given-by-the-oddworks-server" />
+    <meta-data
+        android:name="io.oddworks.apiBaseURL"
+        android:value="https://path-to-your-oddworks-content-service.com/version" />
+    <meta-data
+        android:name="io.oddworks.analyticsApiBaseURL"
+        android:value="https://path-to-your-oddworks-analytics-service.com" />
+</application>
+```
+
 
 ### Requesting Data
 
@@ -134,7 +151,7 @@ RxOddCall
 
 ### Authentication
 
-This SDK offers an `OddAuthenticator` service that can be configured to handle authentication via Oddworks. 
+This SDK offers an `OddAuthenticator` service that can be configured to handle authentication via Oddworks.
 
 An authentication workflow can also be manually created via `OddRequest.Builder`.
 
@@ -156,7 +173,7 @@ To utilize OddAuthenticatorService, you must first declare it within the `<appli
 
 __Step 2:__ `res/strings.xml`
 
-Next, you should override a few strings in your application's `res/strings.xml` file. 
+Next, you should override a few strings in your application's `res/strings.xml` file.
 
 - `@string/oddworks_account_type` - This should be a string that is unique to your application and will distinguish your Accounts from others on the device.
 - `@string/oddworks_account_label` - This will be the label displayed when listing the device's Accounts.
@@ -194,7 +211,7 @@ There are several customizable strings within this view.
     ...
     android:text="@string/action_sign_in"
     />
-    
+
 <TextView
     android:id="@+id/account_message"
     ...
@@ -214,8 +231,68 @@ If the Account's `authToken` is valid, it will be used to make the request.
 
 If the Account's `authToken` is invalid or missing, the user will be prompted to reauthenticate.
 
-If the Authenticated request responds with a `401` code, the Account's `authToken` is invalidated. 
+If the Authenticated request responds with a `401` code, the Account's `authToken` is invalidated.
 
+### Enabling Analytics
+
+There are two ways of sending analytics metrics.
+
+#### Sending OddMetric requests manually
+
+Note: Be careful about making requests on the main thread.
+
+```java
+// from within your activity
+
+OddCallback<OddMetric> metricCallback = new OddCallback<OddMetric>() {
+    @Override
+    public void onSuccess(OddMetric resource) {
+        Log.d(TAG, "handleOddMetric: SUCCESS $resource}")
+    }
+
+    @Override
+    public void onFailure(@NotNull Exception exception) {
+        Log.d(TAG, "handleOddMetric: FAILURE $exception")
+        if (exception is BadResponseCodeException) {
+            Log.d(TAG, "handleOddMetric code: ${exception.code} errors: ${exception.oddErrors}")
+        }
+    }
+};
+
+OddRequest.Builder(context, OddResourceType.EVENT)
+                        .event(event)
+                        .build()
+                        .enqueueRequest(oddMetricCallback)
+```
+
+#### Sending OddMetric requests via the OddRxBus
+
+You will first need to enable the OddMetricHandler. A good place to do this is in your Application class.
+
+```java
+
+public class YourApp extends Application {
+  @Override
+  public void onCreate() {
+      super.onCreate();
+
+      // Enable handling of published analytics events
+      OddMetricHandler.INSTANCE.enable(this);
+  }
+}
+```
+
+Using the OddMetricHandler ensures the POST requests are sent on an IO Scheduler thread.
+
+Next, when you are ready to enqueue an OddMetric request, simply use the `OddRxBus.publish()` function.
+
+```java
+
+// from within an activity
+OddAppInitMetric metric = new OddAppInitMetric();
+
+OddRxBus.INSTANCE.publish(metric);
+```
 
 ## Contributing
 
