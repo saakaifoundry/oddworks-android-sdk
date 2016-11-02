@@ -132,6 +132,91 @@ RxOddCall
     });
 ```
 
+### Authentication
+
+This SDK offers an `OddAuthenticator` service that can be configured to handle authentication via Oddworks. 
+
+An authentication workflow can also be manually created via `OddRequest.Builder`.
+
+#### OddAuthenticatorService
+
+__Step 1:__ `AndroidManifest.xml`
+
+To utilize OddAuthenticatorService, you must first declare it within the `<application>` block of `AndroidManifest.xml`
+
+```xml
+<service android:name="io.oddworks.device.authentication.OddAuthenticatorService">
+    <intent-filter>
+        <action android:name="android.accounts.AccountAuthenticator" />
+    </intent-filter>
+    <meta-data android:name="android.accounts.AccountAuthenticator"
+                       android:resource="@xml/oddworks_authenticator" />
+</service>
+```
+
+__Step 2:__ `res/strings.xml`
+
+Next, you should override a few strings in your application's `res/strings.xml` file. 
+
+- `@string/oddworks_account_type` - This should be a string that is unique to your application and will distinguish your Accounts from others on the device.
+- `@string/oddworks_account_label` - This will be the label displayed when listing the device's Accounts.
+
+!["OddSample"](http://oddworks-android-sdk.s3.amazonaws.com/android-device-account-list.png)
+
+__Step 3:__ `res/mipmap/ic_launcher.png|xml`
+
+Be sure that you have an `ic_launcher` icon set in your application's `res/mipmap` directory(ies). This will be the icon displayed when listing the device's Accounts.
+
+#### OddAuthenticationActivity
+
+When creating a new Account with OddAuthenticationService, an OddAuthenticationActivity is started.
+
+![OddAuthenticationActivity](http://oddworks-android-sdk.s3.amazonaws.com/android-device-odd-authentication-activity.png)
+
+There are several customizable strings within this view.
+
+```xml
+<AutoCompleteTextView
+    android:id="@+id/account_email"
+    ...
+    android:hint="@string/prompt_email"
+    />
+
+<EditText
+    android:id="@+id/account_password"
+    ...
+    android:hint="@string/prompt_password"
+    android:imeActionLabel="@string/action_sign_in_short"
+    />
+
+<Button
+    android:id="@+id/email_sign_in_button"
+    ...
+    android:text="@string/action_sign_in"
+    />
+    
+<TextView
+    android:id="@+id/account_message"
+    ...
+    android:text="@string/account_message"
+    />
+```
+
+In additon to the strings, the view's style can be overridden via `@style/AppTheme`
+
+#### Handling Accounts
+
+Ultimately, how you choose to handle your Account(s) is up to you.
+
+Authenticating an OddRequest with an Account can be done using the `OddRequest.Builder` function `account(Account)`.
+
+If the Account's `authToken` is valid, it will be used to make the request.
+
+If the Account's `authToken` is invalid or missing, the user will be prompted to reauthenticate.
+
+If the Authenticated request responds with a `401` code, the Account's `authToken` is invalidated. 
+
+
 ## Contributing
 
 If you would like to contribute code you can do so through GitHub by forking the repository and sending a pull request.
