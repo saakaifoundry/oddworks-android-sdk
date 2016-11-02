@@ -141,7 +141,7 @@ class OddRequest(
     }
 
     /**
-     * Builds and executes an [Request]
+     * Builds and executes a [Request]
      *
      * @param oddCallback - an [OddCallback]
      */
