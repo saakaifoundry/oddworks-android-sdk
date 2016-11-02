@@ -12,7 +12,29 @@
     tools:context="io.oddworks.oddsample.MainActivity">
 
     <TextView
-        android:layout_width="wrap_content"
+        android:id="@+id/sign_in_message"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Hello World!"/>
+        android:textAlignment="center"
+        android:text="@string/oddworks_sample_app"/>
+
+    <Button
+        android:text="@string/sign_in"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/sign_in_button"
+        tools:visibility="visible"
+        android:visibility="gone"/>
+
+    <ProgressBar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/sign_in_spinner"
+        tools:visibility="gone"
+        android:visibility="visible"/>
+
 </RelativeLayout>

@@ -11,9 +11,9 @@ class OddCollection(identifier: OddIdentifier,
                     meta: JSONObject?,
                     val title: String,
                     val description: String,
-                    val images: Set<OddImage>,
+                    override val images: Set<OddImage>,
                     val genres: Set<String>,
-                    val releaseDate: Date?) : OddResource(identifier, relationships, included, meta) {
+                    val releaseDate: Date?) : OddResource(identifier, relationships, included, meta), OddImageable {
 
     init {
         if (identifier.type != OddResourceType.COLLECTION) {
@@ -21,8 +21,16 @@ class OddCollection(identifier: OddIdentifier,
         }
     }
 
-    companion object {
-        @JvmField val RELATIONSHIP_ENTITIES = "entities"
-        @JvmField val RELATIONSHIP_FEATURED = "featured"
+    fun isEntitled(): Boolean {
+        if (meta != null) {
+            return meta.optBoolean("entitled", false)
+        }
+
+        return false
+    }
+
+    object RELATIONSHIPS {
+        @JvmField val ENTITIES = "entities"
+        @JvmField val FEATURED = "featured"
     }
 }

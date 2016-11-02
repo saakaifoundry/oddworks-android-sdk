@@ -1,17 +1,25 @@
 package io.oddworks.device.request
 
+import android.accounts.*
 import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
+import android.support.annotation.Nullable
 import android.util.Log
 import com.squareup.okhttp.*
 import io.oddworks.device.Oddworks
+import io.oddworks.device.R
+import io.oddworks.device.authentication.OddAuthGeneral
 import io.oddworks.device.exception.BadResponseCodeException
 import io.oddworks.device.exception.OddParseException
 import io.oddworks.device.exception.OddRequestException
 import io.oddworks.device.metric.OddMetric
-import io.oddworks.device.model.OddConfig
+import io.oddworks.device.model.OddAuthentication
+import io.oddworks.device.model.OddProgress
+import io.oddworks.device.model.OddViewer
+import io.oddworks.device.model.OddWatchlist
+import io.oddworks.device.model.common.OddResource
 import io.oddworks.device.model.common.OddResourceType
 import org.json.JSONException
 import java.io.IOException
@@ -22,6 +30,7 @@ class OddRequest(
         private val resourceType: OddResourceType,
         private val resourceId: String? = null,
         private val apiBaseURL: String? = null,
+        private val account: Account? = null,
         private val authorizationJWT: String? = null,
         private val acceptLanguageHeader: String?,
         private val versionName: String? = null,
@@ -32,7 +41,14 @@ class OddRequest(
         private val sort: String? = null,
         private val query: String? = null,
         private val event: OddMetric? = null,
+        private val authentication: OddAuthentication? = null,
+        private val watchlist: OddWatchlist? = null,
+        private val progress: OddProgress? = null,
         private val skipCache: Boolean = false) {
+
+    private val accountManager by lazy {
+        context.getSystemService(Context.ACCOUNT_SERVICE) as AccountManager
+    }
 
     private val packageManager by lazy {
         context.packageManager
@@ -53,10 +69,13 @@ class OddRequest(
 
     private val baseURL: HttpUrl
         get() {
-            val baseUrlString = if (isEventPost()) {
-                apiBaseURL ?: metaData?.getString(Oddworks.ANALYTICS_API_BASE_URL_KEY, Oddworks.DEFAULT_ANALYTICS_API_BASE_URL) ?: throw OddRequestException("Missing ${Oddworks.ANALYTICS_API_BASE_URL_KEY} in Application meta-data")
-            } else {
-                apiBaseURL ?: metaData?.getString(Oddworks.API_BASE_URL_KEY, Oddworks.DEFAULT_API_BASE_URL) ?: throw OddRequestException("Missing ${Oddworks.API_BASE_URL_KEY} in Application meta-data")
+            val baseUrlString = when {
+                isEventResourceType() -> {
+                    apiBaseURL ?: metaData?.getString(Oddworks.ANALYTICS_API_BASE_URL_KEY, Oddworks.DEFAULT_ANALYTICS_API_BASE_URL) ?: throw OddRequestException("Missing ${Oddworks.ANALYTICS_API_BASE_URL_KEY} in Application meta-data")
+                }
+                else -> {
+                    apiBaseURL ?: metaData?.getString(Oddworks.API_BASE_URL_KEY, Oddworks.DEFAULT_API_BASE_URL) ?: throw OddRequestException("Missing ${Oddworks.API_BASE_URL_KEY} in Application meta-data")
+                }
             }
             return HttpUrl.parse(baseUrlString)
         }
@@ -64,7 +83,7 @@ class OddRequest(
     private val oddUserAgent: String
         get() {
             val version = versionName ?: packageInfo.versionName ?: throw OddRequestException("Application PackageInfo versionName is somehow missing")
-            return "platform[name]=Android&model[name]=${Build.MANUFACTURER}&model[version]=${Build.MODEL}&os[name]=${Build.VERSION.CODENAME}&os[version]=${Build.VERSION.SDK_INT}&build[version]=$version"
+            return "model[manufacturer]=${Build.MANUFACTURER}&model[brand]=${Build.BRAND}&model[name]=${Build.MODEL}&model[version]=${Build.PRODUCT}&os[name]=${Build.VERSION.RELEASE}&os[version]=${Build.VERSION.SDK_INT}&build[version]=$version"
         }
 
     private val acceptLanguage: String
@@ -72,9 +91,20 @@ class OddRequest(
             return acceptLanguageHeader ?: LOCALE
         }
 
+    private val viewerJWT: String?
+        get() {
+            if (account == null) return null
+            try {
+                return accountManager.blockingGetAuthToken(account, OddAuthGeneral.AUTH_TOKEN_TYPE_ODDWORKS_DEVICE, true)
+            } catch (e: Exception) {
+                Log.w(TAG, "viewerJWT failed - ${e.message}")
+            }
+            return null
+        }
+
     private val authorization: String
         get() {
-            val jwt = authorizationJWT ?: fetchJWTSharedPreferences() ?: metaData?.getString(Oddworks.CONFIG_JWT_KEY) ?: throw OddRequestException("Missing ${Oddworks.CONFIG_JWT_KEY} in Application meta-data")
+            val jwt = authorizationJWT ?: viewerJWT ?: metaData?.getString(Oddworks.CONFIG_JWT_KEY) ?: throw OddRequestException("Missing ${Oddworks.CONFIG_JWT_KEY} in Application meta-data")
             return "Bearer $jwt"
         }
 
@@ -82,6 +112,7 @@ class OddRequest(
             builder.resourceType,
             builder.resourceId,
             builder.apiBaseURL,
+            builder.account,
             builder.authorizationJWT,
             builder.acceptLanguageHeader,
             builder.versionName,
@@ -92,6 +123,9 @@ class OddRequest(
             builder.sort,
             builder.query,
             builder.event,
+            builder.authentication,
+            builder.watchlist,
+            builder.progress,
             builder.skipCache) {
     }
 
@@ -107,7 +141,7 @@ class OddRequest(
     }
 
     /**
-     * Builds and executes an [Request]
+     * Builds and executes a [Request]
      *
      * @param oddCallback - an [OddCallback]
      */
@@ -130,14 +164,46 @@ class OddRequest(
                 .addHeader("accept-language", acceptLanguage)
 
 
-        val request = if (isEventPost()) {
-            builder.post(RequestBody.create(JSON, event!!.toJSONObject().toString())).build()
-        } else if (shouldSkipCache()) {
-            builder.cacheControl(CacheControl.FORCE_NETWORK).build()
-        } else {
-            builder.build()
+        val request = when {
+            isEventResourceType() -> {
+                builder
+                        .cacheControl(CacheControl.FORCE_NETWORK)
+                        .post(RequestBody.create(JSON, event!!.toJSONObject().toString()))
+                        .build()
+            }
+            isLogin() -> {
+                builder
+                        .cacheControl(CacheControl.FORCE_NETWORK)
+                        .post(RequestBody.create(JSON, authentication!!.toJSONObject().toString()))
+                        .build()
+            }
+            isWatchlistRemove() -> {
+                builder
+                        .cacheControl(CacheControl.FORCE_NETWORK)
+                        .delete(RequestBody.create(JSON, watchlist!!.toJSONObject().toString()))
+                        .build()
+            }
+            isWatchlistAdd() -> {
+                builder
+                        .cacheControl(CacheControl.FORCE_NETWORK)
+                        .post(RequestBody.create(JSON, watchlist!!.toJSONObject().toString()))
+                        .build()
+            }
+            isVideoProgress() -> {
+                builder
+                        .cacheControl(CacheControl.FORCE_NETWORK)
+                        .post(RequestBody.create(JSON, progress!!.toJSONObject().toString()))
+                        .build()
+            }
+            shouldSkipCache() -> {
+                builder
+                        .cacheControl(CacheControl.FORCE_NETWORK)
+                        .build()
+            }
+            else -> {
+                builder.build()
+            }
         }
-
         Log.d(OddRequest::class.java.simpleName, request.toString())
 
         val callback = getCallback(oddCallback, getParseCall<T>())
@@ -154,33 +220,50 @@ class OddRequest(
 
             override fun onResponse(response: Response) {
                 Log.d("ResponseCb onResponse", "code: ${response.code()} responseBody: ${response.body()}")
-                if (response.isSuccessful) {
-                    var responseBody = ""
-                    try {
-                        responseBody = response.body().string()
-                        val obj = parseCall.parse(responseBody)
-                        oddCallback.onSuccess(obj)
-                    } catch (e: Exception) {
-                        responseBody = if (responseBody.isNullOrBlank()) {
-                            "response.body() was empty"
-                        } else {
-                            responseBody
+
+                when {
+                    response.isSuccessful && (response.code() == 202 || response.code() == 204) -> {
+                        try {
+                            val obj = parseCall.parse("")
+                            oddCallback.onSuccess(obj)
+                        } catch (e: Exception) {
+                            handleFailedParse("", e)
                         }
-                        oddCallback.onFailure(OddParseException("Response body parse failed: $responseBody", e))
                     }
-                } else {
-                    // remove JWT on status 401
-                    if (response.code() == 401) {
-                        clearJWTSharedPreferences()
+                    response.isSuccessful -> {
+                        var responseBody = ""
+                        try {
+                            responseBody = response.body().string()
+                            val obj = parseCall.parse(responseBody)
+                            oddCallback.onSuccess(obj)
+                        } catch (e: Exception) {
+                            handleFailedParse(responseBody, e)
+                        }
                     }
-                    // try to get OddErrors, if any
-                    try {
-                        val oddErrors = OddParser.parseErrorMessage(response.body().string())
-                        oddCallback.onFailure(BadResponseCodeException(response.code(), oddErrors))
-                    } catch (e: Exception) {
-                        oddCallback.onFailure(BadResponseCodeException(response.code()))
+                    else -> {
+                        // invalidate JWT on status 401
+                        if (response.code() == 401 && account != null) {
+                            val accountType = context.getString(R.string.oddworks_account_type)
+                            accountManager.invalidateAuthToken(accountType, authorizationJWT)
+                        }
+                        // try to get OddErrors, if any
+                        try {
+                            val oddErrors = OddParser.parseErrorMessage(response.body().string())
+                            oddCallback.onFailure(BadResponseCodeException(response.code(), oddErrors))
+                        } catch (e: Exception) {
+                            oddCallback.onFailure(BadResponseCodeException(response.code()))
+                        }
                     }
                 }
+            }
+
+            private fun handleFailedParse(body: String?, throwable: Throwable) {
+                val responseBody = if (body.isNullOrBlank()) {
+                    "response.body() was empty"
+                } else {
+                    body
+                }
+                oddCallback.onFailure(OddParseException("Response body parse failed: $responseBody", throwable))
             }
         }
     }
@@ -190,32 +273,24 @@ class OddRequest(
         fun parse(responseBody: String): Any
     }
 
+    @Throws(JSONException::class)
     private fun <T> getParseCall(): ParseCall<T> {
-        return if (isListEndpoint()) {
-            object: ParseCall<T> {
-                override fun parse(responseBody: String): T {
-                    @Suppress("UNCHECKED_CAST")
-                    return OddParser.parseMultipleResponse(responseBody) as T
-                }
-            }
-        } else if (isEventPost()) {
-            object: ParseCall<T> {
-                override fun parse(responseBody: String): T {
-                    @Suppress("UNCHECKED_CAST")
-                    return event as T
-                }
-            }
-        } else {
-            object: ParseCall<T> {
-                override fun parse(responseBody: String): T {
-                    @Suppress("UNCHECKED_CAST")
-                    val obj = OddParser.parseSingleResponse(responseBody) as T
-
-                    if (obj is OddConfig) {
-                        stashJWTSharedPreferences(obj.jwt)
+        return object : ParseCall<T> {
+            override fun parse(responseBody: String): T {
+                @Suppress("UNCHECKED_CAST")
+                return when {
+                    isEventResourceType() -> {
+                        event as T
                     }
-
-                    return obj
+                    isWatchlistAdd() || isWatchlistRemove() -> {
+                        watchlist!!.resource as T
+                    }
+                    isListEndpoint() -> {
+                        OddParser.parseMultipleResponse(responseBody) as T
+                    }
+                    else -> {
+                        OddParser.parseSingleResponse(responseBody) as T
+                    }
                 }
             }
         }
@@ -223,20 +298,29 @@ class OddRequest(
 
     private fun getPath(): String {
         return when {
-            resourceType == OddResourceType.SEARCH || resourceType == OddResourceType.CONFIG -> {
-                resourceType.toString().toLowerCase()
+            isLogin() -> {
+                // /login
+                OddAuthentication.ENDPOINT
             }
-            resourceId == null -> {
+            isWatchlistAdd() || isWatchlistRemove() -> {
+                // /viewers/viewerId/relationships/watchlist
+                OddResourceType.WATCHLIST.endpoint.replace(":id", watchlist!!.viewerId)
+            }
+            isVideoProgress() -> {
+                // /videos/:id/progress
+                OddResourceType.PROGRESS.endpoint.replace(":id", progress!!.videoId)
+            }
+            resourceId == null && resourceType != OddResourceType.VIEWER -> {
                 // /resourceType
-                "${resourceType.toString().toLowerCase()}s"
+                resourceType.endpoint
             }
             relationshipName == null -> {
                 // /resourceType/resourceId
-                "${resourceType.toString().toLowerCase()}s/$resourceId"
+                "${resourceType.endpoint}/$resourceId"
             }
             include == null -> {
                 // /resourceType/resourceId/relationships/{relationshipName}
-                "${resourceType.toString().toLowerCase()}s/$resourceId/relationships/$relationshipName"
+                "${resourceType.endpoint}/$resourceId/relationships/$relationshipName"
             }
             else -> {
                 // this should throw
@@ -247,7 +331,7 @@ class OddRequest(
 
     private fun getQueryParameters(): Map<String, String> {
         val parameters = mutableMapOf<String, String>()
-        if (relationshipName == null && include != null && !isListEndpoint() && !isEventPost() && resourceType != OddResourceType.CONFIG) {
+        if (relationshipName == null && include != null && !isListEndpoint() && !isEventResourceType() && resourceType != OddResourceType.CONFIG) {
             parameters.put("include", include)
         }
         if (limit != null && isListEndpoint()) {
@@ -266,42 +350,40 @@ class OddRequest(
     }
 
     private fun isListEndpoint(): Boolean {
-        return (resourceType != OddResourceType.CONFIG && resourceType != OddResourceType.EVENT) && ((resourceId == null && relationshipName == null) || (resourceId != null && relationshipName != null))
+        return (resourceType != OddResourceType.CONFIG && resourceType != OddResourceType.EVENT)
+                && ((resourceId == null && relationshipName == null) || (resourceId != null && relationshipName != null))
+                && (!isLogin())
     }
 
-    private fun isEventPost(): Boolean {
+    private fun isEventResourceType(): Boolean {
         return resourceType == OddResourceType.EVENT
+    }
+
+    private fun isLogin(): Boolean {
+        return resourceType == OddResourceType.VIEWER && authentication != null
+    }
+
+    private fun isWatchlistAdd(): Boolean {
+        return resourceType == OddResourceType.WATCHLIST && watchlist != null && watchlist.addToWatchlist
+    }
+
+    private fun isWatchlistRemove(): Boolean {
+        return resourceType == OddResourceType.WATCHLIST && watchlist != null && !watchlist.addToWatchlist
+    }
+
+    private fun isVideoProgress(): Boolean {
+        return resourceType == OddResourceType.PROGRESS && progress != null
     }
 
     private fun shouldSkipCache(): Boolean {
         if (skipCache) return true
         return when (resourceType) {
-            OddResourceType.CONFIG -> { true }
             OddResourceType.COLLECTION -> { skipCache }
-            OddResourceType.EVENT -> { true }
             OddResourceType.PROMOTION -> { skipCache }
-            OddResourceType.SEARCH -> { true }
             OddResourceType.VIDEO -> { skipCache }
             OddResourceType.VIEW -> { skipCache }
+            else -> { true }
         }
-    }
-
-    private fun fetchJWTSharedPreferences(): String? {
-        val prefs = context.getSharedPreferences(AUTHORIZATION_PREFERENCES, Context.MODE_PRIVATE)
-        return prefs.getString(AUTHORIZATION_PREFERENCE_JWT, null)
-    }
-
-    private fun stashJWTSharedPreferences(jwt: String?) {
-        if (jwt == null) return
-        val prefs = context.getSharedPreferences(AUTHORIZATION_PREFERENCES, Context.MODE_PRIVATE).edit()
-        prefs.putString(AUTHORIZATION_PREFERENCE_JWT, jwt)
-        prefs.apply()
-    }
-
-    private fun clearJWTSharedPreferences() {
-        val prefs = context.getSharedPreferences(AUTHORIZATION_PREFERENCES, Context.MODE_PRIVATE).edit()
-        prefs.remove(AUTHORIZATION_PREFERENCE_JWT)
-        prefs.apply()
     }
 
     /**
@@ -311,6 +393,8 @@ class OddRequest(
      * @param resourceType - provide [OddResourceType] to specify REST resource
      */
     class Builder(val context: Context, val resourceType: OddResourceType) {
+        var account: Account? = null
+        var authentication: OddAuthentication? = null
         var include: String? = null
         var authorizationJWT: String? = null
         var versionName: String? = null
@@ -323,6 +407,8 @@ class OddRequest(
         var sort: String? = null
         var query: String? = null
         var event: OddMetric? = null
+        var watchlist: OddWatchlist? = null
+        var progress: OddProgress? = null
         var skipCache: Boolean = false
 
         /**
@@ -374,6 +460,18 @@ class OddRequest(
          */
         fun include(include: String): Builder {
             this.include = include
+            return this
+        }
+
+        /**
+         * Used to specify the OddViewer Account which contains an Authorization JWT.
+         *
+         * This can be overridden by [authorizationJWT]
+         *
+         * @param account - the android Account to use for authorizing the request.
+         */
+        fun account(@Nullable account: Account?): Builder {
+            this.account = account
             return this
         }
 
@@ -505,6 +603,44 @@ class OddRequest(
         }
 
         /**
+         * Specifies the [OddAuthentication] resource to POST.
+         *
+         * Required when [resourceType] is [OddResourceType.VIEWER]
+         *
+         * @param email - the email address
+         * @param password - the password
+         */
+        fun login(email: String, password: String): Builder {
+            val authentication = OddAuthentication(email, password)
+            this.authentication = authentication
+            return this
+        }
+
+        /**
+         * Specifies the [OddResource] to POST to the given [OddViewer]'s watchlist
+         * relationship.
+         *
+         * @param viewerId - specifies the id of the OddViewer
+         * @param resource - specifies the resource to add to the watchlist
+         */
+        fun addResourceToWatchlist(viewerId: String, resource: OddResource): Builder {
+            this.watchlist = OddWatchlist(viewerId, resource, true)
+            return this
+        }
+
+        /**
+         * Specifies the [OddResource] to DELETE from the given [OddViewer]'s
+         * watchlist relationship.
+         *
+         * @param viewerId - specifies the id of the OddViewer
+         * @param resource - specifies the resource to remove from the watchlist
+         */
+        fun removeResourceFromWatchlist(viewerId: String, resource: OddResource): Builder {
+            this.watchlist = OddWatchlist(viewerId, resource, false)
+            return this
+        }
+
+        /**
          * Force OkHttp to hit Oddworks API instead of relying on cache.
          *
          * Defaults to `true`
@@ -525,8 +661,7 @@ class OddRequest(
 
 
     companion object {
-        private val AUTHORIZATION_PREFERENCES = "${OddRequest::class.java.name}.AUTHORIZATION_PREFERENCES"
-        private val AUTHORIZATION_PREFERENCE_JWT = "${OddRequest::class.java.name}.AUTHORIZATION_PREFERENCE_JWT"
+        private val TAG = OddRequest::class.java.simpleName
         private val JSON = MediaType.parse("application/json; charset=utf-8")
         private val ACCEPT_HEADER = "application/json"
         private val LANGUAGE = Locale.getDefault().language.toLowerCase()

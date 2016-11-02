@@ -14,20 +14,27 @@ class OddVideo(identifier: OddIdentifier,
                meta: JSONObject?,
                val title: String,
                val description: String,
-               val images: Set<OddImage>,
+               override val images: Set<OddImage>,
                val sources: Set<OddSource>,
                val duration: Int = 0,
                val genres: Set<String>,
                val cast: Set<OddCast>,
-               val releaseDate: Date?) : OddResource(identifier, relationships, included, meta) {
+               val releaseDate: Date?) : OddResource(identifier, relationships, included, meta), OddImageable {
     init {
         if (identifier.type != OddResourceType.VIDEO) {
             throw OddResourceException("Mismatched OddResourceType identifier: $identifier")
         }
-
     }
 
-    companion object {
-        @JvmField val RELATIONSHIP_RELATED = "related"
+    fun isEntitled(): Boolean {
+        if (meta != null) {
+            return meta.optBoolean("entitled", false)
+        }
+
+        return false
+    }
+
+    object RELATIONSHIPS {
+        @JvmField val RELATED = "related"
     }
 }

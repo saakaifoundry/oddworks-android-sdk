@@ -7,7 +7,9 @@ import org.json.JSONObject
 class OddView(identifier: OddIdentifier,
               relationships: MutableSet<OddRelationship>,
               included: MutableSet<OddResource>,
-              meta: JSONObject?, val title: String, val images: Set<OddImage>) : OddResource(identifier, relationships, included, meta) {
+              meta: JSONObject?,
+              val title: String,
+              override val images: Set<OddImage>) : OddResource(identifier, relationships, included, meta), OddImageable {
     init {
         if (identifier.type != OddResourceType.VIEW) {
             throw OddResourceException("Mismatched OddResourceType identifier: $identifier")

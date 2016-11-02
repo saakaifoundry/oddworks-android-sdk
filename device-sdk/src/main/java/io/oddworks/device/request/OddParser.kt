@@ -42,10 +42,11 @@ object OddParser {
 
         return when (OddResourceType.valueOf(rawType)) {
             OddResourceType.COLLECTION -> parseCollection(rawData, rawIncluded)
+            OddResourceType.CONFIG -> parseConfig(rawData)
             OddResourceType.PROMOTION -> parsePromotion(rawData, rawIncluded)
             OddResourceType.VIDEO -> parseVideo(rawData, rawIncluded)
             OddResourceType.VIEW -> parseView(rawData, rawIncluded)
-            OddResourceType.CONFIG -> parseConfig(rawData)
+            OddResourceType.VIEWER -> parseViewer(rawData, rawIncluded)
             else -> {
                 throw OddParseException("Attempting to parse un-parseable OddResourceType")
             }
@@ -124,9 +125,36 @@ object OddParser {
         val display = parseDisplay(rawAttributes!!)
         val features = parseFeatures(rawAttributes!!)
 
-        val jwt = JSON.getString(rawAttributes, "jwt")
+        return OddConfig(identifier, meta, views, display, features)
+    }
 
-        return OddConfig(identifier, meta, views, display, features, jwt)
+    @Throws(JSONException::class)
+    private fun parseViewer(rawData: JSONObject, rawIncluded: JSONArray? = null): OddViewer {
+        val id = JSON.getString(rawData, ID) ?: throw OddParseException("parseConfig() missing id property")
+        val identifier = OddIdentifier(id, OddResourceType.VIEWER)
+
+        val rawAttributes = JSON.getJSONObject(rawData, ATTRIBUTES, true)
+        val meta = JSON.getJSONObject(rawData, META, false)
+
+        val email = JSON.getString(rawAttributes, "email") ?: ""
+        val jwt = JSON.getString(rawAttributes, "jwt") ?: ""
+
+        val entitlements = mutableSetOf<String>()
+        val rawEntitlements = JSON.getJSONArray(rawAttributes, "entitlements", false)
+        if (rawEntitlements != null) {
+            for (i in 0..(rawEntitlements.length() - 1)) {
+                val entitlement = rawEntitlements.getString(i)
+                entitlements.add(entitlement)
+            }
+        }
+
+
+        val rawRelationships = JSON.getJSONObject(rawData, RELATIONSHIPS, false)
+        val relationships = parseRelationships(rawRelationships)
+
+        val included = parseResourceArray(rawIncluded)
+
+        return OddViewer(identifier, relationships, included, meta, email, entitlements.toSet(), jwt)
     }
 
     @Throws(JSONException::class)

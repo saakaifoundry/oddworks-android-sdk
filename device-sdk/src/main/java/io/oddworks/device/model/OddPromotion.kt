@@ -11,8 +11,8 @@ class OddPromotion(identifier: OddIdentifier,
                    meta: JSONObject?,
                    val title: String,
                    val description: String,
-                   val images: Set<OddImage>,
-                   val url: String) : OddResource(identifier, relationships, included, meta) {
+                   override val images: Set<OddImage>,
+                   val url: String) : OddResource(identifier, relationships, included, meta), OddImageable {
     init {
         if (identifier.type != OddResourceType.PROMOTION) {
             throw OddResourceException("Mismatched OddResourceType identifier: $identifier")

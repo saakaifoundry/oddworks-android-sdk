@@ -43,4 +43,13 @@ open class OddResource(val identifier: OddIdentifier, var relationships: Set<Odd
         }
         return isMissing
     }
+
+    fun toRelationshipJSONObject(): JSONObject {
+        val json = JSONObject()
+        val data = JSONObject()
+        data.put("id", identifier.id)
+        data.put("type", identifier.type.toString().toLowerCase())
+        json.put("data", data)
+        return json
+    }
 }

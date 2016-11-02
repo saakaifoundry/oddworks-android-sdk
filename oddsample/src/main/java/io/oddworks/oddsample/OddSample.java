@@ -11,6 +11,6 @@ public class OddSample extends Application {
         super.onCreate();
 
         // Enable handling of published analytics events
-        OddMetricHandler.INSTANCE.enable(this);
+        OddMetricHandler.enable(this);
     }
 }

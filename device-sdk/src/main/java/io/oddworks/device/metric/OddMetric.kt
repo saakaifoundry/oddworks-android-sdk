@@ -1,5 +1,6 @@
 package io.oddworks.device.metric
 
+import android.os.Build
 import android.util.Log
 
 import org.json.JSONException
@@ -10,6 +11,11 @@ import io.oddworks.device.service.OddRxBus
 abstract class OddMetric(protected val contentType: String?, protected val contentId: String?, protected val meta: JSONObject?) : OddRxBus.OddRxBusEvent {
     abstract val action: String
     abstract val enabled: Boolean
+
+    val viewerId: String
+        get() {
+            return Build.SERIAL
+        }
 
     val type: String
         get() = TYPE
@@ -23,6 +29,7 @@ abstract class OddMetric(protected val contentType: String?, protected val conte
             data.put("type", type)
 
             attributes.put("action", action)
+            attributes.put("viewer", viewerId)
             attributes.put("contentType", contentType)
             attributes.put("contentId", contentId)
 
@@ -37,7 +44,7 @@ abstract class OddMetric(protected val contentType: String?, protected val conte
     }
 
     override fun toString(): String {
-        return "$TAG (type=$type, action=$action, contentType=$contentType, contentId=$contentId, meta=${meta.toString()})"
+        return "$TAG (type=$type, viewerId=$viewerId action=$action, contentType=$contentType, contentId=$contentId, meta=${meta.toString()})"
     }
 
     companion object {
