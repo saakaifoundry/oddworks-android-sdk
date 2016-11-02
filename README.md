@@ -219,7 +219,7 @@ There are several customizable strings within this view.
     />
 ```
 
-In additon to the strings, the view's style can be overridden via `@style/AppTheme`
+In addition to the strings, the view's style can be overridden via `@style/AppTheme`
 
 #### Handling Accounts
 
@@ -277,7 +277,7 @@ public class YourApp extends Application {
       super.onCreate();
 
       // Enable handling of published analytics events
-      OddMetricHandler.INSTANCE.enable(this);
+      OddMetricHandler.enable(this);
   }
 }
 ```
@@ -291,7 +291,7 @@ Next, when you are ready to enqueue an OddMetric request, simply use the `OddRxB
 // from within an activity
 OddAppInitMetric metric = new OddAppInitMetric();
 
-OddRxBus.INSTANCE.publish(metric);
+OddRxBus.publish(metric);
 ```
 
 ## Contributing
