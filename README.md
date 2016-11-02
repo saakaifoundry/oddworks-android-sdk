@@ -171,6 +171,17 @@ To utilize OddAuthenticatorService, you must first declare it within the `<appli
 </service>
 ```
 
+There are also some permissions needed. Depending upon the SDK level you are targeting, you may need to request these permissions at runtime.
+
+```xml
+<uses-permission android:name="android.permission.USE_CREDENTIALS"/>
+<uses-permission android:name="android.permission.GET_ACCOUNTS"/>
+<uses-permission android:name="android.permission.MANAGE_ACCOUNTS"/>
+
+<uses-permission android:name="android.permission.INTERNET" />
+<uses-permission android:name="android.permission.AUTHENTICATE_ACCOUNTS" />
+```
+
 __Step 2:__ `res/strings.xml`
 
 Next, you should override a few strings in your application's `res/strings.xml` file.
