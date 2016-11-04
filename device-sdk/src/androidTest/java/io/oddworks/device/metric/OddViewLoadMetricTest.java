@@ -48,7 +48,8 @@ public class OddViewLoadMetricTest {
                 "attributes: {" +
                 "action: \"" + oddViewLoadMetric.getAction() + "\"," +
                 "contentType: \"" + oddViewLoadMetric.getContentType() + "\"," +
-                "contentId: \"" + oddViewLoadMetric.getContentId() + "\"" +
+                "contentId: \"" + oddViewLoadMetric.getContentId() + "\"," +
+                "viewer: \"" + oddViewLoadMetric.getViewerId() + "\"" +
                 "}" +
                 "}}";
         JSONAssert.assertEquals(expected, oddViewLoadMetric.toJSONObject(), true);

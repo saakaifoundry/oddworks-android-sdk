@@ -16,6 +16,7 @@ import io.oddworks.device.model.OddCollection;
 import io.oddworks.device.model.OddConfig;
 import io.oddworks.device.model.OddPromotion;
 import io.oddworks.device.model.OddView;
+import io.oddworks.device.model.OddViewer;
 import io.oddworks.device.model.common.OddIdentifier;
 import io.oddworks.device.model.common.OddImage;
 import io.oddworks.device.model.common.OddRelationship;
@@ -168,5 +169,13 @@ public class OddParserTest {
         Iterator<OddResource> promotionIterator = promotion.iterator();
         OddPromotion promotion1 = (OddPromotion) promotionIterator.next();
         assertFalse(promotionIterator.hasNext());
+    }
+
+    @Test
+    public void testParseViewer() throws Exception {
+        String json = AssetUtils.readFileToString(ctx, "ViewerResponse.json");
+        OddViewer oddViewer = (OddViewer) OddParser.INSTANCE.parseSingleResponse(json);
+
+        assertThat(oddViewer.getIdentifier().getId(), is("success@channel-name.com"));
     }
 }

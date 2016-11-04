@@ -57,7 +57,8 @@ public class OddVideoPlayingMetricTest {
                 "contentType: \"" + oddVideoPlayingMetric.getContentType() + "\"," +
                 "contentId: \"" + oddVideoPlayingMetric.getContentId() + "\"," +
                 "elapsed: " + elapsed + "," +
-                "duration: " + duration + "" +
+                "duration: " + duration + "," +
+                "viewer: \"" + oddVideoPlayingMetric.getViewerId() + "\"" +
                 "}" +
                 "}}";
         JSONAssert.assertEquals(expected, oddVideoPlayingMetric.toJSONObject(), true);

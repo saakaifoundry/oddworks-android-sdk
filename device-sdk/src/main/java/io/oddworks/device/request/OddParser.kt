@@ -1,5 +1,6 @@
 package io.oddworks.device.request
 
+import android.util.Log
 import io.oddworks.device.exception.OddParseException
 import io.oddworks.device.model.*
 import io.oddworks.device.model.common.*
@@ -25,6 +26,7 @@ object OddParser {
     private val ID = "id"
     private val TYPE = "type"
     private val RELATIONSHIPS = "relationships"
+    private val TAG = OddParser::class.java.simpleName
 
     @Throws(JSONException::class)
     fun parseMultipleResponse(responseBody: String): LinkedHashSet<OddResource> {
@@ -40,7 +42,14 @@ object OddParser {
         val rawIncluded = JSON.getJSONArray(rawBody, INCLUDED, false)
         val rawType = JSON.getString(rawData, TYPE)?.toUpperCase() ?: throw OddParseException("parseSingleResponse() unable to determine resource type")
 
-        return when (OddResourceType.valueOf(rawType)) {
+        var resourceType: OddResourceType? = null
+        try {
+            resourceType = OddResourceType.valueOf(rawType)
+        } catch (e: Exception) {
+            Log.w(TAG, "Unknown OddResourceType: ${e.message}")
+        }
+
+        return when (resourceType) {
             OddResourceType.COLLECTION -> parseCollection(rawData, rawIncluded)
             OddResourceType.CONFIG -> parseConfig(rawData)
             OddResourceType.PROMOTION -> parsePromotion(rawData, rawIncluded)
@@ -48,7 +57,7 @@ object OddParser {
             OddResourceType.VIEW -> parseView(rawData, rawIncluded)
             OddResourceType.VIEWER -> parseViewer(rawData, rawIncluded)
             else -> {
-                throw OddParseException("Attempting to parse un-parseable OddResourceType")
+                throw OddParseException("Attempting to parse unknown OddResourceType")
             }
         }
 
@@ -86,16 +95,21 @@ object OddParser {
             val includedObject = rawArray.getJSONObject(i)
             val rawType = JSON.getString(includedObject, TYPE)?.toUpperCase() ?: throw OddParseException("parseResourceArray() unable to determine resource type")
 
-            val includedType = OddResourceType.valueOf(rawType)
+            var resourceType: OddResourceType? = null
+            try {
+                resourceType = OddResourceType.valueOf(rawType)
+            } catch (e: Exception) {
+                Log.w(TAG, "Unknown OddResourceType: ${e.message}")
+            }
 
-            when (includedType) {
+            when (resourceType) {
                 OddResourceType.COLLECTION -> resources.add(parseCollection(includedObject))
                 OddResourceType.PROMOTION -> resources.add(parsePromotion(includedObject))
                 OddResourceType.VIDEO -> resources.add(parseVideo(includedObject))
                 OddResourceType.VIEW -> resources.add(parseView(includedObject))
                 OddResourceType.CONFIG -> resources.add(parseConfig(includedObject))
                 else -> {
-                    throw OddParseException("Attempting to parse un-parseable OddResourceType")
+                    throw OddParseException("Attempting to parse unknown OddResourceType")
                 }
             }
         }
@@ -377,13 +391,16 @@ object OddParser {
         val rawAuthentication = JSON.getJSONObject(rawFeatures, "authentication", false) ?: return Authentication(false, Authentication.AuthenticationType.DISABLED)
 
         val enabled = JSON.getBoolean(rawAuthentication, "enabled")
-        val type = JSON.getString(rawAuthentication, TYPE)?.toUpperCase()
-        val authenticationType = if (type == null) {
-            Authentication.AuthenticationType.DISABLED
-        } else {
-            Authentication.AuthenticationType.valueOf(type)
-        }
+        val type = JSON.getString(rawAuthentication, TYPE)?.toUpperCase() ?: "DISABLED"
 
+
+        var authenticationType: Authentication.AuthenticationType
+        try {
+            authenticationType = Authentication.AuthenticationType.valueOf(type)
+        } catch (e: Exception) {
+            Log.w(TAG, "Unknown Authentication.AuthenticationType: ${e.message}")
+            authenticationType = Authentication.AuthenticationType.DISABLED
+        }
 
         val properties = mutableMapOf<String, String>()
         rawAuthentication.keys().forEach {
@@ -614,8 +631,11 @@ object OddParser {
                     val identifier = JSON.getJSONObject(relationship, DATA, true)!!
                     val relId = JSON.getString(identifier, ID) ?: throw OddParseException("parseRelationships() missing id property")
                     val relType = JSON.getString(identifier, TYPE)?.toUpperCase() ?: throw OddParseException("parseRelationships() missing type property")
-                    identifiers.add(OddIdentifier(relId, OddResourceType.valueOf(relType)))
-
+                    try {
+                        identifiers.add(OddIdentifier(relId, OddResourceType.valueOf(relType)))
+                    } catch (e: Exception) {
+                        Log.w(TAG, "Unknown OddResourceType: ${e.message}")
+                    }
                 } else if (relationship.get(DATA) is JSONArray) {
                     // handle multiple relationship.data
                     val rawIdentifiers = JSON.getJSONArray(relationship, DATA, true)!!
@@ -624,7 +644,11 @@ object OddParser {
                         val identifier = rawIdentifiers.getJSONObject(i)
                         val relId = JSON.getString(identifier, ID) ?: throw OddParseException("parseRelationships() missing id property")
                         val relType = JSON.getString(identifier, TYPE)?.toUpperCase() ?: throw OddParseException("parseRelationships() missing type property")
-                        identifiers.add(OddIdentifier(relId, OddResourceType.valueOf(relType)))
+                        try {
+                            identifiers.add(OddIdentifier(relId, OddResourceType.valueOf(relType)))
+                        } catch (e: Exception) {
+                            Log.w(TAG, "Unknown OddResourceType: ${e.message}")
+                        }
                     }
                 }
 

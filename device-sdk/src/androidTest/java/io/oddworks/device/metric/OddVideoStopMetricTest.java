@@ -52,7 +52,8 @@ public class OddVideoStopMetricTest {
                 "contentType: \"" + oddVideoStopMetric.getContentType() + "\"," +
                 "contentId: \"" + oddVideoStopMetric.getContentId() + "\"," +
                 "elapsed: " + elapsed + "," +
-                "duration: " + duration + "" +
+                "duration: " + duration + "," +
+                "viewer: \"" + oddVideoStopMetric.getViewerId() + "\"" +
                 "}" +
                 "}}";
         JSONAssert.assertEquals(expected, oddVideoStopMetric.toJSONObject(), true);
