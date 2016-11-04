@@ -13,7 +13,7 @@ An [Oddworks](https://github.com/oddnetworks/oddworks) device client SDK for And
 <dependency>
   <groupId>io.oddworks</groupId>
   <artifactId>device-sdk</artifactId>
-  <version>3.0.0-rc2</version>
+  <version>{version}</version>
 </dependency>
 ```
 
@@ -27,7 +27,7 @@ repositories {
 }
 
 dependencies {
-    compile 'io.oddworks:device-sdk:3.0.0-beta'
+    compile 'io.oddworks:device-sdk:{version}'
 }
 ```
 
