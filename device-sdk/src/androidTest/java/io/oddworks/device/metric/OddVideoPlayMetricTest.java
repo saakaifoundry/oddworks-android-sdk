@@ -48,7 +48,8 @@ public class OddVideoPlayMetricTest {
                 "attributes: {" +
                 "action: \"" + oddVideoPlayMetric.getAction() + "\"," +
                 "contentType: \"" + oddVideoPlayMetric.getContentType() + "\"," +
-                "contentId: \"" + oddVideoPlayMetric.getContentId() + "\"" +
+                "contentId: \"" + oddVideoPlayMetric.getContentId() + "\"," +
+                "viewer: \"" + oddVideoPlayMetric.getViewerId() + "\"" +
                 "}" +
                 "}}";
         JSONAssert.assertEquals(expected, oddVideoPlayMetric.toJSONObject(), true);

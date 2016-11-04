@@ -48,7 +48,8 @@ public class OddVideoErrorMetricTest {
                 "attributes: {" +
                 "action: \"" + metric.getAction() + "\"," +
                 "contentType: \"" + metric.getContentType() + "\"," +
-                "contentId: \"" + metric.getContentId() + "\"" +
+                "contentId: \"" + metric.getContentId() + "\"," +
+                "viewer: \"" + metric.getViewerId() + "\"" +
                 "}" +
                 "}}";
 

@@ -51,7 +51,8 @@ public class OddAppInitMetricTest {
         String expected = "{\"data\": {" +
                 "type: \"" + metric.getType() + "\"," +
                 "attributes: {" +
-                "action: \"" + metric.getAction() + "\"" +
+                "action: \"" + metric.getAction() + "\"," +
+                "viewer: \"" + metric.getViewerId() + "\"" +
                 "}," +
                 "meta: {" +
                 "foo: \"bar\"" +
