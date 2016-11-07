@@ -6,16 +6,18 @@ import io.oddworks.device.exception.OddResourceException
 import io.oddworks.device.model.common.*
 import org.json.JSONObject
 
-class OddViewer(identifier: OddIdentifier,
+class OddViewer(id: String,
+                type: OddResourceType,
                 relationships: Set<OddRelationship>,
                 included: MutableSet<OddResource>,
                 meta: JSONObject?,
                 val email: String,
                 val entitlements: Set<String>,
-                val jwt: String): OddResource(identifier, relationships, included, meta), Parcelable {
+                val jwt: String): OddResource(id, type, relationships, included, meta), Parcelable {
 
     protected constructor(source: Parcel): this(
-            OddIdentifier(source.readString(), OddResourceType.VIEWER),
+            source.readString(),
+            OddResourceType.VIEWER,
             emptySet(),
             mutableSetOf<OddResource>(),
             null,
@@ -28,7 +30,7 @@ class OddViewer(identifier: OddIdentifier,
 
 
     override fun writeToParcel(dest: Parcel, flags: Int) {
-        dest.writeString(identifier.id)
+        dest.writeString(id)
         dest.writeString(email)
         dest.writeStringList(entitlements.toList())
         dest.writeString(jwt)
@@ -37,8 +39,8 @@ class OddViewer(identifier: OddIdentifier,
     override fun describeContents() = 0
 
     init {
-        if (identifier.type != OddResourceType.VIEWER) {
-            throw OddResourceException("Mismatched OddResourceType identifier: $identifier")
+        if (type != OddResourceType.VIEWER) {
+            throw OddResourceException("Mismatched OddResourceType: $type")
         }
     }
 
@@ -47,7 +49,7 @@ class OddViewer(identifier: OddIdentifier,
     }
 
     override fun toString(): String {
-        return "OddViewer(identifier: $identifier, email: $email, entitlements: $entitlements, jwt: ${jwt.subSequence(0, 10)}...)"
+        return "OddViewer(id: $id, email: $email, entitlements: $entitlements, jwt: ${jwt.subSequence(0, 10)}...)"
     }
 
     object RELATIONSHIPS {

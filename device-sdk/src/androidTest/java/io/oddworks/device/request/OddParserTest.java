@@ -47,8 +47,8 @@ public class OddParserTest {
         String json = AssetUtils.readFileToString(ctx, "ConfigResponse.json");
         OddConfig oddConfig = (OddConfig) OddParser.INSTANCE.parseSingleResponse(json);
 
-        assertThat(oddConfig.getIdentifier().getId(), is("channel-id-channel-id-android"));
-        assertThat(oddConfig.getIdentifier().getType(), is(OddResourceType.CONFIG));
+        assertThat(oddConfig.getId(), is("channel-id-channel-id-android"));
+        assertThat(oddConfig.getType(), is(OddResourceType.CONFIG));
 
         // Views
         assertThat(oddConfig.getViews().size(), is(3));
@@ -91,8 +91,8 @@ public class OddParserTest {
         String json = AssetUtils.readFileToString(ctx, "ViewResponse.json");
         OddView oddView = (OddView) OddParser.INSTANCE.parseSingleResponse(json);
 
-        assertThat(oddView.getIdentifier().getId(), is("channel-id-home-view"));
-        assertThat(oddView.getIdentifier().getType(), is(OddResourceType.VIEW));
+        assertThat(oddView.getId(), is("channel-id-home-view"));
+        assertThat(oddView.getType(), is(OddResourceType.VIEW));
 
         assertThat(oddView.getTitle(), is("Channel Sample Homepage"));
 
@@ -126,8 +126,8 @@ public class OddParserTest {
         String json = AssetUtils.readFileToString(ctx, "ViewResponseWithIncluded.json");
         OddView oddView = (OddView) OddParser.INSTANCE.parseSingleResponse(json);
 
-        assertThat(oddView.getIdentifier().getId(), is("channel-id-home-view"));
-        assertThat(oddView.getIdentifier().getType(), is(OddResourceType.VIEW));
+        assertThat(oddView.getId(), is("channel-id-home-view"));
+        assertThat(oddView.getType(), is(OddResourceType.VIEW));
 
         assertThat(oddView.getTitle(), is("Channel Sample Homepage"));
 
@@ -176,6 +176,6 @@ public class OddParserTest {
         String json = AssetUtils.readFileToString(ctx, "ViewerResponse.json");
         OddViewer oddViewer = (OddViewer) OddParser.INSTANCE.parseSingleResponse(json);
 
-        assertThat(oddViewer.getIdentifier().getId(), is("success@channel-name.com"));
+        assertThat(oddViewer.getId(), is("success@channel-name.com"));
     }
 }

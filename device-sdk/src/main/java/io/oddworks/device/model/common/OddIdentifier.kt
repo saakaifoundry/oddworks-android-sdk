@@ -3,7 +3,7 @@ package io.oddworks.device.model.common
 import android.os.Parcel
 import android.os.Parcelable
 
-data class OddIdentifier(val id: String, val type: OddResourceType) : Parcelable {
+open class OddIdentifier(val id: String, val type: OddResourceType) : Parcelable {
 
     constructor(parcel: Parcel): this(parcel.readString(), OddResourceType.valueOf(parcel.readString()))
 

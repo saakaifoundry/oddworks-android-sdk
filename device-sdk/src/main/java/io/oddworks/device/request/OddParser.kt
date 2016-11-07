@@ -120,7 +120,6 @@ object OddParser {
     @Throws(JSONException::class, IllegalArgumentException::class)
     private fun parseConfig(rawData: JSONObject): OddConfig {
         val id = JSON.getString(rawData, ID) ?: throw OddParseException("parseConfig() missing id property")
-        val identifier = OddIdentifier(id, OddResourceType.CONFIG)
 
         val rawAttributes = JSON.getJSONObject(rawData, ATTRIBUTES, true)
         val meta = JSON.getJSONObject(rawData, META, false)
@@ -139,13 +138,12 @@ object OddParser {
         val display = parseDisplay(rawAttributes!!)
         val features = parseFeatures(rawAttributes!!)
 
-        return OddConfig(identifier, meta, views, display, features)
+        return OddConfig(id, OddResourceType.CONFIG, meta, views, display, features)
     }
 
     @Throws(JSONException::class)
     private fun parseViewer(rawData: JSONObject, rawIncluded: JSONArray? = null): OddViewer {
         val id = JSON.getString(rawData, ID) ?: throw OddParseException("parseConfig() missing id property")
-        val identifier = OddIdentifier(id, OddResourceType.VIEWER)
 
         val rawAttributes = JSON.getJSONObject(rawData, ATTRIBUTES, true)
         val meta = JSON.getJSONObject(rawData, META, false)
@@ -168,13 +166,12 @@ object OddParser {
 
         val included = parseResourceArray(rawIncluded)
 
-        return OddViewer(identifier, relationships, included, meta, email, entitlements.toSet(), jwt)
+        return OddViewer(id, OddResourceType.VIEWER, relationships, included, meta, email, entitlements.toSet(), jwt)
     }
 
     @Throws(JSONException::class)
     private fun parseCollection(rawData: JSONObject, rawIncluded: JSONArray? = null): OddCollection {
         val id = JSON.getString(rawData, ID) ?: throw OddParseException("parseCollection() missing id property")
-        val identifier = OddIdentifier(id, OddResourceType.COLLECTION)
 
         val rawAttributes = JSON.getJSONObject(rawData, ATTRIBUTES, true)
         val meta = JSON.getJSONObject(rawData, META, false)
@@ -194,7 +191,8 @@ object OddParser {
         val included = parseResourceArray(rawIncluded)
 
         return OddCollection(
-                identifier,
+                id,
+                OddResourceType.COLLECTION,
                 relationships,
                 included,
                 meta,
@@ -208,7 +206,6 @@ object OddParser {
     @Throws(JSONException::class)
     private fun parseVideo(rawData: JSONObject, rawIncluded: JSONArray? = null): OddVideo {
         val id = JSON.getString(rawData, ID) ?: throw OddParseException("parseVideo() missing id property")
-        val identifier = OddIdentifier(id, OddResourceType.VIDEO)
 
         val rawAttributes = JSON.getJSONObject(rawData, ATTRIBUTES, true)
         val meta = JSON.getJSONObject(rawData, META, false)
@@ -236,7 +233,8 @@ object OddParser {
         val included = parseResourceArray(rawIncluded)
 
         return OddVideo(
-                identifier,
+                id,
+                OddResourceType.VIDEO,
                 relationships,
                 included,
                 meta,
@@ -253,7 +251,6 @@ object OddParser {
     @Throws(JSONException::class)
     private fun parsePromotion(rawData: JSONObject, rawIncluded: JSONArray? = null): OddPromotion {
         val id = JSON.getString(rawData, ID) ?: throw OddParseException("parseVideo() missing id property")
-        val identifier = OddIdentifier(id, OddResourceType.PROMOTION)
 
         val rawAttributes = JSON.getJSONObject(rawData, ATTRIBUTES, true)
         val meta = JSON.getJSONObject(rawData, META, false)
@@ -269,13 +266,12 @@ object OddParser {
 
         val included = parseResourceArray(rawIncluded)
 
-        return OddPromotion(identifier, relationships, included, meta, title, description, images, url)
+        return OddPromotion(id, OddResourceType.PROMOTION, relationships, included, meta, title, description, images, url)
     }
 
     @Throws(JSONException::class)
     private fun parseView(rawData: JSONObject, rawIncluded: JSONArray? = null): OddView {
         val id = JSON.getString(rawData, ID) ?: throw OddParseException("parseVideo() missing id property")
-        val identifier = OddIdentifier(id, OddResourceType.VIEW)
 
         val rawAttributes = JSON.getJSONObject(rawData, ATTRIBUTES, true)
         val meta = JSON.getJSONObject(rawData, META, false)
@@ -291,7 +287,8 @@ object OddParser {
         val included = parseResourceArray(rawIncluded)
 
         return OddView(
-                identifier,
+                id,
+                OddResourceType.VIEW,
                 relationships,
                 included,
                 meta,

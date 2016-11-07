@@ -5,7 +5,7 @@ import org.json.JSONObject
 data class OddProgress(val video: OddVideo, val position: Int, val complete: Boolean) {
 
     val videoId: String
-        get() = video.identifier.id
+        get() = video.id
 
 
     fun toJSONObject(): JSONObject {

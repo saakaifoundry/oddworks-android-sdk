@@ -9,15 +9,16 @@ import io.oddworks.device.model.config.Display
 import io.oddworks.device.model.config.Features
 import org.json.JSONObject
 
-class OddConfig(identifier: OddIdentifier,
+class OddConfig(id: String,
+                type: OddResourceType,
                 meta: JSONObject?,
                 val views: Map<String, String>,
                 val display: Display,
-                val features: Features) : OddResource(identifier, mutableSetOf(), mutableSetOf(), meta){
+                val features: Features) : OddResource(id, type, mutableSetOf(), mutableSetOf(), meta){
 
     init {
-        if (identifier.type != OddResourceType.CONFIG) {
-            throw OddResourceException("Mismatched OddResourceType identifier: $identifier")
+        if (type != OddResourceType.CONFIG) {
+            throw OddResourceException("Mismatched OddResourceType: $type")
         }
 
         Log.d(OddConfig::class.java.simpleName, "views[${views.keys}]")

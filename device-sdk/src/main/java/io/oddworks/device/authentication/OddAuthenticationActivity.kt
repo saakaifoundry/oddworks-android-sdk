@@ -67,7 +67,7 @@ class OddAuthenticationActivity : AccountAuthenticatorActivity() {
     private fun finishLogin(accountType: String, password: String,  viewer: OddViewer) {
         val passwordData = password.toByteArray()
         val hashedPassword = Base64.encodeToString(passwordData, Base64.DEFAULT)
-        val account = Account(viewer.identifier.id, accountType)
+        val account = Account(viewer.id, accountType)
         if (intent.getBooleanExtra(ARG_IS_ADDING_NEW_ACCOUNT, false)) {
             Log.d(TAG, "finishLogin > addAccountExplicitly")
 
