@@ -23,7 +23,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
 
-import io.oddworks.device.authentication.OddAuthGeneral;
+import io.oddworks.device.authentication.OddAuthenticator;
 import io.oddworks.device.exception.BadResponseCodeException;
 import io.oddworks.device.metric.OddAppInitMetric;
 import io.oddworks.device.metric.OddViewLoadMetric;
@@ -33,6 +33,7 @@ import io.oddworks.device.model.OddError;
 import io.oddworks.device.model.OddPromotion;
 import io.oddworks.device.model.OddVideo;
 import io.oddworks.device.model.OddView;
+import io.oddworks.device.model.common.OddIdentifier;
 import io.oddworks.device.model.common.OddResource;
 import io.oddworks.device.model.common.OddResourceType;
 import io.oddworks.device.request.OddCallback;
@@ -45,7 +46,7 @@ import rx.schedulers.Schedulers;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = MainActivity.class.getSimpleName();
-    private static final int PERMISSIONS_REQUEST_GET_ACCOUNTS = 0;
+    private static final int PERMISSIONS_GET_ACCOUNTS = 0;
 
     private Context ctx = this;
     private AccountManager accountManager = null;
@@ -111,7 +112,7 @@ public class MainActivity extends AppCompatActivity {
      */
     private void checkAuthentication() {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.GET_ACCOUNTS) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.GET_ACCOUNTS}, PERMISSIONS_REQUEST_GET_ACCOUNTS);
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.GET_ACCOUNTS}, PERMISSIONS_GET_ACCOUNTS);
         } else {
             Account[] accounts = accountManager.getAccountsByType(getString(R.string.oddworks_account_type));
             if (accounts.length == 0) {
@@ -149,15 +150,15 @@ public class MainActivity extends AppCompatActivity {
                 .subscribe(new Action1<OddView>() {
                     @Override
                     public void call(OddView oddView) {
-                        LinkedHashSet<OddResource> featuredCollections = oddView.getIncludedByRelationship("featuredCollections");
+                        LinkedHashSet<OddResource> featured = oddView.getIncludedByRelationship("featuredCollections");
                         LinkedHashSet<OddResource> promotions = oddView.getIncludedByRelationship("promotion");
 
                         OddPromotion promotion = (OddPromotion) promotions.iterator().next();
-                        OddCollection collection1 = (OddCollection) featuredCollections.iterator().next();
+                        OddCollection collection1 = (OddCollection) featured.iterator().next();
 
                         Log.d(TAG, "getView success: promotion " + promotion.getTitle() + " collection: " + collection1.getTitle());
                         getVideos();
-                        getCollectionEntities(collection1.getIdentifier().getId());
+                        getCollectionEntities(collection1.getId());
                         addToWatchlist(collection1);
                     }
                 }, new Action1<Throwable>() {
@@ -206,9 +207,9 @@ public class MainActivity extends AppCompatActivity {
 
     private void getCollectionEntities(final String collectionId) {
         RxOddCall
-                .observableFrom(new Action1<OddCallback<LinkedHashSet<OddResource>>>() {
+                .observableFrom(new Action1<OddCallback<LinkedHashSet<OddIdentifier>>>() {
                     @Override
-                    public void call(OddCallback<LinkedHashSet<OddResource>> oddCallback) {
+                    public void call(OddCallback<LinkedHashSet<OddIdentifier>> oddCallback) {
                         new OddRequest.Builder(ctx, OddResourceType.COLLECTION)
                                 .account(account)
                                 .resourceId(collectionId)
@@ -219,10 +220,10 @@ public class MainActivity extends AppCompatActivity {
                 })
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<LinkedHashSet<OddResource>>() {
+                .subscribe(new Action1<LinkedHashSet<OddIdentifier>>() {
                     @Override
-                    public void call(LinkedHashSet<OddResource> oddResources) {
-                        Log.d(TAG, "getCollectionEntities success: " + oddResources.size());
+                    public void call(LinkedHashSet<OddIdentifier> identifiers) {
+                        Log.d(TAG, "getCollectionEntities success: " + identifiers.size());
                     }
                 }, new Action1<Throwable>() {
                     @Override
@@ -252,7 +253,7 @@ public class MainActivity extends AppCompatActivity {
                 .subscribe(new Action1<OddResource>() {
                     @Override
                     public void call(OddResource oddResource) {
-                        Log.d(TAG, "addToWatchlist success: " + oddResource.getIdentifier());
+                        Log.d(TAG, "addToWatchlist success: " + oddResource.getId());
                     }
                 }, new Action1<Throwable>() {
                     @Override
@@ -282,7 +283,7 @@ public class MainActivity extends AppCompatActivity {
                 .subscribe(new Action1<OddResource>() {
                     @Override
                     public void call(OddResource oddResource) {
-                        Log.d(TAG, "removeFromWatchlist success: " + oddResource.getIdentifier());
+                        Log.d(TAG, "removeFromWatchlist success: " + oddResource.getId());
                     }
                 }, new Action1<Throwable>() {
                     @Override
@@ -301,6 +302,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+
     private void showButton() {
         View signInButton = findViewById(R.id.sign_in_button);
         if (signInButton != null) {
@@ -308,7 +310,7 @@ public class MainActivity extends AppCompatActivity {
             signInButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    addNewAccount(getString(R.string.oddworks_account_type), OddAuthGeneral.AUTH_TOKEN_TYPE_ODDWORKS_DEVICE);
+                    addNewAccount(getString(R.string.oddworks_account_type), OddAuthenticator.AUTH_TOKEN_TYPE_ODDWORKS_DEVICE);
                 }
             });
         }
@@ -368,8 +370,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         switch (requestCode) {
-            case PERMISSIONS_REQUEST_GET_ACCOUNTS: {
-                checkAuthentication();
+            case PERMISSIONS_GET_ACCOUNTS: {
+                restartActivity();
             }
             default: {
                 super.onRequestPermissionsResult(requestCode, permissions, grantResults);
