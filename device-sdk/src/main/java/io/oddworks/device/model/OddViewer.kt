@@ -3,7 +3,10 @@ package io.oddworks.device.model
 import android.os.Parcel
 import android.os.Parcelable
 import io.oddworks.device.exception.OddResourceException
-import io.oddworks.device.model.common.*
+import io.oddworks.device.model.common.OddRelationship
+import io.oddworks.device.model.common.OddResource
+import io.oddworks.device.model.common.OddResourceType
+import io.oddworks.device.model.common.createParcel
 import org.json.JSONObject
 
 class OddViewer(id: String,

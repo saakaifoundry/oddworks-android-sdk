@@ -3,14 +3,11 @@ package io.oddworks.device.handler
 import android.content.Context
 import android.util.Log
 import io.oddworks.device.exception.BadResponseCodeException
-
 import io.oddworks.device.metric.OddMetric
 import io.oddworks.device.model.common.OddResourceType
 import io.oddworks.device.request.OddCallback
 import io.oddworks.device.request.OddRequest
 import io.oddworks.device.service.OddRxBus
-import rx.Observable
-import rx.functions.Action1
 import rx.schedulers.Schedulers
 
 /**

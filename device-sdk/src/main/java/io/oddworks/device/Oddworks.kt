@@ -3,7 +3,6 @@ package io.oddworks.device
 import android.content.Context
 import android.util.Log
 import io.oddworks.device.model.OddViewer
-import io.oddworks.device.model.common.OddIdentifier
 import io.oddworks.device.model.common.OddRelationship
 import io.oddworks.device.model.common.OddResourceType
 
