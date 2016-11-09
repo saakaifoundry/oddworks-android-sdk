@@ -20,7 +20,9 @@ class OddVideo(id: String,
                val duration: Int = 0,
                val genres: Set<String>,
                val cast: Set<OddCast>,
-               val releaseDate: Date?) : OddResource(id, type, relationships, included, meta), OddImageable {
+               val releaseDate: Date?,
+               val position: Int = 0,
+               val complete: Boolean = false) : OddResource(id, type, relationships, included, meta), OddImageable {
     init {
         if (type != OddResourceType.VIDEO) {
             throw OddResourceException("Mismatched OddResourceType: $type")

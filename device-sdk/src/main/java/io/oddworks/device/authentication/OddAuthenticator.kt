@@ -43,7 +43,7 @@ class OddAuthenticator(val context: Context) : AbstractAccountAuthenticator(cont
         }
 
         // Ensure the caller requested an authToken type that we support
-        if (authTokenType != OddAuthGeneral.AUTH_TOKEN_TYPE_ODDWORKS_DEVICE) {
+        if (authTokenType != AUTH_TOKEN_TYPE_ODDWORKS_DEVICE) {
             val bundle = Bundle()
             bundle.putInt(AccountManager.KEY_ERROR_CODE, AccountManager.ERROR_CODE_BAD_AUTHENTICATION)
             bundle.putString(AccountManager.KEY_ERROR_MESSAGE, "invalid authTokenType")
@@ -77,7 +77,7 @@ class OddAuthenticator(val context: Context) : AbstractAccountAuthenticator(cont
     }
 
     override fun getAuthTokenLabel(authTokenType: String): String {
-        if (authTokenType == OddAuthGeneral.AUTH_TOKEN_TYPE_ODDWORKS_DEVICE) {
+        if (authTokenType == AUTH_TOKEN_TYPE_ODDWORKS_DEVICE) {
             return context.getString(R.string.oddworks_account_label)
         }
         return "$authTokenType (Label)"
