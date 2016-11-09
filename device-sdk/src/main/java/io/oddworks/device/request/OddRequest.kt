@@ -1,6 +1,7 @@
 package io.oddworks.device.request
 
-import android.accounts.*
+import android.accounts.Account
+import android.accounts.AccountManager
 import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Build
@@ -9,8 +10,7 @@ import android.support.annotation.Nullable
 import android.util.Log
 import com.squareup.okhttp.*
 import io.oddworks.device.Oddworks
-import io.oddworks.device.R
-import io.oddworks.device.authentication.OddAuthGeneral
+import io.oddworks.device.authentication.OddAuthenticator
 import io.oddworks.device.exception.BadResponseCodeException
 import io.oddworks.device.exception.OddParseException
 import io.oddworks.device.exception.OddRequestException
@@ -93,13 +93,16 @@ class OddRequest(
 
     private val viewerJWT: String?
         get() {
-            if (account == null) return null
-            try {
-                return accountManager.blockingGetAuthToken(account, OddAuthGeneral.AUTH_TOKEN_TYPE_ODDWORKS_DEVICE, true)
-            } catch (e: Exception) {
-                Log.w(TAG, "viewerJWT failed - ${e.message}")
+            if (account == null) {
+                return null
+            } else {
+                try {
+                    return accountManager.blockingGetAuthToken(account, OddAuthenticator.AUTH_TOKEN_TYPE_ODDWORKS_DEVICE, true)
+                } catch (e: Exception) {
+                    Log.w(TAG, "viewerJWT failed - ${e.message}")
+                }
+                return null
             }
-            return null
         }
 
     private val authorization: String
@@ -241,11 +244,16 @@ class OddRequest(
                         }
                     }
                     else -> {
-                        // invalidate JWT on status 401
-                        if (response.code() == 401 && account != null) {
-                            val accountType = context.getString(R.string.oddworks_account_type)
-                            accountManager.invalidateAuthToken(accountType, authorizationJWT)
+                        if (account != null && response.code() == 401) {
+                            // remove account and clear cache
+                            if (Build.VERSION.SDK_INT < 22) {
+                                accountManager.removeAccount(account, null, null)
+                            } else {
+                                accountManager.removeAccountExplicitly(account)
+                            }
+                            OKHTTP_CLIENT.cache = Cache(context.cacheDir, MAX_CACHE_SIZE)
                         }
+
                         // try to get OddErrors, if any
                         try {
                             val oddErrors = OddParser.parseErrorMessage(response.body().string())
@@ -267,6 +275,8 @@ class OddRequest(
             }
         }
     }
+
+
 
     private interface ParseCall<out Any> {
         @Throws(JSONException::class)
