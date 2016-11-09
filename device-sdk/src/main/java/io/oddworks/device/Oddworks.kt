@@ -3,7 +3,6 @@ package io.oddworks.device
 import android.content.Context
 import android.util.Log
 import io.oddworks.device.model.OddViewer
-import io.oddworks.device.model.common.OddIdentifier
 import io.oddworks.device.model.common.OddRelationship
 import io.oddworks.device.model.common.OddResourceType
 
@@ -28,8 +27,7 @@ object Oddworks {
         val entitlements = prefs.getStringSet(AUTHORIZED_VIEWER_ENTITLEMENTS, emptySet())
         val jwt = prefs.getString(AUTHORIZED_VIEWER_JWT, null)
         try {
-            val identifier = OddIdentifier(id, OddResourceType.VIEWER)
-            return OddViewer(identifier, emptySet<OddRelationship>(), mutableSetOf(), null, email, entitlements, jwt)
+            return OddViewer(id, OddResourceType.VIEWER, emptySet<OddRelationship>(), mutableSetOf(), null, email, entitlements, jwt)
         } catch (e: Exception) {
             Log.w(Oddworks::class.java.simpleName, "getViewer failed", e)
             return null
@@ -38,7 +36,7 @@ object Oddworks {
 
     @JvmStatic fun setStoredViewer(ctx: Context, viewer: OddViewer) {
         val prefs = ctx.getSharedPreferences(AUTHORIZED_VIEWER_PREFERENCES, Context.MODE_PRIVATE).edit()
-        prefs.putString(AUTHORIZED_VIEWER_ID, viewer.identifier.id)
+        prefs.putString(AUTHORIZED_VIEWER_ID, viewer.id)
         prefs.putString(AUTHORIZED_VIEWER_EMAIL, viewer.email)
         prefs.putStringSet(AUTHORIZED_VIEWER_ENTITLEMENTS, viewer.entitlements)
         prefs.putString(AUTHORIZED_VIEWER_JWT, viewer.jwt)

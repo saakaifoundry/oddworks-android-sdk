@@ -4,15 +4,16 @@ import io.oddworks.device.exception.OddResourceException
 import io.oddworks.device.model.common.*
 import org.json.JSONObject
 
-class OddView(identifier: OddIdentifier,
+class OddView(id: String,
+              type: OddResourceType,
               relationships: MutableSet<OddRelationship>,
               included: MutableSet<OddResource>,
               meta: JSONObject?,
               val title: String,
-              override val images: Set<OddImage>) : OddResource(identifier, relationships, included, meta), OddImageable {
+              override val images: Set<OddImage>) : OddResource(id, type, relationships, included, meta), OddImageable {
     init {
-        if (identifier.type != OddResourceType.VIEW) {
-            throw OddResourceException("Mismatched OddResourceType identifier: $identifier")
+        if (type != OddResourceType.VIEW) {
+            throw OddResourceException("Mismatched OddResourceType: $type")
         }
     }
 }

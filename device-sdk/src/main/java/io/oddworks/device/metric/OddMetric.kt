@@ -2,11 +2,9 @@ package io.oddworks.device.metric
 
 import android.os.Build
 import android.util.Log
-
+import io.oddworks.device.service.OddRxBus
 import org.json.JSONException
 import org.json.JSONObject
-
-import io.oddworks.device.service.OddRxBus
 
 abstract class OddMetric(protected val contentType: String?, protected val contentId: String?, protected val meta: JSONObject?) : OddRxBus.OddRxBusEvent {
     abstract val action: String

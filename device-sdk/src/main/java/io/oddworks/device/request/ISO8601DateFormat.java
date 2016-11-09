@@ -10,7 +10,12 @@ package io.oddworks.device.request;
  * LICENSE: Apache-2.0
  */
 
-import java.text.*;
+import java.text.DateFormat;
+import java.text.DecimalFormat;
+import java.text.FieldPosition;
+import java.text.NumberFormat;
+import java.text.ParseException;
+import java.text.ParsePosition;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;

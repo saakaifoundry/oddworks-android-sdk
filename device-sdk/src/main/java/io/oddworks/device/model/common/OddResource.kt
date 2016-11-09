@@ -3,7 +3,7 @@ package io.oddworks.device.model.common
 import org.json.JSONObject
 import java.util.*
 
-open class OddResource(val identifier: OddIdentifier, var relationships: Set<OddRelationship>, val included: MutableSet<OddResource>, val meta: JSONObject?) {
+open class OddResource(id: String, type: OddResourceType, var relationships: Set<OddRelationship>, val included: MutableSet<OddResource>, val meta: JSONObject?): OddIdentifier(id, type) {
     fun getRelationship(name: String): OddRelationship? {
         return relationships.find {
             it.name == name
@@ -22,7 +22,7 @@ open class OddResource(val identifier: OddIdentifier, var relationships: Set<Odd
         val inc = linkedSetOf<OddResource>()
 
         relationship.identifiers.forEach { identifier ->
-            val found = included.find { it.identifier == identifier }
+            val found = included.find { it.id == identifier.id && it.type == identifier.type }
             if (found != null) {
                 inc.add(found)
             }
@@ -35,7 +35,7 @@ open class OddResource(val identifier: OddIdentifier, var relationships: Set<Odd
         var isMissing = false
         relationships.forEach {
             it.identifiers.forEach { identifier ->
-                val included = included.find { it.identifier == identifier }
+                val included = included.find { it.id == identifier.id && it.type == identifier.type }
                 if (included == null) {
                     isMissing = true
                 }
@@ -47,8 +47,8 @@ open class OddResource(val identifier: OddIdentifier, var relationships: Set<Odd
     fun toRelationshipJSONObject(): JSONObject {
         val json = JSONObject()
         val data = JSONObject()
-        data.put("id", identifier.id)
-        data.put("type", identifier.type.toString().toLowerCase())
+        data.put("id", id)
+        data.put("type", type.toString().toLowerCase())
         json.put("data", data)
         return json
     }

@@ -5,7 +5,8 @@ import io.oddworks.device.model.common.*
 import org.json.JSONObject
 import java.util.*
 
-class OddCollection(identifier: OddIdentifier,
+class OddCollection(id: String,
+                    type: OddResourceType,
                     relationships: Set<OddRelationship>,
                     included: MutableSet<OddResource>,
                     meta: JSONObject?,
@@ -13,11 +14,11 @@ class OddCollection(identifier: OddIdentifier,
                     val description: String,
                     override val images: Set<OddImage>,
                     val genres: Set<String>,
-                    val releaseDate: Date?) : OddResource(identifier, relationships, included, meta), OddImageable {
+                    val releaseDate: Date?) : OddResource(id, type, relationships, included, meta), OddImageable {
 
     init {
-        if (identifier.type != OddResourceType.COLLECTION) {
-            throw OddResourceException("Mismatched OddResourceType identifier: $identifier")
+        if (type != OddResourceType.COLLECTION) {
+            throw OddResourceException("Mismatched OddResourceType: $type")
         }
     }
 
