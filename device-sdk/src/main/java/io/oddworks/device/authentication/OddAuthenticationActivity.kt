@@ -97,7 +97,6 @@ class OddAuthenticationActivity : AccountAuthenticatorActivity() {
             accountManager.setPassword(account, viewer.jwt)
         }
 
-        // TODO - do we need to put things in the bundle?
         val data = Bundle()
         val result = Intent()
         result.putExtras(data)
