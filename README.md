@@ -162,13 +162,17 @@ __Step 1:__ `AndroidManifest.xml`
 To utilize OddAuthenticatorService, you must first declare it within the `<application>` block of `AndroidManifest.xml`
 
 ```xml
-<service android:name="io.oddworks.device.authentication.OddAuthenticatorService">
-    <intent-filter>
-        <action android:name="android.accounts.AccountAuthenticator" />
-    </intent-filter>
-    <meta-data android:name="android.accounts.AccountAuthenticator"
+<application>
+  <activity android:name="io.oddworks.device.authentication.OddAuthenticationActivity" 
+              android:label="@string/login_label" />
+  <service android:name="io.oddworks.device.authentication.OddAuthenticatorService">
+      <intent-filter>
+          <action android:name="android.accounts.AccountAuthenticator" />
+      </intent-filter>
+      <meta-data android:name="android.accounts.AccountAuthenticator"
                        android:resource="@xml/oddworks_authenticator" />
-</service>
+  </service>
+</application>
 ```
 
 There are also some permissions needed. Depending upon the SDK level you are targeting, you may need to request these permissions at runtime.
@@ -197,7 +201,7 @@ Be sure that you have an `ic_launcher` icon set in your application's `res/mipma
 
 #### OddAuthenticationActivity
 
-When creating a new Account with OddAuthenticationService, an OddAuthenticationActivity is started.
+When creating a new Account with OddAuthenticationService, an OddAuthenticationActivity is started, which you will need to declare this activity within your `AndroidManifest.xml`:
 
 ![OddAuthenticationActivity](http://oddworks-android-sdk.s3.amazonaws.com/android-device-odd-authentication-activity.png)
 
