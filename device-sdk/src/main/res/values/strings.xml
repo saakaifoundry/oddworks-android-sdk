@@ -5,6 +5,7 @@
     <string name="oddworks_single_account_only">Only one account per device is allowed</string>
     <string name="oddworks_authentication_failed_with_detail">Authentication Failed: %s</string>
     <string name="oddworks_authentication_failed_no_detail">Authentication Failed</string>
+    <string name="oddworks_account_logged_out">Account Logged Out</string>
     <string name="title_activity_odd_authentication">Sign in</string>
 
     <!-- Strings related to login -->
