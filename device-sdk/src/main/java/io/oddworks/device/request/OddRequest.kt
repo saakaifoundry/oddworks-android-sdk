@@ -8,8 +8,10 @@ import android.os.Build
 import android.os.Bundle
 import android.support.annotation.Nullable
 import android.util.Log
+import android.widget.Toast
 import com.squareup.okhttp.*
 import io.oddworks.device.Oddworks
+import io.oddworks.device.R
 import io.oddworks.device.authentication.OddAuthenticator
 import io.oddworks.device.exception.BadResponseCodeException
 import io.oddworks.device.exception.OddParseException
@@ -251,6 +253,8 @@ class OddRequest(
                             } else {
                                 accountManager.removeAccountExplicitly(account)
                             }
+
+                            Toast.makeText(context, context.getString(R.string.oddworks_authentication_failed_with_detail, context.getText(R.string.oddworks_account_logged_out)), Toast.LENGTH_SHORT).show()
                             OKHTTP_CLIENT.cache = Cache(context.cacheDir, MAX_CACHE_SIZE)
                         }
 
