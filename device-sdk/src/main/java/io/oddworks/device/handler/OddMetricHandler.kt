@@ -34,7 +34,7 @@ object OddMetricHandler {
                 Log.d(TAG, "handleOddMetric: SUCCESS $resource}")
             }
 
-            override fun onFailure(exception: Exception) {
+            override fun onFailure(exception: Throwable) {
                 Log.d(TAG, "handleOddMetric: FAILURE $exception")
                 if (exception is BadResponseCodeException) {
                     Log.d(TAG, "handleOddMetric code: ${exception.code} errors: ${exception.oddErrors}")

@@ -11,5 +11,5 @@ package io.oddworks.device.request
  */
 interface OddCallback<T> {
     fun onSuccess(resource: T)
-    fun onFailure(exception: Exception)
+    fun onFailure(exception: Throwable)
 }

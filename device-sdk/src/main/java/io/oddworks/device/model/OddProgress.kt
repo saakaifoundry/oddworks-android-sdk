@@ -2,12 +2,7 @@ package io.oddworks.device.model
 
 import org.json.JSONObject
 
-data class OddProgress(val video: OddVideo, val position: Int, val complete: Boolean) {
-
-    val videoId: String
-        get() = video.id
-
-
+data class OddProgress(val videoId: String, val position: Int, val complete: Boolean) {
     fun toJSONObject(): JSONObject {
         val json = JSONObject()
         val data = JSONObject()
