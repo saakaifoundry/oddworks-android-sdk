@@ -30,6 +30,7 @@ import io.oddworks.device.metric.OddViewLoadMetric;
 import io.oddworks.device.model.OddCollection;
 import io.oddworks.device.model.OddConfig;
 import io.oddworks.device.model.OddError;
+import io.oddworks.device.model.OddProgress;
 import io.oddworks.device.model.OddPromotion;
 import io.oddworks.device.model.OddVideo;
 import io.oddworks.device.model.OddView;
@@ -96,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(@NotNull Exception exception) {
+            public void onFailure(@NotNull Throwable exception) {
                 handleRequestException("getConfig", exception);
             }
         };
@@ -192,6 +193,7 @@ public class MainActivity extends AppCompatActivity {
                             OddVideo vid = oddVideoIterator.next();
                             if (account != null) {
                                 addToWatchlist(vid);
+                                recordProgress(vid);
                                 removeFromWatchlist(vid);
                             }
                         }
@@ -259,6 +261,36 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void call(Throwable throwable) {
                         handleRequestException("addToWatchlist", throwable);
+                    }
+                });
+    }
+
+    private void recordProgress(final OddVideo resource) {
+        if (account == null) {
+            Log.d(TAG, "recordProgress not called - no account");
+        }
+        RxOddCall
+                .observableFrom(new Action1<OddCallback<OddProgress>>() {
+                    @Override
+                    public void call(OddCallback<OddProgress> oddCallback) {
+                        new OddRequest.Builder(ctx, OddResourceType.PROGRESS)
+                                .account(account)
+                                .recordProgress(resource.getId(), resource.getDuration() - 204, false)
+                                .build()
+                                .enqueueRequest(oddCallback);
+                    }
+                })
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<OddProgress>() {
+                    @Override
+                    public void call(OddProgress oddResource) {
+                        Log.d(TAG, "recordProgress success: " + oddResource.toJSONObject());
+                    }
+                }, new Action1<Throwable>() {
+                    @Override
+                    public void call(Throwable throwable) {
+                        handleRequestException("recordProgress", throwable);
                     }
                 });
     }

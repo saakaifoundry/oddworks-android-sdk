@@ -24,6 +24,7 @@ import io.oddworks.device.model.OddWatchlist
 import io.oddworks.device.model.common.OddResource
 import io.oddworks.device.model.common.OddResourceType
 import org.json.JSONException
+import rx.Observable
 import java.io.IOException
 import java.util.*
 
@@ -226,23 +227,35 @@ class OddRequest(
             override fun onResponse(response: Response) {
                 Log.d("ResponseCb onResponse", "code: ${response.code()} responseBody: ${response.body()}")
 
-                when {
+                val observable = when {
                     response.isSuccessful && (response.code() == 202 || response.code() == 204) -> {
-                        try {
-                            val obj = parseCall.parse("")
-                            oddCallback.onSuccess(obj)
-                        } catch (e: Exception) {
-                            handleFailedParse("", e)
+                        Observable.create<T> {
+                            try {
+                                val obj = parseCall.parse("")
+                                it.onNext(obj)
+                            } catch (e: Exception) {
+                                it.onError(OddParseException("Response body parse failed", e))
+                            } finally {
+                                it.onCompleted()
+                            }
                         }
                     }
                     response.isSuccessful -> {
-                        var responseBody = ""
-                        try {
-                            responseBody = response.body().string()
-                            val obj = parseCall.parse(responseBody)
-                            oddCallback.onSuccess(obj)
-                        } catch (e: Exception) {
-                            handleFailedParse(responseBody, e)
+                        Observable.create<T> {
+                            var responseBody = ""
+                            try {
+                                responseBody = response.body().string()
+                                val obj = parseCall.parse(responseBody)
+                                it.onNext(obj)
+                            } catch (e: Exception) {
+                                if (responseBody.isNullOrBlank()) {
+                                    responseBody = "response.body() was empty"
+                                }
+                                it.onError(OddParseException("Response body parse failed: $responseBody", e))
+                            } finally {
+                                response.body().close()
+                                it.onCompleted()
+                            }
                         }
                     }
                     else -> {
@@ -261,21 +274,18 @@ class OddRequest(
                         // try to get OddErrors, if any
                         try {
                             val oddErrors = OddParser.parseErrorMessage(response.body().string())
-                            oddCallback.onFailure(BadResponseCodeException(response.code(), oddErrors))
+
+                            Observable.error<T>(BadResponseCodeException(response.code(), oddErrors))
                         } catch (e: Exception) {
-                            oddCallback.onFailure(BadResponseCodeException(response.code()))
+                            Observable.error<T>(BadResponseCodeException(response.code()))
                         }
                     }
                 }
-            }
-
-            private fun handleFailedParse(body: String?, throwable: Throwable) {
-                val responseBody = if (body.isNullOrBlank()) {
-                    "response.body() was empty"
-                } else {
-                    body
-                }
-                oddCallback.onFailure(OddParseException("Response body parse failed: $responseBody", throwable))
+                observable.subscribe({
+                    oddCallback.onSuccess(it)
+                }, {
+                    oddCallback.onFailure(it)
+                })
             }
         }
     }
@@ -298,6 +308,9 @@ class OddRequest(
                     }
                     isWatchlistAdd() || isWatchlistRemove() -> {
                         watchlist!!.resource as T
+                    }
+                    isVideoProgress() -> {
+                        progress as T
                     }
                     isListEndpoint() -> {
                         OddParser.parseMultipleResponse(responseBody) as T
@@ -651,6 +664,18 @@ class OddRequest(
          */
         fun removeResourceFromWatchlist(viewerId: String, resource: OddResource): Builder {
             this.watchlist = OddWatchlist(viewerId, resource, false)
+            return this
+        }
+
+        /**
+         * Records the [OddProgress] which updates the [OddViewer]'s progress for a given [OddVideo]
+         *
+         * @param videoId - the id of the OddVideo
+         * @param position - the position within the video
+         * @param complete - whether or not the viewer has completed the video
+         */
+        fun recordProgress(videoId: String, position: Int, complete: Boolean = false): Builder {
+            this.progress = OddProgress(videoId, position, complete)
             return this
         }
 
