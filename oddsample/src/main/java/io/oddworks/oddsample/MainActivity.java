@@ -78,10 +78,8 @@ public class MainActivity extends AppCompatActivity {
                 splashId = config.getViews().get("splash");
 
                 OddAppInitMetric initMetric = new OddAppInitMetric();
-                OddViewLoadMetric viewLoadMetric = new OddViewLoadMetric("view", homepageId, null);
 
                 OddRxBus.publish(initMetric);
-                OddRxBus.publish(viewLoadMetric);
 
                 Log.d(TAG, "getConfig success: " + config);
 
@@ -156,6 +154,10 @@ public class MainActivity extends AppCompatActivity {
 
                         OddPromotion promotion = (OddPromotion) promotions.iterator().next();
                         OddCollection collection1 = (OddCollection) featured.iterator().next();
+
+
+                        OddViewLoadMetric viewLoadMetric = new OddViewLoadMetric("view", oddView.getId(), oddView.getTitle(), null);
+                        OddRxBus.publish(viewLoadMetric);
 
                         Log.d(TAG, "getView success: promotion " + promotion.getTitle() + " collection: " + collection1.getTitle());
                         getVideos();

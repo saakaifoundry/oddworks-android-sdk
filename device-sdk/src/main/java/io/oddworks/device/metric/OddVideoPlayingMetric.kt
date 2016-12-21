@@ -5,7 +5,7 @@ import android.util.Log
 import org.json.JSONException
 import org.json.JSONObject
 
-class OddVideoPlayingMetric(contentType: String, contentId: String, meta: JSONObject? = null, val elapsed: Int = 0, val duration: Int = 0) : OddMetric(contentType, contentId, meta) {
+class OddVideoPlayingMetric(contentType: String, contentId: String, title: String, meta: JSONObject? = null, val elapsed: Int = 0, val duration: Int = 0) : OddMetric(contentType, contentId, title, meta) {
 
     override val action: String
         get() = OddVideoPlayingMetric.action
