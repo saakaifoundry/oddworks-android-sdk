@@ -8,6 +8,9 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.TextView
 import android.widget.Toast
+import android.view.View
+import android.view.inputmethod.EditorInfo
+import android.widget.EditText
 import io.oddworks.device.R
 import io.oddworks.device.exception.BadResponseCodeException
 import io.oddworks.device.model.OddViewer
@@ -23,7 +26,7 @@ class OddAuthenticationActivity : AccountAuthenticatorActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        setTheme(R.style.OddAuthenticationTheme)
         setContentView(R.layout.activity_odd_authentication)
         accountManager = AccountManager.get(baseContext)
 
@@ -31,18 +34,23 @@ class OddAuthenticationActivity : AccountAuthenticatorActivity() {
         authTokenType = intent.getStringExtra(ARG_AUTH_TYPE) ?: OddAuthenticator.AUTH_TOKEN_TYPE_ODDWORKS_DEVICE
 
         if (accountEmail != null) {
-            (findViewById(R.id.account_email) as TextView).text = accountEmail
+            (findViewById(R.id.odd_authentication_email) as TextView).text = accountEmail
         }
-
-        findViewById(R.id.email_sign_in_button).setOnClickListener {
-            submit()
+        (findViewById(R.id.odd_authentication_password) as EditText).setOnEditorActionListener { textView, actionId, keyEvent ->
+            if (actionId == R.id.odd_authentication_sign_in || actionId == EditorInfo.IME_ACTION_UNSPECIFIED) {
+                submit(textView)
+                return@setOnEditorActionListener true
+            }
+            false
         }
     }
 
-    private fun submit() {
-        val email = (findViewById(R.id.account_email) as TextView).text.toString()
-        val password = (findViewById(R.id.account_password) as TextView).text.toString()
+    fun submit(view: View) {
+        val email = (findViewById(R.id.odd_authentication_email) as TextView).text.toString()
+        val password = (findViewById(R.id.odd_authentication_password) as TextView).text.toString()
         val accountType = intent.getStringExtra(ARG_ACCOUNT_TYPE)
+
+        showProgress()
 
         RxOddCall
                 .observableFrom<OddViewer> {
@@ -79,7 +87,24 @@ class OddAuthenticationActivity : AccountAuthenticatorActivity() {
                         }
                     }
                     Toast.makeText(baseContext, message, Toast.LENGTH_SHORT).show()
+                    hideProgress()
                 })
+    }
+
+    private fun showProgress() {
+        val button = findViewById(R.id.odd_authentication_button)
+        val progress = findViewById(R.id.odd_authentication_progress)
+
+        button.visibility = View.GONE
+        progress.visibility = View.VISIBLE
+    }
+
+    private fun hideProgress() {
+        val button = findViewById(R.id.odd_authentication_button)
+        val progress = findViewById(R.id.odd_authentication_progress)
+
+        button.visibility = View.VISIBLE
+        progress.visibility = View.GONE
     }
 
     private fun finishLogin(accountType: String, viewer: OddViewer) {
