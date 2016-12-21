@@ -2,7 +2,7 @@ package io.oddworks.device.metric
 
 import org.json.JSONObject
 
-class OddVideoErrorMetric(contentType: String, contentId: String, meta: JSONObject? = null) : OddMetric(contentType, contentId, meta) {
+class OddVideoErrorMetric(contentType: String, contentId: String, title: String, meta: JSONObject? = null) : OddMetric(contentType, contentId, title, meta) {
     override val action: String
         get() = OddVideoErrorMetric.action
 

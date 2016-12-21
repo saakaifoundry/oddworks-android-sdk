@@ -13,11 +13,12 @@ import static org.junit.Assert.assertEquals;
 public class OddVideoErrorMetricTest {
     private String contentType = "aThing";
     private String contentId = "thingId";
+    private String title = "vid title";
     private OddVideoErrorMetric oddVideoErrorMetric;
 
     @Before
     public void beforeEach() {
-        oddVideoErrorMetric = new OddVideoErrorMetric(contentType, contentId, null);
+        oddVideoErrorMetric = new OddVideoErrorMetric(contentType, contentId, title, null);
     }
 
     @Test
@@ -40,8 +41,13 @@ public class OddVideoErrorMetricTest {
     }
 
     @Test
+    public void testGetTitle() throws Exception {
+        assertEquals(title, oddVideoErrorMetric.getTitle());
+    }
+
+    @Test
 	public void testToJSONObject() throws Exception {
-        OddVideoErrorMetric metric = new OddVideoErrorMetric(contentType, contentId, null);
+        OddVideoErrorMetric metric = new OddVideoErrorMetric(contentType, contentId, title, null);
 
         String expected = "{\"data\": {" +
                 "type: \"" + metric.getType() + "\"," +
@@ -49,6 +55,7 @@ public class OddVideoErrorMetricTest {
                 "action: \"" + metric.getAction() + "\"," +
                 "contentType: \"" + metric.getContentType() + "\"," +
                 "contentId: \"" + metric.getContentId() + "\"," +
+                "title: \"" + metric.getTitle() + "\"," +
                 "viewer: \"" + metric.getViewerId() + "\"" +
                 "}" +
                 "}}";

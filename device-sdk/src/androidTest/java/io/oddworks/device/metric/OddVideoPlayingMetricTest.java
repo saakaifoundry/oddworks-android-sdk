@@ -15,6 +15,7 @@ import static org.junit.Assert.assertEquals;
 public class OddVideoPlayingMetricTest {
     private String contentType = "aThing";
     private String contentId = "thingId";
+    private String title = "vid title";
     private int elapsed = 456;
     private int duration = 1234;
     private int customInterval = 312;
@@ -22,7 +23,7 @@ public class OddVideoPlayingMetricTest {
 
     @Before
     public void beforeEach() {
-        oddVideoPlayingMetric = new OddVideoPlayingMetric(contentType, contentId, null, elapsed, duration);
+        oddVideoPlayingMetric = new OddVideoPlayingMetric(contentType, contentId, title, null, elapsed, duration);
     }
 
     @Test
@@ -46,6 +47,11 @@ public class OddVideoPlayingMetricTest {
     }
 
     @Test
+    public void testGetTitle() throws Exception {
+        assertEquals(title, oddVideoPlayingMetric.getTitle());
+    }
+
+    @Test
     public void testToJSONObject() throws Exception {
 
         Log.d("TESTING", oddVideoPlayingMetric.getContentId());
@@ -56,6 +62,7 @@ public class OddVideoPlayingMetricTest {
                 "action: \"" + oddVideoPlayingMetric.getAction() + "\"," +
                 "contentType: \"" + oddVideoPlayingMetric.getContentType() + "\"," +
                 "contentId: \"" + oddVideoPlayingMetric.getContentId() + "\"," +
+                "title: \"" + oddVideoPlayingMetric.getTitle() + "\"," +
                 "elapsed: " + elapsed + "," +
                 "duration: " + duration + "," +
                 "viewer: \"" + oddVideoPlayingMetric.getViewerId() + "\"" +

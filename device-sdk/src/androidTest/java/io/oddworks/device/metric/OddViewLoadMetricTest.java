@@ -13,11 +13,12 @@ import static org.junit.Assert.assertEquals;
 public class OddViewLoadMetricTest {
     private String contentType = "aThing";
     private String contentId = "thingId";
+    private String title = "view title";
     private OddViewLoadMetric oddViewLoadMetric;
 
     @Before
     public void beforeEach() {
-        oddViewLoadMetric = new OddViewLoadMetric(contentType, contentId, null);
+        oddViewLoadMetric = new OddViewLoadMetric(contentType, contentId, title, null);
     }
 
     @Test
@@ -41,6 +42,11 @@ public class OddViewLoadMetricTest {
     }
 
     @Test
+    public void testGetTitle() throws Exception {
+        assertEquals(title, oddViewLoadMetric.getTitle());
+    }
+
+    @Test
 	public void testToJSONObject() throws Exception {
 
         String expected = "{\"data\": {" +
@@ -49,6 +55,7 @@ public class OddViewLoadMetricTest {
                 "action: \"" + oddViewLoadMetric.getAction() + "\"," +
                 "contentType: \"" + oddViewLoadMetric.getContentType() + "\"," +
                 "contentId: \"" + oddViewLoadMetric.getContentId() + "\"," +
+                "title: \"" + oddViewLoadMetric.getTitle() + "\"," +
                 "viewer: \"" + oddViewLoadMetric.getViewerId() + "\"" +
                 "}" +
                 "}}";
