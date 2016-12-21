@@ -205,36 +205,18 @@ When creating a new Account with OddAuthenticationService, an OddAuthenticationA
 
 ![OddAuthenticationActivity](http://oddworks-android-sdk.s3.amazonaws.com/android-device-odd-authentication-activity.png)
 
-There are several customizable strings within this view.
+This view is highly customizable and can be done so by overriding the following styles:
 
 ```xml
-<AutoCompleteTextView
-    android:id="@+id/account_email"
-    ...
-    android:hint="@string/prompt_email"
-    />
-
-<EditText
-    android:id="@+id/account_password"
-    ...
-    android:hint="@string/prompt_password"
-    android:imeActionLabel="@string/action_sign_in_short"
-    />
-
-<Button
-    android:id="@+id/email_sign_in_button"
-    ...
-    android:text="@string/action_sign_in"
-    />
-
-<TextView
-    android:id="@+id/account_message"
-    ...
-    android:text="@string/account_message"
-    />
+<style name="OddAuthenticationTheme" parent="@style/Theme.AppCompat.NoActionBar">
+<style name="OddAuthenticationTheme.LinearLayout" parent="OddAuthenticationTheme">
+<style name="OddAuthenticationTheme.MessageTextView" parent="OddAuthenticationTheme">
+<style name="OddAuthenticationTheme.EditText" parent="@style/Widget.AppCompat.EditText">
+<style name="OddAuthenticationTheme.EmailEditText" parent="OddAuthenticationTheme.EditText">
+<style name="OddAuthenticationTheme.PasswordEditText" parent="OddAuthenticationTheme.EditText">
+<style name="OddAuthenticationTheme.Button" parent="@style/Widget.AppCompat.Button.Colored">
+<style name="OddAuthenticationTheme.ProgressBar" parent="@style/Widget.AppCompat.ProgressBar">
 ```
-
-In addition to the strings, the view's style can be overridden via `@style/AppTheme`
 
 #### Handling Accounts
 
@@ -244,9 +226,9 @@ Authenticating an OddRequest with an Account can be done using the `OddRequest.B
 
 If the Account's `authToken` is valid, it will be used to make the request.
 
-If the Account's `authToken` is invalid or missing, the user will be prompted to reauthenticate.
+If the Account's `authToken` is invalid or missing, the user will be prompted to re-authenticate.
 
-If the Authenticated request responds with a `401` code, the Account's `authToken` is invalidated.
+If the Authenticated request responds with a `401` code, the Account is removed.
 
 ### Enabling Analytics
 
