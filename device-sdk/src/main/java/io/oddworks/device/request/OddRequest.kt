@@ -6,6 +6,8 @@ import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.support.annotation.Nullable
 import android.util.Log
 import android.widget.Toast
@@ -267,7 +269,12 @@ class OddRequest(
                                 accountManager.removeAccountExplicitly(account)
                             }
 
-                            Toast.makeText(context, context.getString(R.string.oddworks_authentication_failed_with_detail, context.getText(R.string.oddworks_account_logged_out)), Toast.LENGTH_SHORT).show()
+                            // Notify user that login failed
+                            val handler = Handler(Looper.getMainLooper())
+                            handler.post {
+                                Toast.makeText(context, context.getString(R.string.oddworks_authentication_failed_with_detail, context.getText(R.string.oddworks_account_logged_out)), Toast.LENGTH_SHORT).show()
+                            }
+
                             OKHTTP_CLIENT.cache = Cache(context.cacheDir, MAX_CACHE_SIZE)
                         }
 
