@@ -19,7 +19,7 @@ public class OddAppInitMetricTest {
     @Before
     public void beforeEach() {
         customJSON = new JSONObject();
-        oddAppInitMetric = new OddAppInitMetric(null, null, customJSON);
+        oddAppInitMetric = new OddAppInitMetric(null, null, null, customJSON);
     }
 
     @Test
@@ -44,9 +44,14 @@ public class OddAppInitMetricTest {
     }
 
     @Test
+    public void testGetTitle() throws Exception {
+        assertEquals(null, oddAppInitMetric.getTitle());
+    }
+
+    @Test
 	public void testToJSONObject() throws Exception {
         customJSON.put("foo", "bar");
-        OddAppInitMetric metric = new OddAppInitMetric(null, null, customJSON);
+        OddAppInitMetric metric = new OddAppInitMetric(null, null, null, customJSON);
 
         String expected = "{\"data\": {" +
                 "type: \"" + metric.getType() + "\"," +

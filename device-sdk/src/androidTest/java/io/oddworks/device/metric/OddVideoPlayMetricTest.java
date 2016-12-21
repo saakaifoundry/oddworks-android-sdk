@@ -14,11 +14,12 @@ import static org.junit.Assert.assertEquals;
 public class OddVideoPlayMetricTest {
     private String contentType = "aThing";
     private String contentId = "thingId";
+    private String title = "vid title";
     private OddVideoPlayMetric oddVideoPlayMetric;
 
     @Before
     public void beforeEach() {
-        oddVideoPlayMetric = new OddVideoPlayMetric(contentType, contentId, null);
+        oddVideoPlayMetric = new OddVideoPlayMetric(contentType, contentId, title, null);
     }
 
     @Test
@@ -42,6 +43,11 @@ public class OddVideoPlayMetricTest {
     }
 
     @Test
+    public void testGetTitle() throws Exception {
+        assertEquals(title, oddVideoPlayMetric.getTitle());
+    }
+
+    @Test
 	public void testToJSONObject() throws Exception {
         String expected = "{\"data\": {" +
                 "type: \"" + oddVideoPlayMetric.getType() + "\"," +
@@ -49,6 +55,7 @@ public class OddVideoPlayMetricTest {
                 "action: \"" + oddVideoPlayMetric.getAction() + "\"," +
                 "contentType: \"" + oddVideoPlayMetric.getContentType() + "\"," +
                 "contentId: \"" + oddVideoPlayMetric.getContentId() + "\"," +
+                "title: \"" + oddVideoPlayMetric.getTitle() + "\"," +
                 "viewer: \"" + oddVideoPlayMetric.getViewerId() + "\"" +
                 "}" +
                 "}}";
